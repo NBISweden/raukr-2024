@@ -1,0 +1,1051 @@
+---
+title: "Mathematical statistics and machine learning in R"
+author: "Nikolay Oskolkov"
+image: "assets/featured.jpg"
+format:
+  revealjs:
+    fig-align: center
+---
+
+## Packages {visibility="hidden"}
+
+```{r}
+#| echo: false
+
+library("sm")
+library("MASS")
+library("spatstat")
+library("rpart.plot")
+```
+
+## Biological data are high dimensional
+
+![](assets/high_dimensional_data.png){width="100%" .center}
+
+## Types of data analysis
+
+![](assets/AmountOfData.jpg){width="100%" .center}
+
+## Low dimensional space
+
+```{r}
+#| echo: false
+
+set.seed(123)
+```
+
+```{r}
+#| class-source: small
+#| classes: small
+
+n <- 20 # number of samples
+p <- 2  # number of features / dimensions
+Y <- rnorm(n)
+X <- matrix(rnorm(n * p), n, p)
+summary(lm(Y ~ X))
+```
+
+## Going to higher dimensions
+
+```{r}
+#| echo: false
+
+set.seed(123456)
+```
+
+```{r}
+#| class-source: small
+#| classes: small
+
+n <- 20 # number of samples
+p <- 10 # number of features / dimensions
+Y <- rnorm(n)
+X <- matrix(rnorm(n * p), n, p)
+summary(lm(Y ~ X))
+```
+
+## Even higher dimensions
+
+```{r}
+#| echo: false
+
+set.seed(123456)
+```
+
+```{r}
+#| class-source: small
+#| classes: small
+
+n <- 20 # number of samples
+p <- 20 # number of features / dimensions
+Y <- rnorm(n)
+X <- matrix(rnorm(n * p), n, p)
+summary(lm(Y ~ X))
+```
+
+## Equidistant points in high dimensions
+
+```{r}
+#| cache: true
+#| class-source: small
+#| classes: small
+
+n <- 1000; p <- c(2, 32, 512); pair_dist <- list()
+for(i in 1:length(p)) {
+  X <- matrix(rnorm(n * p[i]), n, p[i])
+  pair_dist[[i]] <- as.vector(dist(X));
+  pair_dist[[i]] <- pair_dist[[i]] / max(pair_dist[[i]])
+}
+```
+
+:::: {.columns}
+::: {.column width="60%"}
+
+```{r Hist_Plot}
+#| echo: false
+#| cache: true
+#| fig-width: 10
+#| fig-height: 7
+
+plot(density(pair_dist[[1]]),col="red",main="Pairwise Distances in High Dimensions",xlab="Distance / Max Distance",xlim=c(0,1),ylim=c(0,15))
+polygon(density(pair_dist[[1]]), col="red", border="red");
+lines(density(pair_dist[[2]]),col="green"); polygon(density(pair_dist[[2]]), col="green", border="green")
+lines(density(pair_dist[[3]]),col="blue"); polygon(density(pair_dist[[3]]), col="blue", border="blue")
+legend("topleft",c("2","32","512"),fill=c("red","green","blue"), cex=1.5,inset=.02,title="N dims"); mtext("n = 1000 data points")
+```
+
+:::
+::: {.column width="40%"}
+
+::: {.fragment}
+
+<br/><br/>
+
+- Data points in high dimensions:
+<br/><br/>
+
+  - move **away** from each other
+<br/><br/>
+
+  - become **equidistant** and similar
+<br/><br/>
+
+- Impossible to see differences between cases and controls
+
+:::
+
+:::
+::::
+
+
+## Regularizations: LASSO
+
+$$Y = \beta_1X_1+\beta_2X_2+\epsilon$$
+
+. . .
+
+$$\textrm{OLS} = (Y-\beta_1X_1-\beta_2X_2)^2$$
+
+. . .
+
+$$\textrm{Penalized OLS} = (Y-\beta_1X_1-\beta_2X_2)^2 + \lambda(|\beta_1|+|\beta_2|)$$
+
+. . .
+
+:::: {.columns}
+::: {.column width="60%"}
+
+![](assets/Kfold_CrossVal.jpg){width="90%"}
+
+:::
+::: {.column width="40%"}
+::: {.fragment}
+
+![](assets/CV_lambda.jpg){width="100%"}
+
+:::
+:::
+::::
+
+## Regularizations are priors in Bayesian statistics
+
+$$\small Y = \beta_1X_1+\beta_2X_2+\epsilon; \,\,\, Y \sim N(\,\beta_1X_1+\beta_2X_2, \sigma^2\,) \equiv \rm{L}\,(\,\rm{Y} \,|\, \beta_1,\beta_2\,)$$
+
+- **Maximum Likelihood** principle: maximize probability to observe data given parameters:
+$$\small \rm{L}\,(\,\rm{Y} \,|\, \beta_1,\beta_2\,) = \frac{1}{\sqrt{2\pi\sigma²}} \exp^{\displaystyle -\frac{(Y-\beta_1X_1-\beta_2X_2)^2}{2\sigma²}}$$
+
+::: {.fragment}
+- **Bayes theorem**: maximize posterior probability of observing parameters given data:
+$$\small \rm{Posterior}(\rm{params} \,|\, \rm{data})=\frac{L(\rm{data} \,|\, \rm{params})*\rm{Prior}(\rm{params})}{\int{L(\rm{data} \,|\, \rm{params})*\rm{Prior}(\rm{params}) \, d(\rm{params})}}$$
+:::
+::: {.fragment}
+$$\small \rm{Posterior}(\,\beta_1,\beta_2\,|\, \rm{Y}\,) \sim \rm{L}\,(\,\rm{Y} \,|\,\beta_1,\beta_2\,)*\rm{Prior}(\beta_1,\beta_2) \sim \exp^{-\frac{(Y-\beta_1X_1-\beta_2X_2)^2}{2\sigma²}}*\exp^{-\lambda(|\beta_1|+|\beta_2|)} \\
+\small -\log{\left[\rm{Posterior}(\, \beta_1,\beta_2 \,|\, \rm{Y}\,)\right]} \sim (Y-\beta_1X_1-\beta_2X_2)^2 + \lambda(|\beta_1|+|\beta_2|)$$
+:::
+
+## Markov Chain Monte Carlo (MCMC): introduction
+:::: {.columns}
+
+::: {.column width="45%"}
+::: {.fragment}
+
+- Integration via Monte Carlo sampling
+
+![](assets/MC.png){width="100%"}
+
+:::
+::: {.fragment}
+
+$$\small I = 2\int\limits_2^4{x dx}=2\frac{x^2}{2} \Big|_2^4 = 16 - 4 = 12$$
+
+:::
+::: {.fragment}
+
+```{r}
+#| class-source: smaller
+#| classes: smaller
+
+f <- function(x){return(2*x)}; a <- 2; b <- 4; N <- 10000; count <- 0
+x <- seq(from = a, to = b, by = (b-a) / N); y_max <- max(f(x))
+for(i in 1:N)
+{
+  x_sample <- runif(1, a, b); y_sample <- runif(1, 0, y_max)
+  if(y_sample <= f(x_sample)){count <- count + 1}
+}
+paste0("Integral by Monte Carlo: I = ", (count / N) * (b - a) * y_max)
+```
+
+:::
+
+:::
+
+::: {.column width="5%"}
+:::
+
+::: {.column width="50%"}
+
+::: {.fragment}
+
+- Markov Chain Monte Carlo (MCMC)
+
+![](assets/mcmc.png){width="80%"}
+
+::: {.fragment}
+$$\small \rm{Hastings \,\, ratio} = \frac{\rm{Posterior}\,(\,\rm{params_{next}} \,|\, \rm{data}\,)}{\rm{Posterior}\,(\,\rm{params_{previous}} \,|\, \rm{data}\,)}$$
+:::
+
+::: {.fragment}
+- If Hastings ratio > *u* [0, 1], then **accept**, else **reject**
+<br/><br/>
+- Hastings ratio does not contain the intractable integral from Bayes theorem
+:::
+
+:::
+
+:::
+
+::::
+
+## Markov Chain Monte Carlo (MCMC) from scratch in R
+:::: {.columns}
+
+::: {.column width="50%"}
+
+- Example from population genetics
+
+![](assets/genotypes.png){width="70%"}
+
+::: {.fragment}
+$$\small L(n \, | \, f) = \prod_g{\left[ {2\choose g} f^g (1-f)^{2-g}  \right]^{n_g}}$$
+:::
+
+::: {.fragment}
+$$\small \frac{\partial \log\left[L(n | f)\right]}{\partial f} = 0 \, \Rightarrow \hat{f}=\frac{n_1+2n_2}{2(n_0+n_1+n_2)}$$
+:::
+
+::: {.fragment}
+$$\small \rm{Prior}(f, \alpha, \beta) = \frac{1}{B(\alpha, \beta)} f^{\alpha-1} (1-f)^{\beta-1}$$
+:::
+
+:::
+
+::: {.column width="50%"}
+
+::: {.fragment}
+
+```{r}
+#| class-source: smaller
+#| classes: smaller
+
+N <- 100; n <- c(25, 50, 25) # Observed genotype data for N individuals
+f_MLE <- (n[2] + 2*n[3]) / (2 * sum(n)) # MLE of allele frequency
+
+# Define log-likelihood function (log-binomial distribution)
+LL <- function(n, f){return((n[2] + 2*n[3])*log(f) + (n[2] + 2*n[1])*log(1-f))}
+# Define log-prior function (log-beta distribution)
+LP <- function(f, alpha, beta){return(dbeta(f, alpha, beta, log = TRUE))}
+
+# Run MCMC Metropolis - Hastings sampler
+f_poster <- vector(); alpha <- 0.5; beta <- 0.5; f_cur <- 0.1 # initialization
+for(i in 1:1000)
+{
+  f_next <- abs(rnorm(1, f_cur, 0.1)) # make random step for allele frequency
+  
+  LL_cur <- LL(n, f_cur); LL_next <- LL(n, f_next)
+  LP_cur <- LP(f_cur, alpha, beta); LP_next <- LP(f_next, alpha, beta)
+  hastings_ratio <- LL_next + LP_next - LL_cur - LP_cur
+  
+  if(hastings_ratio > log(runif(1))){f_cur <- f_next}; f_poster[i] <- f_cur
+}
+```
+
+```{r}
+#| echo: false
+
+# Plot analytical posterior of allele frequencies and MLE estimate
+f_vec <- seq(from = 0.01, to = 0.99, by = 0.01)
+analytic_posterior <- function(n, f, alpha, beta){return(dbeta(f, alpha+2*n[1]+n[2]+1, beta+n[2]+2*n[3]+1))}
+plot(f_vec, analytic_posterior(n, f_vec, alpha, beta), type = 'l', xlab = "Allele Frequency (f)", ylab = "Posterior Distribution")
+abline(v = f_MLE, col = "red"); axis(side=3, at=f_MLE, labels=quote(hat("f")), tick=F, col.axis="red")
+# Plot MCMC approximate posterior
+dens <- density(f_poster, adjust = 1.25); lines(dens$x, dens$y, col="blue")
+legend("topleft", c("Analytical posterior", "Maximum Likelihood Estimate", "MCMC - sampler posterior"), 
+       col=c("black", "red", "blue"), lty=1, inset = 0.02)
+```
+
+:::
+
+:::
+
+::::
+
+## Moving from statistics to machine learning
+
+:::: {.columns}
+::: {.column width="45%"}
+
+- Statistics is more **analytical** (pen & paper)
+
+::: {.fragment}
+$$\rm{L}\,(\,x_i \,|\, \mu,\sigma^2\,) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp^{\displaystyle -\frac{\sum\limits_{i=1}^N (x_i-\mu)^2}{2\sigma^2}}$$
+:::
+
+::: {.fragment}
+$$\frac{\partial \rm{L}\,(\,x_i \,|\, \mu,\sigma^2\,)}{\partial\mu} = 0; \,\, \frac{\partial \rm{L}\,(\,x_i \,|\, \mu,\sigma^2\,)}{\partial\sigma^2} = 0$$
+:::
+
+::: {.fragment}
+$$\mu = \frac{1}{N}\sum_{i=0}^N x_i \,\,\rm{-}\,\rm{mean \, estimator}$$
+
+$$\sigma^2 = \frac{1}{N}\sum_{i=0}^N (x_i-\mu)^2 \,\,\rm{-}\,\rm{variance \, estimator}$$
+:::
+
+:::
+
+
+::: {.column width="55%"}
+
+::: {.fragment}
+- Machine Learning is more **algorithmic** (ex. K-means)
+:::
+
+::: {.fragment}
+```{r}
+#| echo: false
+library("MASS")
+set.seed(123)
+data1 <- as.data.frame(mvrnorm(n = 100, mu = c(-1, 0), Sigma=matrix(c(1, 0, 0, 1), ncol = 2)))
+data2 <- as.data.frame(mvrnorm(n = 100, mu = c(3, -1), Sigma=matrix(c(1, 0, 0, 1), ncol = 2)))
+data3 <- as.data.frame(mvrnorm(n = 100, mu = c(0, 3), Sigma=matrix(c(1, 0, 0, 1), ncol = 2)))
+X<-rbind(data1, data2, data3)
+```
+
+```{r}
+#| fig-width: 9
+#| fig-height: 5
+#| class-source: smaller
+#| classes: smaller
+K = 3; set.seed(123); c = X[sample(1:dim(X)[1],K),]; par(mfrow=c(2,2),mai=c(0.8,1,0,0))
+plot(X, xlab = "X", ylab = "Y", pch = 19); points(c, col = "blue", cex = 3, pch = 19)
+for(t in 1:3)
+{
+  l <- vector()
+  for(i in 1:dim(X)[1])
+  {
+    d <- vector(); for(j in 1:K){d[j] <- sqrt((X[i,1]-c[j,1])^2 + (X[i,2]-c[j,2])^2)} 
+    l[i] <- which.min(d)
+  }
+  plot(X, xlab="X", ylab="Y", col=l, pch=19); points(c, col="blue", cex=3, pch=19)
+  s = list(); for(i in unique(l)){s[[i]] <- colMeans(X[l==i,])}; c = Reduce("rbind", s)
+}
+```
+
+:::
+
+:::
+
+::::
+
+## Statistics vs. machine learning: prediction
+
+:::: {.columns}
+
+::: {.column width="36%"}
+::: {.fragment}
+![](assets/stats.jpg)
+:::
+:::
+
+::: {.column width="14%"}
+
+:::
+
+::: {.column width="50%"}
+
+::: {.fragment}
+![](assets/ml.jpg)
+:::
+
+:::
+
+::::
+
+
+## How does machine learning work?
+
+:::: {.columns}
+::: {.column width="60%"}
+
+![](assets/TrainTestSplit.jpg){width="100%"}
+
+:::
+::: {.column width="40%"}
+
+Machine Learning typically involves five basic steps:
+<br/><br/>
+1. Split data set into **train**, **validation** and **test** subsets
+<br/><br/>
+
+::: {.fragment}
+2. Fit the model on the train subset
+<br/><br/>
+:::
+
+::: {.fragment}
+3. Validate your model on the validation subset
+<br/><br/>
+:::
+
+::: {.fragment}
+4. Repeat train - validation split many times and tune **hyperparameters**
+<br/><br/>
+:::
+
+::: {.fragment}
+5. Test the accuracy of the optimized model on the test subset.
+:::
+
+:::
+::::
+
+## Toy example of machine learning
+
+:::: {.columns}
+::: {.column width="50%"}
+
+```{r}
+#| echo: false
+set.seed(12345)
+```
+```{r}
+#| fig-width: 8
+#| fig-height: 6
+#| class-source: small
+#| classes: small
+
+N <- 100
+x <- rnorm(N)
+y <- 2 * x + rnorm(N)
+df <- data.frame(x, y)
+plot(y ~ x, data = df, col = "blue")
+legend("topleft", "Data points", fill = "blue", bty = "n")
+```
+
+:::
+
+::: {.column width="50%"}
+::: {.fragment}
+```{r}
+#| echo: false
+set.seed(123)
+```
+```{r}
+#| fig-width: 8
+#| fig-height: 6
+#| class-source: small
+#| classes: small
+
+train <- df[sample(1:dim(df)[1], 0.7 * dim(df)[1]), ]
+test <- df[!rownames(df) %in% rownames(train), ]
+df$color <- ifelse(rownames(df) %in% rownames(test),"red","blue")
+plot(y ~ x, data = df, col = df$color)
+legend("topleft", c("Train","Test"),fill=c("blue","red"),bty="n")
+abline(lm(y ~ x, data = train), col = "blue")
+```
+
+:::
+
+:::
+::::
+
+## Toy example: model validation
+
+:::: {.columns}
+::: {.column width="60%"}
+
+```{r}
+#| fig-width: 8
+#| fig-height: 6
+#| class-source: small
+#| classes: small
+
+test_predicted <- as.numeric(predict(lm(y ~ x, data = train), newdata = test))
+plot(test$y ~ test_predicted, ylab = "True y", xlab = "Pred y", col = "red")
+abline(lm(test$y ~ test_predicted), col = "darkgreen")
+```
+
+:::
+::: {.column width="40%"}
+::: {.fragment}
+
+```{r}
+#| class-source: small
+#| classes: small
+summary(lm(test$y ~ test_predicted))
+```
+
+<br/><br/>
+Thus the model explains 79% of variation on the test subset.
+:::
+:::
+::::
+
+## From linear models to artificial neural networks (ANNs)
+
+:::: {.columns}
+
+::: {.column width="55%"}
+- ANN: a mathematical function Y = f(X) with a special architecture
+
+::: {.fragment}
+- Can be **non-linear** depending on **activation function**
+<br/><br/>
+:::
+
+::: {.fragment}
+![](assets/ANN.jpg){width="100%"}
+:::
+
+:::
+
+::: {.column width="45%"}
+
+::: {.fragment}
+- Backward propagation (**gradient descent**) for minimizing error
+:::
+
+::: {.fragment}
+- Universal Approximation Theorem
+<br/><br/>
+:::
+
+::: {.fragment}
+![](assets/UAT.jpg){width="100%"}
+:::
+
+:::
+::::
+
+## Gradient descent
+
+:::: {.columns}
+
+::: {.column width="50%"}
+![](assets/GD.png){width="100%"}
+
+$$y_i = \alpha + \beta x_i + \epsilon, \,\, i = 1 \ldots n$$
+
+$$E(\alpha, \beta) = \frac{1}{n}\sum_{i=1}^n(y_i - \alpha - \beta x_i)^2$$
+
+:::
+
+
+::: {.column width="50%"}
+
+::: {.fragment}
+$$\hat{\alpha}, \hat{\beta} = \rm{argmin} \,\, E(\alpha, \beta)$$
+:::
+
+::: {.fragment}
+$$\frac{\partial E(\alpha, \beta)}{\partial\alpha} = -\frac{2}{n}\sum_{i=1}^n(y_i - \alpha - \beta x_i)$$
+
+$$\frac{\partial E(\alpha, \beta)}{\partial\beta} = -\frac{2}{n}\sum_{i=1}^n x_i(y_i - \alpha - \beta x_i)$$
+:::
+
+::: {.fragment}
+Numeric implementation of gradient descent:
+
+$$\alpha_{i+1} = \alpha_i - \eta \left. \frac{\partial E(\alpha, \beta)}{\partial\alpha} \right\vert_{\alpha=\alpha_i,\beta=\beta_i}$$
+
+$$\beta_{i+1} = \beta_i - \eta \left. \frac{\partial E(\alpha, \beta)}{\partial\beta} \right\vert_{\alpha=\alpha_i,\beta=\beta_i}$$
+:::
+
+:::
+
+::::
+
+## Coding gradient descent from scratch in R
+
+:::: {.columns}
+
+::: {.column width="45%"}
+```{r}
+#| echo: false
+set.seed(123)
+```
+```{r}
+#| class-source: small
+#| classes: small
+
+n <- 100 # sample size
+x <- rnorm(n) # simulated expanatory variable
+y <- 3 + 2 * x + rnorm(n) # simulated response variable
+summary(lm(y ~ x))
+```
+<br/><br/>
+Let us now reconstruct the intercept and slope from gradient descent
+:::
+
+
+::: {.column width="55%"}
+::: {.fragment}
+
+```{r}
+#| class-source: small
+#| classes: small
+
+alpha <- vector(); beta <- vector()
+E <- vector(); dEdalpha <- vector(); dEdbeta <- vector()
+eta <- 0.01; alpha[1] <- 1; beta[1] <- 1 # initialize alpha and beta
+for(i in 1:1000)
+{
+  E[i] <- (1/n) * sum((y - alpha[i] - beta[i] * x)^2)  
+  dEdalpha[i] <- - sum(2 * (y - alpha[i] - beta[i] * x)) / n
+  dEdbeta[i] <- - sum(2 * x * (y - alpha[i] - beta[i] * x)) / n
+  
+  alpha[i+1] <- alpha[i] - eta * dEdalpha[i]
+  beta[i+1] <- beta[i] - eta * dEdbeta[i]
+}
+print(paste0("alpha = ", tail(alpha, 1),", beta = ", tail(beta, 1)))
+```
+
+:::
+
+::: {.fragment}
+```{r}
+#| echo: false
+plot(E,ylab="Error",xlab="Number of iterations",type="l",col="blue")
+```
+:::
+
+:::
+
+::::
+
+## ANN from scratch in R: problem formulation
+
+:::: {.columns}
+
+::: {.column width="57%"}
+
+![](assets/Problem.png)
+
+```{r}
+#| class-source: small
+#| classes: small
+
+d <- c(0, 0, 1, 1)  # true labels
+x1 <- c(0, 0, 1, 1) # input variable x1
+x2 <- c(0, 1, 0, 1) # input variable x2
+
+data.frame(x1 = x1, x2 = x2, d = d)
+```
+:::
+
+::: {.column width="43%"}
+
+::: {.fragment}
+![](assets/ANN_Scheme.png)
+:::
+
+::: {.fragment}
+$$y(w_1,w_2)=\phi(w_1x_1+w_2x_2)$$
+:::
+
+::: {.fragment}
+$$\phi(s)=\frac{1}{1+e^{\displaystyle -s}} \,\,\rm{-}\,\rm{sigmoid}$$
+:::
+
+::: {.fragment}
+$$\phi^\prime(s)=\phi(s)\left(1-\phi(s)\right)$$
+:::
+
+:::
+
+::::
+
+## ANN from scratch in R: implementation in code
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+```{r}
+#| class-source: small
+#| classes: small
+
+phi <- function(x){return(1/(1 + exp(-x)))} # activation function
+
+mu <- 0.1; N_epochs <- 10000
+w1 <- 0.1; w2 <- 0.5; E <- vector()
+for(epochs in 1:N_epochs)
+{
+  #Forward propagation
+  y <- phi(w1 * x1 + w2 * x2 - 3) # we use a fixed bias -3
+  
+  #Backward propagation
+  E[epochs] <- (1 / (2 * length(d))) * sum((d - y)^2)
+  dE_dw1 <- - (1 / length(d)) * sum((d - y) * y * (1 - y) * x1)
+  dE_dw2 <- - (1 / length(d)) * sum((d - y) * y * (1 - y) * x2)
+  w1 <- w1 - mu * dE_dw1
+  w2 <- w2 - mu * dE_dw2
+}
+plot(E ~ seq(1:N_epochs), xlab="Epochs", ylab="Error", col="red")
+```
+
+:::
+
+
+::: {.column width="50%"}
+::: {.fragment}
+$$E(w_1,w_2)=\frac{1}{2N}\sum_{i=1}^N\left(d_i-y_i(w_1,w_2)\right)^2$$
+:::
+
+::: {.fragment}
+$$w_{1,2}=w_{1,2}-\mu\frac{\partial E(w_1,w_2)}{\partial w_{1,2}}$$
+:::
+
+::: {.fragment}
+$$\frac{\partial E}{\partial w_1} = -\frac{1}{N}\sum_{i=1}^N (d_i-y_i)*y_i*(1-y_i)*x_{1i}$$
+
+$$\frac{\partial E}{\partial w_2} = -\frac{1}{N}\sum_{i=1}^N (d_i-y_i)*y_i*(1-y_i)*x_{2i}$$
+:::
+
+::: {.fragment}
+```{r}
+#| class-source: small
+#| classes: small
+y
+```
+We nearly reconstruct true labels **d = (0, 0, 1, 1)**
+
+:::
+
+:::
+
+::::
+
+## Decision tree from scratch in R: problem formulation
+
+:::: {.columns}
+
+::: {.column width="48%"}
+
+```{r}
+#| class-source: small
+#| classes: small
+X<-data.frame(height=c(183,167,178,171),weight=c(78,73,85,67))
+y<-as.factor(c("Female", "Male", "Male", "Female"))
+data.frame(X, sex = y)
+```
+
+::: {.fragment}
+```{r}
+#| class-source: small
+#| classes: small
+
+library("rpart"); library("rpart.plot")
+fit<-rpart(y~height+weight,data=X,method="class",minsplit=-1)
+rpart.plot(fit)
+```
+:::
+
+:::
+
+::: {.column width="52%"}
+
+::: {.fragment}
+- Let us visualize what the classifier has learnt
+:::
+
+::: {.fragment}
+
+```{r}
+#| class-source: small
+#| classes: small
+#| fig-width: 10
+#| fig-height: 7
+color <- c("red", "blue", "blue", "red")
+plot(height ~ weight, data = X, col = color, pch = 19, cex = 3)
+legend("topleft",c("Male","Female"),fill=c("blue","red"),inset=.02)
+
+abline(h = 169, lty = 2, col = "darkgreen", lwd = 1.5)
+abline(v = 82, lty = 2, col = "darkgreen", lwd = 1.5)
+```
+:::
+
+:::
+
+::::
+
+## Decision tree from scratch in R: Gini index and split
+
+:::: {.columns}
+
+::: {.column width="45%"}
+
+![](assets/Gini.png){width="100%"}
+
+::: {.fragment}
+```{r}
+#| class-source: smaller
+#| classes: smaller
+gini <- function(x)
+{
+  return(1 - sum((table(x) / length(x))^2))
+}
+gini(c(1, 0, 1, 0))
+```
+```{r}
+#| class-source: smaller
+#| classes: smaller
+gini(c(1, 1, 0, 1, 1))
+```
+:::
+
+:::
+
+::: {.column width="55%"}
+
+::: {.fragment}
+
+```{r}
+#| class-source: smaller
+#| classes: smaller
+
+get_best_split <- function(X, y)
+{
+  mean_gini <- vector(); spl_vals <- vector(); spl_names <- vector()
+  for(j in colnames(X)) # for each variable in X data frame
+  {
+    spl <- vector() # vector of potential split candidates
+    sort_X <- X[order(X[, j]), ]; sort_y <- y[order(X[, j])] # sort by variable
+    for(i in 1:(dim(X)[1]-1)) # for each observation of variable in X data frame
+    {
+      spl[i] <- (sort_X[i, j] + sort_X[(i + 1), j]) / 2 # variable consecutive means
+      g1_y <- sort_y[sort_X[, j] > spl[i]] # take labels for group above split
+      g2_y <- sort_y[sort_X[, j] < spl[i]] # take labels for group below split
+      mean_gini <- append(mean_gini, (gini(g1_y) + gini(g2_y))/2) # two groups mean Gini
+      spl_vals <- append(spl_vals, spl[i])
+      spl_names <- append(spl_names, j)
+    }
+  }
+  min_spl_val <- spl_vals[mean_gini == min(mean_gini)][1] # get best split variable
+  min_spl_name <- spl_names[mean_gini == min(mean_gini)][1] # get best split value
+  sort_X <- X[order(X[, min_spl_name]), ] # sort X by best split variable
+  sort_y <- y[order(X[, min_spl_name])] # sort y by best split variable
+  g1_y <- sort_y[sort_X[, min_spl_name] > min_spl_val] # labels above best split
+  g2_y <- sort_y[sort_X[, min_spl_name] < min_spl_val] # labels below best split
+  if(gini(g1_y) == 0){sex <- paste0("Above: ", as.character(g1_y))}
+  else if(gini(g2_y) == 0){sex <- paste0("Below: ", as.character(g2_y))}
+  
+  return(list(spl_name = min_spl_name, spl_value = min_spl_val, sex = sex))
+}
+get_best_split(X, y)
+```
+:::
+
+:::
+
+::::
+
+## Decision tree from scratch in R: code implementation
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+- After we have found the best split, let us check what group we can split further: **get_new_data** function
+
+::: {.fragment}
+
+```{r}
+#| class-source: smaller
+#| classes: smaller
+
+get_new_data <- function(X, y)
+{
+  spl_name <- get_best_split(X, y)$spl_name
+  spl_val <- get_best_split(X, y)$spl_value
+  
+  # Sort X and y by the variable of the best split
+  sort_X <- X[order(X[, spl_name]), ]; sort_y <- y[order(X[, spl_name])]
+  
+  # get X and y for the first group of samples above the best split value
+  g1_y <- sort_y[sort_X[, spl_name] > spl_val]
+  g1_X <- sort_X[sort_X[, spl_name] > spl_val,]
+  
+  # get X and y for the second group of samples below the best split value
+  g2_y <- sort_y[sort_X[, spl_name] < spl_val]
+  g2_X <- sort_X[sort_X[, spl_name] < spl_val,]
+  
+  # return new data (subset of X and y) for a group with Gini index > 0
+  if(gini(g1_y) > 0){return(list(new_X = g1_X, new_y = g1_y))}
+  else if(gini(g2_y) > 0){return(list(new_X = g2_X, new_y = g2_y))}
+  else{return(0)}
+}
+get_new_data(X, y)
+```
+:::
+
+:::
+
+::: {.column width="50%"}
+
+::: {.fragment}
+- We can train a decision tree of max_depth = 2
+:::
+
+::: {.fragment}
+
+```{r}
+#| class-source: smaller
+#| classes: smaller
+
+decision_tree <- function(X, y, max_depth = 2)
+{
+  new_X <- X; new_y <- y
+  df <- data.frame(matrix(ncol = 5, nrow = max_depth))
+  colnames(df) <- c("spl_num", "spl_name", "sign", "spl_val", "label")
+  for(i in 1:max_depth)
+  {
+    best_split_output <- get_best_split(new_X, new_y)
+    sex <- unlist(strsplit(best_split_output$sex,": "))
+    df[i, "spl_num"] <- i
+    df[i, "spl_name"] <- best_split_output$spl_name
+    df[i, "sign"] <- ifelse(sex[1] == "Below", "<", ">")
+    df[i, "spl_val"] <- best_split_output$spl_value
+    df[i, "label"] <- sex[2]
+    
+    new_data_output <- get_new_data(new_X, new_y)
+    if(length(new_data_output) != 1)
+    {
+      new_X <- new_data_output$new_X
+      new_y <- new_data_output$new_y
+    }
+    else
+    {
+      print("All terminal nodes have perfect purity")
+      break
+    }
+  }
+  return(df)
+}
+decision_tree(X, y)
+```
+:::
+
+:::
+
+::::
+
+## Decision tree from scratch in R: prediction
+
+:::: {.columns}
+
+::: {.column width="52%"}
+
+- Finally, after we have trained the decision tree, we can try to make predictions, and check whether we can reconstruct the labels of the data points
+
+::: {.fragment}
+
+```{r}
+#| class-source: smaller
+#| classes: smaller
+
+predict_decision_tree <- function(X, y)
+{
+  # Train a decision tree
+  t <- decision_tree(X, y, max_depth = 2)
+  
+  # Parse the output of decision tree and code it via if, else if and else
+  pred_labs <- vector()
+  for(i in 1:dim(X)[1])
+  {
+    if(eval(parse(text=paste0(X[i,t$spl_name[1]],t$sign[1],t$spl_val[1]))))
+    {
+      pred_labs[i] <- t$label[1]
+    }
+    else if(eval(parse(text=paste0(X[i,t$spl_name[2]],t$sign[2],t$spl_val[2]))))
+    {
+      pred_labs[i] <- t$label[2]
+    }
+    else{pred_labs[i] <- ifelse(t$label[2] == "Male", "Female", "Male")}
+  }
+
+  return(cbind(cbind(X, y), pred_labs))
+}
+predict_decision_tree(X, y)
+```
+:::
+
+:::
+
+::: {.column width="48%"}
+
+::: {.fragment}
+
+- **Random Forest** has two key differences:
+
+  - train multiple decision trees (**bagging**)
+
+  - train trees on **fractions** of input features
+
+![](assets/Bagging.png){width="100%"}
+
+:::
+
+:::
+
+::::
+
+## {background-image="/assets/images/cover.jpg"}
+
+### Thank you! Questions?
+
+```{r}
+#| echo: false
+R.version[c("platform","os","major","minor")]
+```
+
+[{{< meta current_year >}} • [SciLifeLab](https://www.scilifelab.se/) • [NBIS](https://nbis.se/) • [RaukR](https://nbisweden.github.io/raukr-2024)]{.smaller}

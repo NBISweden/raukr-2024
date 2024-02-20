@@ -1,0 +1,65 @@
+---
+title: "Program"
+date: ""
+sidebar: false
+format:
+  html:
+    number-sections: false
+---
+
+## Guest instructors
+
+::: {.guests-parent}
+::: {.guests-child}
+
+![](assets/images/profile/jenny-bryan.jpg)
+
+[Jennifer Bryan](https://jennybryan.org/)
+
+Software engineer at Posit.  
+Data science professor, [University of British Columbia](https://www.stat.ubc.ca/jenny-bryan)  
+Vancouver, Canada
+
+:::
+::: {.guests-child}
+
+![](assets/images/profile/henrik-bengtsson.jpg)
+
+[Henrik Bengtsson](https://www.linkedin.com/in/henrikbengtsson/)
+
+Project lead for [Futurverse](https://www.futureverse.org/).  
+Associate professor in Epidemiology & Biostatistics, [University of California](https://profiles.ucsf.edu/henrik.bengtsson)  
+San Francisco, USA
+
+:::
+:::
+
+## Syllabus
+
+We will be covering a number of topics in R programming with focus on R features helpful in bioinformatics and computational biology data analyses workflow:
+
+- Reproducible research in R (Quarto, Rmarkdown, Renv)
+- Collaborative work using Git and GitHub
+- R code style guide & best practices
+- Code debugging, optimization and profiling
+- Parallelization and vectorization in R
+- Crafting your own functions
+- Objected oriented programming and R classes: S3, S4, R6 and RC
+- Anatomy of an R package: Creating your own package from scratch
+- Tidy data flow using tidyverse
+- Using the language of graphics: ggplot2
+- Developing web applications using Shiny
+- R and Python integration using reticulate
+- Team project work - developing data analyses workflow in R using acquired skills
+
+## Course materials
+
+Course materials will be made available at the beginning of the workshop and will remain open and publicly accessible online for at least a year. You can check out the materials from [2023](https://nbisweden.github.io/raukr-2023/contents.html).
+
+## Sessions
+
+Our daily schedule begins with a morning session from 08:30 to 12:30, starting with breakfast from 08:30 to 09:00 and a 30-minute break at 10:30. Lunchtime is from 12:30 to 13:30. The afternoon session follows, running from 13:30 to 17:00, with a 30-minute coffee break at 15:00.
+
+Please note that due to varying time zones, online guest lectures might occur after 17:00.
+
+Throughout the majority of sessions, our instructors and teaching assistants will be available to aid you with practical exercises and answer any queries you may have.

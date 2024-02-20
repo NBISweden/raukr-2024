@@ -1,0 +1,344 @@
+---
+title: "git and R"
+author: "Sebastian DiLorenzo"
+image: "assets/featured.jpg"
+format: revealjs
+---
+
+## Overview
+
+```{r}
+#| echo: false
+library(usethis)
+
+```
+
+:::: {.columns}
+::: {.column width="60%"}
+- What is git and why should I use it?
+- git set-up
+- git for yourself
+- git with github
+- Summary
+:::
+
+::: {.column width="40%"}
+![](https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png){width="300px"}
+![](https://git-scm.com/images/logos/downloads/Git-Icon-1788C.png){width="300px"}
+:::
+::::
+
+::: notes
+Maybe start with a show of hands.
+"How many have heard the word git before?"
+"How many have used git before?"
+"How many had a github account before the course?"
+
+Throughout I will show how to do things from RStudio, since this is an R course. In git with github I will not only show how to integrate github for yourself but also with collaborators.
+:::
+
+## What is git and why should I use it?
+
+:::: {.columns}
+::: {.column width="50%"}
+![](assets/tree.png){width="70%"}
+:::
+
+::: {.column width="50%"}
+
+<br>
+
+- Track changes
+- Revert changes
+- Reproducibility
+- Backups
+- Working with others
+:::
+:::: 
+
+::: notes
+Basically, say you have a folder with a bunch of files. And you want to track what changes you have made to every file, kind of like a word or google slide document with track changes. As you are tracking these changes you also have the possibility to revert these changes and go back in time to an earlier state of the files.
+
+Why would you want to do this? It is very useful for working reproducibly to have a complete log of what you have done, it is good for backup, especially if you are also connecting and synchronizing your collection of files with some service such as github, more on that later. It is also very good when you want to work with others in a highly structured way, making sure that many people can work on the same thing without messing it up. 
+
+There are other advantages of course but I do not want to overload you, so in this lecture we will be focusing on basic git usage and there are loads of online resources to take you further than that.
+:::
+
+## What is git and why should I use it?
+
+<br>
+
+#### Version control
+> In software development, version control is a class of systems responsible for managing changes to computer programs or other collections of information such that revisions have a logical and consistent organization.
+>
+> https://en.wikipedia.org/wiki/Comparison_of_version-control_software
+
+<br>
+
+#### Repository
+> A collection of files under version control.
+
+
+
+::: notes
+Git is version control system, tracking changes for all files in a repository.
+This is not the only way to get version control of your files.
+:::
+
+## git set-up
+<br>
+
+#### Checking configuration
+
+```{r}
+#| eval: false
+
+usethis::git_sitrep()
+
+```
+
+::: notes
+Before the course started you received an email that asked you to have a github account and git available on commandline. Since this is an R focused course we will use Rstudio to check, and in some cases set, some of your configurations.
+
+You do not have to do this in R or Rstudio, you can also do this with other git commands from terminal.
+
+To do this we will use the usethis library. git_sitrep() is a great tool for checking what configurations you have set.
+
+**Demo git_sitrep**
+:::
+
+## git set-up
+<br>
+
+#### Checking configuration
+
+```{r}
+#| eval: false
+#| code-line-numbers: "2-4,8,10-15"
+usethis::git_sitrep()
+Git config (global)
+• Name: 'Sebastian-D'
+• Email: 'dilorenzo.sebastian@gmail.com'
+• Global (user-level) gitignore file: <unset>
+• Vaccinated: FALSE
+ℹ See `?git_vaccinate` to learn more
+• Default Git protocol: 'https'
+• Default initial branch name: <unset>
+GitHub
+• Default GitHub host: 'https://github.com'
+• Personal access token for 'https://github.com': '<discovered>'
+• GitHub user: 'Sebastian-D'
+• Token scopes: 'repo, user, workflow'
+• Email(s): 'dilorenzo.sebastian@gmail.com (primary)', 'sebastian.dilorenzo@scilifelab.uu.se'
+Git repo for current project
+• Active usethis project: '/Users/sd/Library/CloudStorage/Box-Box/Work/NBIS_CommMan'
+ℹ Active project is not a Git repo
+```
+
+::: notes
+Lets forcus on that our git global config has a name, which should be the same as the github username, an email associated with both my local git and my github, you can see your default protocol which is usually https unless you have some great reason for having SSH.
+
+In the github section we can also see that we have a personal access token or PAT, and that token has certain scopes related to it. I will get back to this in a moment.
+:::
+
+## git set-up
+<br>
+
+#### Setting global configuration
+```{r}
+#| eval: false
+
+usethis::use_git_config(user.name = "Jane Doe", user.email = "jane@example.com")
+
+```
+
+
+::: notes
+use_git_config(user.name = "Jane Doe", user.email = "jane@example.com")
+
+If you want to use commandline:
+git config --global --list
+git config --global user.name 'Jane Doe'
+git config --global user.email 'jane@example.com'
+:::
+
+## git set-up
+<br>
+
+#### Personal Access Token (PAT)
+
+- Credentials
+- Scope
+    - "What is this PAT allowed to modify?"
+- No password prompt when uploading/downloading data.
+
+```{r}
+#| eval: false
+
+#Takes you to github.com create new token.
+usethis::create_github_token()
+
+#Use to set your new token in your configuration
+gitcreds::gitcreds_set()
+
+```
+
+::: notes
+When we interact with a remote Git server, such as GitHub, we have to include credentials in the request. This proves we are a specific GitHub user, who’s allowed to do whatever we’re asking to do. What we are allowed to do with a certain PAT is the **scope** of the PAT.
+
+**DEMO create_github_token**
+
+Once we have created our token we can save it in a password manager if you are using that. Then set it with our configuration with gitcreds_set(). Let's do this now, then check out gitcreds_sitrep().
+
+usethis::create_github_token()
+gitcreds::gitcreds_set()
+credentials::set_github_pat("my_pat")
+:::
+
+## git for yourself
+
+[![](assets/git_text.png){height="400px"}]{.center}
+
+::: notes
+Now that we hopefully are all set-up, lets finally take a look at actually working with git. As a user, git is a folder and collection of files on your computer that you have initiated git version control on. A repository. 
+
+To revert:
+git reset HEAD~
+:::
+
+## git for yourself
+
+[![](assets/git_text.png){height="400px"}]{.center}
+
+Workflow:
+
+- Make some changes.
+
+. . .
+
+- `git add` the new or changed files.
+
+. . .
+
+- `git commit` the current state of repository.
+
+::: notes
+As you make changes to the files you can save the current state of the files. This is called a **commit**. You can and should give the commit some message describing what you have done. "Fixed bug A", "Created function B", "Added a bunch of new images". It is these commits then that you can revert to as necessary.
+**DEMO RSTUDIO**
+::: 
+
+## git for yourself
+
+[![](assets/git_text.png){height="400px"}]{.center}
+
+Useful commands:
+
+- `git status` lists changes in your repository.
+
+. . .
+
+- `git diff` shows the difference between a file and its last commit state.
+
+. . .
+
+- `git reset` go to a previous commit state.
+
+. . .
+
+- `usethis::use_git()`, initialize git in a project that did not have git activated.
+
+::: notes
+git diff
+git status
+git reset HEAD~
+usethis::use_git()
+
+**DEMO**
+:::
+
+## git with github
+
+[![](assets/github_text.png){height="400px"}]{.center}
+
+. . .
+
+- `git clone`, copy the github repository to a local repository.
+
+. . .
+
+- Create a repository on github from your current RStudio git repository: `usethis::use_github()`
+
+. . .
+
+- `git push` your local file changes to the github repository.
+
+. . .
+
+- `git pull` the github repositories file changes to your local repository.
+
+::: notes
+So what is github? In its very essence, github is a hosting service, a place where you can have your git repositories. By having them on github many people can collaborate on one code project at the same time. It also functions as a backup of your repository, so if something goes amiss with your local repository, you can always delete it and grab the backup from github.
+
+You can go many ways about connecting your local git repository to github. You can create the repository on github first and then create a local copy repository. You can also take a local repository and create a github repository from it.
+
+Lets look at that as an example.
+
+Connect existing repository to a new github repo:
+usethis::use_github()
+
+Clone a repo using rstudio File > New Project > Version Control > Git
+
+push/pull with github
+
+**DEMO**
+:::
+
+## git with github
+
+[![](assets/github_text.png){height="400px"}]{.center}
+
+Working with others workflow
+
+[1. `pull` changes made by others from github repo.]{.small} \
+[2. Settle eventual merge conflicts.]{.small} \
+[3. Make own changes.]{.small} \
+[4. `add` and `commit` changes.]{.small} \
+[5. Repeat 3 and 4 as necessary.]{.small} \
+[6. `push` changes to github, sharing them with others.]{.small} \
+
+
+::: notes
+Assuming you already have a github repository and a cloned local repository.
+:::
+
+## Summary
+<br>
+
+> git and github are great for structured, reproducible, collaborative work.
+
+<br>
+
+1. Create a folder.
+2. Make it a RStudio project.
+3. Make it a git repository.
+4. Connect it to github.
+5. Profit.
+
+<br>
+
+> `commit` often, `push`/`pull` less often.
+
+::: notes
+I wasn't going to tell you more than this right now, but there is a lot more to say. But I think you need to go in and get your hands dirty with this before adding more topics or you will be overburdened. Because of this and because I imagine the level of prior git knowledge can vary greatly in class I have put a lot of extra exercises with explanatory information in the lab.
+:::
+
+##  {background-image="/assets/images/cover.jpg"}
+
+### Thank you! Questions?
+
+```{r}
+#| echo: false
+R.version[c("platform","os","major","minor")]
+```
+
+[{{< meta current_year >}} • [SciLifeLab](https://www.scilifelab.se/) • [NBIS](https://nbis.se/) • [RaukR](https://nbisweden.github.io/raukr-2024)]{.smaller}

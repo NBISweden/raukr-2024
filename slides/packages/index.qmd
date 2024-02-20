@@ -1,0 +1,994 @@
+---
+title: "R packages"
+author: "Sebastian DiLorenzo"
+image: "assets/featured.jpg"
+format: revealjs
+---
+
+## {visibility="hidden"}
+
+```{r}
+#| echo: false
+#library(future)
+```
+
+# Overview
+
+:::: {.columns}
+::: {.column width="50%"}
+
+- What is an R package?
+- Possible package states
+<!-- * [Repositories](#)Include? -->
+- Package structure:
+    - Code | `r/`
+    - Metadata | `DESCRIPTION`
+    - Documentation | `man/`
+    - Vignettes
+    - Import & Export | `NAMESPACE`
+    - Data | `data/`
+    - Tests | `tests/`
+    - Compiled code | `src/`
+<!--    + [Installed files | `inst/`](#) Include? -->     
+        <!-- * [Testing](#)  Include? -->
+- CRAN and `R CMD check`
+- Rstudio and Github
+<!-- * [Package website | `pkgdown`](#)  Include? -->
+:::
+
+::: {.column width="50%"}
+![](assets/rpkg_book.png){width="60%"}  
+[[http://r-pkgs.had.co.nz/]{.smaller}](http://r-pkgs.had.co.nz/])
+:::
+::::
+
+::: {.notes}
+An overview of the topics I will discuss during the lecture.
+"What is an R package" is what should come to mind when thinking an R package.
+In "Possible package states" I will talk about the the different forms we can find R packages in, such as development and installed.
+In package structure I will walk through each of the folders usually included in an R package.
+"git, GitHub, Rstudio and you" is about why git, GitHub and RStudio are good working environments for package development.
+And in "Cran and "R CMD check", I will talk about tools to check your package and the requirements and pros/cons of submitting it CRAN.
+:::
+
+## What is an R package?
+
+:::: {.columns}
+::: {.column width="50%"}
+![](assets/tree_rpkg_mini.png){width="60%"}
+:::
+
+::: {.column width="50%"}
+- A strict and connected folder and file structure
+:::
+::::
+
+::: {.notes}
+You can think of an R package under development as a folder and file structure with some predetermined names and connectivity. So really, a package is more about knowing how to organize code and other files than being a good R programmer. There are also some differences in how you write code that is intended to be used for a package than a script for analysis for example. But I will get back to this. The minimal required package has a DESCRIPTION, a NAMESPACE an R folder for code and here we also see a R project file created by Rstudio which is not required.
+:::
+
+## What is an R package?
+
+:::: {.columns}
+::: {.column width="50%"}
+![](assets/tree_rpkg_mini.png){width="60%"}
+![](assets/tree_rpkg.png){width="60%"}
+:::
+
+::: {.column width="50%"}
+- A strict and connected folder and file structure
+:::
+::::
+
+::: {.notes}
+There are many additional components you can add to the package, more than are shown here, I will go through the major parts of these in this lecture. So what are R packages for?
+:::
+
+## What is an R package?
+
+:::: {.columns}
+::: {.column width="50%"}
+![](assets/tree_rpkg_mini.png){width="60%"}
+![](assets/tree_rpkg.png){width="60%"}
+:::
+
+::: {.column width="50%"}
+- A strict and connected folder and file structure
+- Sharing code
+- Improved quality and rigor
+    - Documentation
+    - Tests
+    - Examples
+- Efficiency
+- Improvability
+- Reproducibility
+:::
+::::
+
+::: {.notes}
+R packages are for sharing code in a way where others can use it. It also forces the author to include elements which can improve the quality of the code, such as documentation, examples and tests. This is a benefit no matter if the package is intended for other users or not. It really helps when coming back to your own code at a later date. Once you get better at writing packages it may even be more time efficient to write a package even if you are not going to share it.
+:::
+
+::: {.notes}
+Finally; At the moment there is much talk about the reproducibility crisis and creating code in this way is definitely in line with good reproducibility.
+:::
+
+## Package naming
+
+- A name that describes your packages function
+    - Letters, numbers and periods
+    - Must start with letter
+    - Cannot end with period
+- Make it "googleable"
+- Check that it doesn't already exist!
+    - CRAN
+    - GitHub
+    - Bioconductor
+
+## Package states
+
+There are five states a package can exist in:
+
+- Source
+- Bundled
+- Binary
+- Installed
+- In-memory
+
+::: {.notes}
+To help understand what's going on with a package it is useful to know the possible states a package can be in.
+:::
+
+## Package states {.incremental}
+
+### Source
+
+The development version of your package. The collection of files on your computer.
+
+### Bundled
+
+- A compressed, **tar.gz** source package with vignettes built
+- **.Rbuildignore** files are excluded
+    - Useful for data for example
+
+::: {.notes}
+We will get to what vignettes are.
+:::
+
+### Binary
+
+- A bundle that is built for a certain architecture
+- Parsed format, skipping the development tools needed to take the package between source and being interpretable by R
+
+::: {.notes}
+Like the bundled package except that if you uncompressed it doesn't look like the source package. This is because it is built for a certain architecture, or operating system.
+:::
+
+## Package states {.incremental}
+
+### Installed
+
+- A binary package decompressed into a package library for R
+    - The package library is the directory or directories where `library(packagename)` searches
+        - `.libPaths()`
+
+### In-memory
+
+When you use a package, it is in memory. When developing, a package does not have to be installed to be in memory.
+
+- `packagename::function()` loads packagename
+
+- `library(packagename)` loads and attaches packagename
+
+::: {.notes}
+There is a subtle difference between loading a package into memory to be able to use the functions and also attaching it to the search path so you can use the functions without writing packagename::function(). When you are developing a package it is good to avoid using library and attaching a package because it makes it clearer which package you want the method to come from and having your package attach another package to its search path can mess up your users scripts.
+:::
+
+## Package states
+
+![](assets/installation.png)  
+[[http://r-pkgs.had.co.nz/package.html]{.smaller}](http://r-pkgs.had.co.nz/package.html)
+
+
+::: {.notes}
+This image is from Hadleys great introduction to developing packages and I think it illustrates very well how when you run install.packages() from CRAN what is really happening is that it determining what operating system you are on, getting the correct binary version of the package and then, on your device, running R CMD install to put it in your R library. From there you can use the library() command, or not if you are developing, to take it into memory. Whereas if you use type = "source" it will not infer your architecture and grab the bundled source if you will instead. This process will demand that you have the tools on your computer to build the correct binary and install.
+:::
+
+## R/
+
+:::: {.columns}
+::: {.column width="40%"}
+![](assets/tree_rpkg.png){width="80%"}
+:::
+::::
+
+::: {.notes}
+Now we will start to go through the folders and files in a package to see how they interact, what belongs where and what they do.
+:::
+
+## R/
+
+:::: {.columns}
+::: {.column width="40%"}
+![](assets/tree_rpkg.png){width="80%" style="opacity:0.5;"}
+![](assets/tree_r.png){width="80%"}
+:::
+
+::: {.column width="60%"}
+- Code
+    - Large functions in their own R files
+    - Utility functions, that your package uses, in one R file
+- Bad code
+    - `library()`, `require()`, `source()`
+    - `options()`, `par()`
+:::
+::::
+
+::: {.notes}
+The first folder is the R/ folder. This is where your R code lives. You should try to keep it organized with functions that your user will be using grouped in some R files, and your utility functions in their own R file. Utility functions are functions that you don't expect your user to run, rather they are used by your main functions. If a function doesn't fit in a group or is very large, it can have its own R file, but each function should not have their own R file. You should avoid using functions in your code that modify the environment of your user. For example if you use library() it will attach the package functions of your user, perhaps getting in the way of other functions he was already using elsewhere. It is better to be explicit then and only load a package into memory. If you change `options()` or `par()` settings you should revert them before ending the function so your users environment isn't changed.
+:::
+
+## DESCRIPTION
+
+![](assets/DESCRIPTION.png)
+
+::: {.notes}
+Now lets look at the DESCRIPTION file. This file handles the metadata of your package. You can change the name of your package in the title here but remember then to change the folder of your package as they should match.
+:::
+
+. . .
+
+:::: {.columns}
+::: {.column width="30%"}
+
+- Title
+    - 65 characters, no punctuation
+- Version
+    - The version of the package
+- Description
+    - One paragraph
+
+::: aside
+[*]{.bold}required
+
+:::
+:::
+
+::: {.column width="70%"}
+
+- Authors@R
+    - Roles
+        - **cre***: Creator or maintainer.
+        - **aut***: Author or authors, that have made significant contributions.
+        - **ctb**: Contributors, have made smaller contributions.
+        - **cph**: Copyright holder. Used if copyright is held by someone other than author, typically company.
+
+:::
+::::
+
+::: {.notes}
+
+Not all of the fields in DESCRIPTION are important unless you plan to distribute you package to other users.
+
+The title of you package should be a short description, no more than 65 characters. I'll talk more in a second about version number recommendations but for now it is enough to say that it is the version of your package and you decide what version your package is in. The author can be one or many people, with names, emails and roles. Every package must have a creator or maintainer and any number of authors, the rest is optional.
+
+:::
+
+## DESCRIPTION
+
+![](assets/DESCRIPTION.png)
+
+:::: {.columns}
+::: {.column width="30%"}
+
+- Depends & Imports
+    - Packages and versions that your package needs
+    - Versions are optional
+    - Depends: Attaches!
+    - Imports: Loads!
+- Suggests
+    - Added functionality
+
+:::
+
+::: {.column width="70%"}
+
+- LazyData
+    - Datasets occupy no memory until loaded
+- License
+    - Can be a file; LICENSE
+    - Influences permissions of who can distribute and modify in what way
+    - Most common; MIT, GPL-3, CC0.
+    - [https://tldrlegal.com/](https://tldrlegal.com/)
+    - CRAN requires a license
+
+:::
+::::
+
+::: {.notes}
+
+The Depends and Imports fields of DESCRIPTION handles what packages, and optionally what versions of packages, your package needs to work. The big difference here is that depends attaches the functions, something that is generally frowned upon for packages, and imports loads them, making them available for use. So usually you will see Depends on R version and most other packages in Imports.  
+Suggests isn't packages that your package needs to function properly but with those packages there can be added functionality. For example a package can create a plot using base R plotting tools but you have built in that if ggplot2 is available create pretties plots instead.  
+LazyData is a special function which should be true which states that any datasets included in your package should not take any memory until they are used. The license of your package should reflect who and how your package should be used or modified. If the license is longer than just a standard abbreviation it can be a file, called LICENSE.
+
+:::
+
+## Versioning
+
+[0.0.0.9000]{.largest .center}
+
+. . .
+
+[major.minor.patch.dev]{.larger .center}
+
+- Major
+  - Large changes, not always backwards compatible
+  - Usually 1 upon first release out of dev
+- Minor
+  - Bug fixes & new features. Most common
+- Patch
+  - Small bugfixes, no new features.
+- Dev
+  - Only used while under development
+  - Always starts at 9000
+
+::: {.notes}
+Wether you are developing your package, or updating and adding to a released package, it is good to change the version numbers in your DESCRIPTION file to reflect the changes. The four numbers reflect the kind of change that you have made to the package. Dev should be removed from the package upon release.
+:::
+
+## man/
+
+:::: {.columns}
+::: {.column width="30%"}
+
+![](assets/tree_rpkg.png){width="80%"}
+
+:::{.small}
+
+*call_me.R*
+
+```         
+#' Output "Call me " followed by input.
+#'
+#' @param x A character or characters.
+#' @return The string "Call me " and \code{x}. I'll write this
+#'    to display how to section with tags.
+#' @examples
+#' call_me("Maeby")
+call_me <- function(x) {
+  paste("Call me ", x, sep="")
+}
+```
+:::
+:::
+
+::: {.notes}
+Documentation of your functions is important for helping users know how to use your package, and also for yourself when you come back to the package. The documentation is in the man/ directory in "R documentation", or Rd files. They contain the information you see when you call ?function. While you can write these by hand it is easier and handsomer to have the package **roxygen2** generate them for you.
+:::
+
+::: {.column width="70%"}
+
+- `Roxygen2`
+  - ?function
+  - Comment block, `#'`, preceding a function
+  - Tags, `@tags`, map values
+  - No tag for introduction
+      - title*
+      - description
+      - details
+  - Special characters `@\%`, escape with `\`
+
+:::
+::::
+
+::: {.notes}
+Roxygen2 works with special comment blocks in your code, directly before the function you are documenting, to create the Rd files. So you are actually writing your documentation in the same place as your code, the .R file, which is easier than going to another file and updating it. It also reminds you as you update your code to update the documentation in a natural way, and **roxygen** even deducts some information by itself so it is faster to write documentation. Here is an example function call_me.R with the **roxygen2** documentation block preceding it. The first line will become the title and also the description if none is given. @param documents the parameter x, @return lets us know what the function returns, and notice the indentation here which I have added to signify how to add multiple rows of text and have them belong together. @examples shows one or many example executions of the code.
+:::
+
+## man/
+
+:::: {.columns}
+::: {.column width="60%"}
+*call_me.R*
+
+```         
+#' Output "Call me " followed by input.
+#'
+#' @param x A character or characters.
+#' @return The string "Call me " and \code{x}. I'll write this
+#'    to display how to section with tags.
+#' @examples
+#' call_me("Maeby")
+call_me <- function(x) {
+  paste("Call me ", x, sep="")
+}
+```
+
+*call_me.Rd*
+
+```         
+% Generated by roxygen2: do not edit by hand
+% Please edit documentation in R/call_me.R
+\name{call_me}
+\alias{call_me}
+\title{Output "Call me " followed by input.}
+\usage{
+call_me(x)
+}
+\arguments{
+\item{x}{A character or characters.}
+}
+\value{
+The string "Call me " and \code{x}. I'll write this
+   to display how to section with tags.
+}
+\description{
+Output "Call me " followed by input.
+}
+\examples{
+call_me("Maeby")
+}
+```
+
+]{.small}
+:::
+
+::: notes
+So when your documentation is built, roxygen takes the block information and generates a Rd file that looks like this.
+:::
+
+::: {.column width="40%"}
+
+<br><br>
+`> ?call_me`
+
+![](assets/rdexample.png)
+:::
+::::
+
+::: {.notes}
+And when you do question mark the function name in R the Rd file is parsed and you get this helpful documentation that I am sure you are all familiar with. I know this is a busy slide but what I hope I have been able to convey to you is that you use the code block in the .R code file which roxygen2 parses to create the Rd file which in turn is what is read when you ask for the documentation of a function in R.
+:::
+
+## man/ for datasets
+
+:::: {.columns}
+::: {.column width="50%"}
+![](assets/tree_rpkg.png){width="80%"}
+
+::: {.notes}
+We will get to datasets later but while I am talking about documentation you should also document your datasets, if you have any. It is very similar to functional documentation, my dataset is the publicly available ToothGrowth dataset and I have created a R file called data.R where I will add documentation.
+:::
+:::
+
+::: {.column width="50%"}
+
+```{r}
+head(ToothGrowth)
+```
+
+<br><br>
+
+:::
+
+::: {.notes}
+Here we see the head of the ToothGrowth dataset.
+:::
+
+*data.R:*
+
+```         
+#' The Effect of Vitamin C on Tooth Growth in Guinea Pigs
+#'
+#' The response is the length of odontoblasts (cells responsible for tooth growth)
+#'   in 60 guinea pigs. Each animal received one of three dose levels of vitamin C
+#'   (0.5, 1, and 2 mg/day) by one of two delivery methods, orange juice or ascorbic
+#'   acid (a form of vitamin C and coded as VC).
+#'
+#' @usage ToothGrowth
+#'
+#' @format A data frame with 60 observations on 3 variables.
+#' \describe{
+#'   \item{len}{Tooth length}
+#'   \item{supp}{Supplement type (VC or OJ).}
+#'   \item{dose}{Dose in milligrams/day}
+#' }
+#' @source \url{https://www.elsevier.com/books/the-statistics-of-bioassay/bliss/978-1-4832-5662-7}
+"ToothGrowth"
+```
+
+::: {.notes}
+And here we see the documentation, which I have put in data.R. Just like previously this is then parsed by **roxygen2** when I give the command and ToothGrowth.Rd is created. First title, then description, the usage in this case is just the dataset, and the @format describes the data, not @params that described our functions parameters. At the very end we see just the name of the dataset, which lives in ToothGrowth.RData.
+:::
+::::
+
+## vignettes/
+
+:::: {.columns}
+::: {.column width="50%"}
+
+- A more complete guide to your package
+  - For user/you
+  - Examples and use cases
+- `knitr` & `rmarkdown`
+  - `knitr`: add r code to markdown
+- `vignettes/package-vignette.Rmd`
+
+```         
+usethis::use_vignette("typicalr-vignette")
+```
+
+::: {.notes}
+Vignettes are a long-form guide, or manual, to the package that details what the functions in the package can do. It can also show and give examples of what the package is designed to do, using multiple functions in sequence. If functional documentation shows just a part, think of the vignette as a book chapter showing what your package can do. It can look very different if you intend it for your users or for yourself to read at a later date. You can use many things to create the vignette, but like with **roxygen2** probably the easiest is to use **knitr** and **rmarkdown**.
+:::
+
+:::
+
+::: {.column width="50%"}
+
+*typicalr-vignette.Rmd*
+
+```         
+  ---
+  title: "Vignette Title"
+  author: "Vignette Author"
+  date: "`r Sys.Date()`"
+  output: rmarkdown::html_vignette
+  vignette: >
+    %\VignetteIndexEntry{Vignette Title}
+    %\VignetteEngine{knitr::rmarkdown}
+    %\VignetteEncoding{UTF-8}
+  ---
+```
+:::
+::::
+
+::: {.notes}
+What we are seeing here is the top metadata of a template for a vignette that I created using `usethis::use_vignette("typicalr-vignette")` which created typicalr-vignette.Rmd and the *vignettes/ directory*. It also edits **DESCRIPTION**, adding **knitr** and **rmarkdown** to suggests, and adding `VignetteBuilder: knitr`. You are free to edit any part of the rmarkdown file but should not change the structure of the metadata. Only add the title in both places where it says "Vignette title" and your name as author. You can also change the output to pdf vignette for example. Luckily you have already gone through rmarkdown, so we dont need to talk about that, =).
+:::
+
+## vignettes/
+
+:::: {.columns}
+::: {.column width="50%"}
+
+- A more complete guide to your package
+  - For user/you
+  - Examples and use cases
+- `knitr` & `rmarkdown`
+  - `knitr`: add r code to markdown
+- `vignettes/package-vignette.Rmd`
+
+```         
+usethis::use_vignette("typicalr-vignette")
+```
+:::
+
+::: {.column width="50%"}
+*typicalr-vignette.Rmd*
+
+```         
+  ---
+  title: "typicalr"
+  author: "Sebastian DiLorenzo"
+  date: "`r Sys.Date()`"
+  output: rmarkdown::html_vignette
+  vignette: >
+    %\VignetteIndexEntry{typicalr}
+    %\VignetteEngine{knitr::rmarkdown}
+    %\VignetteEncoding{UTF-8}
+  ---
+```
+:::
+::::
+
+## NAMESPACE
+
+[package1 names &emsp; &emsp; &emsp; &emsp; package2 names]{.center}
+
+![](assets/venn.png){fig-align="center"}
+
+::: {.notes}
+The NAMESPACE makes sure your package works well with other packages, so it is mostly important for submitting to repository, CRAN. It makes sure your code and the code of other packages doesn't interfere with each other. I like to think of it as a venn diagram, where each circle is a space filled with names. What the NAMESPACE does is remove the overlap, so if your function uses a function from package1, it wont accidentally use a function with the same name from package2. It does this by specifying which space a function should look for the name of a function it needs.
+:::
+
+. . .
+
+- `@imports` and `@importsFrom`
+  - Defines how/where a function in one package finds a function in another
+  - `@imports` *pkg*
+  - `@importsFrom` *pkg function*
+- `@export`
+  - Defines which functions are available to user
+  - Do not export data
+
+::: {.notes}
+It does this using imports and exports. Like the other documentation, we can use **roxygen2** to create our NAMESPACE. Using the imports tag, it doesn't matter if our user has loaded a package with a function with the same name as one of our functions are using, because our function will know to use the one specified in imports. Exports helps by saying that only these functions of my package are available outside. If you export all your functions, it increases the risk of being incompatible with other packages, so good practice is to export as few as possible. If you are not going to share your package, just export every function.
+:::
+
+## NAMESPACE
+
+[*call_me.R:*]{.small}
+
+```         
+#' Output "Call me " followed by input.
+#'
+#' @param x A character or characters.
+#' @return The string "Call me " and \code{x}. I'll write this
+#'    to display how to section with tags.
+#' @examples
+#' call_me("Maeby")
+#' @export
+call_me <- function(x) {
+  paste("Call me ",x,sep="")
+}
+```
+
+[*utility.R:*]{.small}
+
+```         
+#' @import knitr
+NULL
+```
+
+::: {.notes}
+Revisiting call_me.R, I have now added the @export tag, and in the utility.R I have @import knitr, just as an example, using the NULL object since there has to be something there.
+:::
+
+. . .
+
+*NAMESPACE:*
+
+```         
+# Generated by roxygen2: do not edit by hand
+
+export(call_me)
+import(knitr)
+```
+
+::: {.notes}
+So when I run `devtools::document()`, just like when we generated the other documentation, this will generate the NAMESPACE for us. Notice that this is a very minimal example and roxygen2 actually looks at what you are exporting so there are added benefits here where you are just writing @export but roxygen2 is correctly exporting it as a S3 or S4 class etc.
+:::
+
+## NAMESPACE
+
+[Import in **DESCRIPTION** and in **NAMESPACE**!?]{.large .center}
+
+::: {.notes}
+A final note on the NAMESPACE is that at a glance we are now importing packages both in the DESCRIPTION and in the NAMESPACE. This is more an accident of naming as they are doing a bit different things.
+:::
+
+. . .
+
+- DESCRIPTION `Imports:`
+  - "My package needs this package to work"
+- NAMESPACE `@import`
+  - "When my package uses this function, use the one from the package in the NAMESPACE"
+
+- Additional effects:
+  - NAMESPACE removes need for `::`
+      - `package::function()` or `function()`
+
+::: {.notes}
+When you import a function in DESCRIPTION you are saying that "My package needs this package to work", when you import a function in NAMESPACE you are saying "When my package uses this function, use the one from the package in the NAMESPACE" even if there exist functions with the same name. An added benefit is that if you just import a package in DESCRIPTION you need to specify in your code which package it is from as it is not attached but if you import it from NAMESPACE this need is removed. Finally: Realise that writing `package::function()` removes the need to import functions to NAMESPACE and is best, but it takes a while to write of course.
+:::
+
+## data/
+
+:::: {.columns}
+::: {.column width="50%"}
+**Package types:**
+
+- Functional
+  - Performs a or several functions
+  - Contains no or small datasets, <1 MB
+- Dataset
+  - Contains an interesting dataset
+  - Easy to import
+  - Few or no functions
+
+::: {.notes}
+Including data is good if there is some information intrinsic to some of your functions or to provide examples of usage. In some packages it can be the main reason for the package, for example a R package carrying some census data which is easy for people to load. Unless your package is such a data package you should strive to keep it less than 1 MB.
+:::
+:::
+
+::: {.column width="50%"}
+**Data types:**
+
+- Binary data, `.Rdata` or `.rda`
+    - `data/` folder
+    - A single object with the same name as the data file
+- Function data
+    - `R/sysdata.rda`
+    - Data that your functions need
+- Raw data, `.xlsx`,`.csv` etc
+    - `inst/extdata`folder
+
+::: {.notes}
+You can have three types of data in R, binary data is an R object saved to data/ directory with the same name as the object. These can be slightly larger files. Data that your functions need, for example in life sciences you might save the positions of the centromeres within a package that plots the genome, or for a plotting program you may want to save a list of colors, this is usually saved in **R/sysdata.rda**. The objects saved there will be available to your functions by name within the package. If you want to include raw data, usually you should try not to or convert it to binary data, you can save those in **inst/extdata**.
+:::
+:::
+::::
+
+```         
+# Create data in package automatically
+usethis::use_data(object, package)
+
+# Manually
+save(object, file="path/to/package/data/object.Rdata")
+
+# Access raw data
+system.file("extdata","filename.csv", package="packagename")
+```
+
+::: {.notes}
+Here we see some code where we use `usethis` to save a object directly to data/ directory with the correct name. This is the same thing basically as using the save command and pointing to the correct location, with correct filename. If you want to access data belonging to a package you can use the system.file command in R.
+:::
+
+## tests/
+
+:::: {.columns}
+::: {.column width="50%"}
+- What to test?
+- That the return value is what is expected given a certain input
+- Why test?
+- Improved development stability
+- Working in group/open source
+- Working on big package
+
+![](assets/test.jpeg){width="70%"}
+
+::: {.notes}
+Tests or unit tests formally checks that we get the correct result from a function given a specific input. This can be good when working on big and/or complex packages or together with other people as it directly tells you if a change has been made that has changed the expected behavior of the package.
+:::
+:::
+
+::: {.column width="50%"}
+
+- How to test?
+ - Uses `testthat` package for testing and `usethis` package for setup <br>
+ - Initialize with `use_testthat()`
+ - Create test for a function with `use_test("call_me")`
+ - Testfile: `tests/testthat/test-call_me.R`
+ - Run test with `devtools::test()` or `check()`
+
+[*tests/testthat/test-call_me.R:*]{.small}
+
+```         
+test_that("multiplication works", {
+  expect_equal(2 * 2, 4)
+})
+```
+:::
+
+::: {.notes}
+This is the standard template created when use_test() is called.
+:::
+
+::::
+
+## src/
+
+:::: {.columns}
+::: {.column width="50%"}
+
+- Compiled code
+  - `Rcpp`
+  - `rJava`
+- Scripts
+  - `inst/`
+  - Dependencies
+
+:::
+
+::: {.notes}
+I wont go deeply into this, but I want it to be something you are aware of. R isn't the fastest language, so sometimes you may want to put for example C or C++ in your package for certain functions. There are two ways to go about this. Either you can integrate, using packages such as Rcpp, or rJava and others, or you just straight up put code such as **.py** files in inst/python. This should be avoided as it creates additional dependencies on the user. So lets look at an example of how to set up your package to use Rcpp, which is probably the easiest and most common.
+:::
+
+::: {.column width="50%"}
+
+1. `usethis::use_rcpp()`
+    + Edit DESCRIPTION
+    + `#' @useDynLib packagename`
+    + `#' @importFrom Rcpp sourceCpp`
+2. `.cpp` file in `src/`
+
+:::
+::::
+
+[*src/filename.cpp:*]{.small}
+
+```         
+#include <Rcpp.h>
+using namespace Rcpp;
+
+// This is a simple example of exporting a C++ function to R. You can
+// source this function into an R session using the Rcpp::sourceCpp
+// function (or via the Source button on the editor toolbar). Learn
+// more about Rcpp at:
+//
+//   http://www.rcpp.org/
+//   http://adv-r.had.co.nz/Rcpp.html
+//   http://gallery.rcpp.org/
+//
+
+// [[Rcpp::export]]
+NumericVector timesTwo(NumericVector x) {
+  return x * 2;
+}
+```
+
+::: {.notes}
+First you can call `usethis::use_rcpp()` which automates the processes of adding information to your DESCRIPTION and telling you to add two tags for documentation somewhere in your packages code. Then we create a c++ file, from Rstudio preferable, in our **src/** folder. It will look as shown here by default. The only important parts are the header and the `rcpp::export` located above the example function.
+:::
+
+## src/
+
+:::: {.columns}
+::: {.column width="50%"}
+
+* Compiled code
+  + `Rcpp`
+  + `rJava`
+* Scripts
+  + `inst/`
+  + Dependencies
+:::
+
+::: {.column width="50%"}
+
+1. `usethis::use_rcpp()`
+    + Edit DESCRIPTION
+    + `#' @useDynLib packagename`
+    + `#' @importFrom Rcpp sourceCpp`
+2. `.cpp` file in `src/`
+3. `pkgbuild::compile_dll()`
+4. `devtools::document()`
+5. `Build & Reload`
+6. Add documentation to `.cpp`
+
+:::
+::::
+
+[*R/RcppExports.R:*]{.small}
+
+```         
+# Generated by using Rcpp::compileAttributes() -> do not edit by hand
+# Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
+
+timesTwo <- function(x) {
+    .Call('_typicalr_timesTwo', PACKAGE = 'typicalr', x)
+}
+```
+
+::: {.notes}
+To get this to R code we first build the documentation, which exports the function, and your tags for using rcpp, to NAMESPACE, and then Build & Reload in Rstudio, I am sure there are ways to do this with devtools as well. At this stage the cpp function is callable in R, through the RcppExports.R file that has been created in R/ directory, which looks like this. Just like with our normal functions we can add roxygen documentation for this in the cpp file.
+:::
+
+## CRAN and `R CMD check`
+
+:::: {.columns}
+::: {.column width="60%"}
+
+- **C**omprehensive **R** **A**rchive **N**etwork
+  - R package repository
+  - Sign of quality
+- `R CMD check`
+  - More than 50 individual checks
+  - Three messages:
+      - **ERROR**: Always fix.
+      - **WARNING**: Should probably fix. Definitely for CRAN submit.
+      - **NOTE**: Try to solve to CRAN submit, else do not bother.
+  - `devtools::check()`
+
+:::
+
+::: {.column width="40%"}
+![](assets/Rlogo.svg){width="80%"}
+:::
+::::
+
+::: {.notes}
+R CMD check is a command that checks your package for common problems. From filenames and permissions to information in DESCRIPTION and NAMESPACE and whether you can install it. Note that this can only check if it is installable in your current environment, not on other operating systems. It also checks that your package is compatible with CRAN, such as not having the same name as a package that already exists there and that the required information in DESCRIPTION is present. It also checks your actual code, making sure that there are no problems or dependencies that are not met. There are three types of messages that R CMD CHECK can complain about. Errors are always bad, and you should fix them no matter what. Warnings are pretty bad, but there may be some false positives. You should try to fix them especially if you are submitting the package to CRAN. Notes you can take or leave, but if you are a perfectionist you should aspire to fix even these. As with most other commands, devtools has a function for this called `check()` which performs `R CMD check` and some additional operations such as automatically updating the documentation and bundling the package before checking.
+:::
+
+<!-- -- -->
+
+<!-- .pull-right-40[ -->
+<!-- <br> -->
+<!-- <img src="assets/TravisCI.png", style="width:80%"> -->
+<!-- ] -->
+
+<!-- .pull-left-60[ -->
+<!-- * Travis-CI -->
+<!--   + Integrated with your github repository -->
+<!--   + Automates `R CMD check` -->
+<!--   + Multiple operating systems -->
+<!-- ] -->
+
+<!-- ??? -->
+<!-- If you are developing your package on github you can set up Travis to run this check every time you commit your package. One of the best things is that it tests it for multiple different operating systems. -->
+
+## Rstudio and Github
+
+:::: {.columns}
+::: {.column width="60%"}
+
+- `git`
+  - Version control
+  - Working in groups
+  - Rstudio integration
+- GitHub
+  - Unoffical repository
+  - `devtools::install_github()`
+  - R Package development environment
+  - Issues
+
+:::
+
+::: {.column width="40%"}
+![](assets/github.png)
+:::
+::::
+
+::: {.notes}
+That was all I was going to say about the different pieces of a package. There are more but I think those are the main parts and you can dive into the others if you are making an advanced package. Now let's talk a little about hosting your package. Using version control, such as git, is a good way to work on your package, especially if you are working on it in a group. This is because it keeps track of changes and conflicts so that if multiple people are working on the same file no bugs appear. You can also setup Rstudio to work with git and GitHub. A package hosted on GitHub can be directly installed using `devtools::install_github()` and what you see more and more nowadays is that a stable release is on CRAN whereas development versions are on GitHub. It is also a great place for others to contribute to your code and to report issues they have with your package.
+:::
+
+## Github Actions
+
+- What it can do
+  - Integrated with your GitHub repository
+  - Automates `R CMD check`
+  - Test on multiple operating systems
+- How it works
+  - Add a file with instructions to `.github/workflows/workflow-name.yaml`
+  - Triggered by action, for example `push`
+  - Most common R related workflows available in [github r-libs repository](https://github.com/r-lib/actions)
+
+![](assets/github_actions.png){width="80%"}
+
+::: {.notes}
+Lets talk a bit more about setting up GitHub actions. There is an extra assignment in the lab where you set this up for your R package. To get it working you need to have enabled the permissions for your GitHub account to use workflow scopes. Once you have that you create a yaml file of instructions in a directory where GitHub knows to look for such things. Then when you push this to GitHub and your repository updates, it will additionally run whichever tests you have specified.
+:::
+
+## Summary
+
+:::: {.columns}
+::: {.column width="70%"}
+
+- What is an R package?
+- Possible package states
+<!-- - Repositories Include? -->
+- Package structure:
+    - Code | `r/`
+    - Metadata | `DESCRIPTION`
+    - Documentation | `man/`
+    - Vignettes
+    - Import & Export | `NAMESPACE`
+    - Data | `data/`
+    - Tests | `tests/`
+    - Compiled code | `src/`
+<!-- - Installed files | `inst/ Include? -->     
+<!-- - Testing  Include? -->
+- CRAN and `R CMD check`
+- Rstudio and Github
+<!-- - Package website | `pkgdown`  Include? -->
+:::
+
+::: {.column width="30%"}
+[![](assets/rpkg_book.png)
+[http://r-pkgs.had.co.nz/]{.smaller}](http://r-pkgs.had.co.nz/)
+:::
+::::
+
+## {background-image="/assets/images/cover.jpg"}
+
+### Thank you! Questions?
+
+```{r}
+#| echo: false
+R.version[c("platform","os","major","minor")]
+```
+
+[{{< meta current_year >}} • [SciLifeLab](https://www.scilifelab.se/) • [NBIS](https://nbis.se/) • [RaukR](https://nbisweden.github.io/raukr-2024)]{.smaller}

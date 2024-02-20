@@ -1,0 +1,649 @@
+---
+title: "Literate programming with Quarto"
+author: "Roy Francis"
+description: "Documentation and publishing in R"
+image: "assets/featured.jpg"
+format: html
+---
+
+::: callout-note
+These are exercises to get you started with quarto. Refer to the [official quarto documentation](https://quarto.org).
+
+- Quarto usage
+- Markdown markup
+- Set up a quarto notebook
+- Add content and export to some common formats
+  - HTML and PDF reports
+  - RevealJS presentation
+- Quarto projects
+  - Website
+:::
+
+```{r}
+#| message: false
+library(ggplot2)
+library(dplyr)
+library(stringr)
+```
+
+## Introduction
+
+Create a quarto document by creating a text file with **.qmd** extension. In RStudio, go to **File > New File > Quarto Document**. You are given the option to set title, author etc as well as output format. Set the output format as html. This document is a quarto notebook or R notebook. You can set the display mode to be **Source** or **Visual** (where text formatting is shown).
+
+You could just enter some text in the qmd file and render it and that would render a plain HTML file by default. And that's fine. But, it is often useful to enter some metadata information such as title, author etc. And this is defined in the YAML matter.
+
+### YAML
+
+The content on the top of the quarto document within three dashes is the YAML matter. This is optional. It is really up to the author to decide how much information needs to be entered here. Here are some common base level YAML parameters.
+
+````
+---
+title: "My report"
+subtitle: "A subtitle for the report"
+description: "This is a longer description of this report."
+author: "John Doe"
+date: "25-Apr-2022"
+---
+````
+
+::: {.shadow}
+![](assets/report-a.png)
+:::
+
+The default output format is html and this can be changed or arguments for this can be adjusted by specifying this in the yaml. Here is an updated version:
+
+````
+---
+title: "My report"
+subtitle: "A subtitle for the report"
+description: "This is a longer description of this report."
+author: "John Doe"
+date: last-modified
+date-format: "DD-MMM-YYYY"
+format:
+  html:
+    toc: true
+    toc-depth: 4
+    number-sections: true
+    number-depth: 4
+---
+
+# Section 1
+
+This is some text
+
+# Section 2
+
+Here is some more text
+````
+
+::: {.shadow}
+![](assets/report-b.png)
+:::
+
+Date is now set as **last-modified** which means it is automatically updated whenever the document is rendered. The date format is adjusted by setting **date-format: "DD-MMM-YYYY"**. In addition, the output format is now explicitly specified. The table of contents is enabled and it's depth is set to 4. Section numberings are enabled and depth is set to 4. Try changing some of these arguments to see how it affects the output.
+
+Here is a more complex version:
+
+````
+---
+title: "My report"
+subtitle: "A subtitle for the report"
+description: "This is a longer description of this report."
+author: "John Doe"
+date: last-modified
+date-format: "DD-MMM-YYYY"
+format:
+  html:
+    title-block-banner: true
+    smooth-scroll: true
+    toc: true
+    toc-depth: 4
+    toc-location: right
+    number-sections: true
+    number-depth: 4
+    code-fold: true
+    code-tools: true
+    code-copy: true
+    code-overflow: wrap
+    df-print: kable
+    standalone: false
+    fig-align: left
+---
+
+# Section 1
+
+This is some text
+
+# Section 2
+
+Here is some more text
+
+```{{r}}
+date()
+```
+````
+
+::: {.shadow}
+![](assets/report-c.png)
+:::
+
+**title-block-banner: true** displays the blue banner. **code-fold: true** folds the code and reduces clutter. **code-copy: true** adds a copy icon in the code chunk and allows the code to be copied easily. **code-tools: true** adds options to the top right of the document to allow the user to show/hide all code chunks and view source code. **df-print: kable** sets the default method of displaying tables. **standalone: false** specifies if all assets and libraries must be integrated into the output html file as a standalone document.
+
+For a complete guide to YAML metadata for HTML, see [here](https://quarto.org/docs/reference/formats/html.html#metadata).
+
+### Text
+
+The above level 2 heading was created by specifying `# Section 1`. Other headings can be specified similarly.
+
+```
+## Level 2 heading  
+### Level 3 heading  
+#### Level 4 heading  
+##### Level 5 heading  
+###### Level 6 heading
+```
+
+This `*This is italic text*` becomes *This is italic text*.  
+THis `**This is italic text**` becomes **This is bold text**.  
+Subscript written like this `H~2~O` renders as H~2~O.  
+Superscript written like this `2^10^` renders as 2^10^.  
+
+Bullet points are usually specified using `-`.
+
+```
+- Point one
+- Point two
+```
+
+- Point one
+- Point two
+
+Block quotes can be specified using `>`.
+
+```
+> This is a block quote. This
+> paragraph has two lines.
+```
+
+> This is a block quote. This paragraph has two lines.
+
+Lists can also be created inside block quotes.
+
+```
+> 1. This is a list inside a block quote.
+> 2. Second item.
+```
+
+> 1.  This is a list inside a block quote.
+> 2.  Second item.
+
+Links can be created using `[this](https://quarto.org)` like [this](https://quarto.org).
+
+### Images
+
+Images can be displayed from a relative local location using `![This is a caption](assets/gotland.jpg)`. For example:
+
+![This is a caption](assets/gotland.jpg)
+
+By default, the image is displayed at full scale or until it fills the display width. The image dimension can be adjusted `![This is a caption](assets/gotland.jpg){width=40%}`.
+
+![This is a caption](assets/gotland.jpg){width="40%"}
+
+For finer control, raw HTML can be used. For example;
+
+```
+<img src="assets/gotland.jpg" width="150px">
+```
+
+<img src="assets/gotland.jpg" width="150px"/>
+
+Images can also be displayed using R code. Chunks option `out.width` in RMarkdown can be used to control image display size.
+
+This image is displayed at a size of 200 pixels.
+
+````
+```{{r}}
+#| out-width: "200px"
+knitr::include_graphics("assets/gotland.jpg")
+```
+````
+
+```{r}
+#| echo: false
+#| out-width: "200px"
+knitr::include_graphics("assets/gotland.jpg")
+```
+
+This image is displayed at a size of 75 pixels.
+
+````
+```{{r}}
+#| out-width: "75px"
+knitr::include_graphics("assets/gotland.jpg")
+```
+````
+
+```{r}
+#| echo: false
+#| out-width: "75px"
+knitr::include_graphics("assets/gotland.jpg")
+```
+
+### Code
+
+Text can be formatted as code. Code is displayed using monospaced font. Code formatting that stands by itself as a paragraph is called block code. Block codes are specified using three backticks ```` ``` ```` followed by code and then three more backticks.
+
+This text below
+
+````
+```
+This is generic block code.
+```
+````
+
+renders like this
+
+```
+This is generic block code.
+```
+
+Code formatting can also be included in the middle of a sentence. This is called inline code formatting. Using this `` `This is an inline formatted code.` `` renders like this: `This is an inline formatted code.`
+
+The above codes are not actually executed. They are just text formatted in a different font. Code can be executed by specifying the language along with the backticks. Block code formatted as such:
+
+````
+```{{r}}
+str(iris)
+```
+````
+
+renders like this:
+
+```{r}
+str(iris)
+```
+
+Code blocks are called chunks. The chunk is executed when this document is rendered. In the above example, the rendered output has two chunks; input and output chunks. The rendered code output is also given code highlighting based on the language. For example;
+
+This code chunk
+
+````
+```{{r}}
+#| eval: false
+ggplot(dfr4,aes(x=Month,y=fraction,colour=Year,group=Year))+
+  geom_point(size=2)+
+  geom_line()+
+  labs(x="Month",y="Fraction of support issues")+
+  scale_colour_manual(values=c("#000000","#E69F00","#56B4E9",
+  "#009E73","#F0E442","#006699","#D55E00","#CC79A7"))+
+  theme_bw(base_size=12,base_family="Gidole")+
+  theme(panel.border=element_blank(),
+        panel.grid.minor=element_blank(),
+        panel.grid.major.x=element_blank(),
+        axis.ticks=element_blank())
+```
+````
+
+when rendered (`echo: true` by default, but not evaluated) looks like
+
+```{r}
+#| eval: false
+ggplot(dfr4,aes(x=Month,y=fraction,colour=Year,group=Year))+
+  geom_point(size=2)+
+  geom_line()+
+  labs(x="Month",y="Fraction of support issues")+
+  scale_colour_manual(values=c("#000000","#E69F00","#56B4E9",
+  "#009E73","#F0E442","#006699","#D55E00","#CC79A7"))+
+  theme_bw(base_size=12,base_family="Gidole")+
+  theme(panel.border=element_blank(),
+        panel.grid.minor=element_blank(),
+        panel.grid.major.x=element_blank(),
+        axis.ticks=element_blank())
+```
+
+The behaviour of code chunks can be adjusted using chunk parameters or execution options. The chunk has several options which can be used to control chunk properties.
+
+Using `eval: false` prevents that chunk from being executed. `eval: true` which is the default, executes the chunk. Using `echo: false` prevents the code from that chunk from being displayed. Using `output: false` hides the output from that chunk. Here are some of them:
+
+| Option  | Default  | Description                             |
+|---------|----------|-----------------------------------------|
+| eval    | true     | Evaluates the code in this chunk        |
+| echo    | true     | Display the code                        |
+| output  | true     | true, false or asis                     |
+| warning | true     | Display warnings from code execution    |
+| error   | false    | Display error from code execution       |
+| message | true     | Display messages from this chunk        |
+| include | true     | Disable message, warnings and all output|
+
+Chunk options are specified like this:
+
+````
+```{{r}}
+#| eval: false
+#| echo: false
+#| fig-height: 6
+#| fig-width: 7
+```
+````
+
+These chunk arguments or execution options can also be set globally in the YAML matter.
+
+```
+---
+execute:
+  eval: true
+  echo: false
+---
+```
+
+There are many other [execution options](https://quarto.org/docs/computations/execution-options.html). 
+
+### Tables
+
+This is a table with a label and a dynamically generated caption.
+
+````
+```{{r}}
+#| label: tbl-iris
+#| tbl-cap: !expr paste0("The column names are ",paste(colnames(iris),collapse=", "))
+
+head(iris)
+```
+````
+
+```{r}
+#| echo: false
+#| label: tbl-iris
+#| tbl-cap: !expr paste0("The column names are ",paste(colnames(iris),collapse=", "))
+
+head(iris)
+```
+
+Tables can be also be simple markdown.
+
+```
+|#|Sepal.Length|Sepal.Width|Petal.Length|Petal.Width|Species|
+|---|---|---|---|---|---|
+|1|5.1|3.5|1.4|0.2|setosa|
+|2|4.9|3.0|1.4|0.2|setosa|
+|3|4.7|3.2|1.3|0.2|setosa|
+|4|4.6|3.1|1.5|0.2|setosa|
+
+: This is a caption {#tbl-markdown-table}
+```
+
+|#|Sepal.Length|Sepal.Width|Petal.Length|Petal.Width|Species|
+|---|---|---|---|---|---|
+|1|5.1|3.5|1.4|0.2|setosa|
+|2|4.9|3.0|1.4|0.2|setosa|
+|3|4.7|3.2|1.3|0.2|setosa|
+|4|4.6|3.1|1.5|0.2|setosa|
+
+: This is a caption {#tbl-markdown-table}
+
+### Plots
+
+R Plots can be plotted like below:
+
+````         
+```{{r}}
+#| label: fig-plot-a
+#| fig-cap: This is a figure caption.
+#| fig-height:6
+#| fig-width: 6
+plot(x=iris$Petal.Length,y=iris$Petal.Width)
+```
+````
+
+```{r}
+#| echo: false
+#| label: fig-plot-a
+#| fig-cap: This is a figure caption.
+#| fig-height: 6
+#| fig-width: 6
+plot(x=iris$Petal.Length,y=iris$Petal.Width)
+```
+
+### Export
+
+The quarto notebook can be exported into various format. The most common formats are HTML and PDF.
+
+#### HTML
+
+The quarto document can be previewed as an HTML inside RStudio by clicking the 'Render' button.
+
+The document can be exported from R using the **quarto** R package.
+
+```{r}
+#| eval: false
+quarto::quarto_render("document.qmd")
+```
+
+The document can be rendered from the terminal as such:
+
+```{bash}
+#| eval: false
+quarto render document.qmd
+```
+
+HTML documents can be opened and viewed in any standard browser such as Chrome, Safari, Firefox etc.
+
+#### PDF
+
+A qmd document can be converted to a PDF. Behind the scenes, the markdown is converted to TeX format. The conversion to PDF needs a tool that understands TeX format and converts to PDF. This can be softwares like 'MacTeX', 'MikTeX' etc. which needs to be installed on the system beforehand. A light-weight option is to install R package **tinytex**.
+
+The **format** argument in the YAML matter must be changed to `pdf`, and the **pdf-engine** option may need to be changed as needed. If using **tinytex**, set **pdf-engine: pdflatex**.
+
+Sometimes TeX converters may need additional libraries which may need to be installed. And all features of HTML are not supported on TeX which may return errors.
+
+See [here](https://quarto.org/docs/reference/formats/pdf.html) for more PDF options.
+
+## Report
+
+In this example, we will recreate the parameterized report shown below:
+
+::: {.shadow}
+```{=html}
+<iframe width="100%" height="600" src="https://royfrancis.github.io/quarto-exp/documents/report/index.html" title="Quarto report"></iframe>
+```
+:::
+<br>
+
+The source code for the page is available on the page by clicking the code-tools icon on top right.
+
+The aim of the report is to subset the iris dataset and create a report on the subsetted data. This is a parameterized report because the species to subset is provided as a parameter to the document during run time.
+
+This is how the YAML metadata is organised:
+
+````
+---
+subtitle: "Parameterized report"
+author: "John Doe"
+date: last-modified
+format:
+  html:
+    title-block-banner: true
+    toc: true
+    number-sections: true
+    theme: pulse
+    highlight: kate
+    code-tools: true
+    fig-align: left
+
+params:
+  name: setosa
+---
+````
+
+- Since this a parameterized report, `params` is defined in the YAML metadata. Here we have one parameter `name` with default value **setosa**. The parameter can be passed in while rendering the document. If no parameter is passed, the default value is used.
+- The title takes this parameter to create a title with the name.
+- The output format is set to `html`.
+- Table of contents (`toc`) is enabled.
+- `title-block-banner` is enabled
+- The theme is set to `pulse`. More themes are available at [bootswatch](https://bootswatch.com)
+- `code-tools` creates a widget on the top right side of the document to view source code.
+
+A heading is created through code using param value.
+
+````
+```{{r}}
+#| echo: false
+#| output: asis
+cat("## ",params$name)
+```
+````
+
+This code chunk is used to create a plot along with plot caption and plot numbering.
+
+````
+```{{r}}
+#| label: fig-scatterplot
+#| fig-cap: !expr paste0("Scatterplot of ",params$name," species.")
+ggplot(iris_filtered,aes(Sepal.Length,Petal.Length,col=Species))+
+    geom_point()+
+    labs(title=params$name)
+```
+````
+
+- It is important that the figure label starts with `fig-`
+- The figure caption can be generated from code using the special `!expr` usage
+
+In the last chunk, an image of the species is displayed.
+
+- Try to create a new report for the species **versicolor**
+- Try to convert the document to PDF
+
+HTML outputs are documented [here](https://quarto.org/docs/output-formats/html-basics.html).
+
+## RevealJS
+
+Now, we will convert the report to a presentation using revealjs. 
+
+::: {.shadow}
+```{=html}
+<iframe width="100%" height="400" src="https://royfrancis.github.io/quarto-exp/documents/revealjs/index.html" title="Quarto revealjs presentation"></iframe>
+```
+:::
+<br>
+
+The raw code is available [here](https://raw.githubusercontent.com/royfrancis/quarto-exp/main/documents/revealjs/index.qmd).
+
+- The most important change is `format: html` to `format: revealjs`
+- Slides are defined by heading `##`
+- Slides can be hidden using `{visibility="hidden"}`
+
+```
+## Title {visibility="hidden"}
+```
+
+- Incremental lists can be created like this
+
+```
+::: {.incremental}
+- Eat spaghetti
+- Drink wine
+:::
+```
+
+- Columns can be defined like this
+
+```
+:::: {.columns}
+
+::: {.column width="50%"}
+Left column
+:::
+
+::: {.column width="50%"}
+Right column
+:::
+
+::::
+```
+
+- Speaker view is created like this:
+
+```
+::: {.notes}
+Speaker notes go here.
+:::
+```
+
+This can be viewed by pressing the <kbd>S</kbd> key.
+
+- The presentation theme can be changed
+
+```
+format:
+  revealjs: 
+    theme: dark
+```
+
+- Minor slide content can be defined as below. This content will be smaller font size and pushed to the bottom.
+
+```
+::: aside
+Some additional commentary of more peripheral interest.
+:::
+```
+
+- Code chunks can have [line highlighting](https://quarto.org/docs/presentations/revealjs/#line-highlighting)
+
+````
+```{{r code-line-numbers="4-5"}}
+library(ggplot2)
+
+ggplot(iris,aes(Sepal.Length, Petal.Length))+
+  geom_point()+
+  theme_bw()
+```
+````
+
+- Tabset panels
+
+```
+::: {.panel-tabset}
+
+### Tab A
+
+Content for `Tab A`
+
+### Tab B
+
+Content for `Tab B`
+
+:::
+```
+
+RevealJS features are documented [here](https://quarto.org/docs/presentations/revealjs/).
+
+## Projects
+
+So far, the output formats have been a single document. We can also have a project composed of multiple documents and document types. In this case, the files are organised in a directory and the configuration is defined in `_quarto.yml`. This will be referred to as the config file. Think of this as a shared YAML metadata file for all of the documents. In addition, an **index.qmd** file defines the home page.
+
+For a website, the minimal config looks like this
+
+```
+project:
+  type: website
+```
+
+And for a book:
+
+```
+project:
+  type: book
+```
+
+Then running `quarto render` renders the output into a directory named `_site`. The output can be changed to **docs** for example for GitHub Pages.
+
+```
+project:
+  type: website
+  output_dir: docs
+```
+
+The output format by default is HTML. This can be changed or modified by adding `format` to the config file or to individual qmd files. The parameters defined in the config file will be shared by all other qmd files.
+
+For more project options, see [here](https://quarto.org/docs/reference/projects/options.html).

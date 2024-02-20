@@ -1,0 +1,19 @@
+.title-slide {
+background-size: 25%;
+background-position: 50% 35%;
+}
+
+.end-slide {
+padding-bottom: 0em;
+}
+
+/* A special container to break out of the other pull containers*/
+.pull-out {
+  width: 99%;
+  float: left;
+  margin-right: 0.5%;
+  margin-left: 0.5%;
+}
+
+.normal { font-size: 100% }
+.smallish { font-size: 90% }

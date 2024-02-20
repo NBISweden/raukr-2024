@@ -1,0 +1,38 @@
+---
+title: "FAQs"
+description: "Frequently Asked Questions"
+toc: false
+date: ""
+sidebar: false
+number-sections: false
+accordion:
+  - faq:
+    - header: 1. Will I receive a certificate for completing the workshop?
+      body: Certainly! Upon maintaining satisfactory attendance, demonstrating proficiency in practical exercises, and actively engaging in the collaborative group project (a collaborative effort presented by your group at the conclusion of RaukR), you will be awarded a course completion certificate.
+    - header: 2. How many ECTS points will I earn for RaukR?
+      body: We do not explicitly specify the number of points. Instead, we document the number of training hours attended and the covered topics. The allocation of ECTS points is determined by your university. Historically, participants have encountered no issues in receiving credits for attending RaukR. If formal credits are crucial, the applicant needs to confer with the home department before registration in order to establish whether this workshop is valid for formal credits or not.
+    - header: 3. I can't make it to Visby on Sunday for the mingle.
+      body: It is a pity, but you will still have a chance to meet us in the morning on Monday.
+    - header: 4. I will be late on Monday due to travel.
+      body: While we strongly recommend timely arrival, if you anticipate being late on Monday, please inform us in advance. However, arriving later than Monday after lunch is generally discouraged unless due to unforeseen circumstances.
+    - header: 5. I need to leave earlier. Is that acceptable?
+      body: Project presentations are scheduled for the morning on the final day, and participation in presenting your project is a key criterion. If you must leave early, we can attempt to schedule your group's presentation at an earlier time to accommodate your schedule.
+    - header: 6. Will there be any free days during the workshop?
+      body: Certainly! We recognize the need for a break. One weekend day is optional, and on the other day (usually Sunday), we organize an excursion to a delightful location on Gotland. Typically, activities start at 09:00 and conclude by 17:00.
+    - header: 7. Should I bring my medieval outfit?
+      body: You are encouraged to embrace the viking within you. Some instructors take it quite seriously. After all, we are in Visby!
+    - header: 8. My family is planning to follow. What should I consider?
+      body: You can of course organize your family's accomodation along with yours. It's likely that you will not be able to spend much time with them as the workshop is quite intense. We recommend they arrive towards the end of the workshop, and perhaps you can all extend your stay to celebrate Midsommar in Visby.
+    - header: 9. Are there any planned social activities?
+      body: Absolutely! We have one official dinner (date to be announced) and a full-day trip on the weekend. Additionally, if students wish to organize informal gatherings like a BBQ or meet in town for a beer or ice cream, we not only encourage but warmly support such initiatives.
+    - header: 10. I woke up feeling sick. What should I do?
+      body: Please inform us and stay in your room until you feel better. We prioritize the well-being of all participants and understand that illness may prevent participation. We will work to find a suitable solution for you to minimize the impact on your learning experience. If you require assistance, don't hesitate to reach out.
+    - header: 11. Do you accommodate special dietary needs and provide suitable food options?
+      body: Please provide your dietary requirements in the registration form, and we'll communicate them to the restaurant. Lunches are buffet style with various options, and the restaurant can prepare special meals if needed to accommodate your specific dietary needs.
+format: html
+filters:
+  - accordion
+---
+
+{{< accordion faq >}}
+

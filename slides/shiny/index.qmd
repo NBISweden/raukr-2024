@@ -1,0 +1,735 @@
+---
+title: "Interactive web apps with Shiny"
+author: "Roy Francis"
+image: "assets/featured.jpg"
+format: revealjs
+---
+
+## {visibility="hidden"}
+
+```{r}
+#| echo: false
+
+library(dplyr)
+library(ggplot2)
+library(kableExtra) # for table
+library(gridExtra) # multiple plot alignment
+library(shiny)
+# not loaded but, but used
+#library(ggpubr)
+#library(cowplot)
+```
+
+## Contents
+
+- Introduction
+- Code Structure
+- App execution
+- UI
+- Code execution
+- Reactivity
+- Updating widgets
+- Isolate
+- Error validation
+- Download
+- Deploy
+- Interactive documents
+- Extensions
+
+## 
+
+![](assets/gallery.png){width="95%"}
+[https://shiny.rstudio.com/gallery/](https://shiny.rstudio.com/gallery/)
+
+## What is shiny?
+
+:::: {.columns}
+::: {.column width="50%"}
+
+- Web applications & interactive documents
+- Completely created using R
+- Needs a live environment
+
+### Usage
+
+- [Standalone web applications](http://shiny.rstudio.com/gallery/see-more.html)
+- [Dashboard/Flexboard](http://rstudio.github.io/shinydashboard/examples.html)
+- Interactive RMarkdown
+- Gadgets/RStudio extensions
+
+:::
+
+::: {.column width="50%"}
+
+### App structure
+
+- UI Layout
+- UI Inputs (Widgets)
+- UI Outputs
+- Renderer
+- Builder
+- [Function reference](https://shiny.rstudio.com/reference/shiny)
+
+:::
+::::
+
+## Code structure
+
+:::: {.columns}
+::: {.column width="50%"}
+**One file format**
+
+*app.R*
+
+```         
+ui <- fluidPage()
+server <- function(input,output) {}
+shinyApp(ui=ui,server=server)
+```
+:::
+
+::: {.column width="50%"}
+**Two file format**
+
+*ui.R*
+
+```         
+ui <- fluidPage()
+```
+
+*server.R*
+
+```         
+server <- function(input,output) {}
+```
+
+```
+shiny::runApp("path/to/folder")
+```
+:::
+::::
+
+## Running the app
+
+- Change to app directory, then run `runApp()`
+- Use `shinyApp()`
+
+```{r}
+#| eval: false
+
+shinyApp(
+ui=fluidPage(),
+server=function(input,output) {}
+)
+```
+
+- From Rmd file using `rmarkdown::run()`
+- Running as a separate process from terminal
+
+```         
+R -e "shiny::runApp('~/shinyapp')"
+```
+
+## UI • Layout
+
+```{r}
+#| eval: false
+shinyApp(
+ui=fluidPage(
+  titlePanel("Title Panel"),
+  sidebarLayout(
+    sidebarPanel(
+      helpText("Sidebar Panel")
+    ),
+    mainPanel(tabsetPanel(
+                tabPanel("tab1",
+                         fluidRow(
+                           column(6,helpText("Col1")),
+                           column(6,
+                                  helpText("Col2"),
+                                  fluidRow(
+                                    column(4,style="background-color:#b0c6fb",helpText("Col1")),
+                                    column(4,style="background-color:#ffa153",helpText("Col2")),
+                                    column(4,style="background-color:#b1f6c6",helpText("Col3"))
+                                  )
+                           )
+                         )
+                ),
+                tabPanel("tab2",
+                         inputPanel(helpText("Input Panel"))
+                ),
+                tabPanel("tab3",
+                  wellPanel(helpText("Well Panel"))
+                )
+              )
+    )
+  )
+),
+server=function(input,output) {})
+```
+
+![](assets/app-layout.png){width="600px"}
+
+## UI • Widgets • Input
+
+:::: {.columns}
+::: {.column width="70%"}
+```{r}
+#| eval: false
+
+shinyApp(
+ui=fluidPage(
+  fluidRow(
+    column(4,
+           fileInput("file-input","fileInput:"),
+           selectInput("select-input",label="selectInput",choices=c("A","B","C")),
+           numericInput("numeric-input",label="numericInput",value=5,min=1,max=10),
+           sliderInput("slider-input",label="sliderInput",value=5,min=1,max=10),
+           textInput("text-input",label="textInput"),
+           textAreaInput("text-area-input",label="textAreaInput"),
+           dateInput("date-input",label="dateInput"),
+           dateRangeInput("date-range-input",label="dateRangeInput"),
+           radioButtons("radio-button",label="radioButtons",choices=c("A","B","C"),inline=T),
+           checkboxInput("checkbox","checkboxInput",value=FALSE),
+           actionButton("action-button","Action"),
+           hr(),
+           submitButton()
+    )
+  )
+),
+server=function(input,output) {
+})
+```
+:::
+
+::: {.column width="30%"}
+![](assets/app-widgets-input.png){width="50%"}
+:::
+::::
+
+[[Widgets gallery](http://shiny.rstudio.com/gallery/widget-gallery.html)]{.smaller}
+
+::: {.notes}
+Widgets are visual objects on a page to allow for data input. Input and output variables.
+:::
+
+## UI • Widgets • Outputs
+
+:::: {.columns}
+::: {.column width="70%"}
+```{r}
+#| eval: false
+shinyApp(
+ui=fluidPage(fluidRow(column(5,
+           textInput("text_input",label="textInput",value="<h3 style='color:red'>Red text</h3>"),
+           hr(),
+           htmlOutput("html_output"),
+           textOutput("text_output"),
+           verbatimTextOutput("verbatim_text_output"),
+           tableOutput("table_output"),
+           plotOutput("plot_output",width="300px",height="300px")
+    ))),
+
+server=function(input, output) {
+  output$html_output <- renderText({input$text_input})
+  output$text_output <- renderText({input$text_input})
+  output$verbatim_text_output <- renderText({input$text_input})
+  output$table_output <- renderTable({iris[1:3,1:3]})
+  output$plot_output <- renderPlot({
+    plot(iris[,1],iris[,2])
+  })
+})
+```
+:::
+
+::: {.column width="30%"}
+![](assets/app-widgets-output.png){width="70%"}
+:::
+::::
+
+## Dynamic UI
+
+- UI elements are created conditionally using `uiOutput()`/`renderUI()`
+
+```{r}
+#| eval: false
+#| code-line-numbers: "6,13-15"
+shinyApp(
+ui=fluidPage(
+  selectInput("data",label="Select data",
+              choices=c("mtcars","faithful","iris")),
+  tableOutput("table"),
+ uiOutput("ui")
+),
+
+server=function(input, output) {
+  
+  data <- reactive({ get(input$data, 'package:datasets') })
+  
+ output$ui <- renderUI({
+  if(input$data=="iris") plotOutput("plot",width="400px")
+  })
+  
+  output$plot <- renderPlot({hist(data()[, 1])})
+  output$table <- renderTable({head(data())})
+})
+```
+
+- Other options include `conditionalPanel()`, `ìnsertUI()` and `removeUI()`
+
+## Code execution
+
+**App launch**
+
+```{r}
+#| eval: false
+ui <- fluidPage(textInput("text_input",label="textInput"), textOutput("text_output"))
+server <- function(input,output) {
+  output$text_output <- renderText({input$text_input})
+}
+```
+
+. . .
+
+**New user**
+
+```{r}
+#| eval: false
+#| code-line-numbers: "2-4"
+ui <- fluidPage(textInput("text_input",label="textInput"), textOutput("text_output"))
+server <- function(input,output) {
+  output$text_output <- renderText({input$text_input})
+}
+```
+
+. . .
+
+**Widget update**
+
+```{r}
+#| eval: false
+#| code-line-numbers: "3"
+ui <- fluidPage(textInput("text_input",label="textInput"), textOutput("text_output"))
+server <- function(input,output) {
+  output$text_output <- renderText({input$text_input})
+}
+```
+
+## Reactivity
+
+```{r}
+#| eval: false
+shinyApp(
+  ui=fluidPage(
+    numericInput("num_input",label="Observations",value=50),
+    textOutput("text_output")),
+  server=function(input,output) {
+    output$text_output <- renderText({
+        mean(rnorm(input$num_input))
+    })
+  })
+```
+
+![](assets/reactive1.png)
+
+## Reactivity
+
+```{r}
+#| eval: false
+shinyApp(
+  ui=fluidPage(
+    numericInput("num_input",label="Observations",value=50),
+    textOutput("text_output"), plotOutput("plot_output")
+    ),
+  server=function(input,output) {
+    output$text_output <- renderText({
+        mean(rnorm(input$num_input))
+    })
+    output$plot_output <- renderPlot({
+      x <- rnorm(input$num_input)
+      hist(x,main=mean(x))
+    })
+  })
+```
+
+![](assets/reactive2.png)
+
+## Reactivity
+
+```{r}
+#| eval: false
+shinyApp(
+  ui=fluidPage(
+    numericInput("num_input",label="Observations",value=50),
+    textOutput("text_output"), plotOutput("plot_output")
+    ),
+  server=function(input,output) {
+    rand <- reactive({ rnorm(input$num_input) })
+    output$text_output <- renderText({
+      mean(rand())
+    })
+    output$plot_output <- renderPlot({
+      x <- rand()
+      hist(x,main=mean(x))
+    })
+  })
+```
+
+![](assets/reactive3.png)
+
+::: {.notes}
+Reactive functions can be use to share output from a common source. They can be used to reduce computation for demanding functions. Reactive values cannot be accessed from outside the reactive environment.
+
+Try changing the reactive function
+
+`rand <- reactive({ rnorm(input$num_input) })`
+
+to a regular function
+
+`rand <- function(){ rnorm(input$num_input) }`
+:::
+
+## Updating widgets
+
+- Widgets can be updated once initialised.
+
+. . .
+
+- Example of a typical UI
+
+```{r}
+#| eval: false
+ui=fluidPage(
+  selectInput("select-input",label="selectInput",choices=c("A","B","C")),
+  numericInput("numeric-input",label="numericInput",value=5,min=1,max=10),
+)
+```
+
+. . .
+
+- Add third argument **session** to server function
+- Update functions can be used to update input widgets
+- Reactive observer `observe({})` monitors for a conditional change
+
+```{r}
+#| eval: false
+server=function(input,output,session) {
+  observe({
+    if(something) {
+      updateSelectInput(session,"select-input",label="selectInput",choices=c("D","E","F"))
+      updateNumericInput(session,"numeric-input",label="numericInput",value=10,min=1,max=10)
+    }
+  })}
+```
+
+## Isolate reactivity
+
+- Reactivity can be controlled.
+
+```{r}
+#| eval: false
+shinyApp(
+  ui=fluidPage(
+    textInput("text_input",label="textInput"),
+    actionButton("btn_go", "Go!"),
+    textOutput("text_output")),
+  
+  server=function(input,output) {
+    output$text_output <- renderText({
+   input$btn_go
+   isolate(input$text_input)
+      })
+  }
+)
+```
+
+## Error validation
+
+- Shiny returns an error with missing or incorrect values
+
+:::: {.columns}
+::: {.column width="70%"}
+
+```{r}
+#| eval: false
+shinyApp(
+ui=fluidPage(
+  selectInput("data_input",label="Select data",
+              choices=c("","mtcars","faithful","iris")),
+  tableOutput("table_output")
+),
+
+server=function(input, output) {
+  getdata <- reactive({ get(input$data_input,'package:datasets') })
+  output$table_output <- renderTable({head(getdata())})
+})
+```
+
+:::
+
+::: {.column width="30%"}
+![](assets/val1.png)
+:::
+::::
+
+## Error validation
+
+- Errors can be handled in a controlled manner
+
+. . .
+
+- `validate()` can be used to check input
+- `validate()` using `need()`
+
+:::: {.columns}
+::: {.column width="70%"}
+```{r}
+#| eval: false
+shinyApp(
+ui=fluidPage(
+  selectInput("data_input",label="Select data",
+              choices=c("","unknown","mtcars","faithful","iris")),
+  tableOutput("table_output")
+),
+
+server=function(input, output) {
+  getdata <- reactive({ 
+  validate(need(try(input$data_input),"Please select a data set"))
+    get(input$data_input,'package:datasets') 
+    })
+  output$table_output <- renderTable({head(getdata())})
+})
+```
+:::
+
+::: {.column width="30%"}
+![](assets/val2.png)
+:::
+::::
+
+## Error validation
+
+:::: {.columns}
+::: {.column width="70%"}
+
+- `validate()` using custom function
+
+```{r}
+#| eval: false
+valfn <- function(x) if(is.null(x) | is.na(x) | x=="") return("Input data is incorrect.")
+
+shinyApp(
+ui=fluidPage(
+  selectInput("data_input",label="Select data",
+              choices=c("","unknown","mtcars","faithful","iris")),
+  tableOutput("table_output")
+),
+
+server=function(input,output) {
+  getdata <- reactive({ 
+  validate(valfn(try(input$data_input)))
+    get(input$data_input,'package:datasets')
+    })
+  output$table_output <- renderTable({head(getdata())})
+})
+```
+
+:::
+
+::: {.column width="30%"}
+![](assets/val3.png)
+:::
+::::
+
+. . .
+
+- `shiny::req()` checks input variable and silently stops execution
+
+## Download • Data
+
+- Add button and `downloadHandler()` function
+
+```{r}
+#| eval: false
+shinyApp(
+ui=fluidPage(
+  selectInput("data_input",label="Select data", choices=c("mtcars","faithful","iris")),
+  textOutput("text_output"),
+  downloadButton("button_download","Download")),
+server=function(input, output) {
+  getdata <- reactive({ get(input$data_input, 'package:datasets') })
+  output$text_output <- renderText(paste0("Selected dataset: ",input$data_input))
+  
+  output$button_download <- downloadHandler(
+  filename = function() {
+     paste0(input$data_input,".csv")
+   },
+  content = function(file) {
+     write.csv(getdata(),file,row.names=FALSE,quote=F)
+   })
+})
+```
+
+- Run in system browser if Rstudio browser doesn't work
+
+## Download • Plots
+
+```{r}
+#| eval: false
+shinyApp(
+ui=fluidPage(
+  selectInput("data_input",label="Select data",
+              choices=c("mtcars","faithful","iris")),
+  textOutput("text_output"),
+  plotOutput("plot_output",width="400px"),
+  downloadButton("button_download", "Download")
+),
+
+server=function(input, output) {
+  getdata <- reactive({ get(input$data_input, 'package:datasets') })
+  output$text_output <- renderText(paste0("Selected dataset: ",input$data_input))
+  output$plot_output <- renderPlot({hist(getdata()[, 1])})
+  
+output$button_download <- downloadHandler(
+  filename = function() {
+    paste0(input$data_input,".png")
+  },
+  content = function(file) {
+    png(file)
+    hist(getdata()[, 1])
+    dev.off()
+  })
+})
+```
+
+- Run in system browser if Rstudio browser doesn't work
+- See usage of download buttons
+
+## Deployment
+
+- R scripts
+  - GitHub
+  - R Package
+  - Docker container
+
+- Webpage
+  - Shinyapps.io
+  - Shiny Server (Free)
+  - Shiny Server Pro
+
+. . .
+
+- Automatically deploying to shinyapps.io
+
+```{r}
+#| eval: false
+library(rsconnect)
+rsconnect::setAccountInfo(name="username", token="HDFGT46YF7TDT6474G47", secret="hdgTDF5FStgdkpJ")
+deployApp(appName="name")
+```
+
+. . .
+
+- [Shiny apps user guide](https://docs.rstudio.com/shinyapps.io/index.html)
+- [Shiny server guide](https://docs.rstudio.com/shiny-server/)
+
+## Interactive documents • Quarto
+
+````
+---
+title: "Old Faithful"
+format: html
+server: shiny
+---
+
+```{{r}}
+sliderInput("bins", "Number of bins:", min = 1, max = 50, value = 30)
+plotOutput("distPlot")
+```
+
+```{{r}}
+#| context: server
+output$distPlot <- renderPlot({
+  x <- faithful[, 2]
+  bins <- seq(min(x), max(x), length.out = input$bins + 1)
+  hist(x, breaks = bins, col = 'darkgray', border = 'white')
+})
+```
+````
+
+## Interactive documents • Rmarkdown
+
+- Shiny can run in RMarkdown documents. Set YAML `runtime: shiny`.  
+
+````        
+---
+title: Interactive document
+output: html_document
+runtime: shiny
+---
+````
+
+- Shiny widgets can be included directly  
+
+````
+```{{r}}
+selectInput('n_breaks',label='Number of bins:',choices=c(10,20,35,50),selected=20)
+```
+````
+
+## Interactive documents
+
+- Whole shiny apps can be included directly  
+
+````
+```{{r}}
+shinyApp(
+  ui=fluidPage(),
+  server=function(input,output) {}
+)
+```
+````
+
+- Hosted shiny apps can be embedded using `<iframe>`  
+
+```         
+<iframe src="https://user.shinyapps.io/app"></iframe>
+```
+
+## Extensions
+
+- [Naxstats](https://github.com/nanxstats/awesome-shiny-extensions): Repo collection of shiny extensions
+- [bslib](https://rstudio.github.io/bslib): Bootswatch themes for shiny
+- shinyurl: using URLs to recreate state of an app
+- shinypod: Reusable modules
+- [shinyjs](https://deanattali.com/shinyjs/): Custom javascript functionality
+- [shinyWidgets](https://github.com/dreamRs/shinyWidgets): Bootstrap 3 custom widgets
+- [shinyBS](https://github.com/ebailey78/shinyBS): Bootstrap 3 widgets
+- [shinymanager](https://datastorm-open.github.io/shinymanager/): Authentication for shiny apps
+
+## Help
+
+- [**Mastering Shiny Book**](https://mastering-shiny.org/index.html)
+- [**Shiny Interfaces**](https://unleash-shiny.rinterface.com/index.html)
+- [**Posit Shiny home**](https://shiny.posit.co/) 
+- [**Posit Shiny articles**](https://shiny.posit.co/r/articles/)
+
+### Other topics
+
+- [Shiny modules](https://shiny.posit.co/r/articles/improve/modules/)
+- [Shiny profiling](https://shiny.posit.co/r/articles/improve/profiling/)
+- [Shiny unit tests](https://shiny.posit.co/r/articles/improve/testing-overview/)
+- [Applications of action buttons](https://shiny.posit.co/r/articles/build/action-buttons/)  
+- [Progress indicators](https://shiny.posit.co/r/articles/build/progress/)  
+- ...
+
+## {background-image="/assets/images/cover.jpg"}
+
+### Thank you! Questions?
+
+```{r}
+#| echo: false
+R.version[c("platform","os","major","minor")]
+```
+
+[{{< meta current_year >}} • [SciLifeLab](https://www.scilifelab.se/) • [NBIS](https://nbis.se/) • [RaukR](https://nbisweden.github.io/raukr-2024)]{.smaller}

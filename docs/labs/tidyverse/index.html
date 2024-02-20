@@ -1,0 +1,1898 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.549">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Marcin Kierczak">
+<meta name="description" content="Tidyverse, tidy work and the modern R paradigm.">
+
+<title>Tidy work in Tidyverse</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../assets/favicon.svg" rel="icon" type="image/svg+xml">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<style>
+
+      .quarto-title-block .quarto-title-banner {
+        background-image: url(../../assets/images/banner.jpg);
+background-size: cover;
+      }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Fira+Mono&amp;family=Nunito:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&amp;display=swap" rel="stylesheet">
+<link href="../../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="../../site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../assets/logos/raukr.png" alt="RaukR" class="navbar-logo">
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../home_program.html"> 
+<span class="menu-text">Program</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../home_registration.html"> 
+<span class="menu-text">Registration</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../home_gallery.html"> 
+<span class="menu-text">Gallery</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../home_faq.html"> 
+<span class="menu-text">FAQ</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../home_about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Tidy work in Tidyverse</h1>
+            <p class="subtitle lead">RaukR 2024 • Advanced R for Bioinformatics</p>
+                  <div>
+        <div class="description">
+          Tidyverse, tidy work and the modern R paradigm.
+        </div>
+      </div>
+                </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Marcin Kierczak </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">20-Feb-2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#general-exercises" id="toc-general-exercises" class="nav-link active" data-scroll-target="#general-exercises"><span class="header-section-number">1</span> General exercises</a>
+  <ul>
+  <li><a href="#pipes" id="toc-pipes" class="nav-link" data-scroll-target="#pipes"><span class="header-section-number">1.1</span> Pipes</a>
+  <ul class="collapse">
+  <li><a href="#chunk-1" id="toc-chunk-1" class="nav-link" data-scroll-target="#chunk-1"><span class="header-section-number">1.1.1</span> Chunk 1</a></li>
+  <li><a href="#chunk-2" id="toc-chunk-2" class="nav-link" data-scroll-target="#chunk-2"><span class="header-section-number">1.1.2</span> Chunk 2</a></li>
+  <li><a href="#chunk-3" id="toc-chunk-3" class="nav-link" data-scroll-target="#chunk-3"><span class="header-section-number">1.1.3</span> Chunk 3</a></li>
+  <li><a href="#chunk-4" id="toc-chunk-4" class="nav-link" data-scroll-target="#chunk-4"><span class="header-section-number">1.1.4</span> Chunk 4</a></li>
+  </ul></li>
+  <li><a href="#tibbles" id="toc-tibbles" class="nav-link" data-scroll-target="#tibbles"><span class="header-section-number">1.2</span> Tibbles</a>
+  <ul class="collapse">
+  <li><a href="#task-1" id="toc-task-1" class="nav-link" data-scroll-target="#task-1"><span class="header-section-number">1.2.1</span> Task 1</a></li>
+  <li><a href="#task-2" id="toc-task-2" class="nav-link" data-scroll-target="#task-2"><span class="header-section-number">1.2.2</span> Task 2</a></li>
+  <li><a href="#task-3" id="toc-task-3" class="nav-link" data-scroll-target="#task-3"><span class="header-section-number">1.2.3</span> Task 3</a></li>
+  <li><a href="#task-4" id="toc-task-4" class="nav-link" data-scroll-target="#task-4"><span class="header-section-number">1.2.4</span> Task 4</a></li>
+  </ul></li>
+  <li><a href="#parsing" id="toc-parsing" class="nav-link" data-scroll-target="#parsing"><span class="header-section-number">1.3</span> Parsing</a></li>
+  </ul></li>
+  <li><a href="#nyc-flights-challenge" id="toc-nyc-flights-challenge" class="nav-link" data-scroll-target="#nyc-flights-challenge"><span class="header-section-number">2</span> NYC flights Challenge</a>
+  <ul>
+  <li><a href="#task-1-selecting-column" id="toc-task-1-selecting-column" class="nav-link" data-scroll-target="#task-1-selecting-column"><span class="header-section-number">2.1</span> Task 1: Selecting column</a></li>
+  <li><a href="#task-2-filtering-rows" id="toc-task-2-filtering-rows" class="nav-link" data-scroll-target="#task-2-filtering-rows"><span class="header-section-number">2.2</span> Task 2: Filtering rows</a></li>
+  <li><a href="#task-3-transmutations" id="toc-task-3-transmutations" class="nav-link" data-scroll-target="#task-3-transmutations"><span class="header-section-number">2.3</span> Task 3: Trans(mutations)</a></li>
+  <li><a href="#task-4-groups-and-counts" id="toc-task-4-groups-and-counts" class="nav-link" data-scroll-target="#task-4-groups-and-counts"><span class="header-section-number">2.4</span> Task 4: Groups and counts</a></li>
+  <li><a href="#task-5-joins" id="toc-task-5-joins" class="nav-link" data-scroll-target="#task-5-joins"><span class="header-section-number">2.5</span> Task 5: Joins</a></li>
+  </ul></li>
+  <li><a href="#tidying-data" id="toc-tidying-data" class="nav-link" data-scroll-target="#tidying-data"><span class="header-section-number">3</span> Tidying data</a></li>
+  <li><a href="#nanopore-channel-activity-challenge" id="toc-nanopore-channel-activity-challenge" class="nav-link" data-scroll-target="#nanopore-channel-activity-challenge"><span class="header-section-number">4</span> Nanopore Channel Activity Challenge</a>
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction"><span class="header-section-number">4.1</span> Introduction</a></li>
+  <li><a href="#preparations" id="toc-preparations" class="nav-link" data-scroll-target="#preparations"><span class="header-section-number">4.2</span> Preparations</a></li>
+  <li><a href="#reading-data" id="toc-reading-data" class="nav-link" data-scroll-target="#reading-data"><span class="header-section-number">4.3</span> Reading data</a></li>
+  <li><a href="#extracting-information-you-need" id="toc-extracting-information-you-need" class="nav-link" data-scroll-target="#extracting-information-you-need"><span class="header-section-number">4.4</span> Extracting information you need</a></li>
+  <li><a href="#preparing-tidy-dataset" id="toc-preparing-tidy-dataset" class="nav-link" data-scroll-target="#preparing-tidy-dataset"><span class="header-section-number">4.5</span> Preparing tidy dataset</a></li>
+  <li><a href="#plotting-events-per-channel" id="toc-plotting-events-per-channel" class="nav-link" data-scroll-target="#plotting-events-per-channel"><span class="header-section-number">4.6</span> Plotting events per channel</a></li>
+  <li><a href="#distribution-of-time-intervals" id="toc-distribution-of-time-intervals" class="nav-link" data-scroll-target="#distribution-of-time-intervals"><span class="header-section-number">4.7</span> Distribution of time intervals</a></li>
+  </ul></li>
+  <li><a href="#species-identification-challenge" id="toc-species-identification-challenge" class="nav-link" data-scroll-target="#species-identification-challenge"><span class="header-section-number">5</span> Species Identification Challenge</a>
+  <ul>
+  <li><a href="#load-necessary-libraries" id="toc-load-necessary-libraries" class="nav-link" data-scroll-target="#load-necessary-libraries"><span class="header-section-number">5.1</span> Load necessary libraries</a></li>
+  <li><a href="#input-variables" id="toc-input-variables" class="nav-link" data-scroll-target="#input-variables"><span class="header-section-number">5.2</span> Input variables</a></li>
+  <li><a href="#reading-the-data" id="toc-reading-the-data" class="nav-link" data-scroll-target="#reading-the-data"><span class="header-section-number">5.3</span> Reading the data</a></li>
+  <li><a href="#number-of-replicates-per-species" id="toc-number-of-replicates-per-species" class="nav-link" data-scroll-target="#number-of-replicates-per-species"><span class="header-section-number">5.4</span> Number of replicates per species</a></li>
+  <li><a href="#filter-out-unwanted-samples" id="toc-filter-out-unwanted-samples" class="nav-link" data-scroll-target="#filter-out-unwanted-samples"><span class="header-section-number">5.5</span> Filter out unwanted samples</a></li>
+  <li><a href="#missing-observations" id="toc-missing-observations" class="nav-link" data-scroll-target="#missing-observations"><span class="header-section-number">5.6</span> Missing observations</a></li>
+  <li><a href="#sorting-issue" id="toc-sorting-issue" class="nav-link" data-scroll-target="#sorting-issue"><span class="header-section-number">5.7</span> Sorting issue</a></li>
+  <li><a href="#supporting-reads" id="toc-supporting-reads" class="nav-link" data-scroll-target="#supporting-reads"><span class="header-section-number">5.8</span> Supporting reads</a></li>
+  <li><a href="#within-otu-species-diversity" id="toc-within-otu-species-diversity" class="nav-link" data-scroll-target="#within-otu-species-diversity"><span class="header-section-number">5.9</span> Within-OTU species diversity</a></li>
+  <li><a href="#adding-diversity-data" id="toc-adding-diversity-data" class="nav-link" data-scroll-target="#adding-diversity-data"><span class="header-section-number">5.10</span> Adding diversity data</a></li>
+  <li><a href="#visualising-the-data" id="toc-visualising-the-data" class="nav-link" data-scroll-target="#visualising-the-data"><span class="header-section-number">5.11</span> Visualising the data</a></li>
+  </ul></li>
+  <li><a href="#wildlife-aircraft-strikes-challenge" id="toc-wildlife-aircraft-strikes-challenge" class="nav-link" data-scroll-target="#wildlife-aircraft-strikes-challenge"><span class="header-section-number">6</span> Wildlife Aircraft Strikes Challenge</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Welcome to the hands-on workshop “Tidy Work in Tidyverse”. Most of the functions necessary to complete the tutorials and challenges were covered in the lecture. However, sometimes the tasks <strong>require</strong> that you check the docs or search online. Our solutions are not the only possible ones! Let us know if you can do better or solve things in a different way!</p>
+<p><em>If stuck, look at hints, next do some google searches and, if still stuck, turn to a TA.</em></p>
+<p>It is a lot of material, we know! <strong>Do not feel bad</strong> if you do not solve all the tasks. If you completed Challenge 3, you have used all the most important features of <code>tidyverse</code>! Good luck!</p>
+</div>
+</div>
+<section id="general-exercises" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="general-exercises"><span class="header-section-number">1</span> General exercises</h2>
+<p>Datasets are available <a href="https://www.dropbox.com/s/dxxt959g6iefeaf/tidyverse_lab_data.zip?dl=0">here</a>.</p>
+<section id="pipes" class="level3" data-number="1.1">
+<h3 data-number="1.1" class="anchored" data-anchor-id="pipes"><span class="header-section-number">1.1</span> Pipes</h3>
+<section id="chunk-1" class="level4" data-number="1.1.1">
+<h4 data-number="1.1.1" class="anchored" data-anchor-id="chunk-1"><span class="header-section-number">1.1.1</span> Chunk 1</h4>
+<p>Rewrite the following code chunks as pipes (Load package <code>magrittr</code> because <code>tidyverse</code> supports only the <code>%&gt;%</code> pipe!):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>my_cars <span class="ot">&lt;-</span> mtcars[, <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="dv">10</span>)]</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>my_cars <span class="ot">&lt;-</span> my_cars[my_cars<span class="sc">$</span>disp <span class="sc">&gt;</span> <span class="fu">mean</span>(my_cars<span class="sc">$</span>disp), ]</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>my_cars <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(my_cars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This is our solution:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">%&gt;%</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="dv">10</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(disp <span class="sc">&gt;</span> <span class="fu">mean</span>(disp)) <span class="sc">%&gt;%</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">colMeans</span>() <span class="ot">-&gt;</span> my_cars</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>What is wrong with our solution?</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li>It is better to have the result assigned on the left hand side: result &lt;- expression. In this case the expression is the <strong>whole</strong> pipe.</li>
+<li>Our ‘expression -&gt; result’ is correct but can easily be missed when reading the code.</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="chunk-2" class="level4" data-number="1.1.2">
+<h4 data-number="1.1.2" class="anchored" data-anchor-id="chunk-2"><span class="header-section-number">1.1.2</span> Chunk 2</h4>
+<p>The <code>summary(x)</code> function is a bit special: when you type <code>summary(x)</code> in the console, <code>print</code> is called in an implicit way. Pipe call does not do such implicite call, so you will have to invoke <code>print</code> in an explicit way. But the <code>%T&gt;%</code> does unbranch for one call only, you will have to make printing of the <code>summary</code> a one single composed call using <code>{}</code>. Try to wrap your mind around this. If in doubt, turn to a TA.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(cars)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colSums</span>(cars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>cars <span class="sc">%T&gt;%</span> {<span class="fu">print</span>(<span class="fu">summary</span>(.))} <span class="sc">%&gt;%</span> <span class="fu">colSums</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="chunk-3" class="level4" data-number="1.1.3">
+<h4 data-number="1.1.3" class="anchored" data-anchor-id="chunk-3"><span class="header-section-number">1.1.3</span> Chunk 3</h4>
+<p>Rewrite the following correlations using pipes.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(mtcars<span class="sc">$</span>gear, mtcars<span class="sc">$</span>mpg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">%$%</span> <span class="fu">cor</span>(gear, mpg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(mtcars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">%&gt;%</span> <span class="fu">cor</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="chunk-4" class="level4" data-number="1.1.4">
+<h4 data-number="1.1.4" class="anchored" data-anchor-id="chunk-4"><span class="header-section-number">1.1.4</span> Chunk 4</h4>
+<p>Given is the <code>dim_summary(nrows, ncols)</code> function which takes <code>nrows</code> and <code>ncols</code> as arguments and prints this info:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>dim_summary <span class="ot">&lt;-</span> <span class="cf">function</span>(nrows, ncols) {</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste0</span>(<span class="st">'Matrix M has: '</span>, nrows, <span class="st">' rows and '</span>, ncols, <span class="st">' columns.'</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Rewrite each of the code chunks below using pipes:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>distr1 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">16</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>M <span class="ot">&lt;-</span> <span class="fu">matrix</span>(distr1, <span class="at">ncol =</span> <span class="dv">4</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(M)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>M <span class="ot">&lt;-</span> M <span class="sc">+</span> <span class="fu">sample</span>(M)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="fu">dim_summary</span>(<span class="at">nrows =</span> <span class="fu">nrow</span>(M), <span class="at">ncols =</span> <span class="fu">ncol</span>(M))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>distr2 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">16</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="fu">matrix</span>(distr2, <span class="at">ncol =</span> <span class="dv">4</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(N) <span class="ot">&lt;-</span> (letters[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>])</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(N)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> N <span class="sc">+</span> <span class="dv">0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>P <span class="ot">&lt;-</span> M <span class="sc">%x%</span> <span class="fu">t</span>(N)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">heatmap</span>(P)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(P) <span class="ot">&lt;-</span> letters[<span class="dv">1</span><span class="sc">:</span><span class="fu">dim</span>(P)[<span class="dv">2</span>]]</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(P[ ,<span class="st">'a'</span>], P[ ,<span class="st">'i'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Beware of a class of functions, called <em>replacement functions</em>. These beasts are of the form: <code>function(arguments) &lt;- value</code> and <code>rownames(x) &lt;- c('a', 'b', 'c')</code> is a good example of such beast. When writing pipes, we have bear in mind that whole <code>function &lt;-</code> is the name of the replacement function and thus we have to use it as such in the pipe enquoted using backticks. Yes, we know… but you wont see this too often.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Sometimes, it may not be possible to put everything into one single pipe and the results of running two or more pipes have to be used in the final pipe.</p>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>dim_summary <span class="ot">&lt;-</span> <span class="cf">function</span>(nrows, ncols) {</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">'Matrix M has: '</span>, nrows, <span class="st">' rows and '</span>, ncols, <span class="st">' columns.'</span>))</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>M <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">16</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">matrix</span>(<span class="at">ncol =</span> <span class="dv">4</span>) <span class="sc">%T&gt;%</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">+</span><span class="st">`</span>(., <span class="fu">sample</span>(.)) <span class="sc">%T&gt;%</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  {<span class="fu">dim_summary</span>(<span class="fu">nrow</span>(.), <span class="fu">ncol</span>(.))}</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">16</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">matrix</span>(<span class="at">ncol =</span> <span class="dv">4</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">colnames&lt;-</span><span class="st">`</span>(letters[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]) <span class="sc">%T&gt;%</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>() <span class="sc">%&gt;%</span> <span class="st">`</span><span class="at">+</span><span class="st">`</span>(., <span class="dv">0</span>)</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>P <span class="ot">&lt;-</span> M <span class="sc">%&gt;%</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">%x%</span><span class="st">`</span>(., <span class="fu">t</span>(N)) <span class="sc">%T&gt;%</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">heatmap</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">colnames&lt;-</span><span class="st">`</span>(letters[<span class="dv">1</span><span class="sc">:</span><span class="fu">dim</span>(.)[<span class="dv">2</span>]]) <span class="sc">%&gt;%</span></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_data_frame</span>() <span class="sc">%$%</span></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cor</span>(a, i)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+</section>
+<section id="tibbles" class="level3" data-number="1.2">
+<h3 data-number="1.2" class="anchored" data-anchor-id="tibbles"><span class="header-section-number">1.2</span> Tibbles</h3>
+<section id="task-1" class="level4" data-number="1.2.1">
+<h4 data-number="1.2.1" class="anchored" data-anchor-id="task-1"><span class="header-section-number">1.2.1</span> Task 1</h4>
+<ul>
+<li>Convert the <code>mtcars</code> dataset to a tibble <code>vehicles</code>.</li>
+<li>Select the number of cylinders (<code>cyl</code>) variable using:
+<ul>
+<li>the <code>[[index]]</code> accessor,</li>
+<li>the <code>[[string]]</code> accessor,</li>
+<li>the <code>$</code> accessor.</li>
+</ul></li>
+<li>Do the same selection as above, but using pipe and placeholders (use all three ways of accessing a variable).</li>
+<li>Print the tibble.</li>
+<li>Print the 30 first rows of the tibble.</li>
+<li>Change the default behavior of printing a tibble so that at least 15 and at most 30 rows are printed.</li>
+<li>What is the difference between the <code>tibble.print_max</code> and <code>dplyr.print_min</code>? Is there any? Test it.</li>
+<li>Convert <code>vehicles</code> back to a <code>data.frame</code> called <code>automobiles</code>.</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>vehicles <span class="ot">&lt;-</span> mtcars <span class="sc">%&gt;%</span> <span class="fu">as_tibble</span>()</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 2</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>vehicles[[<span class="st">'cyl'</span>]]</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>vehicles[[<span class="dv">2</span>]]</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>vehicles<span class="sc">$</span>cyl</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 3</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>vehicles <span class="sc">%T&gt;%</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  {<span class="fu">print</span>(.[[<span class="st">'cyl'</span>]])} <span class="sc">%T&gt;%</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>  {<span class="fu">print</span>(.[[<span class="dv">2</span>]])} <span class="sc">%&gt;%</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>  .<span class="sc">$</span>cyl</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 4</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>vehicles</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a><span class="co"># 5</span></span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>vehicles <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">30</span>)</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a><span class="co"># 6</span></span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">tibble.print_min =</span> <span class="dv">15</span>, <span class="at">tibble.print_max =</span> <span class="dv">30</span>)</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a><span class="co"># 7</span></span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a><span class="co"># In theory there should be no difference. dplyr imports tibble from the tibble package</span></span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a><span class="co"># and dplyr.width, dplyr.print_min and dplyr.print_min are passed down to the tibble.</span></span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a><span class="co"># But test both behaviours. First with only the tibble package loaded, later with dplyr # loaded.</span></span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a><span class="co"># 8</span></span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a>automobiles <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(vehicles)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="task-2" class="level4" data-number="1.2.2">
+<h4 data-number="1.2.2" class="anchored" data-anchor-id="task-2"><span class="header-section-number">1.2.2</span> Task 2</h4>
+<p>Create the following tibble using <code>tribble()</code>:</p>
+<div class="cell">
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["id"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["event"],"name":[2],"type":["chr"],"align":["left"]},{"label":["date"],"name":[3],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"success","3":"24-04-2017"},{"1":"2","2":"failed","3":"25-04-2017"},{"1":"3","2":"failed","3":"25-04-2017"},{"1":"4","2":"success","3":"27-04-2017"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>tab <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>id, <span class="sc">~</span>event, <span class="sc">~</span>date,</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span>, <span class="st">'success'</span>, <span class="st">'24-04-2017'</span>,</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="dv">2</span>, <span class="st">'failed'</span>, <span class="st">'25-04-2017'</span>,</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="dv">3</span>, <span class="st">'failed'</span>, <span class="st">'25-04-2017'</span>,</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="dv">4</span>, <span class="st">'success'</span>, <span class="st">'27-04-2017'</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="task-3" class="level4" data-number="1.2.3">
+<h4 data-number="1.2.3" class="anchored" data-anchor-id="task-3"><span class="header-section-number">1.2.3</span> Task 3</h4>
+<p>Compare the performance of <code>as.data.frame()</code>, <code>as_data_frame()</code> and <code>as_tibble()</code> on a 100 x 30 matrix filled with some random integers. Use package <code>microbenchmark</code>. Fill in your result <a href="https://docs.google.com/spreadsheets/d/1_2tDeEkDVS06RkB437yBI1XEB5SUebtHWyxAf_aRJu4/edit#gid=99106509">here</a> in the Tidyverse Lab sheet, Tibbles – performance.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>tst <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">30</span>, <span class="fu">sample</span>(<span class="dv">100</span>), <span class="at">simplify =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(tst) <span class="ot">=</span> <span class="fu">paste0</span>(<span class="fu">rep</span>(<span class="st">'col'</span>, <span class="at">times =</span> <span class="fu">dim</span>(tst)[<span class="dv">2</span>]), <span class="dv">1</span><span class="sc">:</span><span class="fu">dim</span>(tst)[<span class="dv">2</span>])</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>microbenchmark<span class="sc">::</span><span class="fu">microbenchmark</span>(</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>(tst),</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_data_frame</span>(tst),</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>(tst)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="task-4" class="level4" data-number="1.2.4">
+<h4 data-number="1.2.4" class="anchored" data-anchor-id="task-4"><span class="header-section-number">1.2.4</span> Task 4</h4>
+<p>Do you think tibbles are lazy? Try to create a tibble that tests whether <em>lazy evaluation</em> applies to tibbles too.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">replace =</span> T), <span class="at">y =</span> <span class="fu">log10</span>(x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+</section>
+<section id="parsing" class="level3" data-number="1.3">
+<h3 data-number="1.3" class="anchored" data-anchor-id="parsing"><span class="header-section-number">1.3</span> Parsing</h3>
+<p>Parse the following vectors using <code>parse_</code> functions:</p>
+<ul>
+<li><code>vec1 &lt;- c(1, 7.2, 3.84, -5.23)</code> – parse it as <code>double</code> (any problems? why?).</li>
+<li>Now, parse the same vector <code>c(1, 7.2, 3.84, -5.23)</code> as <code>integer</code>. What happens?</li>
+<li>Can you still parse it as <code>integer</code> somehow?</li>
+<li>Parse as double <code>vec2 &lt;- c('2', '3,45', '?', '-7,28')</code></li>
+<li>Parse correctly <code>vec3 &lt;- c('2', '3,45', '?', '-7.28')</code></li>
+<li>Parse the following guessing the parser: <code>vec4 &lt;- c('barrel: 432.7$', 'liter: 15.42PLN', 'gallon costs approx 32.1SEK', 'sunny, wind gusts up till 55m/s')</code></li>
+<li>Can you parse <code>vec4</code> as number? Do it if you can.</li>
+<li>Parse <code>vec5 &lt;- "25 Dec 2015"</code> as date (hint: <code>?parse_date()</code>).</li>
+<li>Parse <code>10_Jul_1410</code> as date.</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>vec1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">7.2</span>, <span class="fl">3.84</span>, <span class="sc">-</span><span class="fl">5.23</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>vec2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">'2'</span>, <span class="st">'3,45'</span>, <span class="st">'?'</span>, <span class="st">'-7,28'</span>)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>vec3 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">'2'</span>, <span class="st">'3,45'</span>, <span class="st">'?'</span>, <span class="st">'-7.28'</span>)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>vec4 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">'barrel: 432.7$'</span>, <span class="st">'liter: 15.42PLN'</span>, <span class="st">'gallon costs approx 32.1SEK'</span>, <span class="st">'sunny, wind gusts up till 55m/s'</span>)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>vec5 <span class="ot">&lt;-</span> <span class="st">"25 Dec 2015"</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="fu">parse_double</span>(vec1)</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="fu">parse_integer</span>(vec1)</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="fu">parse_integer</span>(<span class="fu">as.integer</span>(vec1)) <span class="co"># Is it the best way? Hint: rounding.</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="fu">parse_double</span>(vec2, <span class="at">na =</span> <span class="st">'?'</span>, <span class="at">locale =</span> <span class="fu">locale</span>(<span class="at">decimal_mark =</span> <span class="st">','</span>))</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="fu">parse_number</span>(vec2, <span class="at">na =</span> <span class="st">'?'</span>, <span class="at">locale =</span> <span class="fu">locale</span>(<span class="at">decimal_mark =</span> <span class="st">','</span>))</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="fu">guess_parser</span>(vec4)</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="fu">parse_guess</span>(vec4)</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Yes, you can:</span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="fu">parse_number</span>(vec4)</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a><span class="fu">parse_date</span>(vec5, <span class="at">format=</span><span class="st">"%d %b %Y"</span>)</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a><span class="fu">parse_date</span>(<span class="st">"10_Jul_1410"</span>, <span class="at">format=</span><span class="st">"%d%.%b%.%Y"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+</section>
+<section id="nyc-flights-challenge" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="nyc-flights-challenge"><span class="header-section-number">2</span> NYC flights Challenge</h2>
+<p>The <code>nycflights13</code> package contains information about all flights that departed from NYC (i.e., EWR, JFK and LGA) in 2013: 336,776 flights with 16 variables. To help understand what causes delays, it also includes a number of other useful datasets: weather, planes, airports, airlines. We will use it to train working with tibbles and <code>dplyr</code>.</p>
+<section id="task-1-selecting-column" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="task-1-selecting-column"><span class="header-section-number">2.1</span> Task 1: Selecting column</h3>
+<ul>
+<li>Load the <code>nycflights13</code> package (install if necessary).</li>
+<li>Read about the data in the package docs.</li>
+<li>Inspect the <code>flights</code> tibble.</li>
+<li>Select all columns but <code>carrier</code> and <code>arr_time</code>.</li>
+<li>Select <code>carrier</code>, <code>tailnum</code> and <code>origin</code>.</li>
+<li>Hide columns from <code>day</code> through <code>carrier</code>.</li>
+<li>Select all columns that have to do with <code>arr</code>ival (hint: <code>?tidyselect</code>).</li>
+<li>Select columns based on a vector <code>v &lt;- c("arr_time", "sched_arr_time", "arr_delay")</code>.</li>
+<li>Rename column <code>dest</code> to <code>destination</code> using:
+<ul>
+<li><code>select()</code> and</li>
+<li><code>rename()</code></li>
+</ul></li>
+</ul>
+<p>What is the difference between the two approaches?</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">'nycflights13'</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">'nycflights13'</span>)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>?nycflights13</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>flights</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>carrier, <span class="sc">-</span>arr_time)</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">%&gt;%</span> <span class="fu">select</span>(carrier, tailnum, origin)</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>(day<span class="sc">:</span>carrier))</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">contains</span>(<span class="st">'arr_'</span>)) <span class="co"># or</span></span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"arr_time"</span>, <span class="st">"sched_arr_time"</span>, <span class="st">"arr_delay"</span>)</span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">%&gt;%</span> <span class="fu">select</span>(v) <span class="co"># ambiguous, or better</span></span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">all_of</span>(v))</span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="at">destination =</span> dest)</span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">destination =</span> dest)</span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a><span class="co"># select keeps only the renamed column while rename returns the whole dataset</span></span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a><span class="co"># with the column renamed.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="task-2-filtering-rows" class="level3" data-number="2.2">
+<h3 data-number="2.2" class="anchored" data-anchor-id="task-2-filtering-rows"><span class="header-section-number">2.2</span> Task 2: Filtering rows</h3>
+<ul>
+<li>Filter only the flights that arrived ahead of schedule.</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">%&gt;%</span> <span class="fu">filter</span>(arr_delay <span class="sc">&lt;</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<ul>
+<li>Filter the flights that had departure delay between 10 and 33.</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">%&gt;%</span> <span class="fu">filter</span>(dep_delay <span class="sc">&gt;=</span> <span class="dv">10</span>, dep_delay <span class="sc">&lt;=</span> <span class="dv">33</span>) <span class="co"># or</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="fu">between</span>(dep_delay, <span class="dv">10</span>, <span class="dv">33</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<ul>
+<li>Fish out all flights with unknown arrival time.</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="fu">is.na</span>(arr_time))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<ul>
+<li>Retrieve rows 1234:1258 (hint: <code>?slice</code>).</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1234</span><span class="sc">:</span><span class="dv">1258</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<ul>
+<li>Sample (<code>?sample_n()</code>) 3 random flights per day in March.</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>nycflights13<span class="sc">::</span>flights <span class="sc">%&gt;%</span> <span class="fu">filter</span>(month <span class="sc">==</span> <span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(day) <span class="sc">%&gt;%</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<ul>
+<li>Show 5 most departure-delayed flights in January per carrier.</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>nycflights13<span class="sc">::</span>flights <span class="sc">%&gt;%</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(month <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(carrier) <span class="sc">%&gt;%</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(dep_delay, <span class="at">n =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<ul>
+<li>Retrieve all <code>unique()</code> routes and sort them by destination.</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>nycflights13<span class="sc">::</span>flights <span class="sc">%&gt;%</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(origin, dest) <span class="sc">%&gt;%</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unique</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(dest)</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>nycflights13<span class="sc">::</span>flights <span class="sc">%&gt;%</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">route =</span> <span class="fu">paste</span>(origin, dest, <span class="at">sep=</span><span class="st">"-"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(route) <span class="sc">%&gt;%</span></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unique</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<ul>
+<li>Retrieve all <code>distinct()</code> routes and sort them by destination.</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>nycflights13<span class="sc">::</span>flights <span class="sc">%&gt;%</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(origin, dest) <span class="sc">%&gt;%</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(dest)</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co"># or</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">%&gt;%</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">route =</span> <span class="fu">paste</span>(origin, dest, <span class="at">sep=</span><span class="st">"-"</span>))  <span class="sc">%&gt;%</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(route)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<ul>
+<li>Is <code>unique()</code> more efficient than <code>distinct()</code>?</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>microbenchmark<span class="sc">::</span><span class="fu">microbenchmark</span>(</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>   <span class="at">unique =</span> nycflights13<span class="sc">::</span>flights <span class="sc">%&gt;%</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>     <span class="fu">select</span>(origin, dest) <span class="sc">%&gt;%</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>     <span class="fu">unique</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>     <span class="fu">arrange</span>(dest),</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>   <span class="at">distinct =</span> nycflights13<span class="sc">::</span>flights <span class="sc">%&gt;%</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>     <span class="fu">distinct</span>(origin, dest) <span class="sc">%&gt;%</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>     <span class="fu">arrange</span>(dest),</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>   <span class="at">times =</span> <span class="dv">10</span>L</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Distinct is faster.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="task-3-transmutations" class="level3" data-number="2.3">
+<h3 data-number="2.3" class="anchored" data-anchor-id="task-3-transmutations"><span class="header-section-number">2.3</span> Task 3: Trans(mutations)</h3>
+<ul>
+<li><code>air_time</code> is the amount of time in minutes spent in the air. Add a new column <code>air_spd</code> that will contain aircraft’s airspeed in mph.</li>
+<li>As above, but keep only the new <code>air_spd</code> variable.</li>
+<li>Use <code>rownames_to_column()</code> on <code>mtcars</code> to add car model as an extra column.</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">air_spd =</span> distance<span class="sc">/</span>(air_time <span class="sc">/</span> <span class="dv">60</span>))</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">%&gt;%</span> <span class="fu">transmute</span>(<span class="at">air_spd =</span> distance<span class="sc">/</span>(air_time <span class="sc">/</span> <span class="dv">60</span>))</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">%&gt;%</span> <span class="fu">rownames_to_column</span>(<span class="st">'model'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="task-4-groups-and-counts" class="level3" data-number="2.4">
+<h3 data-number="2.4" class="anchored" data-anchor-id="task-4-groups-and-counts"><span class="header-section-number">2.4</span> Task 4: Groups and counts</h3>
+<ul>
+<li>Use <code>group_by()</code>, <code>summarise()</code> and <code>n()</code> to see how many planes were delayed (departure) every month.</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">%&gt;%</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(dep_delay <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(month) <span class="sc">%&gt;%</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">num_dep_delayed =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<ul>
+<li>Do the same but using <code>tally()</code> and <code>count()</code>.</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">%&gt;%</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(dep_delay <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(month) <span class="sc">%&gt;%</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>()</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">%&gt;%</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(dep_delay <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(month)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<ul>
+<li>What was the mean <code>dep_delay</code> per month?</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">%&gt;%</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(month) <span class="sc">%&gt;%</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_dep_delay =</span> <span class="fu">mean</span>(dep_delay, <span class="at">na.rm =</span> T))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<ul>
+<li>Count the number of incoming delayed flights from each unique origin and sort origins by this count (descending).</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">%&gt;%</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(arr_delay <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(origin) <span class="sc">%&gt;%</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">cnt =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(cnt))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<ul>
+<li>Do the same using <code>tally()</code></li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">%&gt;%</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(arr_delay <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(origin) <span class="sc">%&gt;%</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tally</span>(<span class="at">sort =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<ul>
+<li>Use <code>summarise()</code> to sum total <code>dep_delay</code> per month in hours.</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">%&gt;%</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">group_by</span>(month) <span class="sc">%&gt;%</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a> <span class="fu">summarize</span>(<span class="at">tot_dep_delay =</span> <span class="fu">sum</span>(dep_delay<span class="sc">/</span><span class="dv">60</span>, <span class="at">na.rm =</span> T))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<ul>
+<li>Use the <code>wt</code> parameter of <code>count()</code> (works with <code>tally()</code> too) to achieve the same.</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">%&gt;%</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">group_by</span>(month) <span class="sc">%&gt;%</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a> <span class="fu">count</span>(<span class="at">wt =</span> dep_delay<span class="sc">/</span><span class="dv">60</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<ul>
+<li>Run <code>group_size()</code> on <code>carrier</code> what does it return?</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">%&gt;%</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(carrier) <span class="sc">%&gt;%</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_size</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<ul>
+<li>Use <code>n_groups()</code> to check the number of unique origin-carrier pairs.</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">%&gt;%</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(carrier) <span class="sc">%&gt;%</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">n_groups</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note on <code>ungroup</code>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Depending on the version of <code>dplyr</code>, you may or may need to use the <code>ungroup()</code> if you want to group your data on some other variables. In the newer versions, <code>summarise</code> and <code>mutate</code> drop one aggregation level.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>flights <span class="sc">%&gt;%</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(origin) <span class="sc">%&gt;%</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">mean_delay_orig =</span> (<span class="fu">mean</span>(dep_delay, <span class="at">na.rm =</span> T) <span class="sc">+</span> <span class="fu">mean</span>(arr_delay, <span class="at">na.rm =</span> T)) <span class="sc">/</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(carrier) <span class="sc">%&gt;%</span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">mean_delay_carr =</span> (<span class="fu">mean</span>(dep_delay, <span class="at">na.rm =</span> T) <span class="sc">+</span> <span class="fu">mean</span>(arr_delay, <span class="at">na.rm =</span> T)) <span class="sc">/</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(origin, carrier, mean_delay_orig, mean_delay_carr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="task-5-joins" class="level3" data-number="2.5">
+<h3 data-number="2.5" class="anchored" data-anchor-id="task-5-joins"><span class="header-section-number">2.5</span> Task 5: Joins</h3>
+<p>Given the following tibbles <code>set1</code> and <code>set2</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>set1 <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>id, <span class="sc">~</span>color,</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">'id1'</span>, <span class="st">'grey'</span>,</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">'id1'</span>, <span class="st">'red'</span>,</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">'id2'</span>, <span class="st">'green'</span>,</span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">'id3'</span>, <span class="st">'blue'</span></span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>set2 <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>id, <span class="sc">~</span>size,</span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">'id2'</span>, <span class="st">'XL'</span>,</span>
+<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">'id3'</span>, <span class="st">'M'</span>,</span>
+<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">'id4'</span>, <span class="st">'M'</span></span>
+<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-16"><a href="#cb40-16" aria-hidden="true" tabindex="-1"></a>set1</span>
+<span id="cb40-17"><a href="#cb40-17" aria-hidden="true" tabindex="-1"></a>set2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["color"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"id1","2":"grey"},{"1":"id1","2":"red"},{"1":"id2","2":"green"},{"1":"id3","2":"blue"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div><div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["id"],"name":[1],"type":["chr"],"align":["left"]},{"label":["size"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"id2","2":"XL"},{"1":"id3","2":"M"},{"1":"id4","2":"M"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>Perform joins on <code>id</code> that result in the grey area from the Venn diagrams below. We have not talked about all possible joins, so read the docs if you do not know which join to use.</p>
+<div class="cell" data-layout-align="left">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-43-1.png" class="img-fluid quarto-figure quarto-figure-left figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">left_join</span>(set1, set2, <span class="at">by =</span> <span class="st">'id'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-layout-align="left">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-45-1.png" class="img-fluid quarto-figure quarto-figure-left figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">right_join</span>(set1, set2, <span class="at">by =</span> <span class="st">'id'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-layout-align="left">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-47-1.png" class="img-fluid quarto-figure quarto-figure-left figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">inner_join</span>(set1, set2, <span class="at">by =</span> <span class="st">'id'</span>) <span class="co"># or</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">semi_join</span>(set1, set2, <span class="at">by =</span> <span class="st">'id'</span>) <span class="co"># semi_join removes duplicates in x</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="co"># and also returns only columns from x.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-layout-align="left">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-49-1.png" class="img-fluid quarto-figure quarto-figure-left figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">full_join</span>(set1, set2, <span class="at">by =</span> <span class="st">'id'</span>) <span class="co"># or</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-layout-align="left">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-51-1.png" class="img-fluid quarto-figure quarto-figure-left figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anti_join</span>(set1, set2, <span class="at">by =</span> <span class="st">'id'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+</section>
+<section id="tidying-data" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="tidying-data"><span class="header-section-number">3</span> Tidying data</h2>
+<p>Now time to do some data tidying. First install a package with some untidy data:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co">#renv::install("rstudio/EDAWR")</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(EDAWR)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>Tidy <code>cases</code> so that years are not in separate columns, but in the column called <code>year</code> containing a value per each year.</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>tidy_cases <span class="ot">&lt;-</span> cases <span class="sc">%&gt;%</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>country, <span class="at">names_to =</span> <span class="st">"year"</span>, <span class="at">values_to =</span> <span class="st">"count"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<ul>
+<li>Now time for the <code>pollution</code> dataset. Tidy it so that there separate columns for <code>large</code> and <code>small</code> pollution values.</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>tidy_pollution <span class="ot">&lt;-</span> pollution <span class="sc">%&gt;%</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(city, <span class="at">names_from =</span> size, <span class="at">values_from =</span> amount)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<ul>
+<li>The <code>storms</code> dataset contains the <code>date</code> column. Make it into 3 columns: <code>year</code>, <code>month</code> and <code>day</code>. Store the result as <code>tidy_storms</code>.</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>tidy_storms <span class="ot">&lt;-</span> storms <span class="sc">%&gt;%</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(<span class="at">col =</span> date,</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"year"</span>, <span class="st">"month"</span>, <span class="st">"day"</span>),</span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">sep =</span> <span class="st">"-"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<ul>
+<li>Now, merge <code>year</code>, <code>month</code> and <code>day</code> in <code>tidy_storms</code> into a <code>date</code> column again but in the “DD/MM/YYYY” format.</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>tidy_storms <span class="sc">%&gt;%</span> <span class="fu">unite</span>(<span class="at">col =</span> <span class="st">"date"</span>, <span class="dv">4</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">sep =</span> <span class="st">"/"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="nanopore-channel-activity-challenge" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="nanopore-channel-activity-challenge"><span class="header-section-number">4</span> Nanopore Channel Activity Challenge</h2>
+<section id="introduction" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">4.1</span> Introduction</h3>
+<p>You will be given a <code>fastq</code> file coming from Oxford Nanopore MinION sequencer This file contains test reads from the chicken genome. The flow-cell used here has 512 channels, each channel consists of 4 pores and only one pore is active at a time. Once your sequence gets stuck for some reason, the device will attempt to remove it from the pore by playing with reversing polarity on that pore. If this was successful, the pore will be re-used. Your task will be to visualize reading events from the meta-data in the <code>fastq</code> dataset and to see how each and every channel behaved. Also, you will plot the distribution of reading times.</p>
+<p>Datasets are available <a href="https://www.dropbox.com/s/dxxt959g6iefeaf/tidyverse_lab_data.zip?dl=0">here</a>.</p>
+</section>
+<section id="preparations" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="preparations"><span class="header-section-number">4.2</span> Preparations</h3>
+<p>First, we will need to load the necessary libraries. I will give you a hint – you need the following libraries:</p>
+<ul>
+<li><code>here</code> – not necessary, but it is an elegant way of reading the data locally from the project folder,</li>
+<li><code>tidyverse</code> – well, quite obvious why,</li>
+<li><code>ShortRead</code> from Bioconductor – to deal with short reads in <code>fastq</code>,</li>
+<li><code>lubridate</code> – to figure out reading times.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="co">#BiocManager::install("ShortRead")</span></span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ShortRead)</span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="reading-data" class="level3" data-number="4.3">
+<h3 data-number="4.3" class="anchored" data-anchor-id="reading-data"><span class="header-section-number">4.3</span> Reading data</h3>
+<p>Now, let’s read the fastq data. Check <code>ShortRead</code> documentation to see how to read our <code>fastq</code> file. Also, try to use package <code>here</code>. If you write: <code>data &lt;- here::here('data/my.fastq')</code>, the <code>my.fastq</code> file will be read from the <code>data</code> folder which is a sub folder of your project root, i.e.&nbsp;the folder where your r script is. It is a good practice and also prevents <a href="https://www.tidyverse.org/articles/2017/12/workflow-vs-script/">Jenny Bryan from coming to your office and setting your computer on fire</a>.</p>
+<p>Now think a bit, to plot reading events, do we need all the data in the file or only some specific part? You may want to see some few first lines of the <code>fastq</code> to learn about the data structure.</p>
+<p>Download fastq file.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>raw_data <span class="ot">&lt;-</span> <span class="st">"assets/FUL1_fastqs_GRID2.fastq"</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="co"># if file doesn't exist, download and uncompress it</span></span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">file.exists</span>(raw_data)) {</span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">library</span>(googledrive)</span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drive_deauth</span>()</span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drive_user</span>()</span>
+<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drive_download</span>(</span>
+<span id="cb52-9"><a href="#cb52-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">drive_get</span>(<span class="fu">as_id</span>(<span class="st">"1FCKf19JtiI-OJMKLKHfsC2X2TMuwddzJ"</span>)),</span>
+<span id="cb52-10"><a href="#cb52-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">path =</span> <span class="st">"assets/FUL1_fastqs_GRID2.fastq.gz"</span>,</span>
+<span id="cb52-11"><a href="#cb52-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">overwrite =</span> <span class="cn">TRUE</span></span>
+<span id="cb52-12"><a href="#cb52-12" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb52-13"><a href="#cb52-13" aria-hidden="true" tabindex="-1"></a>  R.utils<span class="sc">::</span><span class="fu">gunzip</span>(<span class="st">"assets/FUL1_fastqs_GRID2.fastq.gz"</span>)</span>
+<span id="cb52-14"><a href="#cb52-14" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Read fastq file.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> ShortRead<span class="sc">::</span><span class="fu">FastqFile</span>(raw_data)</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>rfq <span class="ot">&lt;-</span> ShortRead<span class="sc">::</span><span class="fu">readFastq</span>(f)</span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>headers <span class="ot">&lt;-</span> rfq<span class="sc">@</span>id</span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a><span class="fu">close</span>(f)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="extracting-information-you-need" class="level3" data-number="4.4">
+<h3 data-number="4.4" class="anchored" data-anchor-id="extracting-information-you-need"><span class="header-section-number">4.4</span> Extracting information you need</h3>
+<p>In this step, we are extracting data from fastq headers of each and every read in the fastq file. Not super efficient and perhaps the slowest step of the whole analyses. Can you do it better than our example solution?</p>
+<p>Desired output: a table (tibble/data.frame) with reads as rows and meta-data as columns.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>We will use the <code>stringr</code> package for string manipulation. Use <code>str_split()</code> to explode string data into columns and <code>str_remove_all()</code> to get rid of unwanted characters.</p>
+<ul>
+<li>To split string on a particular character, group of characters use <code>str_split</code>. Here we split on comma.</li>
+</ul>
+<pre><code>text &lt;- "This text is long, or not?"
+str_split(text, ',')</code></pre>
+<ul>
+<li>To remove everything following a given character, e.g.&nbsp;comma:</li>
+</ul>
+<pre><code>str_remove_all(text, ",.*")</code></pre>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">as_tibble</span>(<span class="fu">matrix</span>(<span class="cn">NA_character_</span>, <span class="at">ncol =</span> <span class="dv">6</span>, <span class="at">nrow =</span> <span class="fu">length</span>(headers)), <span class="at">.name_repair =</span> <span class="st">'minimal'</span>)</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(data) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">'id'</span>, <span class="st">'run_id'</span>, <span class="st">'sample_id'</span>, <span class="st">'read'</span>, <span class="st">'channel'</span>, <span class="st">'start_time'</span>)</span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(headers)) {</span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>  data[i,] <span class="ot">&lt;-</span> <span class="fu">toString</span>(headers[[i]]) <span class="sc">%&gt;%</span></span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">strsplit</span>(<span class="st">' '</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unlist</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_remove_all</span>(<span class="st">".*="</span>) <span class="sc">%&gt;%</span> <span class="fu">t</span>()</span>
+<span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</div>
+</div>
+</section>
+<section id="preparing-tidy-dataset" class="level3" data-number="4.5">
+<h3 data-number="4.5" class="anchored" data-anchor-id="preparing-tidy-dataset"><span class="header-section-number">4.5</span> Preparing tidy dataset</h3>
+<p>Now, the fun part begins:</p>
+<ul>
+<li>Add column <code>start_dttm</code> that represents start time for a given read as proper <code>datetime</code> object (read <code>lubridate</code> docs) and</li>
+<li>Add column <code>chan</code> that is the proper numeric representation of the channel,</li>
+<li>Group reads by channel,</li>
+<li>Arrange them by time,</li>
+<li>Add time to next read (NA if this was the last read) and</li>
+<li>Sort by channel again.</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Read about <code>lead()</code></p>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>data2 <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">start_dttm =</span> <span class="fu">as_datetime</span>(start_time)) <span class="sc">%&gt;%</span></span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">chan=</span><span class="fu">as.numeric</span>(channel)) <span class="sc">%&gt;%</span></span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(chan) <span class="sc">%&gt;%</span></span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(start_dttm) <span class="sc">%&gt;%</span></span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">time_diff =</span> <span class="fu">lead</span>(start_dttm) <span class="sc">-</span> start_dttm) <span class="sc">%&gt;%</span></span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(chan)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="plotting-events-per-channel" class="level3" data-number="4.6">
+<h3 data-number="4.6" class="anchored" data-anchor-id="plotting-events-per-channel"><span class="header-section-number">4.6</span> Plotting events per channel</h3>
+<p>Here, we want to see what was happening in each channel over time. Plot the data you have just prepared so that:</p>
+<ul>
+<li>Each point is the start of a new read,</li>
+<li>Colour corresponds to the lag to the next read.</li>
+</ul>
+<p>Can you visualize this in a better way? Different geometry?</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data2, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> start_dttm,</span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">y =</span> <span class="fu">as.factor</span>(chan),</span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>                            <span class="at">col =</span> <span class="fu">as.numeric</span>(time_diff)</span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>                            )</span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>       ) <span class="sc">+</span></span>
+<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> .<span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/plot_events-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="distribution-of-time-intervals" class="level3" data-number="4.7">
+<h3 data-number="4.7" class="anchored" data-anchor-id="distribution-of-time-intervals"><span class="header-section-number">4.7</span> Distribution of time intervals</h3>
+<p>Now, we want to see how time-to-next-read is distributed. Since it has a veeeeery long right tail, I am cutting off everything above 200 seconds (just by eyeballing).</p>
+<ul>
+<li>Plot time-to-next-read is distribution (you can use base-R <code>histogram</code>),</li>
+<li>Can you find a better cutoff value?</li>
+</ul>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Show time-to-next read distribution</span></span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="co"># thr &lt;- mean(data2$time_diff, na.rm = T) + 3 * sd(data2$time_diff, na.rm = T)</span></span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>tmp <span class="ot">&lt;-</span> data2 <span class="sc">%&gt;%</span></span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(time_diff <span class="sc">&lt;</span> <span class="dv">200</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(time_diff)</span>
+<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-8"><a href="#cb59-8" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">as.numeric</span>(tmp<span class="sc">$</span>time_diff), <span class="at">breaks =</span> <span class="dv">1000</span>, <span class="at">las=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/time_to_next_1-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="species-identification-challenge" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="species-identification-challenge"><span class="header-section-number">5</span> Species Identification Challenge</h2>
+<p>In this challenge, your task will be to analyze species composition of some samples. The samples, were actual products containing parts of plants. DNA has been isolated form the samples and an amplicon metabarcoding was performed using two sets of primers: for the ITS1 and the ITS2 region. Each sample had 3 technical replicates. Your task will be to transform BLAST output to a tidy form suitable for further analyses or visualization.</p>
+<section id="load-necessary-libraries" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="load-necessary-libraries"><span class="header-section-number">5.1</span> Load necessary libraries</h3>
+<p>We will obviously need <code>tidyverse</code>, we will also do some string manipulations with <code>stringr</code> also <code>here</code> package is good to have.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="input-variables" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="input-variables"><span class="header-section-number">5.2</span> Input variables</h3>
+<p>Here, we will define our input variables. We need:</p>
+<ul>
+<li><code>file</code> that contains the path to the dataset,</li>
+<li><code>sample_name</code> is a string, the name of the sample you want to analyze,</li>
+<li><code>threshold</code> is an integer saying what is a the minimal number of replicates that have to contain an OTU in order to call it a true positive (TP),</li>
+<li><code>strict</code> a logical. If set to TRUE, only the OTUs deemed TP will be shown.</li>
+</ul>
+<p>Below we set some example values:</p>
+<pre><code># Change the path to your project path, where your data is
+file &lt;- here::here("docs/tidyverse_Marcin/lab/assets/blast_result.csv")
+sample_name &lt;- 'SAMPLE12'
+threshold &lt;- 1
+strict &lt;- F</code></pre>
+</section>
+<section id="reading-the-data" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="reading-the-data"><span class="header-section-number">5.3</span> Reading the data</h3>
+<p>Now, you should read the data:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>species_orig <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(file, <span class="at">col_names =</span> <span class="fu">c</span>(<span class="st">"sample"</span>,<span class="st">"its"</span>,<span class="st">"replicate"</span>,<span class="st">"OTU"</span>,<span class="st">"size"</span>,<span class="st">"hit"</span>,<span class="st">"perc_ident"</span>,<span class="st">"score"</span>,<span class="st">"family"</span>,<span class="st">"species"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>score)</span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(species_orig,<span class="at">n =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["sample"],"name":[1],"type":["chr"],"align":["left"]},{"label":["its"],"name":[2],"type":["chr"],"align":["left"]},{"label":["replicate"],"name":[3],"type":["chr"],"align":["left"]},{"label":["OTU"],"name":[4],"type":["chr"],"align":["left"]},{"label":["size"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["hit"],"name":[6],"type":["chr"],"align":["left"]},{"label":["perc_ident"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["family"],"name":[8],"type":["chr"],"align":["left"]},{"label":["species"],"name":[9],"type":["chr"],"align":["left"]}],"data":[{"1":"SAMPLE10","2":"ITS1","3":"R1","4":"OTU1","5":"372","6":"KX522674","7":"97.08","8":"Anacardiaceae","9":"Spondias_tuberosa"},{"1":"SAMPLE10","2":"ITS1","3":"R1","4":"OTU1","5":"372","6":"AJ783644","7":"97.53","8":"Betulaceae","9":"Betula_populifolia"},{"1":"SAMPLE10","2":"ITS1","3":"R1","4":"OTU1","5":"372","6":"AJ783641","7":"97.53","8":"Betulaceae","9":"Betula_alnoides"},{"1":"SAMPLE10","2":"ITS1","3":"R1","4":"OTU1","5":"372","6":"MF171078","7":"98.71","8":"Pentaphylacaceae","9":"Pentaphylax_euryoides"},{"1":"SAMPLE10","2":"ITS1","3":"R1","4":"OTU2","5":"14","6":"KY214931","7":"98.33","8":"Musaceae","9":"Musa_ornata"},{"1":"SAMPLE10","2":"ITS1","3":"R1","4":"OTU2","5":"14","6":"KY214926","7":"96.23","8":"Musaceae","9":"Musa_sp."},{"1":"SAMPLE10","2":"ITS1","3":"R1","4":"OTU2","5":"14","6":"KY214930","7":"95.73","8":"Musaceae","9":"Musa_basjoo"},{"1":"SAMPLE10","2":"ITS1","3":"R1","4":"OTU2","5":"14","6":"KY214927","7":"97.67","8":"Musaceae","9":"Musella_lasiocarpa"},{"1":"SAMPLE10","2":"ITS1","3":"R2","4":"OTU1","5":"357","6":"AM233397","7":"95.62","8":"Apocynaceae","9":"Secamone_filiformis"},{"1":"SAMPLE10","2":"ITS1","3":"R2","4":"OTU1","5":"357","6":"FR832858","7":"96.69","8":"Rubiaceae","9":"Tricalysia_perrieri"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>As you see, the following information are included in the data:</p>
+<ul>
+<li><code>sample</code> is simply the name of the sample,</li>
+<li><code>its</code> is either ITS1 or ITS2 and tells which set of PCR primers has been used,</li>
+<li><code>replicate</code> contains information on which replicate the sequences come from,</li>
+<li><code>OTU</code> is a unique identifier of the so-called Operational Taxonomic Unit, an OTU often corresponds to one species but not always. Sometimes 2 OTUs represent the same species, sometimes 1 OTU consists of more than one species,</li>
+<li><code>size</code> is the number of reads that support that particular OTU,</li>
+<li><code>hit</code> is the BLAST hit identifier. The 4 top BLAST hits are reported per OTU,</li>
+<li><code>perc_identity</code> is the percentage identity of the sequence to the BLAST hit,</li>
+<li><code>family</code> is the identified plant family,</li>
+<li><code>species</code> is the identified plant species.</li>
+</ul>
+</section>
+<section id="number-of-replicates-per-species" class="level3" data-number="5.4">
+<h3 data-number="5.4" class="anchored" data-anchor-id="number-of-replicates-per-species"><span class="header-section-number">5.4</span> Number of replicates per species</h3>
+<p>Create a new dataset <code>species</code> that contains an extra column <code>n_replicates</code>. The column contains number of replicates this particular species is present in. Do it per sample and its.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>species <span class="ot">&lt;-</span> species_orig <span class="sc">%&gt;%</span></span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sample, its, species) <span class="sc">%&gt;%</span></span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">n_replicates =</span> <span class="fu">n_distinct</span>(replicate)) <span class="sc">%&gt;%</span></span>
+<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-6"><a href="#cb63-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(species,<span class="at">n =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["sample"],"name":[1],"type":["chr"],"align":["left"]},{"label":["its"],"name":[2],"type":["chr"],"align":["left"]},{"label":["replicate"],"name":[3],"type":["chr"],"align":["left"]},{"label":["OTU"],"name":[4],"type":["chr"],"align":["left"]},{"label":["size"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["hit"],"name":[6],"type":["chr"],"align":["left"]},{"label":["perc_ident"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["family"],"name":[8],"type":["chr"],"align":["left"]},{"label":["species"],"name":[9],"type":["chr"],"align":["left"]},{"label":["n_replicates"],"name":[10],"type":["int"],"align":["right"]}],"data":[{"1":"SAMPLE10","2":"ITS1","3":"R1","4":"OTU1","5":"372","6":"KX522674","7":"97.08","8":"Anacardiaceae","9":"Spondias_tuberosa","10":"2"},{"1":"SAMPLE10","2":"ITS1","3":"R1","4":"OTU1","5":"372","6":"AJ783644","7":"97.53","8":"Betulaceae","9":"Betula_populifolia","10":"1"},{"1":"SAMPLE10","2":"ITS1","3":"R1","4":"OTU1","5":"372","6":"AJ783641","7":"97.53","8":"Betulaceae","9":"Betula_alnoides","10":"1"},{"1":"SAMPLE10","2":"ITS1","3":"R1","4":"OTU1","5":"372","6":"MF171078","7":"98.71","8":"Pentaphylacaceae","9":"Pentaphylax_euryoides","10":"1"},{"1":"SAMPLE10","2":"ITS1","3":"R1","4":"OTU2","5":"14","6":"KY214931","7":"98.33","8":"Musaceae","9":"Musa_ornata","10":"1"},{"1":"SAMPLE10","2":"ITS1","3":"R1","4":"OTU2","5":"14","6":"KY214926","7":"96.23","8":"Musaceae","9":"Musa_sp.","10":"1"},{"1":"SAMPLE10","2":"ITS1","3":"R1","4":"OTU2","5":"14","6":"KY214930","7":"95.73","8":"Musaceae","9":"Musa_basjoo","10":"1"},{"1":"SAMPLE10","2":"ITS1","3":"R1","4":"OTU2","5":"14","6":"KY214927","7":"97.67","8":"Musaceae","9":"Musella_lasiocarpa","10":"1"},{"1":"SAMPLE10","2":"ITS1","3":"R2","4":"OTU1","5":"357","6":"AM233397","7":"95.62","8":"Apocynaceae","9":"Secamone_filiformis","10":"1"},{"1":"SAMPLE10","2":"ITS1","3":"R2","4":"OTU1","5":"357","6":"FR832858","7":"96.69","8":"Rubiaceae","9":"Tricalysia_perrieri","10":"1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+</section>
+<section id="filter-out-unwanted-samples" class="level3" data-number="5.5">
+<h3 data-number="5.5" class="anchored" data-anchor-id="filter-out-unwanted-samples"><span class="header-section-number">5.5</span> Filter out unwanted samples</h3>
+<p>Now, your task is to filter out all but your <code>sample_name</code> samples from the dataset. Call the resulting dataset <code>my_sample</code>.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>my_sample <span class="ot">&lt;-</span> species <span class="sc">%&gt;%</span></span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(sample <span class="sc">==</span> sample_name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="missing-observations" class="level3" data-number="5.6">
+<h3 data-number="5.6" class="anchored" data-anchor-id="missing-observations"><span class="header-section-number">5.6</span> Missing observations</h3>
+<p>What happens if a set of primers failed to amplify or if one replicate was lost? Use <code>complete()</code> to make sure you have <code>NA</code> values in such cases.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>my_sample <span class="ot">&lt;-</span> my_sample <span class="sc">%&gt;%</span></span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">complete</span>(<span class="at">its =</span> <span class="fu">c</span>(<span class="st">"ITS1"</span>, <span class="st">"ITS2"</span>),</span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">replicate =</span> <span class="fu">c</span>(<span class="st">"R1"</span>,<span class="st">"R2"</span>,<span class="st">"R3"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="sorting-issue" class="level3" data-number="5.7">
+<h3 data-number="5.7" class="anchored" data-anchor-id="sorting-issue"><span class="header-section-number">5.7</span> Sorting issue</h3>
+<p>Look, the first sample in the table is <code>SAMPLE10</code>. Why not <code>SAMPLE1</code>? That’s a sorting issue: if sorted as character, 10 will come before 1. WE have to fix this by adding trailing zero to the values in <code>OTU</code>. We do not expect more than 99 OTUs in a sample, so it is ok with only one trailing 0 (otherwise the 100th sample will spoil our sorting and come out like: SAMPLE100, SAMPLE01, SAMPLE10). We will need to use regular expression:</p>
+<ul>
+<li>All values in the <code>OTU</code> column that follow pattern “OTU<em>digit</em>” we need to change to “OTU0<em>digit</em>”. Regular expression that matches this is <code>OTU([0-9]$)</code> and it should be replaced by: <code>OTU0\\1</code>. Ask your TAs to explain this if you do not know much about regular expressions and pattern matching.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>my_sample <span class="ot">&lt;-</span> my_sample <span class="sc">%&gt;%</span></span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">OTU =</span> <span class="fu">str_replace</span>(OTU,<span class="at">pattern =</span> <span class="st">"OTU([0-9]$)"</span>,</span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">replacement =</span> <span class="st">"OTU0</span><span class="sc">\\</span><span class="st">1"</span>))</span>
+<span id="cb66-4"><a href="#cb66-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(my_sample,<span class="at">n =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["its"],"name":[1],"type":["chr"],"align":["left"]},{"label":["replicate"],"name":[2],"type":["chr"],"align":["left"]},{"label":["sample"],"name":[3],"type":["chr"],"align":["left"]},{"label":["OTU"],"name":[4],"type":["chr"],"align":["left"]},{"label":["size"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["hit"],"name":[6],"type":["chr"],"align":["left"]},{"label":["perc_ident"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["family"],"name":[8],"type":["chr"],"align":["left"]},{"label":["species"],"name":[9],"type":["chr"],"align":["left"]},{"label":["n_replicates"],"name":[10],"type":["int"],"align":["right"]}],"data":[{"1":"ITS1","2":"R1","3":"SAMPLE12","4":"OTU01","5":"4169","6":"LC089998","7":"99.44","8":"Brassicaceae","9":"Capsella_bursa-pastoris","10":"3"},{"1":"ITS1","2":"R1","3":"SAMPLE12","4":"OTU02","5":"2686","6":"KP794392","7":"98.19","8":"Euphorbiaceae","9":"Tragia_cf.","10":"3"},{"1":"ITS1","2":"R1","3":"SAMPLE12","4":"OTU02","5":"2686","6":"KP794390","7":"98.19","8":"Euphorbiaceae","9":"Tragia_chlorocaulon","10":"3"},{"1":"ITS1","2":"R1","3":"SAMPLE12","4":"OTU02","5":"2686","6":"KP794378","7":"98.19","8":"Euphorbiaceae","9":"Tragia_bahiensis","10":"3"},{"1":"ITS1","2":"R1","3":"SAMPLE12","4":"OTU02","5":"2686","6":"KP794320","7":"98.19","8":"Euphorbiaceae","9":"Bia_alienata","10":"3"},{"1":"ITS1","2":"R1","3":"SAMPLE12","4":"OTU04","5":"1353","6":"GQ396671","7":"97.44","8":"Euphorbiaceae","9":"Triadica_sebifera","10":"3"},{"1":"ITS1","2":"R1","3":"SAMPLE12","4":"OTU04","5":"1353","6":"KX522674","7":"96.25","8":"Anacardiaceae","9":"Spondias_tuberosa","10":"3"},{"1":"ITS1","2":"R1","3":"SAMPLE12","4":"OTU04","5":"1353","6":"KY860928","7":"96.23","8":"Adoxaceae","9":"Viburnum_prunifolium","10":"3"},{"1":"ITS1","2":"R1","3":"SAMPLE12","4":"OTU04","5":"1353","6":"KX757310","7":"96.23","8":"Caryophyllaceae","9":"Silene_caesia","10":"3"},{"1":"ITS1","2":"R1","3":"SAMPLE12","4":"OTU06","5":"577","6":"KY860926","7":"100.00","8":"Asteraceae","9":"Taraxacum_officinale","10":"3"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+</section>
+<section id="supporting-reads" class="level3" data-number="5.8">
+<h3 data-number="5.8" class="anchored" data-anchor-id="supporting-reads"><span class="header-section-number">5.8</span> Supporting reads</h3>
+<p>Sometimes, an OTU generates two or more top BLAST hits that come from the same species. We have decided to sum reads in such cases. Do it!</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>my_sample <span class="ot">&lt;-</span> my_sample <span class="sc">%&gt;%</span></span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sample, its, replicate, OTU, species, n_replicates) <span class="sc">%&gt;%</span></span>
+<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n_reads =</span> <span class="fu">sum</span>(size)) <span class="sc">%&gt;%</span></span>
+<span id="cb67-5"><a href="#cb67-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb67-6"><a href="#cb67-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(its, species, OTU)</span>
+<span id="cb67-7"><a href="#cb67-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-8"><a href="#cb67-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(my_sample,<span class="at">n=</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["sample"],"name":[1],"type":["chr"],"align":["left"]},{"label":["its"],"name":[2],"type":["chr"],"align":["left"]},{"label":["replicate"],"name":[3],"type":["chr"],"align":["left"]},{"label":["OTU"],"name":[4],"type":["chr"],"align":["left"]},{"label":["species"],"name":[5],"type":["chr"],"align":["left"]},{"label":["n_replicates"],"name":[6],"type":["int"],"align":["right"]},{"label":["n_reads"],"name":[7],"type":["dbl"],"align":["right"]}],"data":[{"1":"SAMPLE12","2":"ITS1","3":"R1","4":"OTU01","5":"Capsella_bursa-pastoris","6":"3","7":"4169"},{"1":"SAMPLE12","2":"ITS1","3":"R1","4":"OTU02","5":"Bia_alienata","6":"3","7":"2686"},{"1":"SAMPLE12","2":"ITS1","3":"R1","4":"OTU02","5":"Tragia_bahiensis","6":"3","7":"2686"},{"1":"SAMPLE12","2":"ITS1","3":"R1","4":"OTU02","5":"Tragia_cf.","6":"3","7":"2686"},{"1":"SAMPLE12","2":"ITS1","3":"R1","4":"OTU02","5":"Tragia_chlorocaulon","6":"3","7":"2686"},{"1":"SAMPLE12","2":"ITS1","3":"R1","4":"OTU04","5":"Silene_caesia","6":"3","7":"1353"},{"1":"SAMPLE12","2":"ITS1","3":"R1","4":"OTU04","5":"Spondias_tuberosa","6":"3","7":"1353"},{"1":"SAMPLE12","2":"ITS1","3":"R1","4":"OTU04","5":"Triadica_sebifera","6":"3","7":"1353"},{"1":"SAMPLE12","2":"ITS1","3":"R1","4":"OTU04","5":"Viburnum_prunifolium","6":"3","7":"1353"},{"1":"SAMPLE12","2":"ITS1","3":"R1","4":"OTU06","5":"Taraxacum_amplum","6":"3","7":"577"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+</section>
+<section id="within-otu-species-diversity" class="level3" data-number="5.9">
+<h3 data-number="5.9" class="anchored" data-anchor-id="within-otu-species-diversity"><span class="header-section-number">5.9</span> Within-OTU species diversity</h3>
+<p>Now, we want to see how many identifications an OTU got. Implement this. Store the result in a new tibble <code>diversity</code>.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>diversity <span class="ot">&lt;-</span> my_sample <span class="sc">%&gt;%</span></span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(its, replicate, OTU) <span class="sc">%&gt;%</span></span>
+<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n_species =</span> <span class="fu">n</span>())</span>
+<span id="cb68-5"><a href="#cb68-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-6"><a href="#cb68-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(diversity,<span class="at">n=</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["its"],"name":[1],"type":["chr"],"align":["left"]},{"label":["replicate"],"name":[2],"type":["chr"],"align":["left"]},{"label":["OTU"],"name":[3],"type":["chr"],"align":["left"]},{"label":["n_species"],"name":[4],"type":["int"],"align":["right"]}],"data":[{"1":"ITS1","2":"R1","3":"OTU01","4":"1"},{"1":"ITS1","2":"R1","3":"OTU02","4":"4"},{"1":"ITS1","2":"R1","3":"OTU04","4":"4"},{"1":"ITS1","2":"R1","3":"OTU06","4":"4"},{"1":"ITS1","2":"R1","3":"OTU07","4":"3"},{"1":"ITS1","2":"R1","3":"OTU08","4":"2"},{"1":"ITS1","2":"R1","3":"OTU10","4":"1"},{"1":"ITS1","2":"R1","3":"OTU11","4":"3"},{"1":"ITS1","2":"R1","3":"OTU13","4":"3"},{"1":"ITS1","2":"R1","3":"OTU15","4":"2"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+</section>
+<section id="adding-diversity-data" class="level3" data-number="5.10">
+<h3 data-number="5.10" class="anchored" data-anchor-id="adding-diversity-data"><span class="header-section-number">5.10</span> Adding diversity data</h3>
+<p>Add the <code>diversity</code> data to <code>my_sample</code> using appropriate <code>join</code> function. Also, remove the column with sample names since we are dealing with only one sample.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>my_sample <span class="ot">&lt;-</span> my_sample <span class="sc">%&gt;%</span></span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(diversity) <span class="sc">%&gt;%</span></span>
+<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>sample)</span>
+<span id="cb69-4"><a href="#cb69-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-5"><a href="#cb69-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(my_sample,<span class="at">n=</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["its"],"name":[1],"type":["chr"],"align":["left"]},{"label":["replicate"],"name":[2],"type":["chr"],"align":["left"]},{"label":["OTU"],"name":[3],"type":["chr"],"align":["left"]},{"label":["species"],"name":[4],"type":["chr"],"align":["left"]},{"label":["n_replicates"],"name":[5],"type":["int"],"align":["right"]},{"label":["n_reads"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["n_species"],"name":[7],"type":["int"],"align":["right"]}],"data":[{"1":"ITS1","2":"R1","3":"OTU01","4":"Capsella_bursa-pastoris","5":"3","6":"4169","7":"1"},{"1":"ITS1","2":"R1","3":"OTU02","4":"Bia_alienata","5":"3","6":"2686","7":"4"},{"1":"ITS1","2":"R1","3":"OTU02","4":"Tragia_bahiensis","5":"3","6":"2686","7":"4"},{"1":"ITS1","2":"R1","3":"OTU02","4":"Tragia_cf.","5":"3","6":"2686","7":"4"},{"1":"ITS1","2":"R1","3":"OTU02","4":"Tragia_chlorocaulon","5":"3","6":"2686","7":"4"},{"1":"ITS1","2":"R1","3":"OTU04","4":"Silene_caesia","5":"3","6":"1353","7":"4"},{"1":"ITS1","2":"R1","3":"OTU04","4":"Spondias_tuberosa","5":"3","6":"1353","7":"4"},{"1":"ITS1","2":"R1","3":"OTU04","4":"Triadica_sebifera","5":"3","6":"1353","7":"4"},{"1":"ITS1","2":"R1","3":"OTU04","4":"Viburnum_prunifolium","5":"3","6":"1353","7":"4"},{"1":"ITS1","2":"R1","3":"OTU06","4":"Taraxacum_amplum","5":"3","6":"577","7":"4"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<ul>
+<li>What columns did we join on in our example solution?</li>
+</ul>
+</section>
+<section id="visualising-the-data" class="level3" data-number="5.11">
+<h3 data-number="5.11" class="anchored" data-anchor-id="visualising-the-data"><span class="header-section-number">5.11</span> Visualising the data</h3>
+<p>Can you think of a good way of visualizing the data? Think of:</p>
+<ul>
+<li>Type of plot you want. The simpler the better?</li>
+<li>Which variables you would like to visualize? We have chosen <code>ITS</code>, <code>replicate</code>, <code>n_reads</code>, <code>n_replicates</code>, <code>OTU</code>, <code>threshold</code>, <code>n_species</code> and <code>specie</code>. Well, pretty much all of them :-)</li>
+<li>How do you represent variables: colors, shapes, separate plots, sizes?</li>
+<li>What transformations do you need to apply before visualizing the data?</li>
+</ul>
+<p>Our example solution involves some <code>ggplot2</code> magics. But would base-R be good enough for this type of plot?</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-68-1.png" class="img-fluid figure-img" width="864"></p>
+<figcaption>Red – only one species in the current OTU, blue – identification above the threshold, grey – identification below the threshold</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="wildlife-aircraft-strikes-challenge" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="wildlife-aircraft-strikes-challenge"><span class="header-section-number">6</span> Wildlife Aircraft Strikes Challenge</h2>
+<p>Use the <a href="https://www.kaggle.com/faa/wildlife-strikes">FAA report</a> and <code>tidyverse</code> to learn more about aircraft incidents with wildlife. Use your imagination and <a href="https://nycdatascience.com/blog/student-works/exploring-aviation-accidents-from-1908-through-the-present/">NYC data science blog</a> for inspiration!</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>2024 NBIS | <a href="https://choosealicense.com/licenses/gpl-3.0/">GPL-3 License</a></p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Published with <a href="https://quarto.org/">Quarto</a> v1.4.549
+</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

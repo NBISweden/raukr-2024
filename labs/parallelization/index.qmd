@@ -1,0 +1,152 @@
+---
+title: "Parallelization"
+author: "Sebastian DiLorenzo"
+description: "Speed up your code through parallel computing."
+image: "assets/featured.jpg"
+format: html
+---
+
+```{r}
+#| include: false
+library(future)
+```
+
+::: {.callout-note}
+This is the parallelization lab. It will take you through some basic steps to parallelize your code and try to make you think about when and where you can use this tool.
+
+You are highly encouraged to test things out yourself and tweak things to figure out how these methods behave.
+:::
+
+## Install
+
+The first thing we want to do is install the package required for the exercise.
+
+```{r}
+#| eval: false
+install.packages("future")
+```
+
+## Exercises
+
+The basic construct for a future is this:
+
+```{r}
+#| eval: false
+
+a %<-% { expression(s) }
+```
+
+Here is a computationally intensive task that samples numbers from 1:100, 200000000 times.
+
+```{r}
+#| eval: false
+
+sample(100,200000000,replace=T)
+```
+
+Evaluating the computation time on my machine, it comes out taking about 5.4 seconds to run.
+
+```{r}
+#| eval: false
+
+system.time(sample(100,200000000,replace=T))
+   user  system elapsed 
+  5.173   0.160   5.369 
+```
+
+### Sequential and Multi-
+
+- Use the future package with `plan(sequential)`,which is the default, and run the supplied `sample()` inside a future.
+
+::: {.callout-note}
+There is a warning message when generating random numbers without seed. We can ignore this by changing our options: `options(future.rng.onMisuse="ignore")`.
+:::
+
+- Add an approach from yesterdays lecture on benchmarking or some other way that you are comfortable with to calculate the time it takes to complete the operation of simply assigning the future. Do not evaluate the future yet by asking for the outcome value.
+
+::: {.callout-note}
+You should not attempt to calculate times taken within the future, always wrap this around futures.
+:::
+
+**Question 1:** Split your sampling into multiple futures and compute the time again. Did it complete faster?
+<!-- No, because we are on plan sequential -->
+
+**Question 2:** Change to `plan(multisession)` or `plan(multicore)` according to your setup (operating system type, RStudio or just console). Compute the time again for your multiple futures. Did it complete faster? Think about what the time it takes to compute implies.
+<!-- No. Because we are just sending out the futures. Not resolving them. -->
+
+::: {.callout-note}
+Sometimes there are issues running `plan(multicore)` and even `plan(multisession)` in Rstudio. If this happens, you might want to just start R console from a terminal window.
+:::
+
+**Question 3:** Ask for the outcome of your futures after their definitions, thus evaluating them. How does this influence the time it takes to perform the operations?
+<!-- It increases the time because of the unblocked R process. In this case it is actually measuring the time until resolved while in the previous question it is just measuring the time to send out the futures.-->
+
+At this stage your code should, in **pseudocode**, look something like this:
+
+```{r}
+#| eval: false
+
+plan(multisession)
+
+timer(
+  a %<-% {sample expression}
+  b %<-% {sample expression}
+  #evaluate futures by requesting outcome values
+  a + b
+)
+```
+
+**Question 4:** If you have more than two `availableCores()`, split the `sample()` expression to even more futures . Does this influence time to complete in the manner you thought?
+<!-- This should slightly lower compute time, but probably not quite as much as some would think. Bigger influence for larger processes as here other surrounding operations use a bit of the time. -->
+
+### Errors
+
+-   Introduce an error in one of your future expressions.
+
+**Question 5:** Does the error output when the future is defined and unresolved, or when it is resolved?
+<!-- This depends on the type of error, but usually it shows when it is resolved-->
+
+[Further reading about errors and debugging for futures.](https://github.com/HenrikBengtsson/future#failed-futures)
+
+### for loops
+
+To use futures in for loops we can use named indices to assign the future to environments. This is pretty similar to assigning values to named indices with the normal assigner `<-`, the main difference being that we need to use new environments and we can have multiple expressions for futures.
+
+For example:
+
+```{r}
+#| eval: false
+
+plan(multisession)
+
+#Create a new environment
+v <- new.env()
+for (name in c("a", "b", "c")) {
+  v[[name]] %<-% {
+        #expression(s)
+     }
+}
+#Turn the environment back into a list
+v <- as.list(v)
+
+#To turn the list of vectors into the same format, one long vector, that we had above when running "a + b + c"
+vec <- Reduce(c,v)
+```
+
+- Use this to divide the `sample()` operation into however many smaller pieces you want. Do remember to transform your output back into the object we started with before parallelizing the execution.
+
+Now you know the basics of using the `future` package. With this you have already come a long way in lowering the threshold to implement parallel methods and seeing parallel solutions when you run into it next!
+
+## Extra credit
+
+Try to apply parallelization to your own code in a different context than we have done here. For example dividing up a plot or a large dataset. The possibilities are endless.
+
+## Recommended further reading
+
+Check out [futures demo](https://github.com/HenrikBengtsson/future#demos) visualization of sequential vs multicore/session.
+
+Using futures on HPC clusters with [future.batchtools](https://github.com/HenrikBengtsson/future.batchtools).
+
+Using futures for your `lapply` statements with [future.apply](https://github.com/HenrikBengtsson/future.apply).
+
+The published paper on [future](https://journal.r-project.org/archive/2021/RJ-2021-048/RJ-2021-048.pdf).

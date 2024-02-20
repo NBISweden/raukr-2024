@@ -1,0 +1,355 @@
+---
+title: "Best Coding Practices"
+author: "Marcin Kierczak"
+description: "Styling and conventions for neat and tidy code."
+image: "assets/featured.jpg"
+format: html
+---
+
+```{r}
+#| echo: false
+library(bsplus)
+```
+
+::: {.callout-note}
+The objective of this lab is to improve your coding skills by focusing on coding style, code benchmarking and optimization. Below, you will find a number of tasks connected to the topics covered in the *Best Coding Practices* lecture. Some tasks extend lectures content and require you to find some more information online. Please, note that while we are providing example solutions to many tasks, these are only **examples**. If you solve a task in a different way it does not matter your solution is wrong. In fact, it may be better than our solution. If in doubt, ask PI for help. We are here for you!
+:::
+
+## Coding Style
+
+### Task: Valid Variable Names.
+
+Which of the following are valid/good variable names in R. What is wrong with the ones that are invalid/bad?
+
+- `var1`
+- `3way_handshake`
+- `.password`
+- `__test__`
+- `my-matrix-M`
+- `three.dimensional.array`
+- `3D.distance`
+- `.2objects`
+- `wz3gei92`
+- `next`
+- `P`
+- `Q`
+- `R`
+- `S`
+- `T`
+- `X`
+- `is.larger?`
+
+### Task: Obscure Code.
+
+The code below works, but can be improved. Do improve it!
+
+```{r}
+#| eval: false
+myIterAtoR.max <- 5
+second_iterator.max<-7
+col.NUM= 10
+row.cnt =10
+fwzy45 <- matrix(rep(1, col.NUM*row.cnt),nrow=row.cnt)
+for(haystack in (2-1):col.NUM){
+  for(needle in 1:row.cnt) {
+if(haystack>=myIterAtoR.max){
+fwzy45[haystack, needle]<-NA}
+}}
+```
+
+::: {.callout-tip collapse="true"}
+
+## Example Solution
+
+```{r}
+#| eval: false
+iter_max <- 5
+col_num <- 10
+row_num <- 10
+A <- matrix(rep(1, col_num * row_num), nrow = row_num)
+for (i in 1:col_num) {
+  for (j in 1:row_num) {
+    if (i >= iter_max) {
+      A[i, j] <- NA
+    }
+  }
+}
+
+# Can you improve the code more by eliminating loops or at least one of them?
+```
+
+:::
+
+### Task: Better Formatting.
+
+Improve formatting and style of the following code:
+
+```{r}
+#| eval: false         
+simulate_genotype <- function( q, N=100 ) {
+  if( length(q)==1 ){
+    p <- (1 - q)
+    f_gt <- c(p^2, 2*p*q, q^2) # AA, AB, BB
+  }else{
+    f_gt<-q
+  }
+  tmp <- sample( c('AA','AB','BB'), size =N, prob=f_gt, replace=T )
+  return(tmp)
+}
+```
+
+::: {.callout-tip collapse="true"}
+
+## Example Solution
+
+```{r}
+#| eval: false
+simulate_genotype <- function(q, N = 100) {
+  if (length(q) == 1) {
+    p <- (1 - q)
+    f_gt <- c(p^2, (2 * p * q), q^2) # AA, AB, BB
+  } else {
+    f_gt <- q
+  }
+  sample(c('AA', 'AB', 'BB'), 
+         size = N, 
+         prob = f_gt, 
+         replace = TRUE)
+}
+```
+
+:::
+
+### Task: Hidden Variable.
+
+Assign a vector of three last months (abbreviated in English) in a year to a hidden variable `my_months`.
+
+::: {.callout-tip collapse="true"}
+
+## Example Solution
+
+```{r}
+#| eval: false
+.my_months <- rev(rev(month.abb)[1:3])
+```
+
+:::
+
+### Task: Pipeline-friendly Function.
+
+Modify the function below so that it works with R pipes `%>%`:
+
+```{r}
+#| eval: false
+my_filter <- function(threshold = 1, x, scalar = 5) {
+  x[x >= threshold] <- NA 
+  x <- x * scalar
+  return(x)
+}
+```
+
+::: {.callout-note}
+## Necessary Packages
+You need to have the `magrittr` or `tidyverse` package loaded in order to be able to use the pipe `%>%`!
+:::
+
+::: {.callout-tip collapse="true"}
+
+## Example Solution
+
+```{r}
+#| eval: false
+
+my_filter <- function(x, threshold = 1, scalar = 5) {
+  x[x >= threshold] <- NA 
+  x * scalar
+}
+
+# Test:
+c(-5, 5) %>% my_filter()
+```
+
+:::
+
+### Task: Untidy Code?
+
+Is the code below correct? Can it be improved?
+
+```{r}
+#| eval: false
+simulate_phenotype <- function(pop_params, gp_map, gtype) {
+  pop_mean <- pop_params[1]
+  pop_var <- pop_params[2]
+  pheno <- rnorm(n = N, mean = pop_mean, sd = sqrt(pop_var))
+  effect <- rep(0, times = length(N))
+  for (gt_iter in c('AA', 'AB', 'BB')) {
+    effect[gtype == gt_iter] <- rnorm(n = sum(gtype == gt_iter), 
+                                      mean = gp_map[gt_iter, 'mean_eff'], 
+                                      sd = sqrt(gp_map[gt_iter, 'var_eff']))
+  }
+  dat <- data.frame(gt = gtype, raw_pheno = pheno, effect = effect, pheno = pheno + effect)
+  return(dat)
+}
+```
+
+::: {.callout-tip collapse="true"}
+
+## Example Solution
+
+```{r}
+#| eval: false
+Maybe some small improvements can be done, but in principle the code is clean! Except that... the N is not initialized anywhere.
+```
+
+:::
+
+## Structuring the Code
+
+### Task: Computing Variance.
+
+Write a modular code (function or functions) that computes the sample standard deviation given a vector of numbers. Decide how to logically structure the code. Assume there are no built-in R functions for computing mean and variance available. The formula for variance is: $SD = \sqrt{\frac{\Sigma_{i=1}^{N}(x_i - \bar{x})^2}{N-1}}$. Standard deviation is $Var=SD^2$.
+
+
+::: {.callout-note}
+Consider that you may want to re-use some computed values in future, e.g. variance.
+:::
+
+::: {.callout-tip collapse="true"}
+
+## Example Solution
+
+```{r}
+#| eval: false
+sample_mean <- function(x) {
+  sum(x) / length(x)
+} 
+
+sum_squared_deviations <- function(x) {
+  tmp <- (x - sample_mean(x))^2
+  sum(tmp)
+}
+
+std_dev <- function(x) {
+  sqrt(sum_squared_deviations(x) / (length(x) - 1))
+}
+
+variance <- function(x) {
+  std_dev(x)^2
+}
+```
+
+:::
+
+### Task: Writing a Wrapper Function.
+
+You found two functions in two different packages: the `randomSampleInt` function that generates a random sample of integer numbers and the `randomSampleLetter` function for generating a random sample of letters. Unfortunately, the functions are called in different ways which you want to unify in order to use them interchangeably in your code. Write a wrapper function around the `randomSampleLetter` that will provide the same interface to the function as the `randomSampleInt`. Also, the `randomSampleLetter` cannot handle the seed. Can you add this feature to your wrapper?
+
+```{r}
+#| eval: false
+randomSampleInt <- function(x, verbose, length, seed = 42) {
+  if (verbose) {
+    print(paste0('Generating random sample of ', length, ' integers using seed ', seed))
+  }
+  set.seed(seed)
+  sampleInt <- sample(x = x, size = length, replace = TRUE)
+  return(sampleInt)
+} 
+
+randomSampleLetter <- function(N, silent=T, lett) {
+  if (!silent) {
+    print(paste0('Generating random sample of ', N, ' letters.'))
+  }
+  sample <- sample(x = lett, size = N, replace = TRUE)
+  return(sample)
+}
+```
+
+::: {.callout-tip collapse="true"}
+
+## Example Solution
+
+```{r}
+#| eval: false
+randomSampleLetterWrapper <- function(x, verbose, length, seed = 42) {
+  set.seed(seed)
+  randomSampleLetter(N = length, silent = !verbose, lett = x)
+}
+```
+
+:::
+
+### Task: Customizing `plot`.
+
+Write a wrapper around the `graphics::plot` function that modifies its default behavior so that it plots red crosses instead of black points. Do it in a way that enables the user to modify other function arguments.
+
+::: {.callout-tip}
+You may want to have a look at `graphics::plot.default`.
+:::
+
+::: {.callout-tip collapse="true"}
+
+## Example Solution
+
+```{r}
+#| eval: false
+my_plot <- function(x, ...) {
+  plot(x, pch = 3, col = 'red', ...) 
+}
+```
+
+:::
+
+### Task: Adding Arguments to a Function.
+
+What if you want to pass some additional parameters to a function and, sadly, the authors forgot to add `...` to the list of function arguments. There is a way out -- you can bind extra arguments supplied as `alist` structure to the original function arguments retrieved by `formals`. Try to fix the function below, so that the call `red_plot(1, 1, col = 'red', pch = 19)` will result in points being represented by red circles. Do use `alist` and `formals` and do not edit the `red_plot` itself!
+
+::: {.callout-tip}
+Read help for `alist` and `formals`.
+:::
+
+Original function:
+
+```{r}
+#| eval: false
+red_plot <- function(x, y) { 
+  plot(x, y, las=1, cex.axis=.8, ...)
+}
+```
+
+::: {.callout-tip collapse="true"}
+
+## Example Solution
+
+```{r}
+#| eval: false
+red_plot <- function(x, y) { 
+  plot(x, y, las = 1, cex.axis = .8, ...)
+}
+
+red_plot(1, 1, col = 'red', pch = 19) # Does not work.
+formals(red_plot) <- c(formals(red_plot), alist(... = )) # Fix.
+red_plot(1, 1, col = 'red', pch = 19) # Works!
+```
+
+:::
+
+### Task: Using `options`.
+
+Use `options` to change the default prompt in R to `hello :-) >`.
+
+::: {.callout-tip}
+Check what options are stored in the **hidden** variable called *Options*.
+:::
+
+::: {.callout-tip collapse="true"}
+
+## Example Solution
+
+```{r}
+#| eval: false
+options(prompt = "hello :-) > ")
+.Options
+options(prompt = "> ") # restoring the default
+```
+
+:::

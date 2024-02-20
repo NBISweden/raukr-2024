@@ -1,0 +1,42 @@
+---
+title: "Course Materials"
+toc: false
+date: ""
+sidebar: false
+format:
+  html:
+    number-sections: false
+execute:
+  freeze: false
+---
+
+:::{.contents-table .column-body-outset}
+
+|Topic                                  |Author                                 |Links|
+|---------------------------------------|---------------------------------------|-----|
+|[**WEEK 1**]{.badge .badge-secondary}                                |||
+|[**10-Jun-2024 (Mon)**]{.badge .badge-secondary}    |                                       ||
+|Introduction to RaukR                  |Marcin Kierczak & Sebastian DiLorenzo  ||
+|Functions and scripts                  |Sebastian DiLorenzo                    |[Slides](slides/scripting/index.html), [Lab](labs/scripting/index.html)|
+|Best Coding Practices in R             |Marcin Kierczak                        |[Slides](slides/coding/index.html), [Lab](labs/coding/index.html)|
+|Literate programming with Quarto |Roy Francis                            |[Slides](slides/quarto/index.html), [Lab](labs/quarto/index.html)|
+|Debugging, Profiling and Optimisation  |Marcin Kierczak                        |[Slides](slides/debugging/index.html), [Lab](labs/debugging/index.html)|
+|[**11-Jun-2024 (Tue)**]{.badge .badge-secondary}    |                                       ||
+|Vectorization                          |Sebastian DiLorenzo & Marcin Kierczak  |[Slides](slides/vectorization/index.html), [Lab](labs/vectorization/index.html)|
+|Parallelization                        |Sebastian DiLorenzo & Marcin Kierczak  |[Slides](slides/parallelization/index.html), [Lab](labs/parallelization/index.html)|
+|Object-oriented programming            |Marcin Kierczak                        |[Slides](slides/oop/index.html), [Lab](labs/oop/index.html)|
+|[**12-Jun-2024 (Wed)**]{.badge .badge-secondary}    |                                       ||
+|Tidyverse                              |Marcin Kierczak                        |[Slides](slides/tidyverse/index.html), [Lab](labs/tidyverse/index.html)|
+|git with R                             |Sebastian DiLorenzo                    |[Slides](slides/git/index.html), [Lab](labs/git/index.html)|
+|reticulate: Combining R with Python    |Nina Norgren                           |[Slides](slides/reticulate/index.html), [Lab](labs/reticulate/index.html)|
+|[**13-Jun-2024 (Thu)**]{.badge .badge-secondary}    |                                       ||
+|Plotting with ggplot2                  |Roy Francis & Lokesh Manoharan         |[Slides](slides/ggplot/index.html), [Lab](labs/ggplot/index.html)|
+|How to repeat yourself with Purrr      |Jenny Bryan, Posit                     |[Repo](https://github.com/jennybc/2023_raukr-purrr-pkg-dev)|
+|[**14-Jun-2024 (Fri)**]{.badge .badge-secondary}    |                                       ||
+|R Packages                             |Jenny Bryan, Posit                    ||
+|Web apps with Shiny                    |Roy Francis & Lokesh Manoharan         |[Slides](slides/shiny/index.html), [Lab](labs/shiny/index.html)|
+|[**WEEK 2**]{.badge .badge-secondary}                                |||
+|[**17-Jun-2024 (Mon)**]{.badge .badge-secondary}    |                                       ||
+|Statistics and machine learning in R   |Nikolay Oskolkov                       |[Slides](slides/ml/index.html), [Lab](labs/ml/index.html)|
+
+:::

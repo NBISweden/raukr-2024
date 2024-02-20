@@ -1,0 +1,222 @@
+---
+title: "Registration"
+date: ""
+sidebar: false
+format:
+  html:
+    number-sections: false
+---
+
+```{r}
+#| eval: true
+#| include: false
+
+library(dplyr)
+library(leaflet)
+library(readxl)
+library(gt)
+library(tibble)
+
+dfr <- readxl::read_xlsx("map.xlsx")
+```
+
+## Entry requirements
+
+This workshop is aimed at both Ph.D. students and researchers within life sciences who are already using R for bioinformatics data analyses and who would like to start using R at a more advanced level. In order for you and other participants to benefit the most, you should consider yourself eligible if you are comfortable with reading and transforming data, installing and using third-party packages and plotting using standard R graphics.
+
+## Selection
+
+We can accomodate ~42 participants. Selection criteria include correct entry requirements, motivation to attend the workshop as well as gender and geographical balance. We do accept international applicants, but applicants affiliated to a Swedish institution are prioritized.
+
+Once the registration period concludes, we will review your application and notify you of our decision. If accepted, you will have three working days to confirm your participation. Failure to do so would imply your inability to attend, and we will proceed accordingly. Once confirm, our course administrator will proceed with invoicing.
+
+## Fee
+
+The fee for academic participants is [8000 SEK]{.badge .badge-primary} subsidized by academic grants. Fee for non-academic participants is 16000 SEK.
+
+::: {.callout-warning}
+If you register and are admitted but fail to attend without a valid reason, you will still be liable for the entire fee.
+:::
+
+::: {.callout-note}
+
+## More info about the fee
+
+**Included in the fee**
+
+- Participation in lectures and workshops
+- Mingle reception with snacks and drinks
+- Daily breakfast, coffee and lunch during the workshop
+- One official course dinner
+- Surprise social activities
+
+**Not included in the fee**
+
+- Accomodation
+- Travel to and from Visby
+- Daily dinners
+
+:::
+
+## Certification & Credits
+
+Please refer to our [FAQs](home_faq.html).
+
+## Location
+
+![](assets/images/visby.jpg)\
+[Source: [VisitSweden](https://visitsweden.com/where-to-go/southern-sweden/gotland/visby/)]{.small}
+
+The workshop takes place in the city of Visby nestled on the island of Gotland, Sweden. This medieval town, dating back to the 12th century, is a UNESCO world heritage site. For more information, visit [Visit Sweden](https://visitsweden.com/where-to-go/southern-sweden/gotland/visby/) and [Gotland Tourism](https://gotland.com/).
+
+::: {.raukr-gallery-parent}
+::: {.raukr-gallery-child}
+![](assets/images/gotland/a.jpg){group="gotland"}
+:::
+::: {.raukr-gallery-child}
+![](assets/images/gotland/b.jpg){group="gotland"}
+:::
+::: {.raukr-gallery-child}
+![](assets/images/gotland/c.jpg){group="gotland"}
+:::
+::: {.raukr-gallery-child}
+![](assets/images/gotland/d.jpg){group="gotland"}
+:::
+::: {.raukr-gallery-child}
+![](assets/images/gotland/f.jpg){group="gotland"}
+:::
+::: {.raukr-gallery-child}
+![](assets/images/gotland/g.jpg){group="gotland"}
+:::
+::: {.raukr-gallery-child}
+![](assets/images/gotland/h.jpg){group="gotland"}
+:::
+::: {.raukr-gallery-child}
+![](assets/images/gotland/i.jpg){group="gotland"}
+:::
+::: {.raukr-gallery-child}
+![](assets/images/gotland/j.jpg){group="gotland"}
+:::
+::: {.raukr-gallery-child}
+![](assets/images/gotland/k.jpg){group="gotland"}
+:::
+::: {.raukr-gallery-child}
+![](assets/images/gotland/l.jpg){group="gotland"}
+:::
+::: {.raukr-gallery-child}
+![](assets/images/gotland/m.jpg){group="gotland"}
+:::
+:::
+
+<br>
+
+## Travel
+
+Visby is accessible from mainland Sweden by flight or ferry. See [Gotland tourism](https://gotland.com/resa-hit-runt/) website for information.
+
+[Visby airport](https://www.swedavia.com/visby/) provides connections to Stockholm, Malmö, and Gothenburg, with a flying time of approximately 1 hour from Stockholm. [Bus connection](https://www.swedavia.com/visby/bus/) from the airport to the city centre takes about 10 mins. Alternatively, there are airport taxis as well.
+
+Ferry connections are available from Stockholm (Nynäshamn) to Visby through [Destination Gotland](https://www.destinationgotland.se/) or [Vikingline](https://www.vikingline.se). The journey time from Nynäshamn to Visby is about 3 hours. The ferry terminal in Visby is walking distance from Uppsala university campus (800m) and our suggested accomodations.
+
+![](assets/images/destination-gotland.jpg)\
+[Source: [DestinationGotland](https://www.destinationgotland.se/)]{.small}
+
+## Venue
+
+```{r}
+#| echo: false
+#| eval: true
+#| output: asis
+
+dfr <- dfr %>%
+    mutate(address = paste0("<a target='_blank' href='", url, "'>", label, "</a>,", address)) %>%
+    mutate(address = gsub(",", "<br>", address))
+icons <- awesomeIcons(icon = dfr$marker_icon, markerColor = dfr$marker_colour, iconColor = "#FFFFFF", library = "fa")
+cat(knitr::knit_child(input = "assets/_child-map.qmd", envir = environment(), quiet = TRUE))
+```
+
+<br>
+
+The workshop is held on [Campus Gotland](http://www.campusgotland.uu.se/), Uppsala university. Here is the full address:
+
+::: {.large}
+
+Cramérgatan 3  
+621 57 Visby  
+Gotland, Sweden  
+
+:::
+
+::: {.callout-note}
+The classroom windows may be left open in case the room gets warm. If you are easily disturbed by external noise, it might a good idea to bring noise cancelling headphones for practical labs. Additional extension cables might come in handy too.
+:::
+
+For visual impressions from previous workshops, visit our [Gallery](home_gallery.html).
+
+## Accomodation
+
+Participants are responsible for arranging their own accommodation. When booking accommodation, make sure it is located at a walking distance from Campus Gotland. Here are a few suggestions below. These are also marked on the map.
+
+::: {.grid}
+::: {.g-col-10}
+
+```{r}
+#| echo: false
+
+readxl::read_xlsx("map.xlsx") %>%
+    filter(marker_icon == "bed") %>%
+    mutate(label = paste0("<a target='_blank' href='", url, "'>", label, "</a>")) %>%
+    select(label, address) %>%
+    setNames(c("Name", "Address")) %>%
+    gt() %>%
+    fmt_markdown(columns = Name) %>%
+    cols_width(Name ~ px(250)) %>%
+    tab_style(
+        style = cell_text(weight = "bold"),
+        locations = cells_column_labels()
+    ) %>%
+    opt_row_striping(row_striping = FALSE)
+```
+
+:::
+:::
+
+## Meals
+
+A cafeteria is available onsite just outside the lecture hall for breakfast and lunches as well as coffee and snacks. Dinners are not included. Breakfast is not included on Weekends. For further information, see [FAQs](home_faq.html).
+
+## Key dates
+
+::: {.grid}
+::: {.g-col-10}
+
+```{r}
+#| echo: false
+
+tibble::tribble(
+    ~Date, ~Milestone,
+    "03-Feb-2024", "Application opens",
+    "**14-Apr-2024 23:59**", "Application deadline",
+    "17-Apr-2024", "Notification of acceptance/decline",
+    "09-Jun-2024", "Arrival to Visby, mingle in the evening",
+    "10-Jun-2024 - 21-Jun-2023", "Workshop",
+    "21-Jun-2024", "Project presentations, certificates issued, lunch included",
+) %>%
+    gt() %>%
+    fmt_markdown(columns = Date) %>%
+    cols_width(Date ~ px(300)) %>%
+    tab_style(
+        style = cell_text(weight = "bold"),
+        locations = cells_column_labels()
+    ) %>%
+    opt_row_striping(row_striping = FALSE)
+```
+
+:::
+:::
+
+## Register
+
+Before proceeding, please ensure you have read all the information on this page as well as our [FAQs](home_faq.html). Click below to access the online registration form.
+
+[[**Register Here >**]{.btn .btn-primary .large}](https://nbis.typeform.com/RaukR2024)

@@ -1,0 +1,111 @@
+project:
+  type: website
+  output-dir: docs
+  render: 
+    - "*.qmd"
+    - "*.md"
+    - "!slides/quarto/sample/*.qmd"
+    - "!slides/debugging/index.qmd"
+
+website:
+  image: "assets/images/featured.jpg"
+  favicon: "assets/favicon.svg"
+  navbar:
+    logo: "assets/logos/raukr.png"
+    logo-alt: "RaukR"
+    right:
+      - text: "Home"
+        href: "index.html"
+      - text: "Program"
+        href: "home_program.html"
+      - text: "Registration"
+        href: "home_registration.html"
+      - text: Gallery
+        href: "home_gallery.html"
+      - text: FAQ
+        href: "home_faq.html"
+      - text: About
+        href: "home_about.html"
+  page-footer:
+    border: false
+    left: "{{< meta current_year >}} NBIS | [GPL-3 License](https://choosealicense.com/licenses/gpl-3.0/)"
+    right: "Published with [Quarto](https://quarto.org/) v{{< meta quarto_version >}}"
+  site-url: "https://nbisweden.github.io/raukr-2024/"
+
+format:
+  html:
+    quarto-required: ">=1.4.5"
+    include-in-header: "assets/include_head.html"
+    include-before-body: "assets/include_body_before.html"
+    include_after_body: "assets/include_body_after.html"
+    theme: "assets/css/styles.scss"
+    smooth-scroll: true
+    toc: true
+    toc-depth: 4
+    toc-location: right
+    number-sections: true
+    number-depth: 4
+    code-fold: false
+    code-tools: false
+    code-copy: true
+    code-overflow: wrap
+    df-print: paged
+    standalone: false
+    fig-align: left
+    title-block-banner: "assets/images/banner.jpg"
+    subtitle: "RaukR {{< meta current_year >}} • Advanced R for Bioinformatics"
+    callout-icon: true
+    date:  last-modified
+    date-format: "DD-MMM-YYYY"
+    image: "/assets/images/featured.jpg"
+  revealjs:
+    quarto-required: ">=1.4.5"
+    include-in-header: "assets/include_head.html"
+    theme: ["default","assets/css/slides.scss"]
+    df-print: kable
+    width: 1280
+    height: 720
+    transition: "fade"
+    transition-speed: "fast"
+    smaller: false
+    incremental: false
+    scrollable: false
+    slide-level: 2
+    slide-number: true
+    progress: true
+    date:  last-modified
+    date-format: "DD-MMM-YYYY"
+    fig-align: left
+    chalkboard: true
+    callout-icon: true
+    image: "/assets/images/featured.jpg"
+    title-slide-attributes:
+      data-background-image: "/assets/images/cover.jpg"
+      data-background-size: "cover"
+      data-background-opacity: "1"
+    subtitle: "RaukR {{< meta current_year >}} • Advanced R for Bioinformatics"
+    header-logo-left: /assets/logos/raukr.svg
+    header-logo-left-height: 25px
+    header-logo-left-url: https://nbisweden.github.io/raukr-2024/slides/index.html
+    header-logo-right: /assets/logos/nbis-scilifelab.svg
+    header-logo-right-height: 25px
+    header-logo-right-url: https://nbisweden.github.io/raukr-2024/home_contents.html
+    template-partials:
+      - "/assets/title-slide.html"
+
+execute:
+  eval: true
+  echo: true
+  warning: false
+  message: false
+  freeze: auto
+
+knitr:
+  opts_chunk:
+    results: hold
+
+filters:
+  - assets/custom.lua
+  - reveal-logo
+  - fontawesome
+  - accordion

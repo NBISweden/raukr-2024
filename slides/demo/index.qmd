@@ -1,0 +1,1323 @@
+---
+title: "Demo Slides"
+author: "Roy Francis"
+image: "assets/featured.jpg"
+format: revealjs
+---
+
+## Packages {visibility="hidden"}
+
+```{r}
+#| echo: false
+
+# data handling
+library(dplyr)
+library(tidyr)
+library(stringr)
+
+# tables
+library(kableExtra) # complete table
+library(formattable) # table with conditional formatting
+library(DT) # interactive table
+
+# graphics
+library(ggplot2) # static graphics
+
+# interactive graphics
+library(htmltools)
+library(highcharter)
+library(plotly)
+library(ggiraph) # convert ggplot to interactive
+library(dygraphs) # time series
+library(networkD3) # network graph
+library(leaflet) # interactive maps
+library(crosstalk) # linking plots
+```
+
+## Introduction
+
+::: {.callout-note}
+This is a demo to showcase the **RaukR presentation design guide**, **usage** and capabilities of this presentation system. This presentation is created using **[quarto](https://quarto.org/)**. This presentation uses the javascript library **[revealjs](https://revealjs.com)** as the underlying framework.
+:::
+
+## Getting started
+
+- In RStudio, **File** > **New File** > **Quarto Presentation**
+- Add YAML matter to the top if not already there.
+
+```         
+---
+title: "This is a title"
+format:
+  revealjs
+---
+```
+
+- Click the **Render** button for a rendered preview.
+- Or use `quarto::quarto_render()` in R:
+
+```{r}
+#| eval: false
+quarto::quarto_render("slide.qmd")
+```
+
+- Or use `quarto render` in the terminal:
+
+```{sh}
+#| eval: false
+quarto render slide.qmd
+```
+
+## Slides
+
+#### Slide separators
+
+Slides are separated by `##`.
+Incremental content on is separated by `. . .` like below.
+
+Hide or not count a slide:
+
+```         
+## Slide Title {visibility="hidden"}
+## Slide Title {visibility="uncounted"}
+```
+
+. . .
+
+#### Slide notes
+
+Any content inside class `.notes` on a slide are notes. This is only visible in presenter mode (by pressing **s**).
+
+. . .
+
+#### Keyboard shortcuts
+
+- Press {{< kbd ? >}} for help.
+
+::: {.notes}
+Here are some slide notes. Press **s** again to exit presenter mode.
+:::
+
+## Layout
+
+The slide content can be organized into columns which can be nested if needed.
+
+```         
+:::{.columns}
+:::{.column width="50%"}
+<div style="background-color:#fdebd0">Left content</div>
+:::
+
+:::{.column width="50%"}
+<div style="background-color:#eaf2f8">Right content</div>
+
+:::{.column width="60%"}
+<div style="background-color:#d0ece7">Inner left</div>
+:::
+:::{.column width="40%"}
+<div style="background-color:#f2d7d5">Inner right</div>
+:::
+
+:::
+:::
+```
+
+:::: {.columns}
+
+::: {.column width="50%"}
+::: {style="background-color:#fdebd0"}
+Left content
+:::
+:::
+
+::: {.column width="50%"}
+::: {style="background-color:#eaf2f8"}
+Right content
+:::
+
+::: {.column width="60%"}
+::: {style="background-color:#d0ece7"}
+Inner left
+:::
+:::
+
+::: {.column width="40%"}
+::: {style="background-color:#f2d7d5"}
+Inner right
+:::
+:::
+:::
+
+::::
+
+## Panel tabs
+
+::: {.panel-tabset}
+
+### Tab A
+
+Content for `Tab A`
+
+### Tab B
+
+Content for `Tab B`
+
+:::
+
+## Text Formatting
+
+Rendering of normal text, numbers and symbols.
+
+ABCDEFGHIJKLMNOPQRSTUYWXYZÅÄÖ
+
+abcdefghijklmnopqrstuvwxyzåäö
+
+0123456789
+
+!"#%&/()$@*^~<>-:;,_±|?+=
+
+`!"#%&/\()$@*^~<>-:;,_±|?+=`
+
+## Text formatting
+
+:::: {.columns}
+::: {.column width="50%"}
+
+Headings can be defined as shown below.
+
+```         
+## Level 2 heading  
+### Level 3 heading  
+#### Level 4 heading  
+##### Level 5 heading  
+###### Level 6 heading
+```
+
+### Level 3 heading
+
+#### Level 4 heading
+
+##### Level 5 heading
+
+###### Level 6 heading
+
+Level 1 usage is not recommended. Use level 2 for slide titles. Use level 3 and below for other titles.
+:::
+
+::: {.column width="50%"}
+Text scaling classes
+
+```         
+[Largest text]{.largest}
+[Larger text]{.larger}
+[Large text]{.large}
+Normal text.  
+[Small text]{.small}
+[Smaller text]{.smaller}
+[Smallest text]{.smallest}
+```
+
+[Largest text]{.largest}\
+[Larger text]{.larger}\
+[Large text]{.large}\
+Normal text\
+[Small text]{.small}\
+[Smaller text]{.smaller}\
+[Smallest text]{.smallest}
+:::
+::::
+
+## Text Formatting
+
+:::: {.columns}
+::: {.column width="40%"}
+Horizontal alignment of text can be adjusted as shown below.
+
+```         
+[Left aligned text]{.left}
+[Center aligned text]{.center}
+[Right aligned text]{.right}
+```
+
+[Left aligned text]{.left}  
+[Center aligned text]{.center}  
+[Right aligned text]{.right}
+
+```         
+::: {.blockquote}
+This line is quoted
+:::
+```
+
+::: blockquote
+This line is quoted
+:::
+
+:::
+
+::: {.column width="60%"}
+
+A horizontal line can be created using `---`
+
+---
+
+`This is **Bold text**`  This is **Bold text**
+
+`This is *Italic text*`  This is *Italic text*
+
+`~~Strikethrough~~ text`  ~~Strikethrough~~ text
+
+This is subscript `H~2~O`  H~2~O
+
+This is superscript `2^10`  2^10^
+
+`This is a [badge]{.badge .badge-primary}`  
+This is a [badge]{.badge .badge-primary}  
+
+`This is a [badge]{.badge .badge-secondary}`  
+This is a [badge]{.badge .badge-secondary}  
+
+`This is a [link](r-project.org)`  This is a [link](r-project.org)
+:::
+::::
+
+## Text formatting
+
+Fit text to full width.
+
+```         
+::: {.r-fit-text}
+Attention
+:::
+```
+
+::: {.r-fit-text}
+Attention
+:::
+
+## Text formatting
+
+In reports, `.aside` pushes content into the margin while in revealjs, it is pushed to the bottom.
+
+```
+::: {.aside}
+Content inside aside.
+:::
+```
+
+::: {.aside}
+Content inside aside.
+:::
+
+## Lists
+
+:::: {.columns}
+::: {.column width="50%"}
+
+**Unordered List**
+
+```         
+- Bullet 1
+- Bullet 2
+  - Sub-bullet 2.1
+```
+
+- Bullet 1
+- Bullet 2
+  - Sub-bullet 2.1
+
+:::
+
+::: {.column width="50%"}
+
+**Incremental List**
+
+```         
+:::{.incremental}
+1. Incremental Bullet 1
+2. Incremental Bullet 2
+3. Incremental Bullet 3
+:::
+```
+
+::: {.incremental}
+
+1. Incremental Bullet 1
+2. Incremental Bullet 2
+3. Incremental Bullet 3
+
+:::
+
+[For more options, see [here](https://quarto.org/docs/presentations/revealjs/#incremental-lists).]{.smaller}
+
+:::
+::::
+
+## Custom CSS styling
+
+- You can style text using any custom CSS
+- This is a block level element
+
+```         
+::: {style="color: red"}
+This paragraph is red.
+:::
+```
+
+::: {style="color: red"}
+This paragraph is red.
+:::
+
+- This is a span. ie; A word or one line.
+
+`[This text is blue]{style="color: blue"}`
+
+[This text is blue]{style="color: blue"}
+
+## Callouts
+
+:::: {.columns}
+::: {.column width="40%"}
+
+```         
+::: {.callout-note}
+This is a callout.
+:::
+
+::: {.callout-warning}
+This is a callout.
+:::
+
+::: {.callout-important}
+This is a callout.
+:::
+
+::: {.callout-tip}
+This is a callout.
+:::
+
+::: {.callout-caution}
+This is a callout.
+:::
+```
+
+:::
+
+::: {.column width="60%"}
+::: callout-note
+This is a callout.
+:::
+
+::: callout-warning
+This is a callout.
+:::
+
+::: callout-important
+This is a callout.
+:::
+
+::: callout-tip
+This is a callout.
+:::
+
+::: callout-caution
+This is a callout.
+:::
+
+:::
+::::
+
+::: {.aside}
+CallOut blocks are documented [here](https://quarto.org/docs/authoring/callouts.html)
+:::
+
+## Callouts
+
+Variants of callout
+
+:::: {.columns}
+::: {.column width="50%"}
+
+```         
+::: {.callout-note icon=false}
+Icon is disabled
+:::
+
+::: {.callout-note appearance="simple"}
+Appearance is simple
+:::
+
+::: {.callout-note appearance="minimal"}
+Appearance is minimal
+:::
+
+::: {.callout-note appearance="simple"}
+## Custom title
+Simple appearance and a custom title
+:::
+
+::: {.callout-note appearance="minimal"}
+## Custom title
+Minimal appearance and a custom title
+:::
+```
+
+:::
+
+::: {.column width="50%"}
+
+::: {.callout-note icon=false}
+Icon is disabled
+:::
+
+::: {.callout-note appearance="simple"}
+Appearance is simple
+:::
+
+::: {.callout-note appearance="minimal"}
+Appearance is minimal
+:::
+
+::: {.callout-note appearance="simple"}
+## Custom title
+Simple appearance and a custom title
+:::
+
+::: {.callout-note appearance="minimal"}
+## Custom title
+Minimal appearance and a custom title
+:::
+
+:::
+::::
+
+## Callouts
+
+````
+::: {.callout-note}
+
+This contains code
+
+## Callout with code
+
+```
+Sys.Date()
+```
+
+:::
+````
+
+::: {.callout-note}
+
+## Callout with code
+
+This contains code
+
+```
+Sys.Date()
+```
+
+:::
+
+## Code formatting
+
+**Inline code**
+
+- Code can be defined inline where `` `this` `` looks like `this`.
+- R code can be executed inline `` `r "\u0060r Sys.Date()\u0060"` `` producing `r Sys.Date()`.
+
+`== != && ++ |> <> <- <= <~ /= |=> ->>`
+
+## Code formatting
+
+:::: {.columns}
+::: {.column width="50%"}
+
+**Code chunks**
+
+Code can also be defined inside chunks.
+
+````         
+```
+This is code
+```
+````
+
+```         
+This is code
+```
+
+R code is executed inside code blocks like this
+
+````
+```{{r}}
+Sys.Date()
+```
+````
+
+which shows the code and output.
+
+```{r}
+Sys.Date()
+```
+
+:::
+
+::: {.column width="50%"}
+The code and results can be hidden by
+
+````
+```{{r}}
+#| echo: false
+#| results: hide
+data(iris)
+```
+````
+
+```{r}
+#| echo: true
+data(iris)
+head(iris[1:3,1:2])
+```
+
+[These are called chunk attributes. For more options, see [here](https://quarto.org/docs/computations/execution-options.html) and complete list [here](https://quarto.org/docs/reference/cells/cells-knitr.html).]{.small}
+
+:::
+::::
+
+## Code sizing
+
+**Sizing pre-formatted inline code**
+
+::: {.columns}
+::: {.column}
+
+```         
+[`Sys.Date()`]{.largest}
+[`Sys.Date()`]{.larger}
+[`Sys.Date()`]{.large}
+`Sys.Date()`
+[`Sys.Date()`]{.small}
+[`Sys.Date()`]{.smaller}
+[`Sys.Date()`]{.smallest}
+```
+
+[`Sys.Date()`]{.largest}\
+[`Sys.Date()`]{.larger}\
+[`Sys.Date()`]{.large}\
+`Sys.Date()`\
+[`Sys.Date()`]{.small}\
+[`Sys.Date()`]{.smaller}\
+[`Sys.Date()`]{.smallest}
+
+:::
+::: {.column}
+
+**Sizing pre-formatted code block**
+
+````
+::: {.small}
+```
+Sys.Date()
+```
+:::
+````
+
+::: {.small}
+```
+Sys.Date()
+```
+:::
+
+::: {.smaller}
+```
+Sys.Date()
+```
+:::
+
+::: {.smallest}
+```
+Sys.Date()
+```
+:::
+
+:::
+:::
+
+## Code sizing
+
+**Sizing source code**
+
+::: {.columns}
+::: {.column}
+
+```{{r}}
+#| eval: false
+#| class-source: small
+Sys.Date()
+```
+
+:::
+::: {.column}
+
+```{r}
+#| eval: false
+#| class-source: small
+Sys.Date()
+```
+
+```{r}
+#| eval: false
+#| class-source: smaller
+Sys.Date()
+```
+
+```{r}
+#| eval: false
+#| class-source: smallest
+Sys.Date()
+```
+
+:::
+:::
+
+**Sizing output code**
+
+::: {.columns}
+::: {.column}
+
+```{{r}}
+#| class-source: small
+#| classes: small
+Sys.Date()
+```
+
+:::
+::: {.column}
+
+```{r}
+#| class-source: small
+#| classes: small
+Sys.Date()
+```
+
+```{r}
+#| class-source: smaller
+#| classes: smaller
+Sys.Date()
+```
+
+```{r}
+#| class-source: smallest
+#| classes: smallest
+Sys.Date()
+```
+
+:::
+:::
+
+## Code highlighting
+
+:::{.columns}
+:::{.column width="50%"}
+
+````
+```{{r}}
+#| eval: false
+#| echo: true
+#| code-line-numbers: "2-3"
+
+iris %>%
+  ggplot(aes(x=Sepal.Length,y=Sepal.Width,col=Species))+
+  geom_point(size=2)+
+  labs(x="Sepal Length",y="Sepal Width")+
+  theme_report()
+```
+````
+
+```{r}
+#| eval: false
+#| echo: true
+#| code-line-numbers: "2-3"
+
+iris %>%
+  ggplot(aes(x=Sepal.Length,y=Sepal.Width,col=Species))+
+  geom_point(size=2)+
+  labs(x="Sepal Length",y="Sepal Width")+
+  theme_report()
+```
+
+:::
+:::{.column width="50%"}
+
+````
+```{{r}}
+#| eval: false
+#| echo: true
+#| code-line-numbers: "2|3|5"
+
+iris %>%
+  ggplot(aes(x=Sepal.Length,y=Sepal.Width,col=Species))+
+  geom_point(size=2)+
+  labs(x="Sepal Length",y="Sepal Width")+
+  theme_report()
+```
+````
+
+```{r}
+#| eval: false
+#| echo: true
+#| code-line-numbers: "2|3|5"
+
+iris %>%
+  ggplot(aes(x=Sepal.Length,y=Sepal.Width,col=Species))+
+  geom_point(size=2)+
+  labs(x="Sepal Length",y="Sepal Width")+
+  theme_report()
+```
+:::
+::::
+
+[For more code highlighting documentation, see [here](https://quarto.org/docs/presentations/revealjs/#code-blocks).]{.smaller}
+
+## Images • Markdown
+
+**Using Markdown**
+
+::: {.columns}
+::: {.column width="50%"}
+
+Using regular markdown.
+
+```         
+![](assets/image.jpg)
+```
+
+![](assets/image.jpg)
+
+[The dimensions are based on image and/or fill up the entire width.]{.small}
+:::
+
+::: {.column width="50%"}
+Control image dimensions.
+
+```         
+![](assets/image.jpg){width=50%}
+![](assets/image.jpg){width=20%}
+```
+
+![](assets/image.jpg){width=50%}
+![](assets/image.jpg){width=20%}
+
+[For more image documentation, see [here](https://quarto.org/docs/authoring/figures.html).]{.smaller}
+
+:::
+:::
+
+## Images • Markdown • Layout
+
+Figure layout
+
+```         
+::: {layout-ncol=3}
+![Caption for figure 1](assets/image.jpg){#fig-layout-1}
+
+![Caption for figure 2](assets/image.jpg){#fig-layout-2}
+
+![Caption for figure 3](assets/image.jpg){#fig-layout-3}
+:::
+```
+
+::: {layout-ncol="3"}
+![Caption for figure 1](assets/image.jpg){#fig-layout-1}
+
+![Caption for figure 2](assets/image.jpg){#fig-layout-2}
+
+![Caption for figure 3](assets/image.jpg){#fig-layout-3}
+
+:::
+
+## Images • Markdown • Layout
+
+Absolute positioning
+
+```
+![](assets/image.jpg){.absolute top=250 left=0 height="450"}
+![](assets/image.jpg){.absolute top=200 right=50 height="250"}
+![](assets/image.jpg){.absolute bottom=0 right=200 height="200"}
+```
+
+![](assets/image.jpg){.absolute top=250 left=0 height="450"}
+
+![](assets/image.jpg){.absolute top=200 right=50 height="250"}
+
+![](assets/image.jpg){.absolute bottom=0 right=200 height="200"}
+
+## Images • HTML
+
+**Using Raw HTML**
+
+This image is 30% size.
+`<img src="assets/image.jpg" style="width:30%;"/>`
+
+<img src="assets/image.jpg" style="width:30%;"/>
+
+## Images • R
+
+**Using R**
+
+R chunks in RMarkdown can be used to control image display size using the argument `out.width`.
+
+This image is displayed at a size of 200 pixels.
+
+````
+```{{r}}
+#| out-width: "200px"
+knitr::include_graphics("assets/image.jpg")
+```
+````
+
+```{r}
+#| echo: false
+#| out-width: "200px"
+knitr::include_graphics("assets/image.jpg")
+```
+
+## Math expressions
+
+Some examples of rendering equations.
+
+:::: {.columns}
+::: {.column width="60%"}
+
+```
+$e^{i\pi} + 1 = 0$
+
+$$\frac{E \times X^2 \prod I}{2+7} = 432$$
+
+$$\sum_{i=1}^n X_i$$
+
+$$\int_0^{2\pi} \sin x~dx$$
+```
+
+:::
+
+::: {.column width="40%"}
+
+$e^{i\pi} + 1 = 0$
+$$\frac{E \times X^2 \prod I}{2+7} = 432$$
+$$\sum_{i=1}^n X_i$$
+$$\int_0^{2\pi} \sin x~dx$$
+
+:::
+::::
+
+## Math expressions
+
+Some examples of rendering equations.
+
+:::: {.columns}
+::: {.column width="60%"}
+
+```
+$\left( \sum_{i=1}^{n}{i} \right)^2 = \left( \frac{n(n-1)}{2}\right)^2 = \frac{n^2(n-1)^2}{4}$
+
+$\begin{eqnarray} X & \sim & \mathrm{N}(0,1)\\ Y & \sim & \chi^2_{n-p}\\ R & \equiv & X/Y \sim t_{n-p} \end{eqnarray}$
+
+$\begin{eqnarray} P(|X-\mu| > k) & = & P(|X-\mu|^2 > k^2)\\ & \leq & \frac{\mathbb{E}\left[|X-\mu|^2\right]}{k^2}\\ & \leq & \frac{\mathrm{Var}[X]}{k^2} \end{eqnarray}$
+```
+
+:::
+
+::: {.column width="40%"}
+
+$\left( \sum_{i=1}^{n}{i} \right)^2 = \left( \frac{n(n-1)}{2}\right)^2 = \frac{n^2(n-1)^2}{4}$
+
+$\begin{eqnarray} X & \sim & \mathrm{N}(0,1)\\ Y & \sim & \chi^2_{n-p}\\ R & \equiv & X/Y \sim t_{n-p} \end{eqnarray}$
+
+$\begin{eqnarray} P(|X-\mu| > k) & = & P(|X-\mu|^2 > k^2)\\ & \leq & \frac{\mathbb{E}\left[|X-\mu|^2\right]}{k^2}\\ & \leq & \frac{\mathrm{Var}[X]}{k^2} \end{eqnarray}$
+
+:::
+::::
+
+## Tables • `kable`
+
+The most simple table using `kable` from R package `knitr`.
+
+```{r}
+knitr::kable(head(iris),'html')
+```
+
+## Tables • `kableExtra`
+
+More advanced table using [`kableExtra`](https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html) and [`formattable`](https://cran.r-project.org/web/packages/formattable/vignettes/formattable-data-frame.html).
+
+```{r}
+ iris[c(1:2,51:52,105:106),] %>%
+  mutate(Sepal.Length=color_bar("lightsteelblue")(Sepal.Length)) %>%
+  mutate(Sepal.Width=color_tile("white","orange")(Sepal.Width)) %>%
+  mutate(Species=cell_spec(Species,"html",color="white",bold=T,
+    background=c("#8dd3c7","#fb8072","#bebada")[factor(.$Species)])) %>%
+  kable("html",escape=F) %>%
+  kable_styling(bootstrap_options=c("striped","hover","responsive"),full_width=F) %>%
+  column_spec(5,width="3cm")
+```
+
+## Tables • gt
+
+Tables using the [gt](https://gt.rstudio.com/) package. Grammar of tables with extensive customization options.
+
+:::: {.columns}
+::: {.column width="60%"}
+
+```{r}
+#| eval: false
+library(gt)
+
+iris %>%
+    group_by(Species) %>%
+    slice(1:2) %>%
+    gt() %>%
+    cols_label(
+      Sepal.Length = "Sepal Length", Sepal.Width = "Sepal Width",
+      Petal.Length = "Petal Length", Petal.Width = "Petal Width"
+    ) %>%
+    tab_source_note(
+        source_note = md("Source: Iris data. Anderson, 1936; Fisher, 1936)")
+    )
+```
+
+:::
+
+::: {.column width="40%"}
+
+```{r}
+#| echo: false
+library(gt)
+
+iris %>%
+    group_by(Species) %>%
+    slice(1:2) %>%
+    gt() %>%
+    cols_label(
+      Sepal.Length = "Sepal Length", Sepal.Width = "Sepal Width",
+      Petal.Length = "Petal Length", Petal.Width = "Petal Width"
+    ) %>%
+    tab_source_note(
+        source_note = md("Source: Iris data. Anderson, 1936; Fisher, 1936)")
+    )
+```
+
+:::
+::::
+
+## Tables • Interactive • `DT`
+
+Interactive table using R package [`DT`](https://rstudio.github.io/DT/).
+
+```{r}
+library(DT)
+DT::datatable(iris[1:20,],options=list(pageLength=7))
+```
+
+## Tables • Interactive • `reactable`
+
+Interactive tables with [reactable](https://glin.github.io/reactable/index.html).
+
+```{r}
+library(reactable)
+
+reactable(iris[sample(1:150,6),],
+  striped = TRUE, highlight = TRUE, filterable = TRUE
+)
+```
+
+## Static plots • Base Plot
+
+Plots using base R.
+
+```{r}
+#| fig-height: 6
+#| fig-width: 6
+
+{par(mar=c(5,5,0,0))
+  plot(x=iris$Sepal.Length,y=iris$Sepal.Width,
+      col=c("coral","steelblue","forestgreen")[iris$Species],
+      xlab="Sepal Length",ylab="Sepal Width",pch=19)
+  legend(x=7,y=4.47,legend=c("setosa","versicolor","virginica"),
+       col=c("coral","steelblue","forestgreen"),pch=19)}
+```
+
+## Static plots • `ggplot2`
+
+Plotting using [`ggplot2`](http://ggplot2.org/).
+
+```{r}
+#| fig-height: 6
+#| fig-width: 8
+
+iris %>%
+  ggplot(aes(x=Sepal.Length,y=Sepal.Width,col=Species))+
+  geom_point(size=2)+
+  labs(x="Sepal Length",y="Sepal Width")+
+  theme_bw(base_size=18)
+```
+
+## Interactive plots • `highcharter`
+
+R package [`highcharter`](http://jkunst.com/highcharter/) is a wrapper around javascript library [`highcharts`](https://www.highcharts.com/).
+
+```{r}
+library(highcharter)
+h <- iris %>%
+  hchart("scatter",hcaes(x="Sepal.Length",y="Sepal.Width",group="Species")) %>%
+  hc_xAxis(title=list(text="Sepal Length"),crosshair=TRUE) %>%
+  hc_yAxis(title=list(text="Sepal Width"),crosshair=TRUE) %>%
+  hc_chart(zoomType="xy",inverted=FALSE) %>%
+  hc_legend(verticalAlign="top",align="right") %>% hc_size(height=300,width=500)
+
+htmltools::tagList(list(h))
+```
+
+## Interactive plots • `plotly`
+
+R package [`plotly`](https://plot.ly/r/) provides R binding around javascript plotting library [`plotly`](https://plot.ly).
+
+```{r}
+library(plotly)
+p <- iris %>%
+  plot_ly(x=~Sepal.Length,y=~Sepal.Width,color=~Species,width=550,height=400) %>%
+  add_markers()
+p
+```
+
+## Interactive plots • `ggplotly`
+
+`plotly` also has a function called `ggplotly` which converts a static ggplot2 object into an interactive plot.
+
+```{r}
+#| fig-height: 6
+#| fig-width: 9
+
+library(plotly)
+p <- ggplot(iris,aes(x=Sepal.Length,y=Sepal.Width,col=Species))+
+  geom_point()+
+  labs(x="Sepal Length",y="Sepal Width")+
+  theme_bw(base_size=12)
+
+plotly::ggplotly(p,width=460,height=360)
+```
+
+## Interactive plots • `ggiraph`
+
+R package [`ggiraph`](https://github.com/davidgohel/ggiraph) converts a static ggplot2 object into an interactive plot.
+
+```{r}
+#| fig-height: 2
+#| fig-width: 4
+
+library(ggiraph)
+p <- ggplot(iris,aes(x=Sepal.Length,y=Petal.Length,colour=Species))+
+      geom_point_interactive(aes(tooltip=paste0("<b>Petal Length:</b> ",Petal.Length,"\n<b>Sepal Length: </b>",Sepal.Length,"\n<b>Species: </b>",Species)),size=2)+
+  theme_bw()
+tooltip_css <- "background-color:#f8f9f9;padding:10px;border-style:solid;border-width:2px;border-color:#125687;border-radius:5px;"
+ggiraph(code=print(p),hover_css="cursor:pointer;stroke:black;fill-opacity:0.3",zoom_max=5,tooltip_extra_css=tooltip_css,tooltip_opacity=0.9,height_svg=2,width_svg=4,width=0.6)
+```
+
+## Interactive time series • `dygraphs`
+
+R package [`dygraphs`](http://rstudio.github.io/dygraphs/) provides R bindings for javascript library [dygraphs](http://dygraphs.com/) for time series data.
+
+```{r}
+#| fig-height: 4
+#| fig-width: 9
+library(dygraphs)
+lungDeaths <- cbind(ldeaths, mdeaths, fdeaths)
+dygraph(lungDeaths,main="Deaths from Lung Disease (UK)") %>%
+  dyOptions(colors=c("#66C2A5","#FC8D62","#8DA0CB"))
+```
+
+## Network graph
+
+R package `networkD3` allows the use of interactive network graphs from the [D3.js](https://d3js.org/) javascript library.
+
+```{r}
+library(networkD3)
+data(MisLinks,MisNodes)
+forceNetwork(Links=MisLinks,Nodes=MisNodes,Source="source",
+             Target="target",Value="value",NodeID="name",
+             Group="group",opacity=0.4,
+             height=300,width=500)
+```
+
+## Interactive maps • `leaflet`
+
+R package [`leaflet`](https://rstudio.github.io/leaflet/) provides R bindings for javascript mapping library; [leafletjs](http://leafletjs.com/).
+
+```{r}
+library(leaflet)
+leaflet(height=300,width=800) %>%
+  addTiles(urlTemplate='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png') %>%
+  #addProviderTiles(providers$Esri.NatGeoWorldMap) %>%
+  addMarkers(lat=57.639327,lng=18.288534,popup="RaukR") %>%
+  setView(lat=57.639327,lng=18.288534,zoom=15)
+```
+
+## Linking Plots • `crosstalk`
+
+R package [`crosstalk`](https://rstudio.github.io/crosstalk/index.html) allows crosstalk enabled plotting libraries to be linked. Through the shared 'key' variable, data points can be manipulated simultaneously on two independent plots.
+
+```{r}
+#| message: false
+#| warning: false
+library(crosstalk)
+shared_quakes <- SharedData$new(quakes[sample(nrow(quakes), 100),])
+lf <- leaflet(shared_quakes,height=300) %>%
+        addTiles(urlTemplate='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png') %>%
+        addMarkers()
+py <- plot_ly(shared_quakes,x=~depth,y=~mag,size=~stations,height=300) %>%
+        add_markers()
+div(div(lf,style="float:left;width:49%"),div(py,style="float:right;width:49%"))
+```
+
+## ObservableJS
+
+- Quarto supports [ObservableJS](https://observablehq.com/) for interactive visualisations in the browser.
+
+:::: {.columns}
+::: {.column width="50%"}
+
+Pass data from R to OJS
+
+```{r}
+irism <- iris
+colnames(irism) <- gsub("[.]","_",tolower(colnames(irism)))
+ojs_define(ojsd = irism)
+```
+
+```{ojs}
+ojsdata = transpose(ojsd)
+```
+
+:::
+::: {.column width="50%"}
+
+Display as a table
+
+```{ojs}
+viewof filtered_table = Inputs.table(ojsdata)
+```
+
+:::
+::::
+
+## ObservableJS
+
+:::: {.columns}
+::: {.column width="60%"}
+
+Define inputs
+
+```{ojs}
+viewof x = Inputs.select(Object.keys(ojsdata[0]), {
+  value: "sepal_length", multiple: false, label: "X axis"
+  })
+```
+
+```{ojs}
+viewof y = Inputs.select(Object.keys(ojsdata[0]), {
+  value: "sepal_width", multiple: false, label: "Y axis"
+  })
+```
+
+:::
+::: {.column width="40%"}
+
+Display plot
+
+```{ojs}
+Plot.plot({
+  marks: [
+    Plot.dot(ojsdata, {
+      x: x, y: y, fill: "species",
+      title: (d) => `${d.species} \n Petal length: ${d.petal_length} \n Sepal length: ${d.sepal_length}`
+    })
+  ], grid: true
+})
+```
+
+:::
+::::
+
+ObservableJS in quarto [documentation](https://quarto.org/docs/interactive/index.html#observable-js).
+
+## Diagrams
+
+```{mermaid}
+%%| echo: fenced
+flowchart LR
+  A[Hard edge] --> B(Round edge)
+  B --> C{Decision}
+  C --> D[Result one]
+  C --> E[Result two]
+```
+
+::: {.aside}
+Diagram [documentation](https://quarto.org/docs/authoring/diagrams.html).
+:::
+
+## Colourful {background-color="#ABEBC6"}
+
+This slide has a colourful background
+
+```         
+##  Colourful {background-color="#ABEBC6"}
+```
+
+## Big Image {background-image="assets/image.jpg"}
+
+This slide has a background image
+
+```         
+##  Big Image {background-image="assets/image.jpg"}
+```
+
+## General tips
+
+- To set custom title slide cover image
+
+```yaml
+title-slide-attributes:
+  data-background-image: "assets/images/cover.jpg"
+```
+
+- To add custom end slide picture, set page title
+
+`##  {background-image="assets/images/cover.jpg"}`
+
+- Add custom css under YAML `css: "styles.css"`
+
+## General tips
+
+- If content overflows the slide in vertical direction, add class `.scrollable`
+
+::: scrollable
+```{r}
+#| echo: false
+Sys.info()
+```
+:::
+
+- Export HTML to PDF using PDF export mode by pressing **e**
+- For complete Quarto revealjs documentation, click [here](https://quarto.org/docs/presentations/revealjs/)
+
+##  {background-image="/assets/images/cover.jpg"}
+
+### Thank you! Questions?
+
+```{r}
+#| echo: false
+R.version[c("platform","os","major","minor")]
+```
+
+[{{< meta current_year >}} • [SciLifeLab](https://www.scilifelab.se/) • [NBIS](https://nbis.se/) • [RaukR](https://nbisweden.github.io/raukr-2024)]{.smaller}

@@ -1,0 +1,240 @@
+---
+title: "Vectorization in R"
+author: "Marcin Kierczak"
+image: "assets/featured.jpg"
+format: revealjs
+---
+
+## {visibility="hidden"}
+
+```{r}
+#| echo: false
+library(tidyverse)
+library(emo)
+library(peakRAM)
+#library(ggplot2)
+```
+
+## Learning Outcomes
+
+By the end of this module, you will:
+
+- understand how to write more efficient loops
+- be able to vectorize most loops
+- understand how the `apply*` functions work
+- be aware of the `purrr` package
+- understand what a recursive call is
+
+## The simplest of all `for` loops
+
+Say, we want to add 1 to every element of a vector:
+
+```{r for.loop.ex1}
+vec <- c(1:5)
+vec
+for (i in vec) {
+  vec[i] <- vec[i] + 1
+}
+vec
+```
+
+. . .
+
+Exactly the same can be achieved in R by means of **vectorization**:
+
+```{r for.loop.avoid}
+vec <- c(1:5)
+vec + 1
+```
+
+Which is better? `r emo::ji('confused')`
+
+## Repeating actions &mdash; vectorization
+
+Let us compare the time of execution of the vectorized version (vector with 10,000 elements):
+
+```{r for.loop.avoid.timing}
+#| echo: true
+
+vec <- c(1:1e6)
+peakRAM::peakRAM(vec <- vec + 1)
+```
+
+. . .
+
+to the loop version:
+
+```{r for.loop.avoid.timing2}
+#| echo: true
+
+vec <- c(1:1e6)
+loop <- function(vec) {
+  for (i in vec) {
+    vec[i] <- vec[i] + 1
+  }
+  return(vec)
+}
+peakRAM::peakRAM(loop(vec))
+```
+
+## Vectorization &mdash; the problem
+
+```{r is_a_droid}
+#| error: true
+is_a_droid <- function(x) {
+  droids <- c('2-1B', '4-LOM', '8D8', '0-0-0', 'AP-5', 'AZI-3', 'Mister Bones', 'BB-8', 'BB-9E', 'BD-1', 'BT-1', 'C1-10P', 'C-3PO', 'R2-D2')
+  if (x %in% droids) {
+    return(T)
+  } else {
+    return(F)
+  }
+}
+
+test <- c('Anakin', 'Vader', 'R2-D2', 'AZI-3', 'Luke')
+is_a_droid(test)
+```
+
+## Vectorization &mdash; the solution(s)
+
+The `base::Vectorize` way:
+
+```{r vec_is_a_droid}
+vectorized_is_a_droid <- base::Vectorize(is_a_droid, vectorize.args = c('x'))
+vectorized_is_a_droid(test)
+```
+
+. . .
+
+The `apply*` way:
+
+```{r, error=T}
+apply(as.matrix(test), FUN = is_a_droid, MARGIN = 1)
+```
+
+. . .
+
+```{r}
+lapply(test, FUN=is_a_droid) %>% unlist() # list apply
+```
+
+. . .
+
+```{r}
+sapply(test, is_a_droid) # simplified lapply
+```
+
+## Vectorization &mdash; the solution(s)
+
+The `vapply`:
+
+```{r}
+vapply(test, is_a_droid, FUN.VALUE = TRUE) # value type-safe sapply 
+vapply(test, is_a_droid, FUN.VALUE = 1)
+```
+
+. . .
+
+```{r}
+#| error: true
+vapply(test, is_a_droid, FUN.VALUE = 'a')
+```
+
+. . .
+
+Or the `purrr` way:
+
+```{r}
+purrr::map(test, is_a_droid) %>% unlist()
+```
+
+## Recursion
+
+When we explicitly repeat an action using a loop, we talk about **iteration**. We can also repeat actions by means of **recursion**, i.e. when a function calls itself. Let us implement a factorial $!$:
+
+```{r rec.fact}
+factorial_rec <- function(x) {
+  if (x == 0 || x == 1)
+    return(1)
+  else
+    return(x * factorial_rec(x - 1)) # Recursive call!
+}
+factorial_rec(5)
+```
+
+## To recurse or to iterate?
+
+    Comparing recursion to iteration is like comparing a phillips head screwdriver to a flat head screwdriver. For the most part you could remove any phillips head screw with a flat head, but it would just be easier if you used the screwdriver designed for that screw right?
+
+    Some algorithms just lend themselves to recursion because of the way they are designed (Fibonacci sequences, traversing a tree like structure, etc.). Recursion makes the algorithm more succinct and easier to understand (therefore shareable and reusable)
+
+ -- [StackOverflow](https://stackoverflow.com/questions/72209/recursion-or-iteration)
+ 
+## Loops &mdash; avoid growing data
+
+Avoid changing dimensions of an object inside the loop:
+
+```{r avoid.growing}
+v <- c() # Initialize
+for (i in 1:100) {
+  v <- c(v, i)
+}
+```
+
+. . .
+
+It is much better to do it like this:
+
+```{r avoid.growing2}
+v <- rep(NA, 100) # Initialize with length
+for (i in 1:100) {
+  v[i] <- i
+}
+```
+
+## {background-image="/assets/images/cover.jpg"}
+
+### Thank you! Questions?
+
+```{r}
+#| echo: false
+R.version[c("platform","os","major","minor")]
+```
+
+[{{< meta current_year >}} • [SciLifeLab](https://www.scilifelab.se/) • [NBIS](https://nbis.se/) • [RaukR](https://nbisweden.github.io/raukr-2024)]{.smaller}
+
+## Recursion = iteration?
+
+Yes, every iteration can be converted to recursion (Church-Turing conjecture) and *vice versa*. It is not always obvious, but theoretically it is doable. Let's see how to implement *factorial* in iterative manner:
+
+```{r rec.fact.iter}
+factorial_iter <- function(x) {
+  if (x == 0 || x == 1)
+    return(1)
+  else {
+    tmp <- 1
+    for (i in 2:x) {
+      tmp <- tmp * i
+    }
+    return(tmp)  
+  }
+}
+factorial_iter(5)
+```
+
+## Recursion == iteration, really?
+
+More writing for the iterative version, right? What about the time efficiency?  
+The recursive version:
+```{r rec.fact.mem}
+#| echo: true
+#| error: true
+peakRAM::peakRAM(factorial_rec(1000))
+```
+
+And the iterative one:
+
+```{r iter.fact.mem}
+#| echo: true
+#| error: true
+peakRAM::peakRAM(factorial_iter(1000))
+```

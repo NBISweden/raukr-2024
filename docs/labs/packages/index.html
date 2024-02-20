@@ -1,0 +1,1366 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.549">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Sebastian DiLorenzo">
+<meta name="description" content="Building packages in R.">
+
+<title>R packages</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../assets/favicon.svg" rel="icon" type="image/svg+xml">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<style>
+
+      .quarto-title-block .quarto-title-banner {
+        background-image: url(../../assets/images/banner.jpg);
+background-size: cover;
+      }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Fira+Mono&amp;family=Nunito:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&amp;display=swap" rel="stylesheet">
+<link href="../../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="../../site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../assets/logos/raukr.png" alt="RaukR" class="navbar-logo">
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../home_program.html"> 
+<span class="menu-text">Program</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../home_registration.html"> 
+<span class="menu-text">Registration</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../home_gallery.html"> 
+<span class="menu-text">Gallery</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../home_faq.html"> 
+<span class="menu-text">FAQ</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../home_about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">R packages</h1>
+            <p class="subtitle lead">RaukR 2024 • Advanced R for Bioinformatics</p>
+                  <div>
+        <div class="description">
+          Building packages in R.
+        </div>
+      </div>
+                </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Sebastian DiLorenzo </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">27-Jun-2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#cheatsheet" id="toc-cheatsheet" class="nav-link active" data-scroll-target="#cheatsheet"><span class="header-section-number">1</span> Cheatsheet</a></li>
+  <li><a href="#installing-dependencies" id="toc-installing-dependencies" class="nav-link" data-scroll-target="#installing-dependencies"><span class="header-section-number">2</span> Installing dependencies</a></li>
+  <li><a href="#create-a-package-backbone" id="toc-create-a-package-backbone" class="nav-link" data-scroll-target="#create-a-package-backbone"><span class="header-section-number">3</span> Create a package backbone</a></li>
+  <li><a href="#insert-wondrous-things" id="toc-insert-wondrous-things" class="nav-link" data-scroll-target="#insert-wondrous-things"><span class="header-section-number">4</span> Insert wondrous things</a>
+  <ul>
+  <li><a href="#r-code" id="toc-r-code" class="nav-link" data-scroll-target="#r-code"><span class="header-section-number">4.1</span> R code</a></li>
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data"><span class="header-section-number">4.2</span> Data</a></li>
+  <li><a href="#documentation" id="toc-documentation" class="nav-link" data-scroll-target="#documentation"><span class="header-section-number">4.3</span> Documentation</a>
+  <ul class="collapse">
+  <li><a href="#function-documentation" id="toc-function-documentation" class="nav-link" data-scroll-target="#function-documentation"><span class="header-section-number">4.3.1</span> Function documentation</a></li>
+  <li><a href="#data-documentation" id="toc-data-documentation" class="nav-link" data-scroll-target="#data-documentation"><span class="header-section-number">4.3.2</span> Data documentation</a></li>
+  </ul></li>
+  <li><a href="#description" id="toc-description" class="nav-link" data-scroll-target="#description"><span class="header-section-number">4.4</span> DESCRIPTION</a></li>
+  <li><a href="#namespace" id="toc-namespace" class="nav-link" data-scroll-target="#namespace"><span class="header-section-number">4.5</span> NAMESPACE</a>
+  <ul class="collapse">
+  <li><a href="#import" id="toc-import" class="nav-link" data-scroll-target="#import"><span class="header-section-number">4.5.1</span> Import</a></li>
+  <li><a href="#testing-the-imported-function" id="toc-testing-the-imported-function" class="nav-link" data-scroll-target="#testing-the-imported-function"><span class="header-section-number">4.5.2</span> Testing the imported function</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#checking-your-package" id="toc-checking-your-package" class="nav-link" data-scroll-target="#checking-your-package"><span class="header-section-number">5</span> Checking your package</a></li>
+  <li><a href="#finish-line" id="toc-finish-line" class="nav-link" data-scroll-target="#finish-line"><span class="header-section-number">6</span> Finish line</a></li>
+  <li><a href="#vignette" id="toc-vignette" class="nav-link" data-scroll-target="#vignette"><span class="header-section-number">7</span> Vignette</a></li>
+  <li><a href="#testing" id="toc-testing" class="nav-link" data-scroll-target="#testing"><span class="header-section-number">8</span> Testing</a></li>
+  <li><a href="#src-and-rcpp" id="toc-src-and-rcpp" class="nav-link" data-scroll-target="#src-and-rcpp"><span class="header-section-number">9</span> src/ and Rcpp</a>
+  <ul>
+  <li><a href="#check-again" id="toc-check-again" class="nav-link" data-scroll-target="#check-again"><span class="header-section-number">9.1</span> Check again!</a></li>
+  </ul></li>
+  <li><a href="#github-and-github-actions" id="toc-github-and-github-actions" class="nav-link" data-scroll-target="#github-and-github-actions"><span class="header-section-number">10</span> Github and Github actions</a>
+  <ul>
+  <li><a href="#github" id="toc-github" class="nav-link" data-scroll-target="#github"><span class="header-section-number">10.1</span> Github</a></li>
+  <li><a href="#github-actions" id="toc-github-actions" class="nav-link" data-scroll-target="#github-actions"><span class="header-section-number">10.2</span> Github actions</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This is the R packages exercise from RaukR. It will take you through creating an R package with code, data, documentation, creating or generating a correct DESCRIPTION and NAMESPACE, importing packages, checking your package for warnings. There are also some advanced exercises you can do if you have time.</p>
+<p>The exercise will show how to do things from R console, but many of the functionality are so common they are built into Rstudio. Because of this I have included a cheatsheet which can be useful if you are developing packages in Rstudio in the future.</p>
+<p>It is fine if you do not have time for the whole thing, as all components may not be important to you. You can always come back later :).</p>
+</div>
+</div>
+<section id="cheatsheet" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="cheatsheet"><span class="header-section-number">1</span> Cheatsheet</h2>
+<table class="table">
+<caption>Cheatsheet. Note; not all commands are functionally equivalent to Rstudio commands.</caption>
+<colgroup>
+<col style="width: 11%">
+<col style="width: 45%">
+<col style="width: 21%">
+<col style="width: 21%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">command</th>
+<th style="text-align: left;">description</th>
+<th style="text-align: left;">Rstudio_windows</th>
+<th style="text-align: left;">Rstudio_mac</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">usethis::create_package()</td>
+<td style="text-align: left;">Create a package backbone.</td>
+<td style="text-align: left;">File &gt; New Project &gt; New Directory &gt; R package</td>
+<td style="text-align: left;">File &gt; New Project &gt; New Directory &gt; R package</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">usethis::use_r()</td>
+<td style="text-align: left;">Create or open a file in R/ for editing.</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">devtools::load_all()</td>
+<td style="text-align: left;">Simulates building, installing and attaching a development package.</td>
+<td style="text-align: left;">CTRL+SHIFT+L</td>
+<td style="text-align: left;">CMD+SHIFT+L</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">usethis::use_data()</td>
+<td style="text-align: left;">Creates a .rda file in data/ containing the object. The file has the same name as the object.</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">devtools::document()</td>
+<td style="text-align: left;">Create .Rd files from roxygen2 function comments. Generate NAMESPACE.</td>
+<td style="text-align: left;">CTRL+SHIFT+D</td>
+<td style="text-align: left;">CMD+SHIFT+D</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">devtools::use_package()</td>
+<td style="text-align: left;">Add package to Imports field of DESCRIPTION.</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">devtools::check()</td>
+<td style="text-align: left;">Run R CMD check on your development package from within R. Also performs bundling and other checks.</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="installing-dependencies" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="installing-dependencies"><span class="header-section-number">2</span> Installing dependencies</h2>
+<p>The first thing we want to do is install the dependencies required for the exercise.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"devtools"</span>,<span class="st">"usethis"</span>,<span class="st">"roxygen2"</span>, <span class="st">"knitr"</span>, <span class="st">"rmarkdown"</span>, <span class="st">"reshape2"</span>, <span class="st">"Rcpp"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>If you haven’t already, install <a href="https://posit.co/download/rstudio-desktop/">RStudio</a>.</p>
+</section>
+<section id="create-a-package-backbone" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="create-a-package-backbone"><span class="header-section-number">3</span> Create a package backbone</h2>
+<p>First of all we will create the standard files that are required in an R package.</p>
+<!-- You can do this from within Rstudio **or** using `devtools`. 
+
+### Option 1: In Rstudio
+
+Select *File > New Project > New Directory > R package*, give your package a name and click *Create Project*. This should trigger your Rstudio to reload, showing your package name in the top right corner, your packages file structure in the file viewer and a standard **hello.R** R code file in the editor.
+
+### Option 2: In R devtools suite
+
+-->
+<pre><code>usethis::create_package("path/to/your/package/packagename")</code></pre>
+<p>If you execute this command from within Rstudio, it should open a new instance of Rstudio located within your newly created package. If you didn’t and want to work on your package in Rstudio, double click the <strong>.Rproj</strong> file or select it from Rstudio.</p>
+<p>Take a look at the “Files” pane of Rstudio to see what <code>create_package()</code> actually created for you.</p>
+</section>
+<section id="insert-wondrous-things" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="insert-wondrous-things"><span class="header-section-number">4</span> Insert wondrous things</h2>
+<p>Now that we have a R package backbone lets fill it with stuff!</p>
+<section id="r-code" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="r-code"><span class="header-section-number">4.1</span> R code</h3>
+<p>Let’s create the first function of your package. We can use the handy helper-function <code>usethis::use_r()</code> to create or navigate between the R files in your <strong>R/</strong> folder. You can also just create a <strong>.R</strong> file there if you wish.</p>
+<pre><code>usethis::use_r("trianguletter")</code></pre>
+<p>This should create and open the file <code>R/trianguletter.R</code> for editing.</p>
+<p>Feel free to rewrite the function to perform some simple task. From adding two numbers to creating a basic plot from some input. It’s up to you!</p>
+<p>Here is an example that I threw together:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>trianguletter <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>x){</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="fu">rep</span>( letters[i], <span class="at">times =</span> i),<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>When you are happy with your function, save it. To access and test your newly created function we have to attach it to make it available. But rather than bundle, install and attach we can use the function <code>devtools::load_all()</code> while developing the package. <code>load_all()</code> simulates the behavior of bundling, installing and attaching the package, without actually having to do it.</p>
+<p>Now test your function in the console!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">trianguletter</span>(<span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>a 
+b b 
+c c c 
+d d d d 
+e e e e e 
+f f f f f f 
+g g g g g g g 
+h h h h h h h h 
+i i i i i i i i i 
+j j j j j j j j j j 
+k k k k k k k k k k k 
+l l l l l l l l l l l l </code></pre>
+</div>
+</div>
+<p><strong>Congratulations!</strong> You have just created an R package that fulfills a function!</p>
+</section>
+<section id="data" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="data"><span class="header-section-number">4.2</span> Data</h3>
+<p>Lets add some data to our package, create an R object with whatever information you want. A string, a vector or a data.frame, as long as you recognize it, it doesn’t matter. First we will save it to our <strong>data/</strong> folder using <code>usethis::use_data()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># A random object</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>your_object <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">'red'</span>,<span class="st">'green'</span>,<span class="st">'blue'</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Save to data</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_data</span>(your_object)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This created the <strong>data/</strong> folder and <strong>your_object.rda</strong> inside it.</p>
+<!-- Notice that we are not giving it our packages location. This is because it will default to using the package in the working directory, if your current R session is not in the package root it will complain. -->
+<p>Now when our package is loaded, <code>your_object</code> will be made available to the user. To test this, remove all objects from your working directory, and load all functions. Check that you can access the object, despite just removing it from your workspace.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Clear workspace</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>())</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Load all functions and data from our package</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">load_all</span>()</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Check if we can access our saved object</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>your_object</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"red"</span>   <span class="st">"green"</span> <span class="st">"blue"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The data in <strong>data/</strong> folder is available to the user, needs to be documented, and is where you would store data if the purpose of your package is to distribute one or more datasets in an R friendly way. If there is some data that you don’t want to make easily accessible to the users, AKA not document, but that your functions use, you can put it in <strong>sysdata.rda</strong>. Lets create a second object. Like the last one it does not matter what it is. Use the same command as before to save the object, except this time specify that this data is intended for internal use.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a second object</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>second_object <span class="ot">&lt;-</span> <span class="st">"It works!"</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Save it to R/sysdata.rda</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_data</span>(second_object, <span class="at">internal =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>To check that this worked, clear your workspace and edit your packages function, the <strong>.R</strong> file, to include the object in some way. Load the package and see if it executes as expected.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Clear workspace</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example .R code edit</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>trianguletter <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>x){</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="fu">rep</span>( letters[i], <span class="at">times =</span> i),<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Check if second object can be called by our function</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(second_object)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load all functions and data from our package</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">load_all</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Test the function</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">trianguletter</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>a 
+b b 
+c c c 
+d d d d 
+e e e e e 
+It works!</code></pre>
+</div>
+</div>
+<p>Great work! You have created external and internal datasets and shown that they can be used when your package is loaded in the console and in your packages own functions!</p>
+</section>
+<section id="documentation" class="level3" data-number="4.3">
+<h3 data-number="4.3" class="anchored" data-anchor-id="documentation"><span class="header-section-number">4.3</span> Documentation</h3>
+<p>Now that we have a function and a dataset, lets use <code>roxygen2</code> to create some documentation for them.</p>
+<section id="function-documentation" class="level4" data-number="4.3.1">
+<h4 data-number="4.3.1" class="anchored" data-anchor-id="function-documentation"><span class="header-section-number">4.3.1</span> Function documentation</h4>
+<p>As was discussed in the presentation, the <code>roxygen2</code> documentation for a function is directly before it in so called “comment blocks”, or <code>#'</code>. Here is a brief refresher:</p>
+<ul>
+<li>Comment block : <code>#'</code></li>
+<li>Tags : <code>@tagname</code>
+<ul>
+<li><code>@param</code> : parameter</li>
+<li><code>@example</code> : examples</li>
+<li><code>@return</code> : what does the function return. The <em>value</em> field in R documentation</li>
+<li><code>@section</code> : create any section you want</li>
+<li><code>@export</code> : export the function so it can be used externally</li>
+</ul></li>
+</ul>
+<p>Go ahead and create documentation for your function. Add at least a title, a description, multi-section details, the parameters, the expected return value or output, an example of how to use your function and the export tag.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The <code>@export</code> tag should always be last in documentation and grants the user access to the function. It is very important, if you want the user to be able to call the function. For internal functions, this may not be the case.</p>
+</div>
+</div>
+<p>An example functional documentation:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' A right sided triangle of alphabetic letters</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co">#' A right sided triangle of alphabetic letters</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co">#' This function takes a number as input and outputs an increasing</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co">#'     number of alphabetic letters on top of each other, resembling</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co">#'     a right sided triangle.</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co">#' @section Warning:</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co">#' Not tested for numbers over 26!</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param x A number.</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="co">#' @return Outputs to console. NULL object returned.</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="co">#' @examples</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="co">#' trianguletter(10)</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="co">#' @export</span></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>trianguletter <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>x){</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="fu">rep</span>( letters[i], <span class="at">times =</span> i),<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Check if second object can be called by our function</span></span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(second_object)</span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>When you are satisfied with your documentation, build it using <code>devtools::document()</code>. This creates the <strong>.Rd</strong> file in <strong>man/</strong> which is parsed by R when you request the functions documentation. Additionally, the first time you build documentation it will make some edits to your <strong>DESCRIPTION</strong> and check on your <strong>NAMESPACE</strong>.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You may have gotten a warning message that your NAMESPACE was not generated by roxygen2. This is good behavior by roxygen2, it doesn’t want to change something the user has created a certain way. In this case however, we want the NAMESPACE to be handled by roxygen2, so delete the NAMESPACE file and run <code>devtools::document()</code> again to have roxygen2 create it.</p>
+</div>
+</div>
+<p>Go ahead and preview your function as you would any method and make sure that it looks the way you were expecting.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>?trianguletter</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><img src="assets/trianguletterRd.png" class="img-fluid"></p>
+</section>
+<section id="data-documentation" class="level4" data-number="4.3.2">
+<h4 data-number="4.3.2" class="anchored" data-anchor-id="data-documentation"><span class="header-section-number">4.3.2</span> Data documentation</h4>
+<p>Data documentation is a bit different from functional documentation. Remember that you do not need to document datasets not intended for users, so don’t worry about <strong>sysdata.rda</strong>. What we want to document in this case is the data you created in <strong>man/your_object.rda</strong>, or whichever name you have given it.</p>
+<p>The principle is very similar to functional documentation, but not all tags that are applicable to functions are applicable to data, and should not be used. Similarly, there are some tags that are applicable to data, but not to functions. Usually this is the information you would give a dataset:</p>
+<ul>
+<li>Data documentation
+<ul>
+<li>Title</li>
+<li>Description</li>
+<li><code>@format</code> : what rows and variables are in the data?</li>
+<li><code>@source</code> : where is the data from?</li>
+</ul></li>
+</ul>
+<p>First of all, lets check what the output of requesting help for your dataset is currently.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>?your_object</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>As expected, it is undocumented. Since we cannot add this information to the dataset file, <strong>your_object.rda</strong>, like we did with the functions documentation, lets create an R file in <strong>R/</strong> called <strong>data.R</strong> and add the documentation there. The name we document has to be the same name as the dataset object you created earlier. Go ahead and document your dataset now.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' A vector with three strings</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co">#' A dataset containing three strings usually linked to the</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co">#'    colors of pixels on a screen.</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co">#' @format A vector with three strings:</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co">#' \describe{</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="co">#'   \item{red}{A string, it's red.}</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="co">#'   \item{green}{A string, it's green. Street talk for money.}</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="co">#'   \item{blue}{A string, really didn't see that coming. It's blue this time!}</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="co">#' }</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="co">#' @source \url{http://www.themindofsebastian.com}</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="st">"your_object"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Once you are happy with your documentation, save the file and run <code>devtools::document()</code>. Now check the help page for your dataset again.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>?your_object</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><img src="assets/your_object.png" class="img-fluid"></p>
+<p>Well done! You have successfully created documentation for a function and a dataset and shown that it can be queried within R.</p>
+</section>
+</section>
+<section id="description" class="level3" data-number="4.4">
+<h3 data-number="4.4" class="anchored" data-anchor-id="description"><span class="header-section-number">4.4</span> DESCRIPTION</h3>
+<p>Now lets take a look at our <strong>DESCRIPTION</strong> file, at this point it should look similar to this:</p>
+<pre><code>Package: newpkg
+Title: What the Package Does (One Line, Title Case)
+Version: 0.0.0.9000
+Authors@R: 
+    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: What the package does (one paragraph).
+License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
+    license
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.0
+Depends: 
+    R (&gt;= 2.10)
+LazyData: true</code></pre>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The information can look slightly different depending on how the package was created.</p>
+</div>
+</div>
+<p>Looks pretty good but some information definitely needs to be updated if you are ever going to submit this to a repository.</p>
+<p>Update the <em>Title</em>, <em>Author</em> and <em>Description</em> fields.</p>
+<p>When it comes to the <em>License</em> field, Just in case you don’t want to consider which license to give your package, why not choose one of the most common ones that were mentioned during the lecture?</p>
+<ul>
+<li>MIT : Free, but your license must be included in any following work.</li>
+<li>GPL-3 : Even more free. If someone uses your code, whatever they are doing must also be GPL compatible.</li>
+<li>CC0 : Totally free.</li>
+</ul>
+<p>One good way of adding the license is not to just update the <strong>DESCRIPTION</strong>, but to use a function such as <code>use_mit_license()</code>. It not only updates your <strong>DESCRIPTION</strong>, but also adds the file <strong>LICENSE</strong> and <strong>LICENSE.md</strong> to your package, with relevant license information.</p>
+<p>A good place to look at the meaning of licenses is <a href="https://tldrlegal.com">https://tldrlegal.com</a>.</p>
+<p>Now that your <strong>DESCRIPTION</strong> is up to shape, we can move on to the <strong>NAMESPACE</strong>.</p>
+</section>
+<section id="namespace" class="level3" data-number="4.5">
+<h3 data-number="4.5" class="anchored" data-anchor-id="namespace"><span class="header-section-number">4.5</span> NAMESPACE</h3>
+<p>Roxygen2 made our function available to the users in our <strong>NAMESPACE</strong> and made sure that our package works well with other packages. Basically, you should almost never be editing your <strong>NAMESPACE</strong> by hand.</p>
+<section id="import" class="level4" data-number="4.5.1">
+<h4 data-number="4.5.1" class="anchored" data-anchor-id="import"><span class="header-section-number">4.5.1</span> Import</h4>
+<p>First, lets import a function from a package and add its functionality to the function we created. This is very handy for using functions from other packages in your package and for making sure your package uses only that function when it is called, no matter the users environment.</p>
+<ol type="1">
+<li>Create a new file called <strong>R/utility.R</strong>. We won’t actually put any internal utility functions there, but this is a typical place where you would import functions from other packages.</li>
+<li>Next add code to import the <code>melt</code> function from <code>reshape2</code>. This is in the form <code>@importFrom pkg function</code>. Since this kind of documentation has to precede a function or object, we will give it the <strong>NULL</strong> object, by convention.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' @importFrom reshape2 melt</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="cn">NULL</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>To update the <strong>NAMESPACE</strong> run <code>devtools::document()</code>.</p>
+<p>Now your <strong>NAMESPACE</strong> should look like this:</p>
+<pre><code># Generated by roxygen2: do not edit by hand
+
+export(trianguletter)
+importFrom(reshape2,melt)</code></pre>
+<p>Great! If the <code>melt</code> command from <code>reshape2</code> is ever used in your package, it will know which one to use. But for our package to use <code>reshape2</code> we first have to import it in <strong>DESCRIPTION</strong>.</p>
+<p>To add the <code>Imports</code> field and the <code>reshape2</code> information to your <strong>DESCRIPTION</strong> you can use the <code>usethis::use_package</code> command.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_package</span>(<span class="st">"reshape2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>While <code>Imports</code> means that if someone installs your package it will automatically install <code>reshape2</code> as well, regrettably it does not mean that if <code>reshape2</code> is missing when we reinstall it locally it will be downloaded and installed. Luckily we installed it at the start of the exercise.</p>
+</section>
+<section id="testing-the-imported-function" class="level4" data-number="4.5.2">
+<h4 data-number="4.5.2" class="anchored" data-anchor-id="testing-the-imported-function"><span class="header-section-number">4.5.2</span> Testing the imported function</h4>
+<p>Now that we have added <code>melt</code> from <code>reshape2</code> lets add it to our function. You can do this any way you like, or copy usage from the example function.</p>
+<p>In this example the <code>head</code> of <code>iris</code> dataset before and after <code>melt</code> is viewed, to see that it had an effect.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' A right sided triangle of alphabetic letters</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co">#' A right sided triangle of alphabetic letters</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="co">#' This function takes a number as input and outputs an increasing</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="co">#'     number of alphabetic letters on top of eachother, resembling</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="co">#'     a right sided triangle.</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="co">#' @section Warning:</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="co">#' Not tested for numbers over 26!</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param x A number.</span></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a><span class="co">#' @return Outputs to console. NULL object returned.</span></span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a><span class="co">#' @examples</span></span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a><span class="co">#' trianguletter(10)</span></span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a><span class="co">#' @export</span></span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>trianguletter <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>x){</span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="fu">rep</span>( letters[i], <span class="at">times =</span> i),<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Check if second object can be called by our function</span></span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>  <span class="co">#cat(second_object)</span></span>
+<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a>  <span class="co">#what iris dataset looks like</span></span>
+<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"before melt:</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">head</span>(iris))</span>
+<span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Use melt and see what it looks like</span></span>
+<span id="cb24-26"><a href="#cb24-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"after melt:</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb24-27"><a href="#cb24-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">head</span>(<span class="fu">melt</span>(iris)))</span>
+<span id="cb24-28"><a href="#cb24-28" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Use <code>devtools::load_all()</code> to reload your package and it’s imports. You can check that <code>reshape2</code> was also loaded with <code>sessionInfo()</code>.</p>
+<p>Test your function, does the output show that it can use <code>melt</code>?</p>
+<p>Now, lets check that the NAMESPACE is doing what we want it to do, making sure that the correct <code>melt</code> is being used by our package. Lets define a new function, also named <code>melt</code>, in our global environment. That is to say we just define it from the R console.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>melt <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>   <span class="fu">cat</span>(<span class="st">"abc"</span>,x)}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now try your function again. Is it using the correct <code>melt</code>?</p>
+<p>It should be!</p>
+<p>Try using <code>melt(iris)</code> in your R console, as it is used in your packages function. It should not work. This is because it is using the <code>melt</code> function you just defined, and it is getting in the way of using the correct function!</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>An alternative way of achieving the behaviour of a correct NAMESPACE is writing your code with strict package references. In our case <code>reshape2::melt()</code>. This way you can circumvent using <code>roxygen2</code> to add import tags to <code>NAMESPACE</code> if you want. I recommend doing both =).</p>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="checking-your-package" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="checking-your-package"><span class="header-section-number">5</span> Checking your package</h2>
+<p>Now that we have a pretty complete package, lets run some checks on it. You can use the standard <code>R CMD check pkgname</code> from your terminal, or you can use <code>devtools::check()</code>, which we recommend, as it performs some additional operations such as updating the documentation and bundling the package before checking.</p>
+<pre><code>── R CMD check results ───────────────────────────────── newpkg 0.0.0.9000 ────
+Duration: 18.1s
+
+❯ checking R code for possible problems ... NOTE
+  trianguletter: no visible global function definition for ‘head’
+  trianguletter: no visible binding for global variable ‘iris’
+  Undefined global functions or variables:
+    head iris
+  Consider adding
+    importFrom("datasets", "iris")
+    importFrom("utils", "head")
+  to your NAMESPACE file.
+
+0 errors ✔ | 0 warnings ✔ | 1 note ✖</code></pre>
+<p>Did you get any <strong>NOTE</strong>s, <strong>ERROR</strong>s or <strong>WARNING</strong>s? I know I did! Among other things it didn’t like my usage of the <code>iris</code> dataset without specifying it in the NAMESPACE. This one is a bit tricky, but you can try to solve it if you want.</p>
+</section>
+<section id="finish-line" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="finish-line"><span class="header-section-number">6</span> Finish line</h2>
+<p><img src="assets/small_package.jpg" class="img-fluid" style="width:40.0%"></p>
+<p>Well done! You have built a functional package. Maybe it is even time to update the version number in <strong>DESCRIPTION</strong> and take it out of development?</p>
+<p>If you want to know even more about this topic, I recommend Hadley Wickham and Jenny Bryan’s excellent online resource <a href="http://r-pkgs.had.co.nz/check.html">http://r-pkgs.had.co.nz/check.html</a>.</p>
+<p>The next sections are optional and cover vignettes, testing, including C++ code in your package using <code>Rcpp</code> and pushing your R package to github and setting up github actions for it.</p>
+</section>
+<section id="vignette" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="vignette"><span class="header-section-number">7</span> Vignette</h2>
+<p>Vignettes are long-form documentation for your package. Like a manual detailing what the purpose of your package and its functions are.</p>
+<p>To initialize your vignette, you can use the command:</p>
+<pre><code>usethis::use_vignette("packagename_vignette")</code></pre>
+<p>What this does:</p>
+<ol type="1">
+<li>Creates the <strong>vignettes/</strong> folder with <strong>packagename_vignette.Rmd</strong> inside</li>
+<li>Edits your <strong>DESCRIPTION</strong>, adding <code>knitr</code> to <code>Suggests</code> and as a <code>VignetteBuilder</code>.</li>
+</ol>
+<p>Open the file <strong>vignettes/packagename_vignette.Rmd</strong>, unless it was already automatically opened when using the command. Edit the header data, change <code>title</code> and add an <code>author</code>, then create a minimal vignette for your function. Do run your function and show your dataset using <code>knitr</code> from the vignette. It can be as short as you want, however if you do this for a real package it should be a long form manual showing how your package can use its functions or data to perform the task it was designed for.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>To be able to use the functions of your package in the vignette you will need to install your package, the easiest way is to execute <code>devtools::install()</code>.</p>
+</div>
+</div>
+<p>To preview your vignette while working on it, press the <em>knit</em> button in Rstudio.</p>
+<p>Example <strong>vignette.Rmd</strong>:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "How to write more and more letters, in a triangle"</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span><span class="co"> "Sebastian DiLorenzo"</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> "2024-02-20"</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="an">output:</span><span class="co"> rmarkdown::html_vignette</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="an">vignette:</span><span class="co"> &gt;</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="co">  %\VignetteIndexEntry{How to write more and more letters, in a triangle}</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="co">  %\VignetteEngine{knitr::rmarkdown}</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="co">  %\VignetteEncoding{UTF-8}</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a><span class="in">```{r setup, include=FALSE}</span></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a><span class="in">knitr::opts_chunk$set(</span></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a><span class="in">  collapse = TRUE,</span></span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a><span class="in">  comment = "#&gt;"</span></span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a><span class="in"># replace this with your package name</span></span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a><span class="in">library(newpkg)</span></span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a><span class="fu"># The greatest package for a very specific purpose</span></span>
+<span id="cb28-23"><a href="#cb28-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-24"><a href="#cb28-24" aria-hidden="true" tabindex="-1"></a>If you thought that it was impossible to write letters</span>
+<span id="cb28-25"><a href="#cb28-25" aria-hidden="true" tabindex="-1"></a>alphabetically from top to bottom with each number represented</span>
+<span id="cb28-26"><a href="#cb28-26" aria-hidden="true" tabindex="-1"></a>the same number of times asits position in the alphabet</span>
+<span id="cb28-27"><a href="#cb28-27" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>think again!</span>
+<span id="cb28-28"><a href="#cb28-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-29"><a href="#cb28-29" aria-hidden="true" tabindex="-1"></a>This package and its sole function, trianguletter, solves just this problem!</span>
+<span id="cb28-30"><a href="#cb28-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-31"><a href="#cb28-31" aria-hidden="true" tabindex="-1"></a>But you do not have to take my word for it, see for yourself:</span>
+<span id="cb28-32"><a href="#cb28-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-33"><a href="#cb28-33" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb28-34"><a href="#cb28-34" aria-hidden="true" tabindex="-1"></a><span class="in"># With just a simple number we specify how long into the alphabet we go.</span></span>
+<span id="cb28-35"><a href="#cb28-35" aria-hidden="true" tabindex="-1"></a><span class="in">trianguletter(10)</span></span>
+<span id="cb28-36"><a href="#cb28-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-37"><a href="#cb28-37" aria-hidden="true" tabindex="-1"></a><span class="in"># Also, this package has this random dataset:</span></span>
+<span id="cb28-38"><a href="#cb28-38" aria-hidden="true" tabindex="-1"></a><span class="in">your_object</span></span>
+<span id="cb28-39"><a href="#cb28-39" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-40"><a href="#cb28-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-41"><a href="#cb28-41" aria-hidden="true" tabindex="-1"></a><span class="fu"># Future plans</span></span>
+<span id="cb28-42"><a href="#cb28-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-43"><a href="#cb28-43" aria-hidden="true" tabindex="-1"></a>We plan to add features so that you can give it</span>
+<span id="cb28-44"><a href="#cb28-44" aria-hidden="true" tabindex="-1"></a>a letter, rather than a number, and output a</span>
+<span id="cb28-45"><a href="#cb28-45" aria-hidden="true" tabindex="-1"></a>bunch of numbers instead!</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<!-- > Note: Because I am writing this in rmarkdown I added backslashes before the code or it would not render properly for this exercise instruction. In your rmarkdown there should **not** be backslashes before code chunks.  See the \\``` in the vignette code. -->
+<p>And the beautiful rendered version:</p>
+<p><img src="assets/vignette.png" class="img-fluid"></p>
+<p>The preview you get when knitting the <strong>vignette.Rmd</strong> does not mean that the vignette has been created. When you are happy with the vignette, use <code>devtools::build_vignettes()</code>. To view the vignette as an external user would view it is for some reason a bit of a hassle for the package you are developing, perhaps because the output is pretty much the same as when you knit. If you want to do this you can build your package source with <code>devtools::build()</code>, which also builds the vignette, and then <code>devtools::load_all()</code>. Then view the vignette with <code>browseVignettes("packagename")</code>.</p>
+<p>Once again, good work! Now you have written a short guide to your package that will be included wherever it goes!</p>
+</section>
+<section id="testing" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="testing"><span class="header-section-number">8</span> Testing</h2>
+<p>Testing is a powerful way to add tests to your package. They can for example make sure that the output from your functions are as you expect them to be. This can be very good when you have many people working on a package, such as open source. It is not hard to imagine a situation where someone makes a change that has unforseen consequences and even if the function doesn’t throw an error the output has changed leading to errors in the next function that are hard to track.</p>
+<p>To add tests to your package you can use</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_testthat</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Be sure to check the output from the command as it describes what it does to your package very well. As it suggests we can now use <code>usethis::use_test()</code> to create a template test for a function.</p>
+<p>We will create a new function to test, since <code>trianguletter()</code> uses <code>cat()</code> which is standard output, it is advanced to run tests on it. As always you are free and encouraged to create your own function. The example is for inspiration.</p>
+<p>Create a new function in <code>R/divider.R</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_r</span>(<span class="st">"trivider"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>And define the function.</p>
+<pre><code>trivider &lt;- function(x){
+  x / 3
+}</code></pre>
+<p>Now lets create the test using:</p>
+<pre><code>usethis::use_test("trivider")</code></pre>
+<p>This creates the file <strong>tests/testthat/test-trivider.R</strong>, which is where we will write our tests for that function. Now we can for example write a test that makes sure the input <em>9</em> results in the output <em>3</em>.</p>
+<pre><code>test_that("given a 9 the output is 3", {
+  expect_equal(trivider(9), 3)
+})</code></pre>
+<p>You can run the test by using the command</p>
+<pre><code>devtools::test()</code></pre>
+<p>Try adding another test in <strong>test-trivider.R</strong>, or whichever function you are using. Use <code>expect_error()</code> this time. Can you get a PASS on both your tests?</p>
+<p>Importantly, your tests are performed when you run <code>devtools::check()</code>, which means that you have just extended its functionality to keep a closer eye on your packages expected behaviour.</p>
+</section>
+<section id="src-and-rcpp" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="src-and-rcpp"><span class="header-section-number">9</span> src/ and Rcpp</h2>
+<p>R is not always the most efficient language, which is why it is great that we can integrate other code with our package. Either using ready made solutions, or by including a script file of another language in the package.</p>
+<p>Here we will integrate the well developed <code>Rcpp</code> package to be able to use C++ code in our package.</p>
+<p>Similarly to how we created the package, the first thing we want to do is setup our package to accept <code>Rcpp</code>. We can do this with <code>usethis::use_rcpp()</code> which does four things:</p>
+<ol type="1">
+<li>Creates <strong>src/</strong> folder, unless it already exists.</li>
+<li>Edits <strong>DESCRIPTION</strong>, adding <code>Rcpp</code> to <code>Imports</code> and <code>LinkingTo</code>.</li>
+<li>Create and modify <strong>.gitignore</strong> to not include compiled files (useful if you connect your package to git)</li>
+<li>Let’s you know two roxygen tags that need to be included, like our documentation, somewhere in package.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Some users have reported receiving some warnings when executing <code>usethis::use_rcpp()</code> but it didn’t seem to break anything.</p>
+</div>
+</div>
+<pre><code>usethis::use_rcpp()</code></pre>
+<p>Lets include the roxygen tags in our <strong>utility.R</strong> file.</p>
+<pre><code>#' @useDynLib newpkg, .registration = TRUE
+#' @importFrom Rcpp sourceCpp
+NULL</code></pre>
+<p>Now we are ready to create a C++ file. You can do this from Rstudio to generate a nice template, <em>File &gt; New file &gt; C++ File</em>. It should look something like this:</p>
+<pre><code>#include &lt;Rcpp.h&gt;
+using namespace Rcpp;
+
+// This is a simple example of exporting a C++ function to R. You can
+// source this function into an R session using the Rcpp::sourceCpp
+// function (or via the Source button on the editor toolbar). Learn
+// more about Rcpp at:
+//
+//   http://www.rcpp.org/
+//   http://adv-r.had.co.nz/Rcpp.html
+//   http://gallery.rcpp.org/
+//
+
+// [[Rcpp::export]]
+NumericVector timesTwo(NumericVector x) {
+  return x * 2;
+}
+
+
+// You can include R code blocks in C++ files processed with sourceCpp
+// (useful for testing and development). The R code will be automatically
+// run after the compilation.
+//
+
+/*** R
+timesTwo(42)
+*/</code></pre>
+<p>You should not mess with the header, unless you know what you are doing. Here you can write any C++ function you want, either do this or leave it as it is and we will use the included example function, <code>timesTwo</code>. The function is exported to R using <code>// [[Rcpp::export]]</code>. Importantly, this does not add the function to your <strong>NAMESPACE</strong>. Add documentation to your function in the same way as we have done previously, but with the C++ commenting style of <code>//'</code>.</p>
+<pre><code>//' Multiply a number by two
+//'
+//' @param x A integer.
+//' @export
+// [[Rcpp::export]]
+NumericVector timesTwo(NumericVector x) {
+  return x * 2;
+}</code></pre>
+<p>Save the file to your src/ directory and call <code>pkgbuild::compile_dll()</code>, which re-compiles the package, implementing our changes. Now run <code>devtools::document()</code> to update your <strong>NAMESPACE</strong>. Lets install and restart using <em>Cmd/Ctrl + Shift + B</em> in Rstudio. This will create the file <strong>RcppExports.R</strong> in <strong>R/</strong>, which is what R uses to call your C++ function.</p>
+<p>Test that your function works from console.</p>
+<p>Your R package can now run C++ code, marvelous! Now you just need to learn C++ ;).</p>
+<section id="check-again" class="level3" data-number="9.1">
+<h3 data-number="9.1" class="anchored" data-anchor-id="check-again"><span class="header-section-number">9.1</span> Check again!</h3>
+<blockquote class="blockquote">
+<p>Added new components to the package have we? - Yoda</p>
+</blockquote>
+<p>Perform <code>devtools::check()</code> again and fix any new messages.</p>
+</section>
+</section>
+<section id="github-and-github-actions" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="github-and-github-actions"><span class="header-section-number">10</span> Github and Github actions</h2>
+<p>This section does require some previous git knowledge.</p>
+<section id="github" class="level3" data-number="10.1">
+<h3 data-number="10.1" class="anchored" data-anchor-id="github"><span class="header-section-number">10.1</span> Github</h3>
+<p>Let’s add our R package to github, so we can distribute it! To do this you will need a github account. Since git usage is covered later in the course, you can return to this. But if you want you are very welcome to follow this guide. It does require that you have git installed, accessible and configured on your local computer.</p>
+<p>To initialize git for your R package, so it becomes a local repository, you first need to run the command:</p>
+<pre><code>usethis::use_git()</code></pre>
+<p>To initialize a new github repository with the same name as your R package and push your files there, you can use this command:</p>
+<pre><code>usethis::use_github()</code></pre>
+<p>At this point, you should have a new repository on your github that has your R package files inside it. This is fantastic! Not only does this mean you can now install your package from any other computer , but we can also setup github actions!</p>
+<p>Check that you can install your package directly from the github repository using a command of the form <code>devtools::install_github("Username/repository_name")</code>.</p>
+</section>
+<section id="github-actions" class="level3" data-number="10.2">
+<h3 data-number="10.2" class="anchored" data-anchor-id="github-actions"><span class="header-section-number">10.2</span> Github actions</h3>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Github actions are only free for public repositories. Do not create a private repository, for example under your organisation, for this exercise!</p>
+</div>
+</div>
+<p>Let’s set up our R package so that it will test if it passes R CMD CHECK on three major operating systems.</p>
+<p>The first thing you will need to do is make sure your github account can use actions/workflows. If you are using a personal access token go to <em>(user, not repo) Settings&gt;Developer settings&gt;Personal access tokens</em> on your github account and make sure you have selected a <em>Scope</em> called <em>workflow</em>.</p>
+<p>Now lets add an action to our R-package. It is possible to do this manually but luckily there are some example workflows you can use for the most common cases at https://github.com/r-lib/actions/tree/master/examples. To add the action, we will use the <code>usethis</code> package, similarly to how we used it to initiate vignettes earlier. Issue the command <code>usethis::use_github_action("check-standard")</code> in your R package R session, which will select the standard CI workflow from the link.</p>
+<p>What this actually did is create the folders and file <code>.github/workflows/check-standard.yaml</code> which github will know to look for in a repository for instructions to run actions.</p>
+<p>Now commit and push these newly added files to your git repository the <em>Actions</em> tab on github will commence running an action, checking your R package for compatibility with several operating systems, as shown below.</p>
+<p><img src="assets/github_actions.png" class="img-fluid"></p>
+<p>That is it, now you know all the most important bits about creating an R package. Go make something useful!</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>2024 NBIS | <a href="https://choosealicense.com/licenses/gpl-3.0/">GPL-3 License</a></p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Published with <a href="https://quarto.org/">Quarto</a> v1.4.549
+</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

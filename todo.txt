@@ -1,0 +1,13 @@
+- [] Debugging slide disabled in _quarto.yml
+- [x] Add schedule
+- [] Check key dates
+- [] Add TAs to about
+- [] Add note about funding
+- [] Update README
+- [] Add 2019 group photo
+- [x] Create renv/docker container
+- [] End slide template
+- [] Bold text formatting doesn't work on Ubuntu
+- [x] Add demo
+- [x] Process gallery images, height
+- [x] Slides: Callout headers are too big

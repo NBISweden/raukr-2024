@@ -1,0 +1,474 @@
+---
+title: "Object-Oriented Programming Models in R"
+author: "Marcin Kierczak"
+image: "assets/featured.jpg"
+format: revealjs
+---
+
+## {visibility="hidden"}
+
+```{r}
+#| echo: false
+library(tidyverse)
+library(purrr)
+library(ggplot2)
+```
+
+## Object Oriented Programming
+
+- A programming paradigm.
+- We work with objects.
+- Reflects many real-life systems -- easy to model things.
+- Plato's cave (?): ideal objects -- classes, reflections -- instances.
+
+. . .
+
+![](assets/oop_concept.png){height="400px"}
+
+## OOP Systems in R
+
+- **S3** -- basic R OOP system,
+- **S4** -- a bit more advanced OOP, common in, e.g. Bioconductor,
+- RC -- Reference Classes, the most advanced and close to, e.g. Java OOP, extension of S4,
+- **R6** -- simplified RC, extension of S3, `require(R6)`
+
+## S4 classes
+
+S4 classes are more advanced as you actually define the structure of the data within the object of your particular class:
+
+```{r S4}
+# declare class
+setClass('gene', representation(name='character', coords='numeric'))
+# instantiate class
+my.gene <- new("gene", name = "ANK3", coords = c(1.4e6, 1.412e6))
+
+# declare class
+.intragenic_region <- setClass(Class = 'intragenic_region', 
+                               slots = c(name='character', coords='numeric'))
+
+# instantiate class
+# but since SetClass returns a low-level constructor
+my.intra1 <- .intragenic_region(name = 'int1', 
+                  coords = c(1.7e6, 1.717e6))
+```
+
+## Inheritance in S4
+
+```{r}
+.ext_gene <- setClass(Class = 'ext_gene',contains = "gene",
+  slots = c(gene = 'gene', feature_name = 'character', feature_value = 'character')
+)
+ANK3 <- .ext_gene(name = 'ANK3', coords = c(1.4e6, 1.412e6),
+                  feature_name = 'num_introns', feature_value = '5')
+str(ANK3)
+```
+
+## Sealed Class
+
+Preventing double class definition:
+
+```{r}
+#| error: true
+setClass('Not_Sealed')
+setClass('Not_Sealed')
+```
+
+But to prevent this:
+
+```{r}
+#| error: true
+setClass('Sealed', sealed = T)
+setClass('Sealed')
+```
+
+## S4 class -- slots
+
+The variables within an S4 class are stored in the so-called **slots**. In the above example, we have 2 such slots: *name* and *coords*. Here is how to access them:
+
+```{r S4.slots}
+my.gene@name # access using @ operator
+my.gene@coords[2] # access the 2nd element in slot coords
+```
+
+## S4 class -- methods
+
+The power of classes lies in the fact that they define both the data types in particular slots and operations (functions) we can perform on them. Let us define a *generic print function* for an S4 class:
+
+```{r S4.methods}
+setMethod('print', 'gene', 
+          function(x) {
+              cat('GENE: ', x@name, ' --> ')
+              cat('[', x@coords, ']')
+          })
+print(my.gene) # and we use the newly defined print
+```
+
+## S3 Classes
+
+An S3 class object is one of R base types (e.g. integer) with `class` attribute set:
+
+. . .
+
+:::: {.columns}
+::: {.column width="50%"}
+
+```{r}
+obj <- factor(c("a", "b", "c"))
+typeof(obj)
+```
+
+```{r}
+class(obj)
+```
+
+:::
+
+::: {.column width="50%"}
+
+```{r}
+attributes(obj)
+```
+
+```{r}
+str(obj)
+```
+
+:::
+::::
+
+. . .
+
+```{r}
+print(obj)
+```
+
+. . .
+
+```{r}
+print(unclass(obj))
+```
+
+## Custom `str` Methods
+
+Some S3 classes provide a custom `str`, e.g.: 
+
+```{r}
+time <- strptime("2018-06-07", "%Y-%m-%d")
+```
+
+:::: {.columns}
+::: {.column width="50%"}
+
+```{r}
+str(time)
+```
+
+:::
+
+::: {.column width="50%"}
+
+```{r}
+str(unclass(time))
+```
+
+:::
+::::
+
+## Generic Methods and Method Dispatch
+
+Have you ever wondered why `print()` or `summary()` work on many types (classes) of data? 
+
+. . .
+
+They are so-called *generics*, i.e. functions and methods that operate on classes. They know which method to apply to which class thanks to the process of *method dispatch*. 
+
+The naming scheme for generics is: `generic.class()` i.e. a generic that applies to the `class` class. 
+
+Examples:
+
+- `print.factor()`, 
+- `print.default()`, 
+- `print.data.frame()`.
+
+To see the code of a method:
+
+```{r}
+getS3method('summary', 'lm') %>% 
+  head(n = 5)
+```
+
+## Creating S3 Classes
+
+To create an S3 class, simply give a name to a data structure:
+
+```{r}
+gf <- structure(list(), class = 'genomic_features')
+class(gf)
+```
+
+OR
+
+```{r}
+gf <- list()
+class(gf) <- 'genomic_features'
+class(gf)
+```
+
+You can use some inheritance too:
+
+```{r}
+egf <- list()
+class(egf) <- c('genomic_features', 'extended_genomic_features')
+class(egf)
+```
+
+## Checking for Correctness
+
+```{r}
+linmod <- with(mtcars, lm(log(mpg) ~ log(disp)))
+linmod
+```
+
+. . .
+
+```{r}
+#| error: true
+class(linmod) <- "data.frame"
+linmod
+```
+
+. . .
+
+[S C A R Y !]{.large .center}
+
+## Software engineering
+
+:::: {.columns}
+::: {.column width="50%"}
+
+![Margaret Hamilton, source: Wikimedia Commons](assets/Margaret_Hamilton_-_restoration.jpg){height="500px"}
+
+:::
+
+::: {.column width="50%"}
+
+![](assets/Design-Pattern-GoF-Book.jpg){height="500px"}
+
+:::
+::::
+
+## Design patterns
+
+:::: {.columns}
+::: {.column width="50%"}
+![Source: Wikimedia Commons](assets/Door_1.JPG){height="400px"}
+:::
+
+::: {.column width="50%"}
+![Source: Wikimedia Commons](assets/Door_5_CompressionBraceLoads-1.jpg){height="400px"}
+:::
+::::
+
+## R and Design Pattern
+
+- **strategy** &mdash; `apply()`
+- **decorator** &mdash; `system_time()`
+
+```{r}
+system.time(x <- runif(n = 100000))
+x[1:5]
+```
+
+- **wrapper** 
+
+```{r}
+my_plot <- function(...) {
+  plot(..., col = 'blue', las = 1, cex = .5, pch = 19, cex.axis = .7)
+}
+```
+
+- **Singleton** [see this gist](https://gist.github.com/jverzani/1953641)
+- **Fluent function interface** &mdash; `tidyverse` functions take data `x` as the very first argument and return object similar to `x` so that they can be chained by `%>%`
+
+Even more patterns [here](https://github.com/tidylab/R6P).
+
+## Safe S3 -- Constructor 
+
+```{r}
+new_Animal <- function(species, age) {
+  stopifnot(is.character(species))
+  stopifnot(is.numeric(age))
+  
+  structure(
+    species,
+    age = age,
+    class = "Animal"
+  )
+}
+```
+
+## Safe S3 -- Validator 
+
+```{r} 
+validate_Animal <- function(x) {
+  species <- x[1]
+  age <- attr(x, 'age')
+  
+  if (is.na(species) || species == "") {
+    stop('Species name is missing!', call. = FALSE)
+  }
+  if (!is.numeric(age) || age < 1 || age >= 100) {
+    stop("Invalid age!", call. = FALSE)
+  }
+  return(x)
+}
+```
+
+## Safe S3 -- Helper
+
+```{r}
+Animal <- function(x) {
+  species <- x[[1]] 
+  age <- x[[2]]
+  validate_Animal(new_Animal(species, age))
+}
+```
+
+. . .
+
+```{r}
+#| error: true
+dog <- Animal(list('Canis familiaris', 7))
+class(dog)
+```
+
+. . .
+  
+```{r}
+#| error: true
+cat <- Animal(list('Felis felis', '9'))
+cat <- Animal(list('Felis felis', 9))
+class(cat)
+```
+
+## Building S3 Classes -- Styles
+
+One can build an S3 class on top of any existing base type, e.g. a named list:
+
+```{r}
+point_in_space_class <- function(x, y, z) {
+  structure(
+    list(
+      x = x, 
+      y = y, 
+      z = z
+    ),
+    class = "point_in_space_class"
+  )
+}
+```
+
+## Introduction to R6 classes
+
+- `require(R6)`,
+- Do not rely on S4 like RC, but on S3,
+- Are faster than RC,
+- Do not do *copy-on-modify*,
+- Thus provide OO model similar to C++ or Java.
+- Methods belong to objects, not to generics.
+
+## R6 Class Example
+
+```{r}
+#| code-line-numbers: "1|3-4|5-6|6-11|13-14|15-17"
+library(R6)
+
+Person <- R6Class("Person",
+  public = list(
+    name = NULL,
+    hair = NULL,
+    initialize = function(name = NA, hair = NA) {
+      stopifnot(is.character(name), is.character(hair))
+      self$name <- name
+      self$hair <- hair
+      self$greet()
+    },
+    set_hair = function(val) {
+      self$hair <- val
+    },
+    greet = function() {
+      cat(paste0("Hello, my name is ", self$name, ".\n"))
+    }
+  )
+)
+```
+
+## R6 in Action
+
+```{r}
+kate <- Person$new(name = 'Kate', hair = 'blond')
+str(kate)
+```
+
+## R6 -- methods
+
+```{r}
+kate$greet()
+kate$set_hair('red')
+kate
+```
+
+## R6 copy-on-modify
+
+```{r}
+kate$hair
+```
+
+. . .
+
+```{r}
+ann <- kate
+ann$set_hair('blue')
+ann$hair
+```
+
+. . .
+
+```{r}
+kate$hair
+```
+
+## R6 -- clone()
+
+```{r}
+kate$set_hair('brown')
+kate$hair
+```
+
+. . .
+
+```{r}
+#| code-line-numbers: "1|2-3"
+ann <- kate$clone()
+kate$hair
+ann$hair
+```
+
+. . .
+
+```{r}
+ann$set_hair('blond')
+kate$hair
+ann$hair
+```
+
+## {background-image="/assets/images/cover.jpg"}
+
+### Thank you! Questions?
+
+```{r}
+#| echo: false
+R.version[c("platform","os","major","minor")]
+```
+
+[{{< meta current_year >}} • [SciLifeLab](https://www.scilifelab.se/) • [NBIS](https://nbis.se/) • [RaukR](https://nbisweden.github.io/raukr-2024)]{.smaller}

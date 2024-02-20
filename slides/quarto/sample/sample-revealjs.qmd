@@ -1,0 +1,32 @@
+---
+title: "Iris report"
+author: "John Doe"
+date: "4-Mar-2023"
+format:
+  revealjs:
+    toc: true
+    number-sections: true
+execute:
+  echo: false
+  warning: false
+---
+
+## Iris
+
+Let's explore the **iris** dataset.
+
+## Table
+
+```{r}
+#| echo: true
+iris[1:3,]
+```
+
+## Plot
+
+```{r}
+#| label: fig-hist-sepal
+#| fig-cap: "Distribution of Sepal lengths."
+#| fig-height: 3
+hist(iris$Sepal.Length)
+```

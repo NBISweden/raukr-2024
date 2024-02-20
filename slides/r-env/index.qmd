@@ -1,0 +1,242 @@
+---
+title: "renv: Project environments in R"
+author: "Roy Francis"
+image: "assets/featured.jpg"
+format: revealjs
+---
+
+## Packages {visibility="hidden"}
+
+```{r}
+#| echo: false
+
+library(renv)
+```
+
+## Background
+
+Unable to reproduce the same results when
+
+. . .
+
+- Rerunning old code
+- Sharing your code with others
+
+. . .
+
+> renv is a toolkit to manage project-specific libraries of R packages
+
+## Terminology
+
+**R package**  
+- A standardized collection of R code, data or documentation
+- How you use someone else's code
+- `installed.packages()`
+
+**R library**  
+- A directory that holds R packages
+- Where you store packages
+- `.libPaths()`
+
+**R repository**  
+- A server that hosts R packages for distribution
+- Where you get packages from
+- `getOption("repos")`
+
+## Project lifespan
+
+- Where did I get my package from? What's my **repository**?
+- Where is my package stored? Where is my **package library**?
+- What **version** of the package did I use?
+
+## What can renv do?
+
+**Isolate projects**  
+- Each project gets it's own **library**
+- You can use different versions of a library in different projects
+
+**Reproducible**  
+- Record exact **version** of each package
+
+**Portable**
+- Others can retore your project libraries with the same exact versions
+- And from the same **repository** as you did
+
+## Project timeline
+
+::: {.columns}
+::: {.column}
+Data -> 
+:::
+::: {.column}
+dplyr -> 
+:::
+::: {.column}
+dplyr -> 
+tidyr
+:::
+::: {.column}
+dplyr -> 
+tidyr
+ggplot2
+:::
+::: {.column}
+dplyr -> 
+~~tidyr~~
+ggplot2
+shiny
+:::
+:::
+
+## Snapshot
+
+## renv.lock anatomy
+
+::: {.columns}
+::: {.column}
+
+```
+{
+  "R": {
+    "Version": "4.3.2",
+    "Repositories": [
+      {
+        "Name": "CRAN",
+        "URL": "https://p3m.dev/cran/latest"
+      }
+    ]
+  },
+  "Bioconductor": {
+    "Version": "3.18"
+  },
+  "remotes": {
+    "Package": "remotes",
+    "Version": "2.4.2.1",
+    "Source": "Repository",
+    "Repository": "RSPM",
+    "Requirements": [
+      "R",
+      "methods",
+      "stats",
+      "tools",
+      "utils"
+    ],
+    "Hash": "63d15047eb239f95160112bcadc4fcb9"
+  },
+```
+
+:::
+::: {.column}
+R version
+Active R repositories
+R packages recorded by project
+:::
+:::
+
+## Package level metadata
+
+::: {.columns}
+::: {.column}
+
+```
+"remotes": {
+  "Package": "remotes",
+  "Version": "2.4.2.1",
+  "Source": "Repository",
+  "Repository": "RSPM",
+  "Requirements": [
+    "R",
+    "methods",
+    "stats",
+    "tools",
+    "utils"
+  ],
+  "Hash": "63d15047eb239f95160112bcadc4fcb9"
+}
+```
+
+:::
+::: {.column}
+
+- Package: Package name
+- Version: Package version
+- Source: Location from where package was trieved
+- Repository: Name of repository
+- Hash: Unique hash for this package
+
+:::
+:::
+
+## renv workflow
+
+1. Initialize
+2. Write code install packages
+3. Snapshot environment
+4. Repeat 2 & 3
+5. Restore environment if needed
+
+## Snapshot
+
+Implicit snapshotting
+renv::dependencies()
+
+## Status
+
+## Tracking renv.lock
+
+renv::history()
+
+## Restoring library
+
+- Will not modify R version
+
+## Global package cache
+
+## renv without project library
+
+- Snapshot all packages used in a project
+
+`renv::snapshot()`
+
+- Snapshot all packages in current library
+
+`renv::snapshot(type="all")`
+
+- Restore into system library
+
+`renv::restore()`
+
+- Disable global cache
+
+`renv::settings$use.cache(FALSE)`
+
+## Reproducibility puzzle
+
+
+## Review
+
+renv::init()
+renv::snapshot()
+renv::restore()
+
+renv::status()
+renv::dependencies()
+renv::history()
+renv::revert()
+
+## Acknowledgements
+
+- [renv documentation](https://rstudio.github.io/renv/index.html)
+- [Project environments for R](https://www.youtube.com/watch?v=yjlEbIDevOs): Kevin Ushey, RStudio::Conf 2020
+- [Reproducible environments with renv](https://www.youtube.com/watch?v=7lCOjGrwclQ): Ryan Johnson, NHS-R community 2023
+
+##  {background-image="/assets/images/cover.jpg"}
+
+### Thank you! Questions?
+
+```{r}
+#| echo: false
+R.version[c("platform","os","major","minor")]
+```
+
+[{{< meta current_year >}} • [SciLifeLab](https://www.scilifelab.se/) • [NBIS](https://nbis.se/) • [RaukR](https://nbisweden.github.io/raukr-2024)]{.smaller}

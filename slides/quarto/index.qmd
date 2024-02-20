@@ -1,0 +1,770 @@
+---
+title: "Literate programming with Quarto"
+author: "Roy Francis"
+image: "assets/featured.jpg"
+format: revealjs
+---
+
+## Publishing
+
+- [Literate programming](https://en.wikipedia.org/wiki/Literate_programming): Combining code with narrative
+- Documentation and reporting
+- Presentation
+- Websites
+- E-books
+- PDFs
+
+. . .
+
+[[https://quarto.org/docs/gallery/](https://quarto.org/docs/gallery/)]{.large}
+
+## [Quarto](https://quarto.org/)
+
+**An open-source scientific and technical publishing system built on Pandoc.**
+
+:::: {.columns}
+::: {.column width="70"}
+
+- Command-line tool enabling weaving code and documentation using Python, R, Julia, and Observable.
+- Supports Knitr (plain text, markdown) or Jupyter engines.
+- Supports many IDEs
+  - RStudio
+  - JupyterLab
+  - VS Code
+  - Neovim
+- Numerous output formats
+  - Documents (HTML, PDF, MS Word)
+  - Presentations (RevealJS, Powerpoint, Beamer)
+  - Websites, Blogs, E-Books
+  - Interactive (ObservableJS, Shiny)
+
+:::
+
+::: {.column width="30"}
+
+- Features and components
+  - Scientific markdown
+  - Tables & Figures
+  - Equations
+  - Citations
+  - Call-Out
+  - Layout
+
+:::
+::::
+
+## How it all works
+
+![](assets/flow.jpg){width="90%"}
+
+## Output formats
+
+::: {style='text-align="left"'}
+
+|Rmd                    |Quarto                      |
+|-----------------------|----------------------------|
+|html_document          |html                        |
+|pdf_document           |pdf                         |
+|word_document          |docx                        |
+|beamer_presentation    |beamer                      |
+|powerpoint_presentation|pptx                        |
+|revealjs               |revealjs                    |
+|xaringan               |                            |
+|distill/tufte          |quarto article layout       |
+|html_document2         |quarto crossref             |
+|pdf_document2          |quarto crossref             |
+|word_document2         |quarto crossref             |
+|blogdown/distill       |quarto website/quarto blog  |
+|bookdown               |quarto books                |
+|shiny documents        |quarto interactive documents|
+|pagedown               |TBA                         |
+|rticles                |TBA                         |
+|flexdashboard          |TBA                         |
+
+:::
+
+## Quarto anatomy
+
+:::: {.columns}
+::: {.column width="50%"}
+
+<br>
+
+````
+---
+title: "Iris report"
+author: "John Doe"
+date: "4-Mar-2023"
+format: html
+---
+
+## Iris
+
+Let's explore the **iris** dataset.
+
+```{{r}}
+#| echo: true
+head(iris)
+```
+````
+
+:::
+::: {.column width="50%"}
+
+![](assets/anatomy.png)
+
+:::
+::::
+
+## Quarto anatomy
+
+:::: {.columns}
+::: {.column width="50%"}
+
+![](assets/anatomy-parts.png)
+
+:::
+::: {.column width="50%"}
+
+<br>
+
+[Metadata (YAML)]{.large}
+
+<br>
+<br>
+<br>
+
+[Text (Markdown)]{.large}
+
+<br>
+
+[Code (R, Python, Julia, Observable)]{.large}
+
+:::
+::::
+
+[Literate programming](https://en.wikipedia.org/wiki/Literate_programming) is natural language interspersed with programming code for the purpose of documentation, reproducibility and accessibility particularly relevant in data science.
+
+## YAML metadata
+
+:::: {.columns}
+::: {.column width="60%"}
+
+::: {.left}
+- Yet Another Markup Language (YAML)
+
+```
+---
+key: value
+---
+```
+
+- 2 space indentation
+
+```
+format:
+  html:
+    smooth-scroll: true
+```
+
+- Strings
+```
+description: "This report contains..."
+```
+- Multiline string (Literal/Folded)
+
+:::
+
+:::: {.columns}
+::: {.column width="45%"}
+
+```
+description: |
+  This is
+  a multiline
+  string
+```
+
+:::
+::: {.column width="45%"}
+
+```
+description: >
+  This is
+  a multiline
+  string
+```
+
+:::
+::::
+
+:::
+::: {.column width="40%"}
+
+- Arrays
+
+```
+items: [ 1, 2, 3, 4, 5 ]
+names: [ "one", "two", "three" ]
+names:
+  - "one"
+  - "two"
+  - "three"
+```
+
+- Dictionary arrays
+
+```
+items:
+  - things:
+      thing1: huey
+      things2: dewey
+      thing3: louie
+  - other things:
+      key: value
+```
+
+:::
+::::
+
+[[YAML basics](https://www.cloudbees.com/blog/yaml-tutorial-everything-you-need-get-started)]{.smaller}
+
+## YAML metadata
+
+:::: {.columns}
+::: {.column width="50%"}
+
+<br>
+
+````
+---
+title: "Iris report"
+author: "John Doe"
+date: "4-Mar-2023"
+format:
+  html:
+    toc: true
+    number-sections: true
+execute:
+  echo: false
+  warning: false
+---
+
+## Iris
+
+Let's explore the **iris** dataset.
+
+### Table
+
+```{{r}}
+#| echo: true
+iris[1:3,]
+```
+
+### Plot
+
+```{{r}}
+#| label: fig-hist-sepal
+#| fig-cap: "Distribution of Sepal lengths."
+#| fig-height: 3
+hist(iris$Sepal.Length)
+```
+````
+
+:::
+::: {.column width="50%"}
+
+![](assets/yaml-metadata-preview.png)
+
+:::
+::::
+
+## YAML metadata
+
+```         
+title: Report
+subtitle: Topic
+date: today
+author: "John Doe"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: true
+    df-print: paged
+
+execute:
+  eval: true
+  echo: false
+  warning: false
+  message: false
+  freeze: true
+```
+
+::: {.aside}
+[HTML YAML documentation](https://quarto.org/docs/reference/formats/html.html)  
+[PDF YAML documentation](https://quarto.org/docs/reference/formats/pdf.html)
+:::
+
+## Markdown
+
+Human readable markup
+
+:::: {.columns}
+::: {.column width="25%"}
+
+```         
+### Heading 3
+
+#### Heading 4
+
+*italic text*  
+**bold text**  
+`code text`  
+
+~~strikethrough~~  
+2^10^  
+2~10~  
+$2^{10}$  
+$2_{10}$  
+```
+:::
+
+::: {.column width="25%"}
+### Heading 3
+
+#### Heading 4
+
+*italic text*  
+**bold text**  
+`code text`  
+~~strikethrough~~  
+2<sup>10</sup>  
+2<sub>10</sub>  
+$2^{10}$  
+$2_{10}$
+:::
+
+::: {.column width="28%"}
+```         
+$\sum\limits_{n=1}^{10} \frac{3}{2}\cdot n$
+
+- bullet point
+
+Link to [this](somewhere.com)
+
+![](https://www.r-project.org/Rlogo.png)
+
+![](https://www.r-project.org/Rlogo.png){width="50%"}
+```
+:::
+
+::: {.column width="22%"}
+$\sum\limits_{n=1}^{10} \frac{3}{2}\cdot n$
+
+- bullet point
+
+Link to [this](somewhere.com)
+
+![](https://www.r-project.org/Rlogo.png)
+
+![](https://www.r-project.org/Rlogo.png){width="20%"}
+:::
+::::
+
+::: {.notes}
+
+- Support pure HTML for complex formatting
+- Many variations
+  - [John Gruber's original](https://daringfireball.net/projects/markdown/syntax)
+  - [GitHub Flavored Markdown (GFM)](https://github.github.com/gfm/)
+  - [Pandoc](https://pandoc.org/MANUAL.html#pandocs-markdown)
+  - [MultiMarkdown](https://fletcherpenney.net/multimarkdown/)
+  - [![](assets/cm.png)](https://commonmark.org/)
+- Pandoc supports conversion to multiple output formats
+- To compare MD variants [![](assets/bm.png)](https://babelmark.github.io)
+:::
+
+## RMarkdown
+
+- Markdown + embedded R chunks
+- RMarkdown mostly uses [Pandoc markdown](https://rmarkdown.rstudio.com/authoring_pandoc_markdown.html%23raw-tex#pandoc_markdown)
+- R code can be executed inline
+
+Today's date is `` `r "\u0060r date()\u0060"` ``    
+Today's date is `r date()`
+
+- R code can be executed in code chunks
+
+````
+```{{r}}
+date()
+```
+````
+
+- By default, input source code and output results are displayed.
+
+```{r}
+date()
+```
+
+## RMarkdown • Chunk options
+
+- Setting chunk options
+
+````
+```{{r}}
+#| eval: false
+date()
+```
+````
+
+- Chunk options define how chunks behave
+  - `eval: false` to not evaluate a code chunk
+  - `echo: false` to hide input code
+  - `output: true` to show output, `asis` to skip styling
+  - `warning: false` hides warnins
+  - `message: false` hides messages
+  - `error: true` shows error message and continues code execution
+  - `include: false` supresses all output
+- Other chunk options include figure options and captions
+
+::: {.aside}
+[Chunk option documentation](https://quarto.org/docs/computations/execution-options.html)
+:::
+
+## Installation
+
+- Install the latest [quarto executable](https://quarto.org/docs/get-started/)
+- R package **quarto** to run quarto from R
+- If using [RStudio](https://posit.co/download/rstudio-desktop/), you need a version *v2022.07.1* or newer
+- Optionally, [Visual Studio Code](https://code.visualstudio.com/) along with quarto extension is a great option too
+
+:::: {.columns}
+::: {.column width="50%"}
+![](assets/rstudio-preview.png)
+:::
+
+::: {.column width="50%"}
+![](assets/vscode-preview.png)
+:::
+::::
+
+## Quarto Notebook
+
+- Create a file that ends in `.qmd`  
+- In RStudio, **File > New File > Quarto Document**
+- Add YAML matter to top
+
+```
+---
+title: "This is a title"
+format: html
+---
+```
+
+- Text & visual editor
+- Live preview
+  - From R console `quarto::quarto_preview("report.qmd")`
+  - From terminal `quarto preview report.qmd`
+- Render
+  - Interactively using the **Render** button
+  - From R console `quarto::quarto_render("report.qmd")`
+  - From terminal `quarto render report.qmd`
+
+::: {.notes}
+R Notebook demonstration.
+- Text editor
+- Visual editor
+:::
+
+## PDF
+
+:::: {.columns}
+::: {.column width="40%"}
+
+- Render to PDF format
+- Requires LaTeX installation
+  - Default engine is xelatex
+  - A lightweight option is R package **tinytex**
+  - Change `pdf-engine` as needed
+- Change YAML options
+
+  ```yaml
+  format: pdf
+  pdf-engine: pdflatex
+  ```
+
+:::
+::: {.column width="60%"}
+
+![](assets/demo-pdf.png)
+
+:::
+::::
+
+[For PDF options, see [here](https://quarto.org/docs/reference/formats/pdf.html)]{.smaller}
+
+## Presentation
+
+- Create presentations as HTML (RevealJS) or Powerpoint
+- Change format to `revealjs`
+
+![](assets/demo-revealjs.png){width="60%"}
+
+[For RevealJS options, see [here](https://quarto.org/docs/reference/formats/presentations/revealjs.html)]{.smaller}
+
+## Parameterised reports
+
+- Parameters can be passed into a document during rendering
+- Define parameters/defaults in YAML
+
+```
+---
+title: "My Document"
+params:
+  alpha: 0.1
+  ratio: 0.1
+---
+```
+
+- Access parameters as such
+
+````
+```{{r}}
+params$alpha
+```
+````
+
+- Pass parameters through command-line
+
+`quarto render document.qmd -P alpha:0.2 -P ratio:0.3`
+
+[For more parameter options, see [here](https://quarto.org/docs/computations/parameters.html)]{.smaller}
+
+## Projects
+
+:::: {.columns}
+::: {.column width="50%"}
+
+- Render all files as a project
+- Share YAML configuration across formats
+- Examples of project: **website**, **book**
+- Defined in `_quarto.yml`
+
+```         
+project:
+  output-dir: _output
+
+toc: true
+number-sections: true
+  
+format:
+  html:
+    css: styles.css
+  pdf:
+    documentclass: report
+    margin-left: 30mm
+```
+:::
+
+::: {.column width="50%"}
+
+- Directory level metadata is also allowed
+- Defined in `_metadata.yml`
+
+```         
+format:
+  revealjs: 
+    menu: false
+    progress: false
+search: false
+```
+
+- YAML merging priority:  
+  **root < directory level < document**
+- Render all files: `quarto render`
+
+:::
+::::
+
+::: {.aside}
+[Project documentation](https://quarto.org/docs/projects/quarto-projects.html)
+:::
+
+## Interactive documents
+
+- Make documents interactive using ObservableJS, Shiny or htmlwidgets
+- Shiny requires a server
+- ObservableJS and htmlwidgets run in the browser
+
+[Interactive [documentation](https://quarto.org/docs/interactive/)]{.smaller}
+
+## htmlwidgets
+
+:::: {.columns}
+::: {.column width="55%"}
+
+R package [`plotly`](https://plot.ly/r/) provides R binding around javascript plotting library [`plotly`](https://plot.ly).
+
+````
+```{{r}}
+library(plotly)
+iris %>%
+    plot_ly(x = ~Sepal.Length, y = ~Sepal.Width, 
+    color = ~Species, width = 550, height = 400) %>%
+    add_markers()
+```
+````
+
+:::
+::: {.column width="45%"}
+
+```{r}
+#| echo: false
+library(plotly)
+iris %>%
+    plot_ly(x = ~Sepal.Length, y = ~Sepal.Width, 
+    color = ~Species, width = 550, height = 400) %>%
+    add_markers()
+```
+
+:::
+::::
+
+## OJS
+
+- Quarto supports [ObservableJS](https://observablehq.com/) for interactive visualisations in the browser.
+
+:::: {.columns}
+::: {.column width="50%"}
+
+```{r}
+irism <- iris
+colnames(irism) <- gsub("[.]","_",tolower(colnames(irism)))
+ojs_define(ojsd = irism)
+```
+
+```{ojs}
+ojsdata = transpose(ojsd)
+```
+
+```{ojs}
+viewof x = Inputs.select(Object.keys(ojsdata[0]), {value: "sepal_length", multiple: false, label: "X axis"})
+```
+
+```{ojs}
+//| echo: false
+viewof y = Inputs.select(Object.keys(ojsdata[0]), {value: "sepal_width", multiple: false, label: "Y axis"})
+```
+
+```{ojs}
+//| eval: false
+Plot.plot({
+  marks: [
+    Plot.dot(ojsdata, {
+      x: x, y: y, fill: "species",
+      title: (d) => `${d.species} \n Petal length: ${d.petal_length} \n Sepal length: ${d.sepal_length}`})
+  ],
+  grid: true
+})
+```
+
+:::
+
+::: {.column width="50%"}
+
+```{ojs}
+//| echo: false
+Plot.plot({
+  marks: [
+    Plot.dot(ojsdata, {
+      x: x, y: y, fill: "species",
+      title: (d) => `${d.species} \n Petal length: ${d.petal_length} \n Sepal length: ${d.sepal_length}`})
+  ],
+  grid: true
+})
+```
+
+:::
+
+::::
+
+## Quarto from the terminal
+
+```         
+>  quarto --help
+
+Commands:
+
+render          - Render files or projects to various document types.        
+preview         - Render and preview a document or website project.          
+serve           - Serve a Shiny interactive document.                        
+create          - Create a Quarto project or extension                       
+create-project  - Create a project for rendering multiple documents          
+convert         - Convert documents to alternate representations.            
+pandoc          - Run the version of Pandoc embedded within Quarto.          
+run             - Run a TypeScript, R, Python, or Lua script.                
+add             - Add an extension to this folder or project                 
+install         - Installs an extension or global dependency.                
+publish         - Publish a document or project. Available providers include:
+check           - Verify correct functioning of Quarto installation.         
+help            - Show this help or the help of a sub-command. 
+```
+
+```
+>  quarto --version
+1.3.340
+```
+
+## Extending Quarto
+
+- Official [quarto extensions](https://quarto.org/docs/extensions/)
+- [Awesome Quarto](https://github.com/mcanouil/awesome-quarto)
+
+![](assets/quarto-awesome.png){height="200px" fig-align="left"}
+
+## Acknowledgements
+
+- [quarto.org](https://quarto.org/)
+- [Quarto workshop by Tom Mock](https://www.youtube.com/watch?v=yvi5uXQMvu4)
+- [Quarto introduction by Julia Müller](https://www.youtube.com/watch?v=shVSmYna3GM)
+- [Authoring Quarto](https://rstudio-conf-2022.github.io/get-started-quarto/materials/02-authoring.html#/authoring-quarto)
+- [Datacamp cheatsheet](https://res.cloudinary.com/dyd911kmh/image/upload/v1676540721/Marketing/Blog/Quarto_Cheat_Sheet.pdf)
+
+## {background-image="/assets/images/cover.jpg"}
+
+### Thank you! Questions?
+
+```{r}
+#| echo: false
+R.version[c("platform","os","major","minor")]
+```
+
+[{{< meta current_year >}} • [SciLifeLab](https://www.scilifelab.se/) • [NBIS](https://nbis.se/) • [RaukR](https://nbisweden.github.io/raukr-2024)]{.smaller}
+
+## Compared to Rmd
+
+- Quarto is a command-line tool independent of R
+- Supports multiple languages seamlessly (R, Python, Julia, Observable)
+- YAML options maybe slightly different in quarto. Quarto uses hyphens instead of underscores.
+  - `toc_depth` becomes `toc-depth`
+  - `number_sections` becomes `number-sections`
+  - `code_folding` becomes `code-fold`
+- Chunk options are specified inside the chunk like `#| echo: false` rather than `r{echo=FALSE}`
+- Many more chunk options are available including figure captions and layout
+- CSS classes are easier to use using `:::` notation
+- Many additional functionality out of the box
+  - Page layouts
+  - Figure layouts
+  - Figure captions and numbering
+  - Call-Outs
+  - Cross referencing
+  - Citation
+  - Bibliography
+  - Margin content
+- Quarto supports htmlwidgets in R and jupyter widgets for Python/Julia
+- Interactivity
+  - Client-side interactivity using ObservableJS
+  - Server-side interactivity using Shiny

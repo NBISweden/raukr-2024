@@ -1,0 +1,109 @@
+---
+title: "Gallery"
+description: "Pictures from previous workshops"
+toc: false
+date: ""
+sidebar: false
+format:
+  html:
+    number-sections: false
+---
+
+## Raukr 2023
+
+![](assets/images/raukr-2023/s.jpg){group="raukr-2023"}
+
+::: {.raukr-gallery-parent}
+::: {.raukr-gallery-child}
+![](assets/images/raukr-2023/a.jpg){group="raukr-2023"}
+:::
+::: {.raukr-gallery-child}
+![](assets/images/raukr-2023/b.jpg){group="raukr-2023"}
+:::
+::: {.raukr-gallery-child}
+![](assets/images/raukr-2023/c.jpg){group="raukr-2023"}
+:::
+::: {.raukr-gallery-child}
+![](assets/images/raukr-2023/d.jpg){group="raukr-2023"}
+:::
+::: {.raukr-gallery-child}
+![](assets/images/raukr-2023/e.jpg){group="raukr-2023"}
+:::
+::: {.raukr-gallery-child}
+![](assets/images/raukr-2023/f.jpg){group="raukr-2023"}
+:::
+::: {.raukr-gallery-child}
+![](assets/images/raukr-2023/g.jpg){group="raukr-2023"}
+:::
+::: {.raukr-gallery-child}
+![](assets/images/raukr-2023/h.jpg){group="raukr-2023"}
+:::
+::: {.raukr-gallery-child}
+![](assets/images/raukr-2023/i.jpg){group="raukr-2023"}
+:::
+::: {.raukr-gallery-child}
+![](assets/images/raukr-2023/j.jpg){group="raukr-2023"}
+:::
+::: {.raukr-gallery-child}
+![](assets/images/raukr-2023/k.jpg){group="raukr-2023"}
+:::
+::: {.raukr-gallery-child}
+![](assets/images/raukr-2023/l.jpg){group="raukr-2023"}
+:::
+::: {.raukr-gallery-child}
+![](assets/images/raukr-2023/m.jpg){group="raukr-2023"}
+:::
+::: {.raukr-gallery-child}
+![](assets/images/raukr-2023/n.jpg){group="raukr-2023"}
+:::
+::: {.raukr-gallery-child}
+![](assets/images/raukr-2023/o.jpg){group="raukr-2023"}
+:::
+::: {.raukr-gallery-child}
+![](assets/images/raukr-2023/p.jpg){group="raukr-2023"}
+:::
+::: {.raukr-gallery-child}
+![](assets/images/raukr-2023/q.jpg){group="raukr-2023"}
+:::
+::: {.raukr-gallery-child}
+![](assets/images/raukr-2023/r.jpg){group="raukr-2023"}
+:::
+:::
+
+<br>
+
+## Raukr 2019
+
+::: {.raukr-gallery-parent}
+::: {.raukr-gallery-child}
+![](assets/images/raukr-2019/a.jpg){group="raukr-2019"}
+:::
+::: {.raukr-gallery-child}
+![](assets/images/raukr-2019/b.jpg){group="raukr-2019"}
+:::
+::: {.raukr-gallery-child}
+![](assets/images/raukr-2019/c.jpg){group="raukr-2019"}
+:::
+::: {.raukr-gallery-child}
+![](assets/images/raukr-2019/d.jpg){group="raukr-2019"}
+:::
+::: {.raukr-gallery-child}
+![](assets/images/raukr-2019/e.jpg){group="raukr-2019"}
+:::
+::: {.raukr-gallery-child}
+![](assets/images/raukr-2019/f.jpg){group="raukr-2019"}
+:::
+::: {.raukr-gallery-child}
+![](assets/images/raukr-2019/g.jpg){group="raukr-2019"}
+:::
+::: {.raukr-gallery-child}
+![](assets/images/raukr-2019/h.jpg){group="raukr-2019"}
+:::
+::: {.raukr-gallery-child}
+![](assets/images/raukr-2019/i.jpg){group="raukr-2019"}
+:::
+:::
+
+
+
+
