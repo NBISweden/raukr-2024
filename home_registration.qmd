@@ -22,20 +22,24 @@ dfr <- readxl::read_xlsx("map.xlsx")
 
 ## Entry requirements
 
-This workshop is aimed at both Ph.D. students and researchers within life sciences who are already using R for bioinformatics data analyses and who would like to start using R at a more advanced level. In order for you and other participants to benefit the most, you should consider yourself eligible if you are comfortable with reading and transforming data, installing and using third-party packages and plotting using standard R graphics.
+This workshop is aimed at both Ph.D. students and researchers within life sciences who are already using R for bioinformatics data analyses and who would like to start using R at a more advanced level. In order for you and other participants to benefit the most, you should *consider yourself eligible* if you are comfortable with:
+
+- Reading and transforming data, 
+- Installing and using third-party packages and 
+- Plotting using standard R graphics.
 
 ## Selection
 
 We can accomodate ~42 participants. Selection criteria include correct entry requirements, motivation to attend the workshop as well as gender and geographical balance. We do accept international applicants, but applicants affiliated to a Swedish institution are prioritized.
 
-Once the registration period concludes, we will review your application and notify you of our decision. If accepted, you will have three working days to confirm your participation. Failure to do so would imply your inability to attend, and we will proceed accordingly. Once confirm, our course administrator will proceed with invoicing.
+Once the registration period concludes, we will review your application and notify you of our decision. If accepted, you will have three working days to confirm your participation. Failure to do so would imply your inability to attend, and we will proceed accordingly. Once you confirmed, our course administrator will proceed with invoicing.
 
 ## Fee
 
-The fee for academic participants is [8000 SEK]{.badge .badge-primary} subsidized by academic grants. Fee for non-academic participants is 16000 SEK.
+The fee for academic participants is [8000 SEK]{.badge .badge-primary} subsidized by academic grants. Fee for non-academic participants is 16 000 SEK.
 
 ::: {.callout-warning}
-If you register and are admitted but fail to attend without a valid reason, you will still be liable for the entire fee.
+If you register and are admitted but fail to attend without a valid reason (sickness or urgent family matter), you will still be liable for the entire fee.
 :::
 
 ::: {.callout-note}
@@ -46,7 +50,7 @@ If you register and are admitted but fail to attend without a valid reason, you 
 
 - Participation in lectures and workshops
 - Mingle reception with snacks and drinks
-- Daily breakfast, coffee and lunch during the workshop
+- Daily breakfast/coffee, lunch and afternoon coffee during the workshop
 - One official course dinner
 - Surprise social activities
 
@@ -114,9 +118,9 @@ The workshop takes place in the city of Visby nestled on the island of Gotland, 
 
 Visby is accessible from mainland Sweden by flight or ferry. See [Gotland tourism](https://gotland.com/resa-hit-runt/) website for information.
 
-[Visby airport](https://www.swedavia.com/visby/) provides connections to Stockholm, Malmö, and Gothenburg, with a flying time of approximately 1 hour from Stockholm. [Bus connection](https://www.swedavia.com/visby/bus/) from the airport to the city centre takes about 10 mins. Alternatively, there are airport taxis as well.
+[Visby airport](https://www.swedavia.com/visby/) provides connections to Stockholm, Malmö, and Gothenburg, with a flying time of approximately 1 hour from Stockholm. [Bus connection](https://www.swedavia.com/visby/bus/) from the airport to the city centre takes about 10 min. Alternatively, there are airport taxis as well.
 
-Ferry connections are available from Stockholm (Nynäshamn) to Visby through [Destination Gotland](https://www.destinationgotland.se/) or [Vikingline](https://www.vikingline.se). The journey time from Nynäshamn to Visby is about 3 hours. The ferry terminal in Visby is walking distance from Uppsala university campus (800m) and our suggested accomodations.
+Ferry connections are available from Stockholm (Nynäshamn) to Visby through [Destination Gotland](https://www.destinationgotland.se/) or [Vikingline](https://www.vikingline.se). The journey time from Nynäshamn to Visby is about 3 hours. The ferry terminal in Visby is walking distance from Uppsala University Campus Gotland (800m) and our suggested accomodations.
 
 ![](assets/images/destination-gotland.jpg)\
 [Source: [DestinationGotland](https://www.destinationgotland.se/)]{.small}
@@ -137,7 +141,7 @@ cat(knitr::knit_child(input = "assets/_child-map.qmd", envir = environment(), qu
 
 <br>
 
-The workshop is held on [Campus Gotland](http://www.campusgotland.uu.se/), Uppsala university. Here is the full address:
+The workshop is held on [Campus Gotland](http://www.campusgotland.uu.se/), Uppsala University. Here is the full address:
 
 ::: {.large}
 
@@ -148,7 +152,7 @@ Gotland, Sweden
 :::
 
 ::: {.callout-note}
-The classroom windows may be left open in case the room gets warm. If you are easily disturbed by external noise, it might a good idea to bring noise cancelling headphones for practical labs. Additional extension cables might come in handy too.
+The classroom windows may be left open in case the room gets warm. If you are easily disturbed by external noise, it might a good idea to bring noise cancelling headphones for practical labs (we are close to Visby harbor). Additional extension cables might come in handy too.
 :::
 
 For visual impressions from previous workshops, visit our [Gallery](home_gallery.html).
@@ -195,11 +199,11 @@ A cafeteria is available onsite just outside the lecture hall for breakfast and 
 
 tibble::tribble(
     ~Date, ~Milestone,
-    "03-Feb-2024", "Application opens",
+    "22-Feb-2024", "Application opens",
     "**14-Apr-2024 23:59**", "Application deadline",
     "17-Apr-2024", "Notification of acceptance/decline",
     "09-Jun-2024", "Arrival to Visby, mingle in the evening",
-    "10-Jun-2024 - 21-Jun-2023", "Workshop",
+    "10-Jun-2024 - 21-Jun-2024", "Workshop",
     "21-Jun-2024", "Project presentations, certificates issued, lunch included",
 ) %>%
     gt() %>%

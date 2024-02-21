@@ -34,7 +34,7 @@ docker run --platform=linux/amd64 --rm -e PASSWORD=raukr -p 8787:8787 -v ${PWD}:
 
 In browser, go to [http://localhost:8787/](http://localhost:8787/). Use following credentials:
 
-> username: rstudio
+> username: rstudio  
 > password: raukr
 
 ## Adding/Modifying topics

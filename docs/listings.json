@@ -33,12 +33,12 @@
       "/slides/parallelization/index.html",
       "/slides/ggplot/index.html",
       "/slides/packages/index.html",
+      "/slides/r-env/index.html",
       "/slides/rr/index.html",
       "/slides/reticulate/index.html",
       "/slides/tidyverse/index.html",
       "/slides/vectorization/index.html",
-      "/slides/git/index.html",
-      "/slides/r-env/index.html"
+      "/slides/git/index.html"
     ]
   }
 ]
