@@ -14,7 +14,7 @@
   <meta name="generator" content="quarto-1.4.549">
 
   <meta name="author" content="Roy Francis">
-  <title>renv: Project environments in R</title>
+  <title>Renv: Project environments in R</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -32,6 +32,71 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto.css">
   <link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -339,204 +404,699 @@
     
     <div class="title-parent title-one">
       <div class="title-child-text">
-        <h1 class="title">renv: Project environments in R</h1>
+        <h1 class="title">Renv: Project environments in R</h1>
                 <p class="subtitle">RaukR 2024 • Advanced R for Bioinformatics</p>
                         <p class="author">Roy Francis</p>
-                                <p class="date">20-Feb-2024</p>
+                                <p class="date">21-Feb-2024</p>
               </div>
     </div>
     
   </div>
 </section>
 
-<section id="background" class="slide level2">
-<h2>Background</h2>
-<p>Unable to reproduce the same results when</p>
+<section id="terminology" class="slide level2">
+<h2>Terminology</h2>
+<p><strong>R package</strong></p>
+<ul>
+<li>A standardized collection of R code, data or documentation</li>
+<li>How you use someone else’s code</li>
+<li><code>installed.packages()</code></li>
+</ul>
 <div class="fragment">
+<p><strong>R library</strong></p>
+<ul>
+<li>A directory that holds R packages</li>
+<li>Where you store packages</li>
+<li><code>.libPaths()</code></li>
+</ul>
+</div>
+<div class="fragment">
+<p><strong>R repository</strong></p>
+<ul>
+<li>A server that hosts R packages for distribution</li>
+<li>Where you get packages from</li>
+<li><code>getOption("repos")</code></li>
+</ul>
+</div>
+</section>
+<section id="motivation" class="slide level2">
+<h2>Motivation</h2>
+<div class="columns">
+<div class="column" style="width:70%;">
+<div class="fragment">
+<p>Unable to reproduce the same results when</p>
 <ul>
 <li>Rerunning old code</li>
 <li>Sharing your code with others</li>
 </ul>
 </div>
 <div class="fragment">
-<blockquote>
-<p>renv is a toolkit to manage project-specific libraries of R packages</p>
-</blockquote>
-</div>
-</section>
-<section id="terminology" class="slide level2">
-<h2>Terminology</h2>
-<p><strong>R package</strong><br>
-- A standardized collection of R code, data or documentation - How you use someone else’s code - <code>installed.packages()</code></p>
-<p><strong>R library</strong><br>
-- A directory that holds R packages - Where you store packages - <code>.libPaths()</code></p>
-<p><strong>R repository</strong><br>
-- A server that hosts R packages for distribution - Where you get packages from - <code>getOption("repos")</code></p>
-</section>
-<section id="project-lifespan" class="slide level2">
-<h2>Project lifespan</h2>
+<p><strong>Can you answer these questions about your project?</strong></p>
 <ul>
 <li>Where did I get my package from? What’s my <strong>repository</strong>?</li>
 <li>Where is my package stored? Where is my <strong>package library</strong>?</li>
 <li>What <strong>version</strong> of the package did I use?</li>
 </ul>
+</div>
+<div class="fragment">
+<p><span class="large"><code>renv</code> is a toolkit to manage project-specific libraries of R packages</span></p>
+</div>
+</div><div class="column" style="width:30%;">
+<div class="fragment">
+<p><img data-src="assets/renv.png"></p>
+</div>
+</div>
+</div>
 </section>
 <section id="what-can-renv-do" class="slide level2">
 <h2>What can renv do?</h2>
-<p><strong>Isolate projects</strong><br>
-- Each project gets it’s own <strong>library</strong> - You can use different versions of a library in different projects</p>
-<p><strong>Reproducible</strong><br>
-- Record exact <strong>version</strong> of each package</p>
-<p><strong>Portable</strong> - Others can retore your project libraries with the same exact versions - And from the same <strong>repository</strong> as you did</p>
-</section>
-<section id="project-timeline" class="slide level2">
-<h2>Project timeline</h2>
-<div class="columns">
-<div class="column">
-<p>Data -&gt;</p>
-</div><div class="column">
-<p>dplyr -&gt;</p>
-</div><div class="column">
-<p>dplyr -&gt; tidyr</p>
-</div><div class="column">
-<p>dplyr -&gt; tidyr ggplot2</p>
-</div><div class="column">
-<p>dplyr -&gt; <del>tidyr</del> ggplot2 shiny</p>
-</div>
-</div>
-</section>
-<section id="snapshot" class="slide level2">
-<h2>Snapshot</h2>
-</section>
-<section id="renv.lock-anatomy" class="slide level2">
-<h2>renv.lock anatomy</h2>
-<div class="columns">
-<div class="column">
-<pre><code>{
-  "R": {
-    "Version": "4.3.2",
-    "Repositories": [
-      {
-        "Name": "CRAN",
-        "URL": "https://p3m.dev/cran/latest"
-      }
-    ]
-  },
-  "Bioconductor": {
-    "Version": "3.18"
-  },
-  "remotes": {
-    "Package": "remotes",
-    "Version": "2.4.2.1",
-    "Source": "Repository",
-    "Repository": "RSPM",
-    "Requirements": [
-      "R",
-      "methods",
-      "stats",
-      "tools",
-      "utils"
-    ],
-    "Hash": "63d15047eb239f95160112bcadc4fcb9"
-  },</code></pre>
-</div><div class="column">
-<p>R version Active R repositories R packages recorded by project</p>
-</div>
-</div>
-</section>
-<section id="package-level-metadata" class="slide level2">
-<h2>Package level metadata</h2>
-<div class="columns">
-<div class="column">
-<pre><code>"remotes": {
-  "Package": "remotes",
-  "Version": "2.4.2.1",
-  "Source": "Repository",
-  "Repository": "RSPM",
-  "Requirements": [
-    "R",
-    "methods",
-    "stats",
-    "tools",
-    "utils"
-  ],
-  "Hash": "63d15047eb239f95160112bcadc4fcb9"
-}</code></pre>
-</div><div class="column">
+<p><strong>Isolate projects</strong></p>
 <ul>
-<li>Package: Package name</li>
-<li>Version: Package version</li>
-<li>Source: Location from where package was trieved</li>
-<li>Repository: Name of repository</li>
-<li>Hash: Unique hash for this package</li>
+<li>Each project gets it’s own <strong>library</strong></li>
+<li>You can use different versions of a library in different projects</li>
+</ul>
+<div class="fragment">
+<p><strong>Reproducible</strong></p>
+<ul>
+<li>Record exact <strong>version</strong> of each package</li>
 </ul>
 </div>
+<div class="fragment">
+<p><strong>Portable</strong></p>
+<ul>
+<li>You or others can restore the project libraries with the same exact versions</li>
+<li>And from the same <strong>repository</strong> as you did</li>
+</ul>
 </div>
 </section>
 <section id="renv-workflow" class="slide level2">
 <h2>renv workflow</h2>
+<div class="columns">
+<div class="column" style="width:40%;">
 <ol type="1">
-<li>Initialize</li>
-<li>Write code install packages</li>
-<li>Snapshot environment</li>
-<li>Repeat 2 &amp; 3</li>
-<li>Restore environment if needed</li>
+<li><p>Initialize<br>
+<code>renv::init()</code></p></li>
+<li><p>Write code install packages<br>
+<code>install.packages()</code></p></li>
+<li><p>Record environment<br>
+<code>renv::snapshot()</code></p></li>
+<li><p>Repeat 2 &amp; 3</p></li>
+<li><p>Restore environment if needed<br>
+<code>renv::restore()</code></p></li>
 </ol>
+</div><div class="column" style="width:60%;">
+<p><img data-src="assets/overview.png"></p>
+</div>
+</div>
 </section>
-<section id="snapshot-1" class="slide level2">
-<h2>Snapshot</h2>
-<p>Implicit snapshotting renv::dependencies()</p>
+<section id="initialize" class="slide level2">
+<h2>Initialize</h2>
+<pre><code>&gt; renv::init()
+
+renv: Project Environments for R
+
+Welcome to renv! It looks like this is your first time using renv.
+This is a one-time message, briefly describing some of renv's functionality.
+
+renv will write to files within the active project folder, including:
+
+  - A folder 'renv' in the project directory, and
+  - A lockfile called 'renv.lock' in the project directory.
+
+In particular, projects using renv will normally use a private, per-project
+R library, in which new packages will be installed. This project library is
+isolated from other R libraries on your system.
+
+In addition, renv will update files within your project directory, including:
+
+  - .gitignore
+  - .Rbuildignore
+  - .Rprofile
+
+Finally, renv maintains a local cache of data on the filesystem, located at:
+
+  - "~/Library/Caches/org.R-project.R/R/renv"
+
+This path can be customized: please see the documentation in `?renv::paths`.
+
+Please read the introduction vignette with `vignette("renv")` for more information.
+You can browse the package documentation online at https://rstudio.github.io/renv/.
+Do you want to proceed? [y/N]: y
+
+- "~/Library/Caches/org.R-project.R/R/renv" has been created.
+- Linking packages into the project library ... [32/32] Done!
+The following package(s) will be updated in the lockfile:
+
+# CRAN -----------------------------------------------------------------------
+- R6            [* -&gt; 2.5.1]
+- base64enc     [* -&gt; 0.1-3]
+- bslib         [* -&gt; 0.6.1]
+- cachem        [* -&gt; 1.0.8]
+- fastmap       [* -&gt; 1.1.1]
+- rmarkdown     [* -&gt; 2.25]
+- sass          [* -&gt; 0.4.8]
+- vctrs         [* -&gt; 0.6.5]
+- xfun          [* -&gt; 0.41]
+- yaml          [* -&gt; 2.3.8]
+
+The version of R recorded in the lockfile will be updated:
+- R             [* -&gt; 4.3.2]
+
+- Lockfile written to "~/Downloads/test/renv.lock".
+- renv activated -- please restart the R session.</code></pre>
 </section>
 <section id="status" class="slide level2">
 <h2>Status</h2>
+<p>What has changed in my project compared to the previous record?</p>
+<pre><code>&gt; renv::status()
+The following package(s) are missing:
+
+ package installed recorded used
+ dplyr   n         n        y
+ ggplot2 n         n        y
+ shiny   n         n        y
+
+See ?renv::status() for advice on resolving these issues.</code></pre>
 </section>
-<section id="tracking-renv.lock" class="slide level2">
-<h2>Tracking renv.lock</h2>
-<p>renv::history()</p>
+<section id="snapshot" class="slide level2">
+<h2>Snapshot</h2>
+<div class="panel-tabset">
+<ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">Before installing packages</a></li><li><a href="#tabset-1-2">After installing packages</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1">
+<pre><code>&gt; renv::snapshot()
+The following required packages are not installed:
+- dplyr
+- ggplot2
+- shiny
+Packages must first be installed before renv can snapshot them.
+Use `renv::dependencies()` to see where this package is used in your project.
+
+What do you want to do?
+
+1: Snapshot, just using the currently installed packages.
+2: Install the packages, then snapshot.
+3: Cancel, and resolve the situation on your own.</code></pre>
+</div>
+<div id="tabset-1-2">
+<pre><code>&gt; renv::snapshot()
+The following package(s) will be updated in the lockfile:
+
+# RSPM -----------------------------------------------------------------------
+- dplyr        [* -&gt; 1.1.4]
+- fansi        [* -&gt; 1.0.6]
+- generics     [* -&gt; 0.1.3]
+- tidyselect   [* -&gt; 1.2.0]
+- utf8         [* -&gt; 1.2.4]
+- withr        [* -&gt; 3.0.0]
+
+Do you want to proceed? [Y/n]:</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="renv-workflow-1" class="slide level2">
+<h2>renv workflow</h2>
+
+<img data-src="assets/lockfile_snapshot.png" class="r-stretch"><pre><code># record current state of packages
+renv::snapshot()</code></pre>
+</section>
+<section id="renv.lock-anatomy" class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">renv.lock anatomy</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource json number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode json hljs"><span id="cb6-1" class="hljs-ln-code"><a></a><span class="fu">{</span></span>
+<span id="cb6-2" class="hljs-ln-code"><a></a>  <span class="dt">"R"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb6-3" class="hljs-ln-code"><a></a>    <span class="dt">"Version"</span><span class="fu">:</span> <span class="st">"4.3.2"</span><span class="fu">,</span></span>
+<span id="cb6-4" class="hljs-ln-code"><a></a>    <span class="dt">"Repositories"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb6-5" class="hljs-ln-code"><a></a>      <span class="fu">{</span></span>
+<span id="cb6-6" class="hljs-ln-code"><a></a>        <span class="dt">"Name"</span><span class="fu">:</span> <span class="st">"CRAN"</span><span class="fu">,</span></span>
+<span id="cb6-7" class="hljs-ln-code"><a></a>        <span class="dt">"URL"</span><span class="fu">:</span> <span class="st">"https://p3m.dev/cran/latest"</span></span>
+<span id="cb6-8" class="hljs-ln-code"><a></a>      <span class="fu">}</span></span>
+<span id="cb6-9" class="hljs-ln-code"><a></a>    <span class="ot">]</span></span>
+<span id="cb6-10" class="hljs-ln-code"><a></a>  <span class="fu">},</span></span>
+<span id="cb6-11" class="hljs-ln-code"><a></a>  <span class="dt">"Bioconductor"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb6-12" class="hljs-ln-code"><a></a>    <span class="dt">"Version"</span><span class="fu">:</span> <span class="st">"3.18"</span></span>
+<span id="cb6-13" class="hljs-ln-code"><a></a>  <span class="fu">},</span></span>
+<span id="cb6-14" class="hljs-ln-code"><a></a>  <span class="dt">"remotes"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb6-15" class="hljs-ln-code"><a></a>    <span class="dt">"Package"</span><span class="fu">:</span> <span class="st">"remotes"</span><span class="fu">,</span></span>
+<span id="cb6-16" class="hljs-ln-code"><a></a>    <span class="dt">"Version"</span><span class="fu">:</span> <span class="st">"2.4.2.1"</span><span class="fu">,</span></span>
+<span id="cb6-17" class="hljs-ln-code"><a></a>    <span class="dt">"Source"</span><span class="fu">:</span> <span class="st">"Repository"</span><span class="fu">,</span></span>
+<span id="cb6-18" class="hljs-ln-code"><a></a>    <span class="dt">"Repository"</span><span class="fu">:</span> <span class="st">"RSPM"</span><span class="fu">,</span></span>
+<span id="cb6-19" class="hljs-ln-code"><a></a>    <span class="dt">"Requirements"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb6-20" class="hljs-ln-code"><a></a>      <span class="st">"R"</span><span class="ot">,</span></span>
+<span id="cb6-21" class="hljs-ln-code"><a></a>      <span class="st">"methods"</span><span class="ot">,</span></span>
+<span id="cb6-22" class="hljs-ln-code"><a></a>      <span class="st">"stats"</span><span class="ot">,</span></span>
+<span id="cb6-23" class="hljs-ln-code"><a></a>      <span class="st">"tools"</span><span class="ot">,</span></span>
+<span id="cb6-24" class="hljs-ln-code"><a></a>      <span class="st">"utils"</span></span>
+<span id="cb6-25" class="hljs-ln-code"><a></a>    <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb6-26" class="hljs-ln-code"><a></a>    <span class="dt">"Hash"</span><span class="fu">:</span> <span class="st">"63d15047eb239f95160112bcadc4fcb9"</span></span>
+<span id="cb6-27" class="hljs-ln-code"><a></a>  <span class="fu">}</span></span>
+<span id="cb6-28" class="hljs-ln-code"><a></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="renv.lock-anatomy-r-version" class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">renv.lock anatomy • R version</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7" data-code-line-numbers="3"><pre class="sourceCode numberSource json number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode json hljs"><span id="cb7-1" class="hljs-ln-code"><a></a><span class="fu">{</span></span>
+<span id="cb7-2" class="hljs-ln-code"><a></a>  <span class="dt">"R"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb7-3" class="hljs-ln-code"><a></a>    <span class="dt">"Version"</span><span class="fu">:</span> <span class="st">"4.3.2"</span><span class="fu">,</span></span>
+<span id="cb7-4" class="hljs-ln-code"><a></a>    <span class="dt">"Repositories"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb7-5" class="hljs-ln-code"><a></a>      <span class="fu">{</span></span>
+<span id="cb7-6" class="hljs-ln-code"><a></a>        <span class="dt">"Name"</span><span class="fu">:</span> <span class="st">"CRAN"</span><span class="fu">,</span></span>
+<span id="cb7-7" class="hljs-ln-code"><a></a>        <span class="dt">"URL"</span><span class="fu">:</span> <span class="st">"https://p3m.dev/cran/latest"</span></span>
+<span id="cb7-8" class="hljs-ln-code"><a></a>      <span class="fu">}</span></span>
+<span id="cb7-9" class="hljs-ln-code"><a></a>    <span class="ot">]</span></span>
+<span id="cb7-10" class="hljs-ln-code"><a></a>  <span class="fu">},</span></span>
+<span id="cb7-11" class="hljs-ln-code"><a></a>  <span class="dt">"Bioconductor"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb7-12" class="hljs-ln-code"><a></a>    <span class="dt">"Version"</span><span class="fu">:</span> <span class="st">"3.18"</span></span>
+<span id="cb7-13" class="hljs-ln-code"><a></a>  <span class="fu">},</span></span>
+<span id="cb7-14" class="hljs-ln-code"><a></a>  <span class="dt">"remotes"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb7-15" class="hljs-ln-code"><a></a>    <span class="dt">"Package"</span><span class="fu">:</span> <span class="st">"remotes"</span><span class="fu">,</span></span>
+<span id="cb7-16" class="hljs-ln-code"><a></a>    <span class="dt">"Version"</span><span class="fu">:</span> <span class="st">"2.4.2.1"</span><span class="fu">,</span></span>
+<span id="cb7-17" class="hljs-ln-code"><a></a>    <span class="dt">"Source"</span><span class="fu">:</span> <span class="st">"Repository"</span><span class="fu">,</span></span>
+<span id="cb7-18" class="hljs-ln-code"><a></a>    <span class="dt">"Repository"</span><span class="fu">:</span> <span class="st">"RSPM"</span><span class="fu">,</span></span>
+<span id="cb7-19" class="hljs-ln-code"><a></a>    <span class="dt">"Requirements"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb7-20" class="hljs-ln-code"><a></a>      <span class="st">"R"</span><span class="ot">,</span></span>
+<span id="cb7-21" class="hljs-ln-code"><a></a>      <span class="st">"methods"</span><span class="ot">,</span></span>
+<span id="cb7-22" class="hljs-ln-code"><a></a>      <span class="st">"stats"</span><span class="ot">,</span></span>
+<span id="cb7-23" class="hljs-ln-code"><a></a>      <span class="st">"tools"</span><span class="ot">,</span></span>
+<span id="cb7-24" class="hljs-ln-code"><a></a>      <span class="st">"utils"</span></span>
+<span id="cb7-25" class="hljs-ln-code"><a></a>    <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb7-26" class="hljs-ln-code"><a></a>    <span class="dt">"Hash"</span><span class="fu">:</span> <span class="st">"63d15047eb239f95160112bcadc4fcb9"</span></span>
+<span id="cb7-27" class="hljs-ln-code"><a></a>  <span class="fu">}</span></span>
+<span id="cb7-28" class="hljs-ln-code"><a></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="renv.lock-anatomy-active-repositories" class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">renv.lock anatomy • Active repositories</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8" data-code-line-numbers="4-10"><pre class="sourceCode numberSource json number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode json hljs"><span id="cb8-1" class="hljs-ln-code"><a></a><span class="fu">{</span></span>
+<span id="cb8-2" class="hljs-ln-code"><a></a>  <span class="dt">"R"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb8-3" class="hljs-ln-code"><a></a>    <span class="dt">"Version"</span><span class="fu">:</span> <span class="st">"4.3.2"</span><span class="fu">,</span></span>
+<span id="cb8-4" class="hljs-ln-code"><a></a>    <span class="dt">"Repositories"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb8-5" class="hljs-ln-code"><a></a>      <span class="fu">{</span></span>
+<span id="cb8-6" class="hljs-ln-code"><a></a>        <span class="dt">"Name"</span><span class="fu">:</span> <span class="st">"CRAN"</span><span class="fu">,</span></span>
+<span id="cb8-7" class="hljs-ln-code"><a></a>        <span class="dt">"URL"</span><span class="fu">:</span> <span class="st">"https://p3m.dev/cran/latest"</span></span>
+<span id="cb8-8" class="hljs-ln-code"><a></a>      <span class="fu">}</span></span>
+<span id="cb8-9" class="hljs-ln-code"><a></a>    <span class="ot">]</span></span>
+<span id="cb8-10" class="hljs-ln-code"><a></a>  <span class="fu">},</span></span>
+<span id="cb8-11" class="hljs-ln-code"><a></a>  <span class="dt">"Bioconductor"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb8-12" class="hljs-ln-code"><a></a>    <span class="dt">"Version"</span><span class="fu">:</span> <span class="st">"3.18"</span></span>
+<span id="cb8-13" class="hljs-ln-code"><a></a>  <span class="fu">},</span></span>
+<span id="cb8-14" class="hljs-ln-code"><a></a>  <span class="dt">"remotes"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb8-15" class="hljs-ln-code"><a></a>    <span class="dt">"Package"</span><span class="fu">:</span> <span class="st">"remotes"</span><span class="fu">,</span></span>
+<span id="cb8-16" class="hljs-ln-code"><a></a>    <span class="dt">"Version"</span><span class="fu">:</span> <span class="st">"2.4.2.1"</span><span class="fu">,</span></span>
+<span id="cb8-17" class="hljs-ln-code"><a></a>    <span class="dt">"Source"</span><span class="fu">:</span> <span class="st">"Repository"</span><span class="fu">,</span></span>
+<span id="cb8-18" class="hljs-ln-code"><a></a>    <span class="dt">"Repository"</span><span class="fu">:</span> <span class="st">"RSPM"</span><span class="fu">,</span></span>
+<span id="cb8-19" class="hljs-ln-code"><a></a>    <span class="dt">"Requirements"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb8-20" class="hljs-ln-code"><a></a>      <span class="st">"R"</span><span class="ot">,</span></span>
+<span id="cb8-21" class="hljs-ln-code"><a></a>      <span class="st">"methods"</span><span class="ot">,</span></span>
+<span id="cb8-22" class="hljs-ln-code"><a></a>      <span class="st">"stats"</span><span class="ot">,</span></span>
+<span id="cb8-23" class="hljs-ln-code"><a></a>      <span class="st">"tools"</span><span class="ot">,</span></span>
+<span id="cb8-24" class="hljs-ln-code"><a></a>      <span class="st">"utils"</span></span>
+<span id="cb8-25" class="hljs-ln-code"><a></a>    <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb8-26" class="hljs-ln-code"><a></a>    <span class="dt">"Hash"</span><span class="fu">:</span> <span class="st">"63d15047eb239f95160112bcadc4fcb9"</span></span>
+<span id="cb8-27" class="hljs-ln-code"><a></a>  <span class="fu">}</span></span>
+<span id="cb8-28" class="hljs-ln-code"><a></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="renv.lock-anatomy-r-packages" class="slide level2" data-auto-animate="true">
+<h2 data-id="quarto-animate-title">renv.lock anatomy • R packages</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9" data-code-line-numbers="14-27"><pre class="sourceCode numberSource json number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode json hljs"><span id="cb9-1" class="hljs-ln-code"><a></a><span class="fu">{</span></span>
+<span id="cb9-2" class="hljs-ln-code"><a></a>  <span class="dt">"R"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb9-3" class="hljs-ln-code"><a></a>    <span class="dt">"Version"</span><span class="fu">:</span> <span class="st">"4.3.2"</span><span class="fu">,</span></span>
+<span id="cb9-4" class="hljs-ln-code"><a></a>    <span class="dt">"Repositories"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb9-5" class="hljs-ln-code"><a></a>      <span class="fu">{</span></span>
+<span id="cb9-6" class="hljs-ln-code"><a></a>        <span class="dt">"Name"</span><span class="fu">:</span> <span class="st">"CRAN"</span><span class="fu">,</span></span>
+<span id="cb9-7" class="hljs-ln-code"><a></a>        <span class="dt">"URL"</span><span class="fu">:</span> <span class="st">"https://p3m.dev/cran/latest"</span></span>
+<span id="cb9-8" class="hljs-ln-code"><a></a>      <span class="fu">}</span></span>
+<span id="cb9-9" class="hljs-ln-code"><a></a>    <span class="ot">]</span></span>
+<span id="cb9-10" class="hljs-ln-code"><a></a>  <span class="fu">},</span></span>
+<span id="cb9-11" class="hljs-ln-code"><a></a>  <span class="dt">"Bioconductor"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb9-12" class="hljs-ln-code"><a></a>    <span class="dt">"Version"</span><span class="fu">:</span> <span class="st">"3.18"</span></span>
+<span id="cb9-13" class="hljs-ln-code"><a></a>  <span class="fu">},</span></span>
+<span id="cb9-14" class="hljs-ln-code"><a></a>  <span class="dt">"remotes"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb9-15" class="hljs-ln-code"><a></a>    <span class="dt">"Package"</span><span class="fu">:</span> <span class="st">"remotes"</span><span class="fu">,</span></span>
+<span id="cb9-16" class="hljs-ln-code"><a></a>    <span class="dt">"Version"</span><span class="fu">:</span> <span class="st">"2.4.2.1"</span><span class="fu">,</span></span>
+<span id="cb9-17" class="hljs-ln-code"><a></a>    <span class="dt">"Source"</span><span class="fu">:</span> <span class="st">"Repository"</span><span class="fu">,</span></span>
+<span id="cb9-18" class="hljs-ln-code"><a></a>    <span class="dt">"Repository"</span><span class="fu">:</span> <span class="st">"RSPM"</span><span class="fu">,</span></span>
+<span id="cb9-19" class="hljs-ln-code"><a></a>    <span class="dt">"Requirements"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb9-20" class="hljs-ln-code"><a></a>      <span class="st">"R"</span><span class="ot">,</span></span>
+<span id="cb9-21" class="hljs-ln-code"><a></a>      <span class="st">"methods"</span><span class="ot">,</span></span>
+<span id="cb9-22" class="hljs-ln-code"><a></a>      <span class="st">"stats"</span><span class="ot">,</span></span>
+<span id="cb9-23" class="hljs-ln-code"><a></a>      <span class="st">"tools"</span><span class="ot">,</span></span>
+<span id="cb9-24" class="hljs-ln-code"><a></a>      <span class="st">"utils"</span></span>
+<span id="cb9-25" class="hljs-ln-code"><a></a>    <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb9-26" class="hljs-ln-code"><a></a>    <span class="dt">"Hash"</span><span class="fu">:</span> <span class="st">"63d15047eb239f95160112bcadc4fcb9"</span></span>
+<span id="cb9-27" class="hljs-ln-code"><a></a>  <span class="fu">}</span></span>
+<span id="cb9-28" class="hljs-ln-code"><a></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="package-metadata" class="slide level2">
+<h2>Package metadata</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb10-1"><a></a><span class="er">"remotes":</span> <span class="fu">{</span></span>
+<span id="cb10-2"><a></a>  <span class="dt">"Package"</span><span class="fu">:</span> <span class="st">"remotes"</span><span class="fu">,</span></span>
+<span id="cb10-3"><a></a>  <span class="dt">"Version"</span><span class="fu">:</span> <span class="st">"2.4.2.1"</span><span class="fu">,</span></span>
+<span id="cb10-4"><a></a>  <span class="dt">"Source"</span><span class="fu">:</span> <span class="st">"Repository"</span><span class="fu">,</span></span>
+<span id="cb10-5"><a></a>  <span class="dt">"Repository"</span><span class="fu">:</span> <span class="st">"RSPM"</span><span class="fu">,</span></span>
+<span id="cb10-6"><a></a>  <span class="dt">"Requirements"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb10-7"><a></a>    <span class="st">"R"</span><span class="ot">,</span></span>
+<span id="cb10-8"><a></a>    <span class="st">"methods"</span><span class="ot">,</span></span>
+<span id="cb10-9"><a></a>    <span class="st">"stats"</span><span class="ot">,</span></span>
+<span id="cb10-10"><a></a>    <span class="st">"tools"</span><span class="ot">,</span></span>
+<span id="cb10-11"><a></a>    <span class="st">"utils"</span></span>
+<span id="cb10-12"><a></a>  <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb10-13"><a></a>  <span class="dt">"Hash"</span><span class="fu">:</span> <span class="st">"63d15047eb239f95160112bcadc4fcb9"</span></span>
+<span id="cb10-14"><a></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div><div class="column" style="width:40%;">
+<ul>
+<li><strong>Package</strong>: Package name</li>
+<li><strong>Version</strong>: Package version</li>
+<li><strong>Source</strong>: Source location</li>
+<li><strong>Repository</strong>: Name of repository</li>
+<li><strong>Hash</strong>: Unique hash for this package</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="practical-use-cases-for-lockfile" class="slide level2">
+<h2>Practical use cases for lockfile</h2>
+<ul>
+<li>Time capsules: Freeze exact versions of packages for future</li>
+<li>Collaborate using the same library</li>
+<li>Deploy development environment to a remote server</li>
+</ul>
 </section>
 <section id="restoring-library" class="slide level2">
 <h2>Restoring library</h2>
+<div class="columns">
+<div class="column">
+<pre><code>&gt; renv::restore()
+The following package(s) will be updated:
+
+# CRAN -----------------------------------------------------------------------
+- R6            [* -&gt; 2.5.1]
+- fontawesome   [* -&gt; 0.5.2]
+- xfun          [* -&gt; 0.41]
+- yaml          [* -&gt; 2.3.8]
+
+# RSPM -----------------------------------------------------------------------
+- dplyr         [* -&gt; 1.1.4]
+- fansi         [* -&gt; 1.0.6]
+- withr         [* -&gt; 3.0.0]
+
+Do you want to proceed? [Y/n]:</code></pre>
+</div><div class="column">
+<div class="fragment">
 <ul>
+<li><code>renv::restore()</code></li>
+<li>Rebuild a project library from a lockfile</li>
+<li>Handles multiple sources
+<ul>
+<li>CRAN</li>
+<li>Bioconductor</li>
+<li>GitHub</li>
+<li>Gitlab</li>
+<li>Bitbucket</li>
+<li>Private repositories…</li>
+</ul></li>
 <li>Will not modify R version</li>
 </ul>
+</div>
+</div>
+</div>
 </section>
-<section id="global-package-cache" class="slide level2">
-<h2>Global package cache</h2>
+<section id="tracking-renv.lock" class="slide level2">
+<h2>Tracking renv.lock</h2>
+
+<img data-src="assets/lockfile_tracking.png" class="r-stretch"><pre><code># view lockfile history
+renv::history()
+
+# revert to previous state
+renv::revert(commit="commit 2")</code></pre>
 </section>
-<section id="renv-without-project-library" class="slide level2">
-<h2>renv without project library</h2>
+<section id="how-renv-works" class="slide level2">
+<h2>How renv works</h2>
+<p><strong>Without renv</strong></p>
+<div class="columns">
+<div class="column" style="width:40%;">
+<p><img data-src="assets/structure_sys-lib.png"></p>
+</div><div class="column" style="width:60%;">
 <ul>
-<li>Snapshot all packages used in a project</li>
+<li>All projects share the same library</li>
+<li>Changes in one project affects the other</li>
 </ul>
-<p><code>renv::snapshot()</code></p>
-<ul>
-<li>Snapshot all packages in current library</li>
-</ul>
-<p><code>renv::snapshot(type="all")</code></p>
-<ul>
-<li>Restore into system library</li>
-</ul>
-<p><code>renv::restore()</code></p>
-<ul>
-<li>Disable global cache</li>
-</ul>
-<p><code>renv::settings$use.cache(FALSE)</code></p>
+</div>
+</div>
 </section>
-<section id="reproducibility-puzzle" class="slide level2">
-<h2>Reproducibility puzzle</h2>
+<section id="how-renv-works-1" class="slide level2">
+<h2>How renv works</h2>
+<p><strong>Project specific library without global cache</strong></p>
+<div class="columns">
+<div class="column" style="width:40%;">
+<p><img data-src="assets/structure_no-global-cache.png"></p>
+</div><div class="column" style="width:60%;">
+<ul>
+<li>Each project has it’s own library</li>
+<li><code>renv::settings$use.cache(FALSE)</code> disables global cache</li>
+</ul>
+</div>
+</div>
 </section>
-<section id="review" class="slide level2">
-<h2>Review</h2>
-<p>renv::init() renv::snapshot() renv::restore()</p>
-<p>renv::status() renv::dependencies() renv::history() renv::revert()</p>
+<section id="how-renv-works-2" class="slide level2">
+<h2>How renv works</h2>
+<p><strong>Project specific library with global cache</strong></p>
+<div class="columns">
+<div class="column" style="width:40%;">
+<p><img data-src="assets/structure_global-cache.png"></p>
+</div><div class="column" style="width:60%;">
+<ul>
+<li>Each project has it’s own library</li>
+<li>Projects libraries are soft-linked to global cache</li>
+</ul>
+<div class="fragment">
+<table>
+<thead>
+<tr class="header">
+<th>OS</th>
+<th>Location</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Linux</td>
+<td>~/.local/share/env</td>
+</tr>
+<tr class="even">
+<td>MacOS</td>
+<td>~/Library/Application Support/renv</td>
+</tr>
+<tr class="odd">
+<td>Windows</td>
+<td>%LOCALAPPDATA%/renv</td>
+</tr>
+</tbody>
+</table>
+<p><code>RENV_PATHS_CACHE</code> Set this environment variable to share package cache across multiple users</p>
+</div>
+</div>
+</div>
+</section>
+<section id="project-profiles" class="slide level2">
+<h2>Project profiles</h2>
+<ul>
+<li>Switch between different profiles</li>
+<li>By default, the “default” profile is used</li>
+<li>Create or switch profiles</li>
+</ul>
+<p><code>renv::activate(profile = "dev")</code></p>
+</section>
+<section id="install-packages-using-renv" class="slide level2">
+<h2>Install packages using renv</h2>
+<pre><code>&gt; renv::install(c("dplyr"))
+# Downloading packages -------------------------------------------------------
+- Downloading dplyr from CRAN ...               OK [file is up to date]
+- Downloading generics from CRAN ...            OK [file is up to date]
+- Downloading pillar from CRAN ...              OK [file is up to date]
+- Downloading fansi from CRAN ...               OK [file is up to date]
+- Downloading utf8 from CRAN ...                OK [file is up to date]
+- Downloading tibble from CRAN ...              OK [file is up to date]
+- Downloading pkgconfig from CRAN ...           OK [file is up to date]
+- Downloading tidyselect from CRAN ...          OK [file is up to date]
+- Downloading withr from CRAN ...               OK [file is up to date]
+Successfully downloaded 9 packages in 5.8 seconds.
+
+The following package(s) will be installed:
+- dplyr      [1.1.4]
+- fansi      [1.0.6]
+- generics   [0.1.3]
+- pillar     [1.9.0]
+- pkgconfig  [2.0.3]
+- tibble     [3.2.1]
+- tidyselect [1.2.0]
+- utf8       [1.2.4]
+- withr      [3.0.0]
+These packages will be installed into "~/Downloads/test/renv/library/R-4.3/x86_64-apple-darwin13.4.0".
+
+Do you want to proceed? [Y/n]:</code></pre>
+</section>
+<section id="tidbits" class="slide level2">
+<h2>Tidbits</h2>
+<ul>
+<li>Implicit snapshotting
+<ul>
+<li>Only packages which appear to be used in the project is recorded</li>
+<li><code>renv::snapshot()</code></li>
+</ul></li>
+</ul>
+<div class="fragment">
+<ul>
+<li>Snapshot all packages in current library regardless of project
+<ul>
+<li><code>renv::snapshot(type="all")</code></li>
+</ul></li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>Discover dependencies manually
+<ul>
+<li><code>renv::dependencies()</code></li>
+</ul></li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>Explicit snapshotting
+<ul>
+<li>Only record packages specified in DESCRIPTION file</li>
+<li><code>renv::settings$snapshot.type("explicit")</code></li>
+</ul></li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>Ignore a package explicitly
+<ul>
+<li><code>renv::settings$ignored.packages("&lt;package&gt;")</code></li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="tidbits-1" class="slide level2">
+<h2>Tidbits</h2>
+<ul>
+<li>Restore into system library
+<ul>
+<li><code>renv::restore()</code></li>
+</ul></li>
+</ul>
+<div class="fragment">
+<ul>
+<li>Disable global cache
+<ul>
+<li><code>renv::settings$use.cache(FALSE)</code></li>
+</ul></li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>Install to global cache
+<ul>
+<li><code>renv::install()</code></li>
+</ul></li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>Update packges to newer versions
+<ul>
+<li><code>renv::update()</code></li>
+</ul></li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>renv is integrated into RStudio projects (.Rproj)</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>Disable renv
+<ul>
+<li>Temporary deactivate renv
+<ul>
+<li><code>renv::deactivate()</code></li>
+<li><code>renv::activate()</code></li>
+</ul></li>
+<li>Remove renv from current project (removes renv/, renv.lockfile, .Rprofile)
+<ul>
+<li><code>renv::deactivate(clean=TRUE)</code></li>
+</ul></li>
+<li>Remove renv global cache
+<ul>
+<li><code>unlink(renv::paths$root(), recursive=TRUE)</code></li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="renv-is-only-one-piece-of-the-reproducibility-puzzle" class="slide level2">
+<h2>Renv is only one piece of the reproducibility puzzle</h2>
+<p><img data-src="assets/puzzle-1.png" style="height:95.0%"></p>
+</section>
+<section id="renv-is-only-one-piece-of-the-reproducibility-puzzle-1" class="slide level2">
+<h2>Renv is only one piece of the reproducibility puzzle</h2>
+<p><img data-src="assets/puzzle-2.png" style="height:95.0%"></p>
+</section>
+<section id="renv-is-only-one-piece-of-the-reproducibility-puzzle-2" class="slide level2">
+<h2>Renv is only one piece of the reproducibility puzzle</h2>
+<p><img data-src="assets/puzzle-3.png" style="height:95.0%"></p>
+</section>
+<section id="renv-is-only-one-piece-of-the-reproducibility-puzzle-3" class="slide level2">
+<h2>Renv is only one piece of the reproducibility puzzle</h2>
+<p><img data-src="assets/puzzle-4.png" style="height:95.0%"></p>
+</section>
+<section id="renv-is-only-one-piece-of-the-reproducibility-puzzle-4" class="slide level2">
+<h2>Renv is only one piece of the reproducibility puzzle</h2>
+<p><img data-src="assets/puzzle-5.png" style="height:95.0%"></p>
+<p><img data-src="assets/external.jpg"></p>
+</section>
+<section id="recap" class="slide level2">
+<h2>Recap</h2>
+<div class="columns">
+<div class="column" style="width:40%;">
+<p><strong>Key functions</strong></p>
+<pre><code>renv::init()
+renv::snapshot()
+renv::restore()</code></pre>
+<p><strong>Useful</strong></p>
+<pre><code>renv::status()
+renv::dependencies()
+renv::history()
+renv::revert()</code></pre>
+</div><div class="column" style="width:60%;">
+<p><img data-src="assets/overview.png"></p>
+</div>
+</div>
 </section>
 <section id="acknowledgements" class="slide level2">
 <h2>Acknowledgements</h2>
-<ul>
-<li><a href="https://rstudio.github.io/renv/index.html">renv documentation</a></li>
-<li><a href="https://www.youtube.com/watch?v=yjlEbIDevOs">Project environments for R</a>: Kevin Ushey, RStudio::Conf 2020</li>
-<li><a href="https://www.youtube.com/watch?v=7lCOjGrwclQ">Reproducible environments with renv</a>: Ryan Johnson, NHS-R community 2023</li>
-</ul>
+<div class="columns">
+<div class="column">
+<iframe data-external="1" src="https://www.youtube.com/embed/yjlEbIDevOs" width="100%" height="400px" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+<p><strong>Project environments for R</strong>, Kevin Ushey, RStudio::Conf 2020</p>
+</div><div class="column">
+<iframe data-external="1" src="https://www.youtube.com/embed/7lCOjGrwclQ" width="100%" height="400px" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+<p><strong>Reproducible environments with renv</strong>, Ryan Johnson, NHS-R community 2023</p>
+</div>
+</div>
+<p>renv official <a href="https://rstudio.github.io/renv/index.html">documentation</a></p>
 </section>
 <section id="section" class="slide level2" data-background-image="../../assets/images/cover.jpg">
 <h2></h2>
