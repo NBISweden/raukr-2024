@@ -76,6 +76,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -534,7 +537,7 @@ Tip
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>?trianguletter</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><img src="assets/trianguletterRd.png" class="img-fluid"></p>
+<p><a href="assets/trianguletterRd.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="assets/trianguletterRd.png" class="img-fluid"></a></p>
 </section>
 <section id="data-documentation" class="level4" data-number="4.3.2">
 <h4 data-number="4.3.2" class="anchored" data-anchor-id="data-documentation"><span class="header-section-number">4.3.2</span> Data documentation</h4>
@@ -573,7 +576,7 @@ Tip
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>?your_object</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><img src="assets/your_object.png" class="img-fluid"></p>
+<p><a href="assets/your_object.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="assets/your_object.png" class="img-fluid"></a></p>
 <p>Well done! You have successfully created documentation for a function and a dataset and shown that it can be queried within R.</p>
 </section>
 </section>
@@ -728,7 +731,7 @@ Duration: 18.1s
 </section>
 <section id="finish-line" class="level2" data-number="6">
 <h2 data-number="6" class="anchored" data-anchor-id="finish-line"><span class="header-section-number">6</span> Finish line</h2>
-<p><img src="assets/small_package.jpg" class="img-fluid" style="width:40.0%"></p>
+<p><a href="assets/small_package.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="assets/small_package.jpg" class="img-fluid" style="width:40.0%"></a></p>
 <p>Well done! You have built a functional package. Maybe it is even time to update the version number in <strong>DESCRIPTION</strong> and take it out of development?</p>
 <p>If you want to know even more about this topic, I recommend Hadley Wickham and Jenny Bryan’s excellent online resource <a href="http://r-pkgs.had.co.nz/check.html">http://r-pkgs.had.co.nz/check.html</a>.</p>
 <p>The next sections are optional and cover vignettes, testing, including C++ code in your package using <code>Rcpp</code> and pushing your R package to github and setting up github actions for it.</p>
@@ -806,7 +809,7 @@ Note
 <span id="cb28-45"><a href="#cb28-45" aria-hidden="true" tabindex="-1"></a>bunch of numbers instead!</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <!-- > Note: Because I am writing this in rmarkdown I added backslashes before the code or it would not render properly for this exercise instruction. In your rmarkdown there should **not** be backslashes before code chunks.  See the \\``` in the vignette code. -->
 <p>And the beautiful rendered version:</p>
-<p><img src="assets/vignette.png" class="img-fluid"></p>
+<p><a href="assets/vignette.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="assets/vignette.png" class="img-fluid"></a></p>
 <p>The preview you get when knitting the <strong>vignette.Rmd</strong> does not mean that the vignette has been created. When you are happy with the vignette, use <code>devtools::build_vignettes()</code>. To view the vignette as an external user would view it is for some reason a bit of a hassle for the package you are developing, perhaps because the output is pretty much the same as when you knit. If you want to do this you can build your package source with <code>devtools::build()</code>, which also builds the vignette, and then <code>devtools::load_all()</code>. Then view the vignette with <code>browseVignettes("packagename")</code>.</p>
 <p>Once again, good work! Now you have written a short guide to your package that will be included wherever it goes!</p>
 </section>
@@ -948,7 +951,7 @@ Tip
 <p>Now lets add an action to our R-package. It is possible to do this manually but luckily there are some example workflows you can use for the most common cases at https://github.com/r-lib/actions/tree/master/examples. To add the action, we will use the <code>usethis</code> package, similarly to how we used it to initiate vignettes earlier. Issue the command <code>usethis::use_github_action("check-standard")</code> in your R package R session, which will select the standard CI workflow from the link.</p>
 <p>What this actually did is create the folders and file <code>.github/workflows/check-standard.yaml</code> which github will know to look for in a repository for instructions to run actions.</p>
 <p>Now commit and push these newly added files to your git repository the <em>Actions</em> tab on github will commence running an action, checking your R package for compatibility with several operating systems, as shown below.</p>
-<p><img src="assets/github_actions.png" class="img-fluid"></p>
+<p><a href="assets/github_actions.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="assets/github_actions.png" class="img-fluid"></a></p>
 <p>That is it, now you know all the most important bits about creating an R package. Go make something useful!</p>
 
 
@@ -1358,6 +1361,31 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>
   </div>
 </footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","loop":false,"descPosition":"bottom","selector":".lightbox","openEffect":"zoom"});
+window.onload = () => {
+  lightboxQuarto.on('slide_before_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    const href = trigger.getAttribute('href');
+    if (href !== null) {
+      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+      if (imgEl !== null) {
+        const srcAttr = imgEl.getAttribute("src");
+        if (srcAttr && srcAttr.startsWith("data:")) {
+          slideConfig.href = srcAttr;
+        }
+      }
+    } 
+  });
+
+  lightboxQuarto.on('slide_after_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    if (window.Quarto?.typesetMath) {
+      window.Quarto.typesetMath(slideNode);
+    }
+  });
+
+};
+          </script>
 
 
 

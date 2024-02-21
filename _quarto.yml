@@ -58,6 +58,8 @@ format:
     date:  last-modified
     date-format: "DD-MMM-YYYY"
     image: "/assets/images/featured.jpg"
+    lightbox:
+      match: auto
   revealjs:
     quarto-required: ">=1.4.5"
     include-in-header: "assets/include_head.html"

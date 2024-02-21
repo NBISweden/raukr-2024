@@ -76,6 +76,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -286,7 +289,7 @@ author: "John Doe"
 date: "25-Apr-2022"
 ---</code></pre>
 <div class="shadow">
-<p><img src="assets/report-a.png" class="img-fluid"></p>
+<p><a href="assets/report-a.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="assets/report-a.png" class="img-fluid"></a></p>
 </div>
 <p>The default output format is html and this can be changed or arguments for this can be adjusted by specifying this in the yaml. Here is an updated version:</p>
 <pre><code>---
@@ -312,7 +315,7 @@ This is some text
 
 Here is some more text</code></pre>
 <div class="shadow">
-<p><img src="assets/report-b.png" class="img-fluid"></p>
+<p><a href="assets/report-b.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="assets/report-b.png" class="img-fluid"></a></p>
 </div>
 <p>Date is now set as <strong>last-modified</strong> which means it is automatically updated whenever the document is rendered. The date format is adjusted by setting <strong>date-format: “DD-MMM-YYYY”</strong>. In addition, the output format is now explicitly specified. The table of contents is enabled and it’s depth is set to 4. Section numberings are enabled and depth is set to 4. Try changing some of these arguments to see how it affects the output.</p>
 <p>Here is a more complex version:</p>
@@ -353,7 +356,7 @@ Here is some more text</code></pre>
 <span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a><span class="in">date()</span></span>
 <span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="shadow">
-<p><img src="assets/report-c.png" class="img-fluid"></p>
+<p><a href="assets/report-c.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="assets/report-c.png" class="img-fluid"></a></p>
 </div>
 <p><strong>title-block-banner: true</strong> displays the blue banner. <strong>code-fold: true</strong> folds the code and reduces clutter. <strong>code-copy: true</strong> adds a copy icon in the code chunk and allows the code to be copied easily. <strong>code-tools: true</strong> adds options to the top right of the document to allow the user to show/hide all code chunks and view source code. <strong>df-print: kable</strong> sets the default method of displaying tables. <strong>standalone: false</strong> specifies if all assets and libraries must be integrated into the output html file as a standalone document.</p>
 <p>For a complete guide to YAML metadata for HTML, see <a href="https://quarto.org/docs/reference/formats/html.html#metadata">here</a>.</p>
@@ -399,14 +402,14 @@ Superscript written like this <code>2^10^</code> renders as 2<sup>10</sup>.</p>
 <p>Images can be displayed from a relative local location using <code>![This is a caption](assets/gotland.jpg)</code>. For example:</p>
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
-<p><img src="assets/gotland.jpg" class="img-fluid figure-img"></p>
+<p><a href="assets/gotland.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-4" data-glightbox="description: .lightbox-desc-4" title="This is a caption"><img src="assets/gotland.jpg" class="img-fluid figure-img" alt="This is a caption"></a></p>
 <figcaption>This is a caption</figcaption>
 </figure>
 </div>
 <p>By default, the image is displayed at full scale or until it fills the display width. The image dimension can be adjusted <code>![This is a caption](assets/gotland.jpg){width=40%}</code>.</p>
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
-<p><img src="assets/gotland.jpg" class="img-fluid figure-img" style="width:40.0%"></p>
+<p><a href="assets/gotland.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-5" data-glightbox="description: .lightbox-desc-5" title="This is a caption"><img src="assets/gotland.jpg" class="img-fluid figure-img" style="width:40.0%" alt="This is a caption"></a></p>
 <figcaption>This is a caption</figcaption>
 </figure>
 </div>
@@ -423,7 +426,7 @@ Superscript written like this <code>2^10^</code> renders as 2<sup>10</sup>.</p>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="assets/gotland.jpg" class="img-fluid figure-img" width="200"></p>
+<p><a href="assets/gotland.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="assets/gotland.jpg" class="img-fluid figure-img" width="200"></a></p>
 </figure>
 </div>
 </div>
@@ -437,7 +440,7 @@ Superscript written like this <code>2^10^</code> renders as 2<sup>10</sup>.</p>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="assets/gotland.jpg" class="img-fluid figure-img" width="75"></p>
+<p><a href="assets/gotland.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="assets/gotland.jpg" class="img-fluid figure-img" width="75"></a></p>
 </figure>
 </div>
 </div>
@@ -669,7 +672,7 @@ Table&nbsp;2: This is a caption
 <div id="fig-plot-a" class="quarto-figure quarto-figure-left quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-plot-a-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="index_files/figure-html/fig-plot-a-1.png" class="img-fluid figure-img" width="576">
+<a href="index_files/figure-html/fig-plot-a-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8" data-glightbox="description: .lightbox-desc-8"><img src="index_files/figure-html/fig-plot-a-1.png" class="img-fluid figure-img" width="576"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-plot-a-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: This is a figure caption.
@@ -862,6 +865,11 @@ Content for `Tab B`
 <p>For more project options, see <a href="https://quarto.org/docs/reference/projects/options.html">here</a>.</p>
 
 
+<div class="hidden" aria-hidden="true">
+<span class="glightbox-desc lightbox-desc-4">This is a caption</span>
+<span class="glightbox-desc lightbox-desc-5">This is a caption</span>
+<span class="glightbox-desc lightbox-desc-8">Figure&nbsp;1: This is a figure caption.</span>
+</div>
 </section>
 
 </main> <!-- /main -->
@@ -1267,6 +1275,31 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>
   </div>
 </footer>
+<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","loop":false,"selector":".lightbox","descPosition":"bottom","closeEffect":"zoom"});
+window.onload = () => {
+  lightboxQuarto.on('slide_before_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    const href = trigger.getAttribute('href');
+    if (href !== null) {
+      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+      if (imgEl !== null) {
+        const srcAttr = imgEl.getAttribute("src");
+        if (srcAttr && srcAttr.startsWith("data:")) {
+          slideConfig.href = srcAttr;
+        }
+      }
+    } 
+  });
+
+  lightboxQuarto.on('slide_after_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    if (window.Quarto?.typesetMath) {
+      window.Quarto.typesetMath(slideNode);
+    }
+  });
+
+};
+          </script>
 
 
 

@@ -78,6 +78,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -769,7 +772,7 @@ Note
 </ul>
 <p>The following R packages will be required for this app: <code>ggplot2</code>, <code>shiny</code>, <code>colourpicker</code>.</p>
 <p>Below is a preview of the complete app.</p>
-<p><img src="assets/ggplot-builder-3.png" class="img-fluid"></p>
+<p><a href="assets/ggplot-builder-3.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="assets/ggplot-builder-3.png" class="img-fluid"></a></p>
 <p>We start with a shiny app template with sidebar layout.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
@@ -822,7 +825,7 @@ Note
 <span id="cb19-33"><a href="#cb19-33" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p><img src="assets/ggplot-builder-1.png" class="img-fluid"></p>
+<p><a href="assets/ggplot-builder-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="assets/ggplot-builder-1.png" class="img-fluid"></a></p>
 <p>The input widgets now need to be connected to the ggplot function.</p>
 <div class="cell">
 <details class="code-fold">
@@ -872,7 +875,7 @@ Note
 <span id="cb20-43"><a href="#cb20-43" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p><img src="assets/ggplot-builder-2.png" class="img-fluid"></p>
+<p><a href="assets/ggplot-builder-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="assets/ggplot-builder-2.png" class="img-fluid"></a></p>
 <p>Now try changing the colours of plot elements and hopefully, it should change.</p>
 <p><i class="fa-solid fa-clipboard-list" aria-label="clipboard-list"></i> You can add more options to the input if you like, for example; rectangular elements such as backgrounds.</p>
 <div class="cell">
@@ -933,7 +936,7 @@ Note
 <span id="cb21-53"><a href="#cb21-53" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p><img src="assets/ggplot-builder-3.png" class="img-fluid"></p>
+<p><a href="assets/ggplot-builder-3.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="assets/ggplot-builder-3.png" class="img-fluid"></a></p>
 </section>
 <section id="data-explorer" class="level2" data-number="12">
 <h2 data-number="12" class="anchored" data-anchor-id="data-explorer"><span class="header-section-number">12</span> Data explorer</h2>
@@ -947,7 +950,7 @@ Note
 </ul>
 <p>The following R packages will be required for this app: <code>ggplot2</code>, <code>shiny</code>.</p>
 <p>Below is a preview of the complete app.</p>
-<p><img src="assets/data-explorer-2.png" class="img-fluid"></p>
+<p><a href="assets/data-explorer-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="assets/data-explorer-2.png" class="img-fluid"></a></p>
 <section id="ui" class="level3" data-number="12.1">
 <h3 data-number="12.1" class="anchored" data-anchor-id="ui"><span class="header-section-number">12.1</span> UI</h3>
 <p>We start with a standard shiny app template.</p>
@@ -974,7 +977,7 @@ Note
 <span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">server=</span><span class="cf">function</span>(input,output){}</span>
 <span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><img src="assets/data-explorer-1.png" class="img-fluid"></p>
+<p><a href="assets/data-explorer-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="assets/data-explorer-1.png" class="img-fluid"></a></p>
 <p>And to the sidebar, we will add 3 input widgets corresponding to x axis variable, y axis variable and color variable. These will be dropdown type (<code>selectInput()</code>) and choices will be column names of the iris dataframe. And we add the output widget (<code>plotOutput()</code>) in the main panel.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
@@ -996,7 +999,7 @@ Note
 <span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">server=</span><span class="cf">function</span>(input,output){}</span>
 <span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><img src="assets/data-explorer-2.png" class="img-fluid"></p>
+<p><a href="assets/data-explorer-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="assets/data-explorer-2.png" class="img-fluid"></a></p>
 </section>
 <section id="server" class="level3" data-number="12.2">
 <h3 data-number="12.2" class="anchored" data-anchor-id="server"><span class="header-section-number">12.2</span> Server</h3>
@@ -1034,7 +1037,7 @@ Note
 </ul>
 <p>The following R packages will be required for this app: <code>shiny</code>, <code>hues</code>, <code>bslib</code>.</p>
 <p>Below is a preview of the finished app.</p>
-<p><img src="assets/hues-4.png" class="img-fluid"></p>
+<p><a href="assets/hues-4.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="assets/hues-4.png" class="img-fluid"></a></p>
 <p>The core function that generates colors is <code>hues::iwanthue()</code>. What it does is sample colors from the HCL colorspace. <a href="https://colorspace.r-forge.r-project.org/articles/color_spaces.html">Here</a> is an introduction to colorspaces and HCL colorspace. It requires the number of colors to generate.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>hues<span class="sc">::</span><span class="fu">iwanthue</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1070,7 +1073,7 @@ Note
 <span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>  }</span>
 <span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><img src="assets/hues-1.png" class="img-fluid"></p>
+<p><a href="assets/hues-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9"><img src="assets/hues-1.png" class="img-fluid"></a></p>
 <p>Now we define the inputs in the sidebar panel. The number of colors and the three parameters to the colorspace as ranges. Outside the sidebar panel we define our two outputs: an html output to display the names of the colors as hex values. In the footer, we add an acknowledgement link to the hues package.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
@@ -1102,7 +1105,7 @@ Note
 <span id="cb33-27"><a href="#cb33-27" aria-hidden="true" tabindex="-1"></a>  }</span>
 <span id="cb33-28"><a href="#cb33-28" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><img src="assets/hues-2.png" class="img-fluid"></p>
+<p><a href="assets/hues-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10"><img src="assets/hues-2.png" class="img-fluid"></a></p>
 <p>Now, we add content into the server part. The inputs are passed to the <code>get_colours()</code> reactive function. This function is run inside the <code>renderText()</code> function which outputs the colors as hex values.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
@@ -1150,7 +1153,7 @@ Note
 <span id="cb34-43"><a href="#cb34-43" aria-hidden="true" tabindex="-1"></a>  }</span>
 <span id="cb34-44"><a href="#cb34-44" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><img src="assets/hues-3.png" class="img-fluid"></p>
+<p><a href="assets/hues-3.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11"><img src="assets/hues-3.png" class="img-fluid"></a></p>
 <p>The app will now generate colors as hex values, but we can’t see the colors. It would be nice to visualise the colors. One option would be to create a plot which is generating an image. An alternative lightweight option is to create div elements with the generated colors. For that we add an <code>htmlOutput()</code> element and a new <code>renderText()</code> function to the server part.</p>
 <p>This function is creating a span element for each color. These spans are organised inside a div. The div and spans have a parent-child relationship. The span elements are laid out in a grid manner using some custom CSS. The custom CSS is added to the head of the app. We have also added a bit of CSS to add some space above the app so it doesn’t touch the top.</p>
 <div class="cell">
@@ -1223,7 +1226,7 @@ Note
 <span id="cb35-67"><a href="#cb35-67" aria-hidden="true" tabindex="-1"></a>    }</span>
 <span id="cb35-68"><a href="#cb35-68" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><img src="assets/hues-4.png" class="img-fluid"></p>
+<p><a href="assets/hues-4.png" class="lightbox" data-gallery="quarto-lightbox-gallery-12"><img src="assets/hues-4.png" class="img-fluid"></a></p>
 </section>
 <section id="rna-seq-power" class="level2" data-number="14">
 <h2 data-number="14" class="anchored" data-anchor-id="rna-seq-power"><span class="header-section-number">14</span> RNA-Seq power</h2>
@@ -1238,7 +1241,7 @@ Note
 </ul>
 <p>The following R packages are required for this app: <code>c(shiny, shinythemes)</code>. In addition, install <strong>RNASeqPower</strong> from Bioconductor. <code>BiocManager::install('RNASeqPower')</code>.</p>
 <p>Below is a preview of the complete app.</p>
-<p><img src="assets/rnaseq-power-preview.png" class="img-fluid"></p>
+<p><a href="assets/rnaseq-power-preview.png" class="lightbox" data-gallery="quarto-lightbox-gallery-13"><img src="assets/rnaseq-power-preview.png" class="img-fluid"></a></p>
 <section id="rnaseqpower" class="level3" data-number="14.1">
 <h3 data-number="14.1" class="anchored" data-anchor-id="rnaseqpower"><span class="header-section-number">14.1</span> RNASeqPower</h3>
 <p>The R package <strong>RNASeqPower</strong> helps users to perform a power analysis before running an RNA-Seq experiment. It helps you to estimate, for example, the number of samples required to detect a certain level of significance. The idea of this shiny app is to create a GUI for the RNASeqPower package.</p>
@@ -1861,9 +1864,9 @@ Note
 </ul>
 <p>The following R packages will be required for this app: <code>ggplot2</code>, <code>shiny</code>, <code>colourpicker</code>.</p>
 <p>Below is a preview of the finished app.</p>
-<p><img src="assets/calendar-preview.png" class="img-fluid"></p>
+<p><a href="assets/calendar-preview.png" class="lightbox" data-gallery="quarto-lightbox-gallery-14"><img src="assets/calendar-preview.png" class="img-fluid"></a></p>
 <p>The idea of this app is to create and display a calendar styled planner. Below is a preview of the expected output.</p>
-<p><img src="assets/calendar_plot.png" class="img-fluid"></p>
+<p><a href="assets/calendar_plot.png" class="lightbox" data-gallery="quarto-lightbox-gallery-15"><img src="assets/calendar_plot.png" class="img-fluid"></a></p>
 <p>The image is a plot created in ggplot. X axis showing week numbers, y axis showing weekdays, facet titles showing months and dates are colored by categories. We can split this into two parts. The first part is preparing the code for the core task at hand (ie; generating the plot) and the second part is creating a graphical user interface around it using shiny apps to enable the user to input values and adjust dates, categories, plot parameters etc.</p>
 <section id="creating-the-plot" class="level3" data-number="15.1">
 <h3 data-number="15.1" class="anchored" data-anchor-id="creating-the-plot"><span class="header-section-number">15.1</span> Creating the plot</h3>
@@ -1920,7 +1923,7 @@ Note
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-52-1.png" class="img-fluid figure-img" width="672"></p>
+<p><a href="index_files/figure-html/unnamed-chunk-52-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-16"><img src="index_files/figure-html/unnamed-chunk-52-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -1938,7 +1941,7 @@ Note
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-53-1.png" class="img-fluid figure-img" width="672"></p>
+<p><a href="index_files/figure-html/unnamed-chunk-53-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-17"><img src="index_files/figure-html/unnamed-chunk-53-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -1965,7 +1968,7 @@ Note
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-54-1.png" class="img-fluid figure-img" width="672"></p>
+<p><a href="index_files/figure-html/unnamed-chunk-54-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-18"><img src="index_files/figure-html/unnamed-chunk-54-1.png" class="img-fluid figure-img" width="672"></a></p>
 </figure>
 </div>
 </div>
@@ -1977,7 +1980,7 @@ Note
 <section id="layout" class="level4" data-number="15.2.1">
 <h4 data-number="15.2.1" class="anchored" data-anchor-id="layout"><span class="header-section-number">15.2.1</span> Layout</h4>
 <p>We need to first have a plan for the app page, which UI elements to include and how they will be laid out and structured. My plan is as shown in the preview image.</p>
-<p><img src="assets/calendar-preview.png" class="img-fluid"></p>
+<p><a href="assets/calendar-preview.png" class="lightbox" data-gallery="quarto-lightbox-gallery-19"><img src="assets/calendar-preview.png" class="img-fluid"></a></p>
 <p>There is a horizontal top bar for the title and two columns below. The left column will contain the input widgets and control. The right column will contain the plot output. Since, this is a commonly used layout, it is available as a predefined function in shiny called <code>pageWithSidebar()</code>. It takes three arguments <code>headerPanel</code>, <code>sidebarPanel</code> and <code>mainPanel</code> which is self explanatory.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shinyApp</span>(</span>
@@ -2124,7 +2127,7 @@ Note
 <p></p><div style="width: 100% ; height: 400px ; text-align: center; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box;" class="muted well">Shiny applications not supported in static R Markdown documents</div><p></p>
 </div>
 </div>
-<p><img src="assets/calendar-2.png" class="img-fluid"></p>
+<p><a href="assets/calendar-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-20"><img src="assets/calendar-2.png" class="img-fluid"></a></p>
 <p>The track start and end dates are by default set to the same as that of duration start and end dates. We will adjust this later. Under the settings section, we have added a few useful plot variables to adjust sizes and spacing of plot elements. They are set to reasonable defaults. These variables will be passed on to the ggplot plotting function.</p>
 <p>We can end with column with the download options. Input fields are height, width, resolution and file format. Last we add a button for download.</p>
 <div class="cell">
@@ -2287,7 +2290,7 @@ Note
 <span id="cb70-124"><a href="#cb70-124" aria-hidden="true" tabindex="-1"></a>  <span class="at">server=</span><span class="cf">function</span>(input,output){}</span>
 <span id="cb70-125"><a href="#cb70-125" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><img src="assets/calendar-3.png" class="img-fluid"></p>
+<p><a href="assets/calendar-3.png" class="lightbox" data-gallery="quarto-lightbox-gallery-21"><img src="assets/calendar-3.png" class="img-fluid"></a></p>
 </section>
 <section id="server-1" class="level4" data-number="15.2.3">
 <h4 data-number="15.2.3" class="anchored" data-anchor-id="server-1"><span class="header-section-number">15.2.3</span> Server</h4>
@@ -2836,7 +2839,7 @@ Note
 <span id="cb79-324"><a href="#cb79-324" aria-hidden="true" tabindex="-1"></a>  })</span>
 <span id="cb79-325"><a href="#cb79-325" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><img src="assets/calendar-preview.png" class="img-fluid"></p>
+<p><a href="assets/calendar-preview.png" class="lightbox" data-gallery="quarto-lightbox-gallery-22"><img src="assets/calendar-preview.png" class="img-fluid"></a></p>
 <p>Hopefully, this has not been too overwhelming. Shiny app code may look over-complicated on the first look, but it is easier to understand what is happening by breaking it apart into smaller chunks and understanding how the various components are connected. It is crucial to plan out the structure of your app well in advanced as it is easy to get confused. Remember to name functions and variables sensibly. Use text output widgets and/or print statements in the code to keep track of internal variable values during run-time. Go forth and build awesome apps!</p>
 
 
@@ -3286,6 +3289,31 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>
   </div>
 </footer>
+<script>var lightboxQuarto = GLightbox({"selector":".lightbox","openEffect":"zoom","descPosition":"bottom","loop":false,"closeEffect":"zoom"});
+window.onload = () => {
+  lightboxQuarto.on('slide_before_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    const href = trigger.getAttribute('href');
+    if (href !== null) {
+      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+      if (imgEl !== null) {
+        const srcAttr = imgEl.getAttribute("src");
+        if (srcAttr && srcAttr.startsWith("data:")) {
+          slideConfig.href = srcAttr;
+        }
+      }
+    } 
+  });
+
+  lightboxQuarto.on('slide_after_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    if (window.Quarto?.typesetMath) {
+      window.Quarto.typesetMath(slideNode);
+    }
+  });
+
+};
+          </script>
 
 
 

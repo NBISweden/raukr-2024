@@ -76,6 +76,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -296,9 +299,9 @@ Warning
 <section id="problem-formulation" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="problem-formulation"><span class="header-section-number">1</span> Problem formulation</h2>
 <p>Let us consider a simple problem of only <strong>two features</strong>, i.e.&nbsp;<span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span>, and only <strong>four statistical observations (data points)</strong> that belong to two classes: <strong>circles and crosses</strong>. The four data points are schematically depicted below using <span class="math inline">\(X_1\)</span> vs.&nbsp;<span class="math inline">\(X_2\)</span> coordinate system. Obviously, the circles and crosses are separable with a <strong>linear</strong> decision boundary, i.e.&nbsp;hyperplane.</p>
-<p><img src="assets/Problem.png" class="img-fluid"></p>
+<p><a href="assets/Problem.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="assets/Problem.png" class="img-fluid"></a></p>
 <p>Let us implement the simplest possible feedforward / dense Artificial Neural Network (ANN) without hidden layers using Keras / Tensorflow library. Later, we will reproduce the results from Keras using from scratch coding ANN in R.</p>
-<p><img src="assets/ANN_Scheme.png" class="img-fluid"></p>
+<p><a href="assets/ANN_Scheme.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="assets/ANN_Scheme.png" class="img-fluid"></a></p>
 <p>The architecture of the simplest ANN is displayed above, and includes two input nodes (two feature vectors <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span>) and one output node, where the two classes are coded in the following way: circles are codded as 0 and crosses as 1. The weights <span class="math inline">\(w_1\)</span> and <span class="math inline">\(w_2\)</span> of the edges of the ANN graph are the fitting parameters of the model.</p>
 </section>
 <section id="keras-solution" class="level2" data-number="2">
@@ -354,7 +357,7 @@ ________________________________________________________________________________
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="960"></p>
+<p><a href="index_files/figure-html/unnamed-chunk-6-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="index_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="960"></a></p>
 </figure>
 </div>
 </div>
@@ -418,7 +421,7 @@ tf.Tensor(
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="960"></p>
+<p><a href="index_files/figure-html/unnamed-chunk-9-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="index_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="960"></a></p>
 </figure>
 </div>
 </div>
@@ -842,6 +845,31 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>
   </div>
 </footer>
+<script>var lightboxQuarto = GLightbox({"selector":".lightbox","descPosition":"bottom","closeEffect":"zoom","openEffect":"zoom","loop":false});
+window.onload = () => {
+  lightboxQuarto.on('slide_before_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    const href = trigger.getAttribute('href');
+    if (href !== null) {
+      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+      if (imgEl !== null) {
+        const srcAttr = imgEl.getAttribute("src");
+        if (srcAttr && srcAttr.startsWith("data:")) {
+          slideConfig.href = srcAttr;
+        }
+      }
+    } 
+  });
+
+  lightboxQuarto.on('slide_after_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    if (window.Quarto?.typesetMath) {
+      window.Quarto.typesetMath(slideNode);
+    }
+  });
+
+};
+          </script>
 
 
 

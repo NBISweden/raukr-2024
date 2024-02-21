@@ -1838,7 +1838,7 @@
     "href": "labs/quarto/index.html#projects",
     "title": "Literate programming with Quarto",
     "section": "4 Projects",
-    "text": "4 Projects\nSo far, the output formats have been a single document. We can also have a project composed of multiple documents and document types. In this case, the files are organised in a directory and the configuration is defined in _quarto.yml. This will be referred to as the config file. Think of this as a shared YAML metadata file for all of the documents. In addition, an index.qmd file defines the home page.\nFor a website, the minimal config looks like this\nproject:\n  type: website\nAnd for a book:\nproject:\n  type: book\nThen running quarto render renders the output into a directory named _site. The output can be changed to docs for example for GitHub Pages.\nproject:\n  type: website\n  output_dir: docs\nThe output format by default is HTML. This can be changed or modified by adding format to the config file or to individual qmd files. The parameters defined in the config file will be shared by all other qmd files.\nFor more project options, see here."
+    "text": "4 Projects\nSo far, the output formats have been a single document. We can also have a project composed of multiple documents and document types. In this case, the files are organised in a directory and the configuration is defined in _quarto.yml. This will be referred to as the config file. Think of this as a shared YAML metadata file for all of the documents. In addition, an index.qmd file defines the home page.\nFor a website, the minimal config looks like this\nproject:\n  type: website\nAnd for a book:\nproject:\n  type: book\nThen running quarto render renders the output into a directory named _site. The output can be changed to docs for example for GitHub Pages.\nproject:\n  type: website\n  output_dir: docs\nThe output format by default is HTML. This can be changed or modified by adding format to the config file or to individual qmd files. The parameters defined in the config file will be shared by all other qmd files.\nFor more project options, see here.\n\n\n\nThis is a caption\nThis is a caption\nFigure 1: This is a figure caption."
   },
   {
     "objectID": "labs/packages/index.html",
@@ -2104,7 +2104,7 @@
     "href": "labs/demo/index.html#general-tips",
     "title": "Demo Lab",
     "section": "18 General tips",
-    "text": "18 General tips\n\nUse level 2 heading as the highest level\n\n## Section A\n\nAdd custom css under YAML if needed css: \"my-theme.css\"\nCheck out the Quarto website"
+    "text": "18 General tips\n\nUse level 2 heading as the highest level\n\n## Section A\n\nAdd custom css under YAML if needed css: \"my-theme.css\"\nCheck out the Quarto website\n\n\n\n\nThis is a caption\nCaption for figure 1\nCaption for figure 2\nThis is a caption\nFigure 2: Static plot using base plot.\nScatterplot of speed vs distance\nPairwise scatterplot of all variables\nScatterplot of temperature vs pressure\nStatic plot using ggplot2."
   },
   {
     "objectID": "labs/demo/index.html#footnotes",
@@ -2300,14 +2300,14 @@
     "href": "index.html",
     "title": "",
     "section": "",
-    "text": "In Life Sciences and Bioinformatics, the R programming language is pivotal for data transformation, statistical analyses, and crafting publication-ready visualizations. This workshop goes beyond the basics, offering participants a comprehensive understanding of the R ecosystem. We explore best coding practices, code profiling, delve into data wrangling intricacies, emphasize reproducible research and hands-on development of web apps using R.\n   \n\n\nUpdated: 20-02-2024 at 18:28:34."
+    "text": "In Life Sciences and Bioinformatics, the R programming language is pivotal for data transformation, statistical analyses, and crafting publication-ready visualizations. This workshop goes beyond the basics, offering participants a comprehensive understanding of the R ecosystem. We explore best coding practices, code profiling, delve into data wrangling intricacies, emphasize reproducible research and hands-on development of web apps using R.\n   \n\n\nUpdated: 21-02-2024 at 19:50:53."
   },
   {
     "objectID": "index.html#raukr-summer-school-2024",
     "href": "index.html#raukr-summer-school-2024",
     "title": "",
     "section": "",
-    "text": "In Life Sciences and Bioinformatics, the R programming language is pivotal for data transformation, statistical analyses, and crafting publication-ready visualizations. This workshop goes beyond the basics, offering participants a comprehensive understanding of the R ecosystem. We explore best coding practices, code profiling, delve into data wrangling intricacies, emphasize reproducible research and hands-on development of web apps using R.\n   \n\n\nUpdated: 20-02-2024 at 18:28:34."
+    "text": "In Life Sciences and Bioinformatics, the R programming language is pivotal for data transformation, statistical analyses, and crafting publication-ready visualizations. This workshop goes beyond the basics, offering participants a comprehensive understanding of the R ecosystem. We explore best coding practices, code profiling, delve into data wrangling intricacies, emphasize reproducible research and hands-on development of web apps using R.\n   \n\n\nUpdated: 21-02-2024 at 19:50:53."
   },
   {
     "objectID": "labs/debugging/index.html",
@@ -2545,7 +2545,7 @@
     "href": "labs/tidyverse/index.html#wildlife-aircraft-strikes-challenge",
     "title": "Tidy work in Tidyverse",
     "section": "6 Wildlife Aircraft Strikes Challenge",
-    "text": "6 Wildlife Aircraft Strikes Challenge\nUse the FAA report and tidyverse to learn more about aircraft incidents with wildlife. Use your imagination and NYC data science blog for inspiration!"
+    "text": "6 Wildlife Aircraft Strikes Challenge\nUse the FAA report and tidyverse to learn more about aircraft incidents with wildlife. Use your imagination and NYC data science blog for inspiration!\n\n\n\nRed – only one species in the current OTU, blue – identification above the threshold, grey – identification below the threshold"
   },
   {
     "objectID": "slides/coding/index.html#learning-outcomes",
@@ -3192,13 +3192,6 @@
     "text": "Thank you! Questions?\n\n\n         _                  \nplatform x86_64-pc-linux-gnu\nos       linux-gnu          \nmajor    4                  \nminor    3.2                \n\n\n2024 • SciLifeLab • NBIS • RaukR"
   },
   {
-    "objectID": "slides/r-env/index.html#background",
-    "href": "slides/r-env/index.html#background",
-    "title": "renv: Project environments in R",
-    "section": "Background",
-    "text": "Background\nUnable to reproduce the same results when\n\n\nRerunning old code\nSharing your code with others\n\n\n\n\nrenv is a toolkit to manage project-specific libraries of R packages"
-  },
-  {
     "objectID": "slides/r-env/index.html#terminology",
     "href": "slides/r-env/index.html#terminology",
     "title": "Renv: Project environments in R",
@@ -3206,11 +3199,11 @@
     "text": "Terminology\nR package\n\nA standardized collection of R code, data or documentation\nHow you use someone else’s code\ninstalled.packages()\n\n\nR library\n\nA directory that holds R packages\nWhere you store packages\n.libPaths()\n\n\n\nR repository\n\nA server that hosts R packages for distribution\nWhere you get packages from\ngetOption(\"repos\")"
   },
   {
-    "objectID": "slides/r-env/index.html#project-lifespan",
-    "href": "slides/r-env/index.html#project-lifespan",
-    "title": "renv: Project environments in R",
-    "section": "Project lifespan",
-    "text": "Project lifespan\n\nWhere did I get my package from? What’s my repository?\nWhere is my package stored? Where is my package library?\nWhat version of the package did I use?"
+    "objectID": "slides/r-env/index.html#motivation",
+    "href": "slides/r-env/index.html#motivation",
+    "title": "Renv: Project environments in R",
+    "section": "Motivation",
+    "text": "Motivation\n\n\n\nUnable to reproduce the same results when\n\nRerunning old code\nSharing your code with others\n\n\n\nCan you answer these questions about your project?\n\nWhere did I get my package from? What’s my repository?\nWhere is my package stored? Where is my package library?\nWhat version of the package did I use?\n\n\n\nrenv is a toolkit to manage project-specific libraries of R packages"
   },
   {
     "objectID": "slides/r-env/index.html#what-can-renv-do",
@@ -3220,34 +3213,6 @@
     "text": "What can renv do?\nIsolate projects\n\nEach project gets it’s own library\nYou can use different versions of a library in different projects\n\n\nReproducible\n\nRecord exact version of each package\n\n\n\nPortable\n\nYou or others can restore the project libraries with the same exact versions\nAnd from the same repository as you did"
   },
   {
-    "objectID": "slides/r-env/index.html#project-timeline",
-    "href": "slides/r-env/index.html#project-timeline",
-    "title": "renv: Project environments in R",
-    "section": "Project timeline",
-    "text": "Project timeline\n\n\nData -&gt;\n\ndplyr -&gt;\n\ndplyr -&gt; tidyr\n\ndplyr -&gt; tidyr ggplot2\n\ndplyr -&gt; tidyr ggplot2 shiny"
-  },
-  {
-    "objectID": "slides/r-env/index.html#snapshot",
-    "href": "slides/r-env/index.html#snapshot",
-    "title": "Renv: Project environments in R",
-    "section": "Snapshot",
-    "text": "Snapshot\n\nBefore installing packagesAfter installing packages\n\n\n&gt; renv::snapshot()\nThe following required packages are not installed:\n- dplyr\n- ggplot2\n- shiny\nPackages must first be installed before renv can snapshot them.\nUse `renv::dependencies()` to see where this package is used in your project.\n\nWhat do you want to do?\n\n1: Snapshot, just using the currently installed packages.\n2: Install the packages, then snapshot.\n3: Cancel, and resolve the situation on your own.\n\n\n&gt; renv::snapshot()\nThe following package(s) will be updated in the lockfile:\n\n# RSPM -----------------------------------------------------------------------\n- dplyr        [* -&gt; 1.1.4]\n- fansi        [* -&gt; 1.0.6]\n- generics     [* -&gt; 0.1.3]\n- tidyselect   [* -&gt; 1.2.0]\n- utf8         [* -&gt; 1.2.4]\n- withr        [* -&gt; 3.0.0]\n\nDo you want to proceed? [Y/n]:"
-  },
-  {
-    "objectID": "slides/r-env/index.html#renv.lock-anatomy",
-    "href": "slides/r-env/index.html#renv.lock-anatomy",
-    "title": "Renv: Project environments in R",
-    "section": "renv.lock anatomy",
-    "text": "renv.lock anatomy\n\n{\n  \"R\": {\n    \"Version\": \"4.3.2\",\n    \"Repositories\": [\n      {\n        \"Name\": \"CRAN\",\n        \"URL\": \"https://p3m.dev/cran/latest\"\n      }\n    ]\n  },\n  \"Bioconductor\": {\n    \"Version\": \"3.18\"\n  },\n  \"remotes\": {\n    \"Package\": \"remotes\",\n    \"Version\": \"2.4.2.1\",\n    \"Source\": \"Repository\",\n    \"Repository\": \"RSPM\",\n    \"Requirements\": [\n      \"R\",\n      \"methods\",\n      \"stats\",\n      \"tools\",\n      \"utils\"\n    ],\n    \"Hash\": \"63d15047eb239f95160112bcadc4fcb9\"\n  }\n}"
-  },
-  {
-    "objectID": "slides/r-env/index.html#package-level-metadata",
-    "href": "slides/r-env/index.html#package-level-metadata",
-    "title": "Renv: Project environments in R",
-    "section": "Package level metadata",
-    "text": "Package level metadata\n\n\n\"remotes\": {\n  \"Package\": \"remotes\",\n  \"Version\": \"2.4.2.1\",\n  \"Source\": \"Repository\",\n  \"Repository\": \"RSPM\",\n  \"Requirements\": [\n    \"R\",\n    \"methods\",\n    \"stats\",\n    \"tools\",\n    \"utils\"\n  ],\n  \"Hash\": \"63d15047eb239f95160112bcadc4fcb9\"\n}\n\n\nPackage: Package name\nVersion: Package version\nSource: Location from where package was trieved\nRepository: Name of repository\nHash: Unique hash for this package"
-  },
-  {
     "objectID": "slides/r-env/index.html#renv-workflow",
     "href": "slides/r-env/index.html#renv-workflow",
     "title": "Renv: Project environments in R",
@@ -3255,11 +3220,11 @@
     "text": "renv workflow\n\n\n\nInitialize\nrenv::init()\nWrite code install packages\ninstall.packages()\nRecord environment\nrenv::snapshot()\nRepeat 2 & 3\nRestore environment if needed\nrenv::restore()"
   },
   {
-    "objectID": "slides/r-env/index.html#snapshot-1",
-    "href": "slides/r-env/index.html#snapshot-1",
+    "objectID": "slides/r-env/index.html#initialize",
+    "href": "slides/r-env/index.html#initialize",
     "title": "Renv: Project environments in R",
-    "section": "Snapshot",
-    "text": "Snapshot\nImplicit snapshotting renv::dependencies()"
+    "section": "Initialize",
+    "text": "Initialize\n&gt; renv::init()\n\nrenv: Project Environments for R\n\nWelcome to renv! It looks like this is your first time using renv.\nThis is a one-time message, briefly describing some of renv's functionality.\n\nrenv will write to files within the active project folder, including:\n\n  - A folder 'renv' in the project directory, and\n  - A lockfile called 'renv.lock' in the project directory.\n\nIn particular, projects using renv will normally use a private, per-project\nR library, in which new packages will be installed. This project library is\nisolated from other R libraries on your system.\n\nIn addition, renv will update files within your project directory, including:\n\n  - .gitignore\n  - .Rbuildignore\n  - .Rprofile\n\nFinally, renv maintains a local cache of data on the filesystem, located at:\n\n  - \"~/Library/Caches/org.R-project.R/R/renv\"\n\nThis path can be customized: please see the documentation in `?renv::paths`.\n\nPlease read the introduction vignette with `vignette(\"renv\")` for more information.\nYou can browse the package documentation online at https://rstudio.github.io/renv/.\nDo you want to proceed? [y/N]: y\n\n- \"~/Library/Caches/org.R-project.R/R/renv\" has been created.\n- Linking packages into the project library ... [32/32] Done!\nThe following package(s) will be updated in the lockfile:\n\n# CRAN -----------------------------------------------------------------------\n- R6            [* -&gt; 2.5.1]\n- base64enc     [* -&gt; 0.1-3]\n- bslib         [* -&gt; 0.6.1]\n- cachem        [* -&gt; 1.0.8]\n- fastmap       [* -&gt; 1.1.1]\n- rmarkdown     [* -&gt; 2.25]\n- sass          [* -&gt; 0.4.8]\n- vctrs         [* -&gt; 0.6.5]\n- xfun          [* -&gt; 0.41]\n- yaml          [* -&gt; 2.3.8]\n\nThe version of R recorded in the lockfile will be updated:\n- R             [* -&gt; 4.3.2]\n\n- Lockfile written to \"~/Downloads/test/renv.lock\".\n- renv activated -- please restart the R session."
   },
   {
     "objectID": "slides/r-env/index.html#status",
@@ -3269,11 +3234,60 @@
     "text": "Status\nWhat has changed in my project compared to the previous record?\n&gt; renv::status()\nThe following package(s) are missing:\n\n package installed recorded used\n dplyr   n         n        y\n ggplot2 n         n        y\n shiny   n         n        y\n\nSee ?renv::status() for advice on resolving these issues."
   },
   {
-    "objectID": "slides/r-env/index.html#tracking-renv.lock",
-    "href": "slides/r-env/index.html#tracking-renv.lock",
+    "objectID": "slides/r-env/index.html#snapshot",
+    "href": "slides/r-env/index.html#snapshot",
     "title": "Renv: Project environments in R",
-    "section": "Tracking renv.lock",
-    "text": "Tracking renv.lock\n\n# view lockfile history\nrenv::history()\n\n# revert to previous state\nrenv::revert(commit=\"commit 2\")"
+    "section": "Snapshot",
+    "text": "Snapshot\n\nBefore installing packagesAfter installing packages\n\n\n&gt; renv::snapshot()\nThe following required packages are not installed:\n- dplyr\n- ggplot2\n- shiny\nPackages must first be installed before renv can snapshot them.\nUse `renv::dependencies()` to see where this package is used in your project.\n\nWhat do you want to do?\n\n1: Snapshot, just using the currently installed packages.\n2: Install the packages, then snapshot.\n3: Cancel, and resolve the situation on your own.\n\n\n&gt; renv::snapshot()\nThe following package(s) will be updated in the lockfile:\n\n# RSPM -----------------------------------------------------------------------\n- dplyr        [* -&gt; 1.1.4]\n- fansi        [* -&gt; 1.0.6]\n- generics     [* -&gt; 0.1.3]\n- tidyselect   [* -&gt; 1.2.0]\n- utf8         [* -&gt; 1.2.4]\n- withr        [* -&gt; 3.0.0]\n\nDo you want to proceed? [Y/n]:"
+  },
+  {
+    "objectID": "slides/r-env/index.html#renv-workflow-1",
+    "href": "slides/r-env/index.html#renv-workflow-1",
+    "title": "Renv: Project environments in R",
+    "section": "renv workflow",
+    "text": "renv workflow\n\n# record current state of packages\nrenv::snapshot()"
+  },
+  {
+    "objectID": "slides/r-env/index.html#renv.lock-anatomy",
+    "href": "slides/r-env/index.html#renv.lock-anatomy",
+    "title": "Renv: Project environments in R",
+    "section": "renv.lock anatomy",
+    "text": "renv.lock anatomy\n\n{\n  \"R\": {\n    \"Version\": \"4.3.2\",\n    \"Repositories\": [\n      {\n        \"Name\": \"CRAN\",\n        \"URL\": \"https://p3m.dev/cran/latest\"\n      }\n    ]\n  },\n  \"Bioconductor\": {\n    \"Version\": \"3.18\"\n  },\n  \"remotes\": {\n    \"Package\": \"remotes\",\n    \"Version\": \"2.4.2.1\",\n    \"Source\": \"Repository\",\n    \"Repository\": \"RSPM\",\n    \"Requirements\": [\n      \"R\",\n      \"methods\",\n      \"stats\",\n      \"tools\",\n      \"utils\"\n    ],\n    \"Hash\": \"63d15047eb239f95160112bcadc4fcb9\"\n  }\n}"
+  },
+  {
+    "objectID": "slides/r-env/index.html#renv.lock-anatomy-r-version",
+    "href": "slides/r-env/index.html#renv.lock-anatomy-r-version",
+    "title": "Renv: Project environments in R",
+    "section": "renv.lock anatomy • R version",
+    "text": "renv.lock anatomy • R version\n\n{\n  \"R\": {\n    \"Version\": \"4.3.2\",\n    \"Repositories\": [\n      {\n        \"Name\": \"CRAN\",\n        \"URL\": \"https://p3m.dev/cran/latest\"\n      }\n    ]\n  },\n  \"Bioconductor\": {\n    \"Version\": \"3.18\"\n  },\n  \"remotes\": {\n    \"Package\": \"remotes\",\n    \"Version\": \"2.4.2.1\",\n    \"Source\": \"Repository\",\n    \"Repository\": \"RSPM\",\n    \"Requirements\": [\n      \"R\",\n      \"methods\",\n      \"stats\",\n      \"tools\",\n      \"utils\"\n    ],\n    \"Hash\": \"63d15047eb239f95160112bcadc4fcb9\"\n  }\n}"
+  },
+  {
+    "objectID": "slides/r-env/index.html#renv.lock-anatomy-active-repositories",
+    "href": "slides/r-env/index.html#renv.lock-anatomy-active-repositories",
+    "title": "Renv: Project environments in R",
+    "section": "renv.lock anatomy • Active repositories",
+    "text": "renv.lock anatomy • Active repositories\n\n{\n  \"R\": {\n    \"Version\": \"4.3.2\",\n    \"Repositories\": [\n      {\n        \"Name\": \"CRAN\",\n        \"URL\": \"https://p3m.dev/cran/latest\"\n      }\n    ]\n  },\n  \"Bioconductor\": {\n    \"Version\": \"3.18\"\n  },\n  \"remotes\": {\n    \"Package\": \"remotes\",\n    \"Version\": \"2.4.2.1\",\n    \"Source\": \"Repository\",\n    \"Repository\": \"RSPM\",\n    \"Requirements\": [\n      \"R\",\n      \"methods\",\n      \"stats\",\n      \"tools\",\n      \"utils\"\n    ],\n    \"Hash\": \"63d15047eb239f95160112bcadc4fcb9\"\n  }\n}"
+  },
+  {
+    "objectID": "slides/r-env/index.html#renv.lock-anatomy-r-packages",
+    "href": "slides/r-env/index.html#renv.lock-anatomy-r-packages",
+    "title": "Renv: Project environments in R",
+    "section": "renv.lock anatomy • R packages",
+    "text": "renv.lock anatomy • R packages\n\n{\n  \"R\": {\n    \"Version\": \"4.3.2\",\n    \"Repositories\": [\n      {\n        \"Name\": \"CRAN\",\n        \"URL\": \"https://p3m.dev/cran/latest\"\n      }\n    ]\n  },\n  \"Bioconductor\": {\n    \"Version\": \"3.18\"\n  },\n  \"remotes\": {\n    \"Package\": \"remotes\",\n    \"Version\": \"2.4.2.1\",\n    \"Source\": \"Repository\",\n    \"Repository\": \"RSPM\",\n    \"Requirements\": [\n      \"R\",\n      \"methods\",\n      \"stats\",\n      \"tools\",\n      \"utils\"\n    ],\n    \"Hash\": \"63d15047eb239f95160112bcadc4fcb9\"\n  }\n}"
+  },
+  {
+    "objectID": "slides/r-env/index.html#package-metadata",
+    "href": "slides/r-env/index.html#package-metadata",
+    "title": "Renv: Project environments in R",
+    "section": "Package metadata",
+    "text": "Package metadata\n\n\n\n\"remotes\": {\n  \"Package\": \"remotes\",\n  \"Version\": \"2.4.2.1\",\n  \"Source\": \"Repository\",\n  \"Repository\": \"RSPM\",\n  \"Requirements\": [\n    \"R\",\n    \"methods\",\n    \"stats\",\n    \"tools\",\n    \"utils\"\n  ],\n  \"Hash\": \"63d15047eb239f95160112bcadc4fcb9\"\n}\n\n\n\nPackage: Package name\nVersion: Package version\nSource: Source location\nRepository: Name of repository\nHash: Unique hash for this package"
+  },
+  {
+    "objectID": "slides/r-env/index.html#practical-use-cases-for-lockfile",
+    "href": "slides/r-env/index.html#practical-use-cases-for-lockfile",
+    "title": "Renv: Project environments in R",
+    "section": "Practical use cases for lockfile",
+    "text": "Practical use cases for lockfile\n\nTime capsules: Freeze exact versions of packages for future\nCollaborate using the same library\nDeploy development environment to a remote server"
   },
   {
     "objectID": "slides/r-env/index.html#restoring-library",
@@ -3283,32 +3297,102 @@
     "text": "Restoring library\n\n\n&gt; renv::restore()\nThe following package(s) will be updated:\n\n# CRAN -----------------------------------------------------------------------\n- R6            [* -&gt; 2.5.1]\n- fontawesome   [* -&gt; 0.5.2]\n- xfun          [* -&gt; 0.41]\n- yaml          [* -&gt; 2.3.8]\n\n# RSPM -----------------------------------------------------------------------\n- dplyr         [* -&gt; 1.1.4]\n- fansi         [* -&gt; 1.0.6]\n- withr         [* -&gt; 3.0.0]\n\nDo you want to proceed? [Y/n]:\n\n\n\nrenv::restore()\nRebuild a project library from a lockfile\nHandles multiple sources\n\nCRAN\nBioconductor\nGitHub\nGitlab\nBitbucket\nPrivate repositories…\n\nWill not modify R version"
   },
   {
-    "objectID": "slides/r-env/index.html#global-package-cache",
-    "href": "slides/r-env/index.html#global-package-cache",
-    "title": "renv: Project environments in R",
-    "section": "Global package cache",
-    "text": "Global package cache"
-  },
-  {
-    "objectID": "slides/r-env/index.html#renv-without-project-library",
-    "href": "slides/r-env/index.html#renv-without-project-library",
+    "objectID": "slides/r-env/index.html#tracking-renv.lock",
+    "href": "slides/r-env/index.html#tracking-renv.lock",
     "title": "Renv: Project environments in R",
-    "section": "renv without project library",
-    "text": "renv without project library\n\nSnapshot all packages used in a project\n\nrenv::snapshot()\n\nSnapshot all packages in current library\n\nrenv::snapshot(type=\"all\")\n\nRestore into system library\n\nrenv::restore()\n\nDisable global cache\n\nrenv::settings$use.cache(FALSE)\n\nrenv is integrated into RStudio projects (.Rproj)"
+    "section": "Tracking renv.lock",
+    "text": "Tracking renv.lock\n\n# view lockfile history\nrenv::history()\n\n# revert to previous state\nrenv::revert(commit=\"commit 2\")"
   },
   {
-    "objectID": "slides/r-env/index.html#reproducibility-puzzle",
-    "href": "slides/r-env/index.html#reproducibility-puzzle",
-    "title": "renv: Project environments in R",
-    "section": "Reproducibility puzzle",
-    "text": "Reproducibility puzzle"
+    "objectID": "slides/r-env/index.html#how-renv-works",
+    "href": "slides/r-env/index.html#how-renv-works",
+    "title": "Renv: Project environments in R",
+    "section": "How renv works",
+    "text": "How renv works\nWithout renv\n\n\n\n\n\nAll projects share the same library\nChanges in one project affects the other"
   },
   {
-    "objectID": "slides/r-env/index.html#review",
-    "href": "slides/r-env/index.html#review",
-    "title": "renv: Project environments in R",
-    "section": "Review",
-    "text": "Review\nrenv::init() renv::snapshot() renv::restore()\nrenv::status() renv::dependencies() renv::history() renv::revert()"
+    "objectID": "slides/r-env/index.html#how-renv-works-1",
+    "href": "slides/r-env/index.html#how-renv-works-1",
+    "title": "Renv: Project environments in R",
+    "section": "How renv works",
+    "text": "How renv works\nProject specific library without global cache\n\n\n\n\n\nEach project has it’s own library\nrenv::settings$use.cache(FALSE) disables global cache"
+  },
+  {
+    "objectID": "slides/r-env/index.html#how-renv-works-2",
+    "href": "slides/r-env/index.html#how-renv-works-2",
+    "title": "Renv: Project environments in R",
+    "section": "How renv works",
+    "text": "How renv works\nProject specific library with global cache\n\n\n\n\n\nEach project has it’s own library\nProjects libraries are soft-linked to global cache\n\n\n\n\n\nOS\nLocation\n\n\n\n\nLinux\n~/.local/share/env\n\n\nMacOS\n~/Library/Application Support/renv\n\n\nWindows\n%LOCALAPPDATA%/renv\n\n\n\nRENV_PATHS_CACHE Set this environment variable to share package cache across multiple users"
+  },
+  {
+    "objectID": "slides/r-env/index.html#project-profiles",
+    "href": "slides/r-env/index.html#project-profiles",
+    "title": "Renv: Project environments in R",
+    "section": "Project profiles",
+    "text": "Project profiles\n\nSwitch between different profiles\nBy default, the “default” profile is used\nCreate or switch profiles\n\nrenv::activate(profile = \"dev\")"
+  },
+  {
+    "objectID": "slides/r-env/index.html#install-packages-using-renv",
+    "href": "slides/r-env/index.html#install-packages-using-renv",
+    "title": "Renv: Project environments in R",
+    "section": "Install packages using renv",
+    "text": "Install packages using renv\n&gt; renv::install(c(\"dplyr\"))\n# Downloading packages -------------------------------------------------------\n- Downloading dplyr from CRAN ...               OK [file is up to date]\n- Downloading generics from CRAN ...            OK [file is up to date]\n- Downloading pillar from CRAN ...              OK [file is up to date]\n- Downloading fansi from CRAN ...               OK [file is up to date]\n- Downloading utf8 from CRAN ...                OK [file is up to date]\n- Downloading tibble from CRAN ...              OK [file is up to date]\n- Downloading pkgconfig from CRAN ...           OK [file is up to date]\n- Downloading tidyselect from CRAN ...          OK [file is up to date]\n- Downloading withr from CRAN ...               OK [file is up to date]\nSuccessfully downloaded 9 packages in 5.8 seconds.\n\nThe following package(s) will be installed:\n- dplyr      [1.1.4]\n- fansi      [1.0.6]\n- generics   [0.1.3]\n- pillar     [1.9.0]\n- pkgconfig  [2.0.3]\n- tibble     [3.2.1]\n- tidyselect [1.2.0]\n- utf8       [1.2.4]\n- withr      [3.0.0]\nThese packages will be installed into \"~/Downloads/test/renv/library/R-4.3/x86_64-apple-darwin13.4.0\".\n\nDo you want to proceed? [Y/n]:"
+  },
+  {
+    "objectID": "slides/r-env/index.html#tidbits",
+    "href": "slides/r-env/index.html#tidbits",
+    "title": "Renv: Project environments in R",
+    "section": "Tidbits",
+    "text": "Tidbits\n\nImplicit snapshotting\n\nOnly packages which appear to be used in the project is recorded\nrenv::snapshot()\n\n\n\n\nSnapshot all packages in current library regardless of project\n\nrenv::snapshot(type=\"all\")\n\n\n\n\n\nDiscover dependencies manually\n\nrenv::dependencies()\n\n\n\n\n\nExplicit snapshotting\n\nOnly record packages specified in DESCRIPTION file\nrenv::settings$snapshot.type(\"explicit\")\n\n\n\n\n\nIgnore a package explicitly\n\nrenv::settings$ignored.packages(\"&lt;package&gt;\")"
+  },
+  {
+    "objectID": "slides/r-env/index.html#tidbits-1",
+    "href": "slides/r-env/index.html#tidbits-1",
+    "title": "Renv: Project environments in R",
+    "section": "Tidbits",
+    "text": "Tidbits\n\nRestore into system library\n\nrenv::restore()\n\n\n\n\nDisable global cache\n\nrenv::settings$use.cache(FALSE)\n\n\n\n\n\nInstall to global cache\n\nrenv::install()\n\n\n\n\n\nUpdate packges to newer versions\n\nrenv::update()\n\n\n\n\n\nrenv is integrated into RStudio projects (.Rproj)\n\n\n\n\nDisable renv\n\nTemporary deactivate renv\n\nrenv::deactivate()\nrenv::activate()\n\nRemove renv from current project (removes renv/, renv.lockfile, .Rprofile)\n\nrenv::deactivate(clean=TRUE)\n\nRemove renv global cache\n\nunlink(renv::paths$root(), recursive=TRUE)"
+  },
+  {
+    "objectID": "slides/r-env/index.html#renv-is-only-one-piece-of-the-reproducibility-puzzle",
+    "href": "slides/r-env/index.html#renv-is-only-one-piece-of-the-reproducibility-puzzle",
+    "title": "Renv: Project environments in R",
+    "section": "Renv is only one piece of the reproducibility puzzle",
+    "text": "Renv is only one piece of the reproducibility puzzle"
+  },
+  {
+    "objectID": "slides/r-env/index.html#renv-is-only-one-piece-of-the-reproducibility-puzzle-1",
+    "href": "slides/r-env/index.html#renv-is-only-one-piece-of-the-reproducibility-puzzle-1",
+    "title": "Renv: Project environments in R",
+    "section": "Renv is only one piece of the reproducibility puzzle",
+    "text": "Renv is only one piece of the reproducibility puzzle"
+  },
+  {
+    "objectID": "slides/r-env/index.html#renv-is-only-one-piece-of-the-reproducibility-puzzle-2",
+    "href": "slides/r-env/index.html#renv-is-only-one-piece-of-the-reproducibility-puzzle-2",
+    "title": "Renv: Project environments in R",
+    "section": "Renv is only one piece of the reproducibility puzzle",
+    "text": "Renv is only one piece of the reproducibility puzzle"
+  },
+  {
+    "objectID": "slides/r-env/index.html#renv-is-only-one-piece-of-the-reproducibility-puzzle-3",
+    "href": "slides/r-env/index.html#renv-is-only-one-piece-of-the-reproducibility-puzzle-3",
+    "title": "Renv: Project environments in R",
+    "section": "Renv is only one piece of the reproducibility puzzle",
+    "text": "Renv is only one piece of the reproducibility puzzle"
+  },
+  {
+    "objectID": "slides/r-env/index.html#renv-is-only-one-piece-of-the-reproducibility-puzzle-4",
+    "href": "slides/r-env/index.html#renv-is-only-one-piece-of-the-reproducibility-puzzle-4",
+    "title": "Renv: Project environments in R",
+    "section": "Renv is only one piece of the reproducibility puzzle",
+    "text": "Renv is only one piece of the reproducibility puzzle"
+  },
+  {
+    "objectID": "slides/r-env/index.html#recap",
+    "href": "slides/r-env/index.html#recap",
+    "title": "Renv: Project environments in R",
+    "section": "Recap",
+    "text": "Recap\n\n\nKey functions\nrenv::init()\nrenv::snapshot()\nrenv::restore()\nUseful\nrenv::status()\nrenv::dependencies()\nrenv::history()\nrenv::revert()"
   },
   {
     "objectID": "slides/r-env/index.html#acknowledgements",
@@ -3736,173 +3820,5 @@
     "title": "Vectorization in R",
     "section": "Recursion == iteration, really?",
     "text": "Recursion == iteration, really?\nMore writing for the iterative version, right? What about the time efficiency?\nThe recursive version:\n\npeakRAM::peakRAM(factorial_rec(1000))\n\nAnd the iterative one:\n\npeakRAM::peakRAM(factorial_iter(1000))\n\n\n\n\n\n\n\n\n\n\n\nFunction_Call\nElapsed_Time_sec\nTotal_RAM_Used_MiB\nPeak_RAM_Used_MiB\n\n\n\n\nfactorial_iter(1000)\n0.005\n0\n0.1"
-  },
-  {
-    "objectID": "slides/r-env/index.html#snapshot-2",
-    "href": "slides/r-env/index.html#snapshot-2",
-    "title": "renv: Project environments in R",
-    "section": "Snapshot",
-    "text": "Snapshot\nImplicit snapshotting renv::dependencies()"
-  },
-  {
-    "objectID": "slides/r-env/index.html#how-renv-works",
-    "href": "slides/r-env/index.html#how-renv-works",
-    "title": "Renv: Project environments in R",
-    "section": "How renv works",
-    "text": "How renv works\nWithout renv\n\n\n\n\n\nAll projects share the same library\nChanges in one project affects the other"
-  },
-  {
-    "objectID": "slides/r-env/index.html#how-renv-works-1",
-    "href": "slides/r-env/index.html#how-renv-works-1",
-    "title": "Renv: Project environments in R",
-    "section": "How renv works",
-    "text": "How renv works\nProject specific library without global cache\n\n\n\n\n\nEach project has it’s own library\nrenv::settings$use.cache(FALSE) disables global cache"
-  },
-  {
-    "objectID": "slides/r-env/index.html#how-renv-works-2",
-    "href": "slides/r-env/index.html#how-renv-works-2",
-    "title": "Renv: Project environments in R",
-    "section": "How renv works",
-    "text": "How renv works\nProject specific library with global cache\n\n\n\n\n\nEach project has it’s own library\nProjects libraries are soft-linked to global cache\n\n\n\n\n\nOS\nLocation\n\n\n\n\nLinux\n~/.local/share/env\n\n\nMacOS\n~/Library/Application Support/renv\n\n\nWindows\n%LOCALAPPDATA%/renv\n\n\n\nRENV_PATHS_CACHE Set this environment variable to share package cache across multiple users"
-  },
-  {
-    "objectID": "slides/r-env/index.html#renv-is-only-one-piece-of-the-reproducibility-puzzle",
-    "href": "slides/r-env/index.html#renv-is-only-one-piece-of-the-reproducibility-puzzle",
-    "title": "Renv: Project environments in R",
-    "section": "Renv is only one piece of the reproducibility puzzle",
-    "text": "Renv is only one piece of the reproducibility puzzle"
-  },
-  {
-    "objectID": "slides/r-env/index.html#renv-is-only-one-piece-of-the-reproducibility-puzzle-1",
-    "href": "slides/r-env/index.html#renv-is-only-one-piece-of-the-reproducibility-puzzle-1",
-    "title": "Renv: Project environments in R",
-    "section": "Renv is only one piece of the reproducibility puzzle",
-    "text": "Renv is only one piece of the reproducibility puzzle"
-  },
-  {
-    "objectID": "slides/r-env/index.html#renv-is-only-one-piece-of-the-reproducibility-puzzle-2",
-    "href": "slides/r-env/index.html#renv-is-only-one-piece-of-the-reproducibility-puzzle-2",
-    "title": "Renv: Project environments in R",
-    "section": "Renv is only one piece of the reproducibility puzzle",
-    "text": "Renv is only one piece of the reproducibility puzzle"
-  },
-  {
-    "objectID": "slides/r-env/index.html#renv-is-only-one-piece-of-the-reproducibility-puzzle-3",
-    "href": "slides/r-env/index.html#renv-is-only-one-piece-of-the-reproducibility-puzzle-3",
-    "title": "Renv: Project environments in R",
-    "section": "Renv is only one piece of the reproducibility puzzle",
-    "text": "Renv is only one piece of the reproducibility puzzle"
-  },
-  {
-    "objectID": "slides/r-env/index.html#renv-is-only-one-piece-of-the-reproducibility-puzzle-4",
-    "href": "slides/r-env/index.html#renv-is-only-one-piece-of-the-reproducibility-puzzle-4",
-    "title": "Renv: Project environments in R",
-    "section": "Renv is only one piece of the reproducibility puzzle",
-    "text": "Renv is only one piece of the reproducibility puzzle"
-  },
-  {
-    "objectID": "slides/r-env/index.html#recap",
-    "href": "slides/r-env/index.html#recap",
-    "title": "Renv: Project environments in R",
-    "section": "Recap",
-    "text": "Recap\n\n\nKey functions\nrenv::init()\nrenv::snapshot()\nrenv::restore()\nUseful\nrenv::status()\nrenv::dependencies()\nrenv::history()\nrenv::revert()"
-  },
-  {
-    "objectID": "slides/r-env/index.html#section-1",
-    "href": "slides/r-env/index.html#section-1",
-    "title": "renv: Project environments in R",
-    "section": "",
-    "text": "Thank you! Questions?\n\n\n         _                        \nplatform x86_64-apple-darwin13.4.0\nos       darwin13.4.0             \nmajor    4                        \nminor    3.2                      \n\n\n2024 • SciLifeLab • NBIS • RaukR"
-  },
-  {
-    "objectID": "slides/r-env/index.html#motivation",
-    "href": "slides/r-env/index.html#motivation",
-    "title": "Renv: Project environments in R",
-    "section": "Motivation",
-    "text": "Motivation\n\n\n\nUnable to reproduce the same results when\n\nRerunning old code\nSharing your code with others\n\n\n\nCan you answer these questions about your project?\n\nWhere did I get my package from? What’s my repository?\nWhere is my package stored? Where is my package library?\nWhat version of the package did I use?\n\n\n\nrenv is a toolkit to manage project-specific libraries of R packages"
-  },
-  {
-    "objectID": "slides/r-env/index.html#renv-workflow-1",
-    "href": "slides/r-env/index.html#renv-workflow-1",
-    "title": "Renv: Project environments in R",
-    "section": "renv workflow",
-    "text": "renv workflow\n\n# record current state of packages\nrenv::snapshot()"
-  },
-  {
-    "objectID": "slides/r-env/index.html#renv.lock-anatomy-r-version",
-    "href": "slides/r-env/index.html#renv.lock-anatomy-r-version",
-    "title": "Renv: Project environments in R",
-    "section": "renv.lock anatomy • R version",
-    "text": "renv.lock anatomy • R version\n\n{\n  \"R\": {\n    \"Version\": \"4.3.2\",\n    \"Repositories\": [\n      {\n        \"Name\": \"CRAN\",\n        \"URL\": \"https://p3m.dev/cran/latest\"\n      }\n    ]\n  },\n  \"Bioconductor\": {\n    \"Version\": \"3.18\"\n  },\n  \"remotes\": {\n    \"Package\": \"remotes\",\n    \"Version\": \"2.4.2.1\",\n    \"Source\": \"Repository\",\n    \"Repository\": \"RSPM\",\n    \"Requirements\": [\n      \"R\",\n      \"methods\",\n      \"stats\",\n      \"tools\",\n      \"utils\"\n    ],\n    \"Hash\": \"63d15047eb239f95160112bcadc4fcb9\"\n  }\n}"
-  },
-  {
-    "objectID": "slides/r-env/index.html#renv.lock-anatomy-active-repositories",
-    "href": "slides/r-env/index.html#renv.lock-anatomy-active-repositories",
-    "title": "Renv: Project environments in R",
-    "section": "renv.lock anatomy • Active repositories",
-    "text": "renv.lock anatomy • Active repositories\n\n{\n  \"R\": {\n    \"Version\": \"4.3.2\",\n    \"Repositories\": [\n      {\n        \"Name\": \"CRAN\",\n        \"URL\": \"https://p3m.dev/cran/latest\"\n      }\n    ]\n  },\n  \"Bioconductor\": {\n    \"Version\": \"3.18\"\n  },\n  \"remotes\": {\n    \"Package\": \"remotes\",\n    \"Version\": \"2.4.2.1\",\n    \"Source\": \"Repository\",\n    \"Repository\": \"RSPM\",\n    \"Requirements\": [\n      \"R\",\n      \"methods\",\n      \"stats\",\n      \"tools\",\n      \"utils\"\n    ],\n    \"Hash\": \"63d15047eb239f95160112bcadc4fcb9\"\n  }\n}"
-  },
-  {
-    "objectID": "slides/r-env/index.html#renv.lock-anatomy-r-packages",
-    "href": "slides/r-env/index.html#renv.lock-anatomy-r-packages",
-    "title": "Renv: Project environments in R",
-    "section": "renv.lock anatomy • R packages",
-    "text": "renv.lock anatomy • R packages\n\n{\n  \"R\": {\n    \"Version\": \"4.3.2\",\n    \"Repositories\": [\n      {\n        \"Name\": \"CRAN\",\n        \"URL\": \"https://p3m.dev/cran/latest\"\n      }\n    ]\n  },\n  \"Bioconductor\": {\n    \"Version\": \"3.18\"\n  },\n  \"remotes\": {\n    \"Package\": \"remotes\",\n    \"Version\": \"2.4.2.1\",\n    \"Source\": \"Repository\",\n    \"Repository\": \"RSPM\",\n    \"Requirements\": [\n      \"R\",\n      \"methods\",\n      \"stats\",\n      \"tools\",\n      \"utils\"\n    ],\n    \"Hash\": \"63d15047eb239f95160112bcadc4fcb9\"\n  }\n}"
-  },
-  {
-    "objectID": "slides/r-env/index.html#package-metadata",
-    "href": "slides/r-env/index.html#package-metadata",
-    "title": "Renv: Project environments in R",
-    "section": "Package metadata",
-    "text": "Package metadata\n\n\n\n\"remotes\": {\n  \"Package\": \"remotes\",\n  \"Version\": \"2.4.2.1\",\n  \"Source\": \"Repository\",\n  \"Repository\": \"RSPM\",\n  \"Requirements\": [\n    \"R\",\n    \"methods\",\n    \"stats\",\n    \"tools\",\n    \"utils\"\n  ],\n  \"Hash\": \"63d15047eb239f95160112bcadc4fcb9\"\n}\n\n\n\nPackage: Package name\nVersion: Package version\nSource: Source location\nRepository: Name of repository\nHash: Unique hash for this package"
-  },
-  {
-    "objectID": "slides/r-env/index.html#tidbits",
-    "href": "slides/r-env/index.html#tidbits",
-    "title": "Renv: Project environments in R",
-    "section": "Tidbits",
-    "text": "Tidbits\n\nImplicit snapshotting\n\nOnly packages which appear to be used in the project is recorded\nrenv::snapshot()\n\n\n\n\nSnapshot all packages in current library regardless of project\n\nrenv::snapshot(type=\"all\")\n\n\n\n\n\nDiscover dependencies manually\n\nrenv::dependencies()\n\n\n\n\n\nExplicit snapshotting\n\nOnly record packages specified in DESCRIPTION file\nrenv::settings$snapshot.type(\"explicit\")\n\n\n\n\n\nIgnore a package explicitly\n\nrenv::settings$ignored.packages(\"&lt;package&gt;\")"
-  },
-  {
-    "objectID": "slides/r-env/index.html#practical-use-cases-for-lockfile",
-    "href": "slides/r-env/index.html#practical-use-cases-for-lockfile",
-    "title": "Renv: Project environments in R",
-    "section": "Practical use cases for lockfile",
-    "text": "Practical use cases for lockfile\n\nTime capsules: Freeze exact versions of packages for future\nCollaborate using the same library\nDeploy development environment to a remote server"
-  },
-  {
-    "objectID": "slides/r-env/index.html#project-profiles",
-    "href": "slides/r-env/index.html#project-profiles",
-    "title": "Renv: Project environments in R",
-    "section": "Project profiles",
-    "text": "Project profiles\n\nSwitch between different profiles\nBy default, the “default” profile is used\nCreate or switch profiles\n\nrenv::activate(profile = \"dev\")"
-  },
-  {
-    "objectID": "slides/r-env/index.html#tidbits-1",
-    "href": "slides/r-env/index.html#tidbits-1",
-    "title": "Renv: Project environments in R",
-    "section": "Tidbits",
-    "text": "Tidbits\n\nRestore into system library\n\nrenv::restore()\n\n\n\n\nDisable global cache\n\nrenv::settings$use.cache(FALSE)\n\n\n\n\n\nInstall to global cache\n\nrenv::install()\n\n\n\n\n\nUpdate packges to newer versions\n\nrenv::update()\n\n\n\n\n\nrenv is integrated into RStudio projects (.Rproj)\n\n\n\n\nDisable renv\n\nTemporary deactivate renv\n\nrenv::deactivate()\nrenv::activate()\n\nRemove renv from current project (removes renv/, renv.lockfile, .Rprofile)\n\nrenv::deactivate(clean=TRUE)\n\nRemove renv global cache\n\nunlink(renv::paths$root(), recursive=TRUE)"
-  },
-  {
-    "objectID": "slides/r-env/index.html#init",
-    "href": "slides/r-env/index.html#init",
-    "title": "Renv: Project environments in R",
-    "section": "init",
-    "text": "init\n&gt; renv::init()\n\nrenv: Project Environments for R\n\nWelcome to renv! It looks like this is your first time using renv.\nThis is a one-time message, briefly describing some of renv's functionality.\n\nrenv will write to files within the active project folder, including:\n\n  - A folder 'renv' in the project directory, and\n  - A lockfile called 'renv.lock' in the project directory.\n\nIn particular, projects using renv will normally use a private, per-project\nR library, in which new packages will be installed. This project library is\nisolated from other R libraries on your system.\n\nIn addition, renv will update files within your project directory, including:\n\n  - .gitignore\n  - .Rbuildignore\n  - .Rprofile\n\nFinally, renv maintains a local cache of data on the filesystem, located at:\n\n  - \"~/Library/Caches/org.R-project.R/R/renv\"\n\nThis path can be customized: please see the documentation in `?renv::paths`.\n\nPlease read the introduction vignette with `vignette(\"renv\")` for more information.\nYou can browse the package documentation online at https://rstudio.github.io/renv/.\nDo you want to proceed? [y/N]: y\n\n- \"~/Library/Caches/org.R-project.R/R/renv\" has been created.\n- Linking packages into the project library ... [32/32] Done!\nThe following package(s) will be updated in the lockfile:\n\n# CRAN -----------------------------------------------------------------------\n- R6            [* -&gt; 2.5.1]\n- base64enc     [* -&gt; 0.1-3]\n- bslib         [* -&gt; 0.6.1]\n- cachem        [* -&gt; 1.0.8]\n- fastmap       [* -&gt; 1.1.1]\n- rmarkdown     [* -&gt; 2.25]\n- sass          [* -&gt; 0.4.8]\n- vctrs         [* -&gt; 0.6.5]\n- xfun          [* -&gt; 0.41]\n- yaml          [* -&gt; 2.3.8]\n\nThe version of R recorded in the lockfile will be updated:\n- R             [* -&gt; 4.3.2]\n\n- Lockfile written to \"~/Downloads/test/renv.lock\".\n- renv activated -- please restart the R session."
-  },
-  {
-    "objectID": "slides/r-env/index.html#initialize",
-    "href": "slides/r-env/index.html#initialize",
-    "title": "Renv: Project environments in R",
-    "section": "Initialize",
-    "text": "Initialize\n&gt; renv::init()\n\nrenv: Project Environments for R\n\nWelcome to renv! It looks like this is your first time using renv.\nThis is a one-time message, briefly describing some of renv's functionality.\n\nrenv will write to files within the active project folder, including:\n\n  - A folder 'renv' in the project directory, and\n  - A lockfile called 'renv.lock' in the project directory.\n\nIn particular, projects using renv will normally use a private, per-project\nR library, in which new packages will be installed. This project library is\nisolated from other R libraries on your system.\n\nIn addition, renv will update files within your project directory, including:\n\n  - .gitignore\n  - .Rbuildignore\n  - .Rprofile\n\nFinally, renv maintains a local cache of data on the filesystem, located at:\n\n  - \"~/Library/Caches/org.R-project.R/R/renv\"\n\nThis path can be customized: please see the documentation in `?renv::paths`.\n\nPlease read the introduction vignette with `vignette(\"renv\")` for more information.\nYou can browse the package documentation online at https://rstudio.github.io/renv/.\nDo you want to proceed? [y/N]: y\n\n- \"~/Library/Caches/org.R-project.R/R/renv\" has been created.\n- Linking packages into the project library ... [32/32] Done!\nThe following package(s) will be updated in the lockfile:\n\n# CRAN -----------------------------------------------------------------------\n- R6            [* -&gt; 2.5.1]\n- base64enc     [* -&gt; 0.1-3]\n- bslib         [* -&gt; 0.6.1]\n- cachem        [* -&gt; 1.0.8]\n- fastmap       [* -&gt; 1.1.1]\n- rmarkdown     [* -&gt; 2.25]\n- sass          [* -&gt; 0.4.8]\n- vctrs         [* -&gt; 0.6.5]\n- xfun          [* -&gt; 0.41]\n- yaml          [* -&gt; 2.3.8]\n\nThe version of R recorded in the lockfile will be updated:\n- R             [* -&gt; 4.3.2]\n\n- Lockfile written to \"~/Downloads/test/renv.lock\".\n- renv activated -- please restart the R session."
-  },
-  {
-    "objectID": "slides/r-env/index.html#install-packages-using-renv",
-    "href": "slides/r-env/index.html#install-packages-using-renv",
-    "title": "Renv: Project environments in R",
-    "section": "Install packages using renv",
-    "text": "Install packages using renv\n&gt; renv::install(c(\"dplyr\"))\n# Downloading packages -------------------------------------------------------\n- Downloading dplyr from CRAN ...               OK [file is up to date]\n- Downloading generics from CRAN ...            OK [file is up to date]\n- Downloading pillar from CRAN ...              OK [file is up to date]\n- Downloading fansi from CRAN ...               OK [file is up to date]\n- Downloading utf8 from CRAN ...                OK [file is up to date]\n- Downloading tibble from CRAN ...              OK [file is up to date]\n- Downloading pkgconfig from CRAN ...           OK [file is up to date]\n- Downloading tidyselect from CRAN ...          OK [file is up to date]\n- Downloading withr from CRAN ...               OK [file is up to date]\nSuccessfully downloaded 9 packages in 5.8 seconds.\n\nThe following package(s) will be installed:\n- dplyr      [1.1.4]\n- fansi      [1.0.6]\n- generics   [0.1.3]\n- pillar     [1.9.0]\n- pkgconfig  [2.0.3]\n- tibble     [3.2.1]\n- tidyselect [1.2.0]\n- utf8       [1.2.4]\n- withr      [3.0.0]\nThese packages will be installed into \"~/Downloads/test/renv/library/R-4.3/x86_64-apple-darwin13.4.0\".\n\nDo you want to proceed? [Y/n]:"
   }
 ]

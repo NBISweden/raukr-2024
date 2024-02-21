@@ -40,6 +40,9 @@ ul.task-list li input[type="checkbox"] {
 <script src="/raukr-2024/site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="/raukr-2024/site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="/raukr-2024/site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="/raukr-2024/site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="/raukr-2024/site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="/raukr-2024/site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -143,7 +146,7 @@ background-size: cover;
 
 
 <div style="text-align: center;">
-<p><img src="/raukr-2024/assets/images/404.png" class="img-fluid"></p>
+<p><a href="/raukr-2024/assets/images/404.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="/raukr-2024/assets/images/404.png" class="img-fluid"></a></p>
 <section id="page-not-found" class="level1">
 <h1>404: Page not found</h1>
 <p>It seems like you have stumbled upon a page that doesn’t exist.<br>
@@ -556,6 +559,31 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>
   </div>
 </footer>
+<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","openEffect":"zoom","loop":false,"closeEffect":"zoom","selector":".lightbox"});
+window.onload = () => {
+  lightboxQuarto.on('slide_before_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    const href = trigger.getAttribute('href');
+    if (href !== null) {
+      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+      if (imgEl !== null) {
+        const srcAttr = imgEl.getAttribute("src");
+        if (srcAttr && srcAttr.startsWith("data:")) {
+          slideConfig.href = srcAttr;
+        }
+      }
+    } 
+  });
+
+  lightboxQuarto.on('slide_after_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    if (window.Quarto?.typesetMath) {
+      window.Quarto.typesetMath(slideNode);
+    }
+  });
+
+};
+          </script>
 
 
 

@@ -12,7 +12,7 @@ format:
 ::: {.guests-parent}
 ::: {.guests-child}
 
-![](assets/images/profile/jenny-bryan.jpg)
+![](assets/images/profile/jenny-bryan.jpg){.nolightbox}
 
 [Jennifer Bryan](https://jennybryan.org/)
 
@@ -23,7 +23,7 @@ Vancouver, Canada
 :::
 ::: {.guests-child}
 
-![](assets/images/profile/henrik-bengtsson.jpg)
+![](assets/images/profile/henrik-bengtsson.jpg){.nolightbox}
 
 [Henrik Bengtsson](https://www.linkedin.com/in/henrikbengtsson/)
 

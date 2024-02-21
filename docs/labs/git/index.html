@@ -76,6 +76,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -291,14 +294,14 @@ Note
 <li><p>Create an R script in your project and write some code. You are free to do whatever you want here. Write a function, create a plot, use a public dataset. Go crazy!</p></li>
 <li><p>Use the RStudio <em>git pane</em> to <code>commit</code> your code including a commit message.</p></li>
 </ol>
-<p><img src="assets/git_pane.png" class="img-fluid"></p>
+<p><a href="assets/git_pane.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="assets/git_pane.png" class="img-fluid"></a></p>
 <ol start="5" type="1">
 <li><p><code>push</code> the changes to your GitHub repository. Then go to GitHub and check that you can see your changes there. In your mental model, this is you sharing your code with your collaborators or users.</p></li>
 <li><p>Now introduce some changes to your script from GitHub and <code>commit</code> them. At this point, your GitHub repository is one <code>commit</code> ahead of your local repository. In the mental model, this can be your collaborators making changes in their local repository and <code>push</code>ing it to your shared GitHub project, or a user suggesting a change, that you accept, in your publicly available R-package, used by millions. For now, lets ignore thinking about who has access to <code>commit</code> to your repository, but do not worry, there are ways to safeguard this. Your code can be open on GitHub without other people being able to ruin it so you have to constantly go back to a previous unruined <code>commit</code>!</p></li>
 <li><p>To transfer the changes in the GitHub repository to your local repository, go back to RStudio and use the blue arrow in the <em>git pane</em> to <code>pull</code> the changes. In the mental model this is you updating your code with the code contributed by your collaborators. Notice here that if if you had in the meantime made some changes to the local repository in the same R script and position as you had on GitHub, there would be what is called a “merge conflict” when you tried to <code>pull</code>. We will get to those later.</p></li>
 <li><p>Let’s look at the <code>diff</code> operation. Make some changes in your local repository R script again, both removing and adding something, then press the <code>diff</code> button in the <em>git pane</em>. This should bring up a new window that is similar to the image below. As you can see it clearly shows you what has been added and what has been removed, what the <code>diff</code>erence is since your last <code>commit</code>.</p></li>
 </ol>
-<p><img src="assets/diff.png" class="img-fluid"></p>
+<p><a href="assets/diff.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="assets/diff.png" class="img-fluid"></a></p>
 <ol start="9" type="1">
 <li>Go ahead and <code>commit</code> the changes you made. No need to <code>push</code> them to GitHub. Now lets go into our mental model and say that you did not like those changes. You have done something you regret, or broken something, and you want to go back. One of the main points of version control after all is the ability to go back. For this you will have to use the <em>terminal pane</em> in RStudio. In essence, what you are doing now is using git from the terminal in your local repository, this is because the git operations necessary to go back are not currently built into RStudio. Here are the commands we will be using:</li>
 </ol>
@@ -315,7 +318,7 @@ Note
 <section id="branches" class="level3" data-number="3.1">
 <h3 data-number="3.1" class="anchored" data-anchor-id="branches"><span class="header-section-number">3.1</span> Branches</h3>
 <p>Branches in git are a way to create a separate version controlled instance of your repository. Think of your git changes as a tree trunk, growing as you <code>add</code> and <code>commit</code>, but always possible to <code>reset</code> and go back down to a lower point on the trunk. Then <code>branch</code>ing is the equivalent of a <code>branch</code> shooting out at a certain point on that trunk with the possibility to grow as you develop that <code>branch</code>. This permits you or someone else to work on a separate idea at the same time as you continue to develop the trunk. Say for example that you have a situation where there is a stable release of your R package and you do not want to <code>push</code> changes to this. So you create a <code>branch</code> called “development” and when you are happy with it you merge that <code>branch</code> back into the trunk!</p>
-<p><img src="assets/git_branch.png" class="img-fluid"></p>
+<p><a href="assets/git_branch.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="assets/git_branch.png" class="img-fluid"></a></p>
 <p>Useful commands for branches from terminal:</p>
 <ul>
 <li><code>git branch &lt;name of branch&gt;</code> : Create a new branch.</li>
@@ -809,6 +812,31 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>
   </div>
 </footer>
+<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","closeEffect":"zoom","openEffect":"zoom","loop":false,"selector":".lightbox"});
+window.onload = () => {
+  lightboxQuarto.on('slide_before_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    const href = trigger.getAttribute('href');
+    if (href !== null) {
+      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+      if (imgEl !== null) {
+        const srcAttr = imgEl.getAttribute("src");
+        if (srcAttr && srcAttr.startsWith("data:")) {
+          slideConfig.href = srcAttr;
+        }
+      }
+    } 
+  });
+
+  lightboxQuarto.on('slide_after_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    if (window.Quarto?.typesetMath) {
+      window.Quarto.typesetMath(slideNode);
+    }
+  });
+
+};
+          </script>
 
 
 
