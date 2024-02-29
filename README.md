@@ -23,12 +23,14 @@ docker pull --platform=linux/amd64 ghcr.io/nbisweden/workshop-raukr:latest
 **Render qmd**
 
 ```
+# run in the cloned repo
 docker run --platform=linux/amd64 --rm -u 1000:1000 -v ${PWD}:/home/rstudio/raukr ghcr.io/nbisweden/workshop-raukr:latest quarto render index.qmd
 ```
 
 **Run RStudio server**
 
 ```
+# run in the cloned repo
 docker run --platform=linux/amd64 --rm -e PASSWORD=raukr -p 8787:8787 -v ${PWD}:/home/rstudio/raukr ghcr.io/nbisweden/workshop-raukr:latest
 ```
 

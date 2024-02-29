@@ -2139,21 +2139,21 @@
     "href": "home_program.html",
     "title": "Program",
     "section": "",
-    "text": "Jennifer Bryan\nSoftware engineer at Posit.\nData science professor, University of British Columbia\nVancouver, Canada\n\n\n\nHenrik Bengtsson\nProject lead for Futurverse.\nAssociate professor in Epidemiology & Biostatistics, University of California\nSan Francisco, USA"
+    "text": "Jennifer Bryan\nSoftware engineer at Posit\nData science professor\nUniversity of British Columbia\nVancouver, Canada\n\n\n\nHenrik Bengtsson\nProject lead for Futureverse\nAssociate professor in Epidemiology & Biostatistics\nUniversity of California\nSan Francisco, USA"
   },
   {
     "objectID": "home_program.html#guest-instructors",
     "href": "home_program.html#guest-instructors",
     "title": "Program",
     "section": "",
-    "text": "Jennifer Bryan\nSoftware engineer at Posit.\nData science professor, University of British Columbia\nVancouver, Canada\n\n\n\nHenrik Bengtsson\nProject lead for Futurverse.\nAssociate professor in Epidemiology & Biostatistics, University of California\nSan Francisco, USA"
+    "text": "Jennifer Bryan\nSoftware engineer at Posit\nData science professor\nUniversity of British Columbia\nVancouver, Canada\n\n\n\nHenrik Bengtsson\nProject lead for Futureverse\nAssociate professor in Epidemiology & Biostatistics\nUniversity of California\nSan Francisco, USA"
   },
   {
     "objectID": "home_program.html#syllabus",
     "href": "home_program.html#syllabus",
     "title": "Program",
     "section": "Syllabus",
-    "text": "Syllabus\nWe will be covering a number of topics in R programming with focus on R features helpful in bioinformatics and computational biology data analyses workflow:\n\nReproducible research in R (Quarto, Rmarkdown, Renv)\nCollaborative work using Git and GitHub\nR code style guide & best practices\nCode debugging, optimization and profiling\nParallelization and vectorization in R\nCrafting your own functions\nObjected oriented programming and R classes: S3, S4, R6 and RC\nAnatomy of an R package: Creating your own package from scratch\nTidy data flow using tidyverse\nUsing the language of graphics: ggplot2\nDeveloping web applications using Shiny\nR and Python integration using reticulate\nTeam project work - developing data analyses workflow in R using acquired skills"
+    "text": "Syllabus\nWe will be covering a number of topics in R programming with focus on R features helpful in bioinformatics and computational biology data analyses workflow:\n\nReproducible research in R (Quarto, Rmarkdown, Renv)\nCollaborative work using Git and GitHub\nR code style guide & best practices\nCode debugging, optimization and profiling\nParallelization and vectorization in R\nCrafting your own functions\nObject oriented programming and R classes: S3, S4, R6 and RC\nAnatomy of an R package: Creating your own package from scratch\nTidy data flow using tidyverse\nUsing the language of graphics: ggplot2\nDeveloping web applications using Shiny\nR and Python integration using reticulate\nTeam project work - developing data analyses workflow in R using acquired skills"
   },
   {
     "objectID": "home_program.html#course-materials",
