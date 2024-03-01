@@ -203,7 +203,7 @@ tibble::tribble(
     "**14-Apr-2024 23:59**", "Application deadline",
     "17-Apr-2024", "Notification of acceptance/decline",
     "09-Jun-2024", "Arrival to Visby, mingle in the evening",
-    "10-Jun-2024 - 21-Jun-2024", "Workshop",
+    "10-Jun-2024 - 20-Jun-2024", "Workshop",
     "21-Jun-2024", "Project presentations, certificates issued, lunch included",
 ) %>%
     gt() %>%
