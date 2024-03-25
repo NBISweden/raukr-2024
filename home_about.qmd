@@ -10,8 +10,8 @@ format:
 
 ## Organizers
 
-::: {.organisers-parent}
-::: {.organisers-child}
+::: {.profile-parent}
+::: {.profile-child}
 
 ![](assets/images/profile/marcin-kierczak.jpg){.nolightbox}
 
@@ -20,7 +20,7 @@ Bioinformatics Data Scientist, NBIS
 Associate Professor in Bioinformatics, Uppsala university
 
 :::
-::: {.organisers-child}
+::: {.profile-child}
 
 ![](assets/images/profile/sebastian-dilorenzo.jpg){.nolightbox}
 
@@ -28,7 +28,7 @@ Associate Professor in Bioinformatics, Uppsala university
 Bioinformatics Data Scientist, NBIS
 
 :::
-::: {.organisers-child}
+::: {.profile-child}
 
 ![](assets/images/profile/roy-francis.jpg){.nolightbox}
 
@@ -36,7 +36,7 @@ Bioinformatics Data Scientist, NBIS
 Bioinformatics Data Scientist, NBIS
 
 :::
-::: {.organisers-child}
+::: {.profile-child}
 
 ![](assets/images/profile/annika-kollstedt.jpg){.nolightbox}
 
@@ -44,7 +44,7 @@ Bioinformatics Data Scientist, NBIS
 Administrator, NBIS
 
 :::
-::: {.organisers-child}
+::: {.profile-child}
 
 ![](assets/images/profile/nina-norgren.jpg){.nolightbox}
 

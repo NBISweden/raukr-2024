@@ -173,43 +173,38 @@ div.callout-important .callout-icon::before {
   background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMTYiIHdpZHRoPSIxNiIgZmlsbD0iIzFjMjgzMyIgdmlld0JveD0iMCAwIDUxMiA1MTIiPjwhLS0hRm9udCBBd2Vzb21lIEZyZWUgNi41LjEgYnkgQGZvbnRhd2Vzb21lIC0gaHR0cHM6Ly9mb250YXdlc29tZS5jb20gTGljZW5zZSAtIGh0dHBzOi8vZm9udGF3ZXNvbWUuY29tL2xpY2Vuc2UvZnJlZSBDb3B5cmlnaHQgMjAyMyBGb250aWNvbnMsIEluYy4tLT48cGF0aCBkPSJNNDE2IDM5OC45YzU4LjUtNDEuMSA5Ni0xMDQuMSA5Ni0xNzQuOUM1MTIgMTAwLjMgMzk3LjQgMCAyNTYgMFMwIDEwMC4zIDAgMjI0YzAgNzAuNyAzNy41IDEzMy44IDk2IDE3NC45YzAgLjQgMCAuNyAwIDEuMXY2NGMwIDI2LjUgMjEuNSA0OCA0OCA0OGg0OFY0NjRjMC04LjggNy4yLTE2IDE2LTE2czE2IDcuMiAxNiAxNnY0OGg2NFY0NjRjMC04LjggNy4yLTE2IDE2LTE2czE2IDcuMiAxNiAxNnY0OGg0OGMyNi41IDAgNDgtMjEuNSA0OC00OFY0MDBjMC0uNCAwLS43IDAtMS4xek05NiAyNTZhNjQgNjQgMCAxIDEgMTI4IDBBNjQgNjQgMCAxIDEgOTYgMjU2em0yNTYtNjRhNjQgNjQgMCAxIDEgMCAxMjggNjQgNjQgMCAxIDEgMC0xMjh6Ii8+PC9zdmc+') !important;
 }
 
-/* about */
+/* shinylive */
 
-.organisers-parent {
+.shinylive-wrapper {
+  position: relative;
+}
+
+.shinylive-wrapper::before {
+  content: "\e05d";
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  font-size:  1rem;
+  position: absolute;
+  top: -40px;
+  left: 0px;
+  padding: 2px;
+  margin: 4px;
+}
+
+/* profile gallery */
+
+.profile-parent {
   display: -ms-grid;
   display: grid;
   gap: 1em;
-  -ms-grid-columns: 1fr 1em 1fr 1em 1fr;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
 }
 
-.organisers-child {
+.profile-child {
   text-align: center;
 }
 
-.organisers-child img {
-  height: 200px;
-  width: 200px;
-  -o-object-fit: cover;
-  object-fit: cover;
-  border-radius: 50%;
-}
-
-/* guests */
-
-.guests-parent {
-  display: -ms-grid;
-  display: grid;
-  gap: 1em;
-  -ms-grid-columns: 1fr 1em 1fr;
-  grid-template-columns: repeat(2, 1fr);
-}
-
-.guests-child {
-  text-align: center;
-}
-
-.guests-child img {
+.profile-child img {
   height: 200px;
   width: 200px;
   -o-object-fit: cover;
@@ -223,8 +218,7 @@ div.callout-important .callout-icon::before {
   display: -ms-grid;
   display: grid;
   gap: 10px;
-  -ms-grid-columns: 1fr 10px 1fr 10px 1fr 10px 1fr 10px 1fr 10px 1fr;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(100px,1fr));
 }
 
 .raukr-gallery-child {
