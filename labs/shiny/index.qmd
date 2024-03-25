@@ -19,10 +19,10 @@ library(shinyAce)
 ```
 
 ::: {.callout-note}
-This is an introduction to shiny web applications with R. Please follow the exercise to familiarise yourself with the fundamentals. And then you can follow instructions to build one of the two complete apps.
+This is an introduction to shiny web applications with R. Please follow the exercise to familiarise yourself with the fundamentals. And then you can follow instructions to build one of the many example apps.
 
 - Code chunks starting with `shinyApp()` can be simply copy-pasted to the RStudio console and run.
-- Generally, complete shiny code is saved as a text file, named for example, as **app.R** and then clicking **Run app** launches the app.
+- Generally, complete shiny code is saved as a text file, named as **app.R** and then clicking **Run app** launches the app.
 :::
 
 ## UI • Layout
