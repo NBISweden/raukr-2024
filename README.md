@@ -10,34 +10,7 @@ To edit, preview and render documents, you need one or more of the following req
 - [VSCode](https://arinbasu.medium.com/why-quarto-with-vscode-is-a-great-data-science-tool-f0a259d28702) is a good alternative to RStudio for quarto documents
 - You need to install the R packages necessary for your topic/document
 
-:bangbang: Be wary of using the visual editor! It may mess up the code formatting.
-
-### Docker
-
-A docker container is available for rendering quarto documents and to run RStudio server.
-
-```
-docker pull --platform=linux/amd64 ghcr.io/nbisweden/workshop-raukr:latest
-```
-
-**Render qmd**
-
-```
-# run in the cloned repo
-docker run --platform=linux/amd64 --rm -u 1000:1000 -v ${PWD}:/home/rstudio/raukr ghcr.io/nbisweden/workshop-raukr:latest quarto render index.qmd
-```
-
-**Run RStudio server**
-
-```
-# run in the cloned repo
-docker run --platform=linux/amd64 --rm -e PASSWORD=raukr -p 8787:8787 -v ${PWD}:/home/rstudio/raukr ghcr.io/nbisweden/workshop-raukr:latest
-```
-
-In browser, go to [http://localhost:8787/](http://localhost:8787/). Use following credentials:
-
-> username: rstudio  
-> password: raukr
+:warning: Be wary of using the visual editor! It may mess up the code formatting.
 
 ## Adding/Modifying topics
 
@@ -66,8 +39,10 @@ In browser, go to [http://localhost:8787/](http://localhost:8787/). Use followin
 
 - To preview, run in terminal
   - `quarto preview slides/topic/index.qmd`
-  - `quarto preview labs/topic/index.qmd`
+  - `quarto preview`
   - Saving the file updates the preview
+
+To preview from inside docker: `quarto preview labs/topic/index.qmd --host 0.0.0.0 --port 4200 --no-browser`
 
 :bulb: The document is rendered to the specified output format in the output directory.
 
@@ -79,7 +54,7 @@ In browser, go to [http://localhost:8787/](http://localhost:8787/). Use followin
     - **docs/slides/topic/index.html**
     - **docs/labs/topic/index.html**
     
-:bangbang: Do not run `quarto render` as it will remove everything from **docs/** and attempt to render all the files. This might overwrite someone else's materials and also break since you won't have their R packages installed. So, only render your files.
+:warning: Do not run `quarto render` as it will remove everything from **docs/** and attempt to render all the files. This might overwrite someone else's materials and also break since you won't have their R packages installed. So, only render your files.
 
 - Finally commit changes (both source files and rendered files)
 
@@ -89,6 +64,73 @@ git commit -m "Added topic"
 ```
 
 - Push changes to your fork and send a pull request
+
+### Docker
+
+A docker container is available for rendering quarto documents and to run RStudio server.
+
+:warning: ~11GB
+
+```
+docker pull --platform=linux/amd64 ghcr.io/nbisweden/workshop-raukr:latest
+```
+
+**Render qmd**
+
+- For non-interactive use
+
+```
+# run in the cloned repo
+docker run --platform=linux/amd64 --rm -u 1000:1000 -v ${PWD}:/home/rstudio/raukr ghcr.io/nbisweden/workshop-raukr:latest quarto render index.qmd
+```
+
+**Run RStudio server**
+
+- To develop or interactively work with notebooks
+
+```
+# run in the cloned repo
+docker run --platform=linux/amd64 -e PASSWORD=raukr -p 8787:8787  -p 4200:4200 -v ${PWD}:/home/rstudio/raukr ghcr.io/nbisweden/workshop-raukr:latest
+```
+
+In browser, go to [http://localhost:8787/](http://localhost:8787/). Use following credentials:
+
+> username: rstudio  
+> password: raukr
+
+On adding new packages, see below.
+
+**Updating docker**
+
+If new packages are added/required, then they need to be added to the docker image as well. It is assumed that you are working in the container. Add packages as you normally would. Once your new materials and new packages are finalized, follow the steps below.
+
+- Update the `renv.lock` file. You need to run this in R in the container and in the root of the repo. This will add your new packages to `renv.lock`. Pay attention to what is changed. If it looks ok, go forward.
+
+```
+renv::snapshot(type="all")
+```
+
+- Rebuild the container with the new packages. Run this in a local terminal in the root of the repo. Increment the version number as needed.
+
+```
+docker build --platform=linux/amd64 -t ghcr.io/nbisweden/workshop-raukr:1.1.0 -t ghcr.io/nbisweden/workshop-raukr:latest --file dockerfile .
+```
+
+- Push image back to repository
+
+```
+# login if needed
+# echo "personalaccesstoken" | docker login ghcr.io -u githubusername --password-stdin
+
+docker push ghcr.io/nbisweden/workshop-raukr:1.1.0
+docker push ghcr.io/nbisweden/workshop-raukr:latest
+```
+
+## Convert HTML slides to PDF
+
+```
+docker run --platform=linux/amd64 -v $PWD:/work astefanutti/decktape url-to-slide.html /work/output.pdf
+```
 
 ## Tips & Conventions
 
