@@ -200,8 +200,10 @@ A cafeteria is available onsite just outside the lecture hall for breakfast and 
 tibble::tribble(
     ~Date, ~Milestone,
     "22-Feb-2024", "Application opens",
-    "**14-Apr-2024 23:59**", "Application deadline",
+    "1̶4̶-̶A̶p̶r̶-̶2̶0̶2̶4̶ 2̶3̶:̶5̶9̶", "A̶p̶p̶l̶i̶c̶a̶t̶i̶o̶n̶ d̶e̶a̶d̶l̶i̶n̶e̶",
+    "**16-Apr-2024 23:59**", "Extended application deadline",
     "17-Apr-2024", "Notification of acceptance/decline",
+    "30-Apr-2024", "Notification of acceptance/decline for extended deadline",
     "09-Jun-2024", "Arrival to Visby, mingle in the evening",
     "10-Jun-2024 - 20-Jun-2024", "Workshop",
     "21-Jun-2024", "Project presentations, certificates issued, lunch included",
