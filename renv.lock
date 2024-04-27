@@ -4,7 +4,7 @@
     "Repositories": [
       {
         "Name": "CRAN",
-        "URL": "https://p3m.dev/cran/latest"
+        "URL": "https://p3m.dev/cran/2024-02-28"
       }
     ]
   },
@@ -780,6 +780,18 @@
         "utils"
       ],
       "Hash": "4f57884290cc75ab22f4af9e9d4ca862"
+    },
+    "anytime": {
+      "Package": "anytime",
+      "Version": "0.3.9",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "BH",
+        "R",
+        "Rcpp"
+      ],
+      "Hash": "74a64813f17b492da9c6afda6b128e3d"
     },
     "archive": {
       "Package": "archive",
@@ -3305,6 +3317,17 @@
       ],
       "Hash": "3ce98cb043968d0370d17807f4c25f0a"
     },
+    "phosphoricons": {
+      "Package": "phosphoricons",
+      "Version": "0.2.0",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "R",
+        "htmltools"
+      ],
+      "Hash": "9c7e25aa49773b758f0a96245577a6d9"
+    },
     "pillar": {
       "Package": "pillar",
       "Version": "1.9.0",
@@ -4419,6 +4442,24 @@
       ],
       "Hash": "99b2ee37c4f174539b1b0d920b00d16c"
     },
+    "shinyWidgets": {
+      "Package": "shinyWidgets",
+      "Version": "0.8.1",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "R",
+        "anytime",
+        "bslib",
+        "grDevices",
+        "htmltools",
+        "jsonlite",
+        "rlang",
+        "sass",
+        "shiny"
+      ],
+      "Hash": "96bb249d21b7473dbeb0311702ef5288"
+    },
     "shinyjs": {
       "Package": "shinyjs",
       "Version": "2.1.0",
@@ -5225,6 +5266,24 @@
       ],
       "Hash": "dfcb77371df343b663d6668d2d63ac35"
     },
+    "toastui": {
+      "Package": "toastui",
+      "Version": "0.3.1",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "R",
+        "htmltools",
+        "htmlwidgets",
+        "magrittr",
+        "phosphoricons",
+        "rlang",
+        "shiny",
+        "shinyWidgets",
+        "utils"
+      ],
+      "Hash": "89895690e02327432149e99f2cde8941"
+    },
     "tseries": {
       "Package": "tseries",
       "Version": "0.10-55",
@@ -5524,6 +5583,13 @@
         "R"
       ],
       "Hash": "5d4545e140e36476f35f20d0ca87963e"
+    },
+    "writexl": {
+      "Package": "writexl",
+      "Version": "1.5.0",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Hash": "856a075aec895ea1bea3055fa54e356c"
     },
     "xaringan": {
       "Package": "xaringan",

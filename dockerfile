@@ -33,6 +33,9 @@ RUN install2.r --error renv \
     && R -e "renv::restore(lockfile='/renv/renv.lock')" \
     && rm -rf /tmp/downloaded_packages/ /tmp/*.rds
 
+## Install phantomjs for screenshotting shinyapps
+RUN Rscript -e 'webshot::install_phantomjs()'
+
 ## Install conda environments
 RUN Rscript -e 'reticulate::conda_create("keras", packages=c("keras", "tensorflow"), channel="conda-forge", python_version="3.9", conda = "/opt/miniconda/bin/conda")' \
     && Rscript -e 'reticulate::conda_create("raukr-reticulate", python_version = "3.9", packages = c("pandas=2.2.0","sqlalchemy=2.0.0"), conda = "/opt/miniconda/bin/conda")'
@@ -51,7 +54,10 @@ RUN apt-get -y autoclean \
 	&& strip /usr/local/lib/R/site-library/*/libs/*.so \
 	## Fix https://github.com/tschaffter/rstudio/issues/11 \
 	&& ln -s /usr/local/lib/R/lib/libR.so /lib/x86_64-linux-gnu/libR.so \
-	&& mkdir -p /home/rstudio/raukr
+	&& mkdir -p /home/rstudio/raukr \
+	&& export LC_ALL=en_US.UTF-8 \
+  && export LANG=en_US.UTF-8 \
+  && export LANGUAGE=en_US.UTF-8
 
 WORKDIR /home/rstudio/raukr
 

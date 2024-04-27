@@ -8,6 +8,60 @@ format:
     page-layout: full
 ---
 
-```{=html}
-<iframe width="100%" height="100%" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSIci4xlYTisAysZOricXo1DtN7xCxy0cAy3q2vHSPAPt-NP_XGVHmwzZ7DUJUVyEdHOwdwWN3AkorX/pubhtml?gid=0&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+```{r}
+#| eval: false
+#| echo: false
+# <iframe width="100%" height="100%" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSIci4xlYTisAysZOricXo1DtN7xCxy0cAy3q2vHSPAPt-NP_XGVHmwzZ7DUJUVyEdHOwdwWN3AkorX/pubhtml?gid=0&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
 ```
+
+::: {.schedule}
+
+```{r}
+#| echo: false
+#| fig-height: 6
+
+library(googlesheets4)
+library(lubridate)
+library(readr)
+library(toastui)
+library(dplyr)
+library(tidyr)
+
+fn_rle <- function(x){
+  r <- rle(x)
+  return(rep(paste(r$values,1:length(r$values),sep="-"),times=r$lengths))
+}
+
+googlesheets4::gs4_deauth()
+url_schedule = "https://docs.google.com/spreadsheets/d/1svAmuAzNRG3Ujj73qbC9DsOSzZ7jGyol79pLxuLD_fg"
+
+dfr <- googlesheets4::read_sheet(url_schedule, sheet="schedule-vertical", col_types = "c") %>%
+  mutate(time=as.character(time)) %>%
+  tidyr::fill(date, .direction="down") %>%
+  tidyr::drop_na(type) %>%
+  mutate(start=lubridate::dmy_hm(paste(.$date, .$time))) %>%
+  mutate(end=start+lubridate::dminutes(30)) %>%
+  mutate(grp=paste0(fn_rle(type),"-",fn_rle(title)),.by=date) %>%
+  group_by(date,grp) %>%
+  summarise(type=type[1],body=body[1],title=title[1],start=start[1],end=tail(end,n=1)) %>%
+  ungroup() %>%
+  mutate(calendarId=as.character(as.integer(as.factor(type)))) %>%
+  mutate(start=as.character(lubridate::ymd_hms(start)),end=as.character(lubridate::ymd_hms(end))) %>%
+  dplyr::select(calendarId,title,body,start,end,type) %>%
+  mutate(category="time")
+
+colors <- data.frame(
+  id=c("1","2","3","4","5"),
+  name=sort(unique(dfr$type)),
+  color=c(rep("#2c3e50",5)),
+  backgroundColor=c("#fcf3cf","#a9dfbf","#fae5d3","#e8daef","#d6eaf8"),
+  borderColor=c("#f7dc6f","#7dcea0","#f0b27a","#bb8fce","#85c1e9")
+)
+rownames(colors) <- colors$id
+
+calendar(dfr, view="week", navigation=TRUE, defaultDate=as.Date("2024-06-10"), height=790) %>%
+    cal_week_options(startDayOfWeek = 1, hourStart=8, hourEnd=21, eventView="time", showNowIndicator = TRUE) %>%
+  cal_props(colors)
+```
+
+:::

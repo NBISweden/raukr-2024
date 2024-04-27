@@ -16,6 +16,8 @@ website:
     right:
       - text: "Home"
         href: "index.html"
+      - text: "Schedule"
+        href: "home_schedule.html"
       - text: "Program"
         href: "home_program.html"
       - text: "Registration"

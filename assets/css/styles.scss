@@ -177,6 +177,7 @@ div.callout-important .callout-icon::before {
 
 .shinylive-wrapper {
   position: relative;
+  margin: 2em 0 !important;
 }
 
 .shinylive-wrapper::before {
@@ -234,4 +235,25 @@ div.callout-important .callout-icon::before {
 
 .raukr-gallery-child p {
   margin-bottom: 0;
+}
+
+/* schedule toastui */
+
+.schedule .cell-output-display {
+  height: 800px;
+  overflow: hidden;
+}
+
+.toastui-calendar-time {
+  height: 500px !important;
+}
+
+.toastui-calendar-event-time .toastui-calendar-event-time-content, .toastui-calendar-event-time .toastui-calendar-travel-time, .toastui-calendar-day-name__name {
+  font-size: 14px !important;
+}
+
+.toastui-calendar-section-button,
+.toastui-calendar-popup-section > .toastui-calendar-detail-item:nth-child(1),
+.toastui-calendar-popup-section > .toastui-calendar-detail-item:nth-child(2) {
+  display: none;
 }
