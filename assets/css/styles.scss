@@ -240,16 +240,25 @@ div.callout-important .callout-icon::before {
 /* schedule toastui */
 
 .schedule .cell-output-display {
-  height: 800px;
+  height: 700px;
   overflow: hidden;
 }
 
+.toastui-calendar-week-view .toastui-calendar-panel:not(.toastui-calendar-time) {
+  overflow-y: hidden !important;  
+}
+
 .toastui-calendar-time {
-  height: 500px !important;
+  height: 610px !important;
+}
+
+.toastui-calendar-timegrid {
+  height: 600px !important;
+  min-height: 600px !important;
 }
 
 .toastui-calendar-event-time .toastui-calendar-event-time-content, .toastui-calendar-event-time .toastui-calendar-travel-time, .toastui-calendar-day-name__name {
-  font-size: 14px !important;
+  font-size: 13px !important;
 }
 
 .toastui-calendar-section-button,
