@@ -1,0 +1,33 @@
+/* custom css style */
+
+/* gallery */
+
+.shiny-gallery-parent {
+  display: -ms-grid;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+  grid-template-rows: repeat(auto-fit, minmax(220px,1fr));
+}
+
+.shiny-gallery-child {
+  text-align: center;
+}
+
+.shiny-gallery-child img {
+  -o-object-fit: cover;
+  object-fit: cover;
+  margin: 0;
+}
+
+.shiny-gallery-child p {
+  margin-bottom: 0;
+}
+
+.shiny-gallery-child .quarto-figure {
+  margin-bottom: 0;
+}
+
+.shiny-gallery-child figcaption {
+  font-size: 0.6em;
+}

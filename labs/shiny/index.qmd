@@ -3,26 +3,27 @@ title: "Web apps with Shiny"
 author: "Roy Francis"
 description: "Interactive web applications in R."
 image: "assets/featured.jpg"
-format: html
+format:
+  html:
+    resources: 
+      - shinylive-sw.js
 code-annotations: hover
+filters:
+  - shinylive
 ---
 
 ```{r}
-#| include: false
+#| echo: false
 library(shiny)
-library(ggplot2)
-#BiocManager::install("RNASeqPower")
-library(RNASeqPower)
-library(shinythemes)
-library(colourpicker)
-library(shinyAce)
 ```
 
 ::: {.callout-note}
-This is an introduction to shiny web applications with R. Please follow the exercise to familiarise yourself with the fundamentals. And then you can follow instructions to build one of the many example apps.
+This is an introduction to shiny web applications with R. Please follow the exercise to familiarize yourself with the fundamentals. And then you can follow instructions to build one of the example apps.
 
-- Code chunks starting with `shinyApp()` can be simply copy-pasted to the RStudio console and run.
-- Generally, complete shiny code is saved as a text file, named as **app.R** and then clicking **Run app** launches the app.
+- Code chunks with a complete app can be simply copy-pasted to the RStudio console and run.
+- Complete shiny code can be saved as a text file, named as **app.R** and then clicking **Run app** in RStudio launches the app. Alternatively, `shiny::runApp()` from the R console.
+
+{{< fa hand-sparkles >}} Interactive app: This can take a few minutes to load.
 :::
 
 ## UI • Layout
@@ -31,8 +32,11 @@ This is an example to show the layout of widgets on a webpage using shiny functi
 
 In the main panel, the use of tab panels are demonstrated. The function `tabsetPanel()` is used to define a tab panel set and individual tabs are defined using `tabPanel()`. `fluidRow()` and `column()` are used to structure elements within each tab. The width of each column is specified. Total width of columns must add up to 12.
 
-```{r}
-#| column: page
+:::{.column-page}
+
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
 
 library(shiny)
 ui <- fluidPage(
@@ -76,11 +80,17 @@ server <- function(input,output){}
 shinyApp(ui=ui,server=server)
 ```
 
+:::
+
 ## UI • Widgets • Input
 
 Input widgets are used to accept content interactively from the user. These widgets usually end in `Input` like `selectInput()`. Below are usage examples of several of shiny's built-in widgets. Every widget has a variable name which is accessible through `input$` in the server function. For example, the value of a variable named `text-input` would be accessed through `input$text-input`.
 
-```{r}
+:::{.column-page}
+
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
 shinyApp(
 ui=fluidPage(
   fluidRow(
@@ -103,13 +113,31 @@ ui=fluidPage(
 ),
 server=function(input,output){},
 options=list(height=900))
+
+
+
+
+
+
+
+
+
+
+
+
+
 ```
+
+:::
 
 ## UI • Widgets • Outputs
 
 Similar to input widgets, output widgets are used to display information to the user on the webpage. These widgets usually end in `Output` like `textOutput()`. Every widget has a variable name accessible under `output$` to which content is written in the server function. Render functions are used to write content to output widgets. For example `renderText()` is used to write text data to `textOutput()` widget.
 
-```{r}
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 650
+#| components: [editor, viewer]
 shinyApp(
   ui=fluidPage(fluidRow(column(6,
              textInput("text_input",label="textInput",value="<h3 style='color:red'>Red text</h3>"),
@@ -128,8 +156,19 @@ shinyApp(
     output$plot_output <- renderPlot({
       plot(iris[,1],iris[,2])
     })
-},
-options=list(height=700))
+})
+
+
+
+
+
+
+
+
+
+
+
+
 ```
 
 In this example, we have a text input box which takes user text and outputs it in three different variations. The first output is html output `htmlOutput()`. Since the default text is html content, the output is red colored text. A normal non-html text would just look like normal text. The second output is normal text output `textOutput()`. The third variation is `verbatimTextOutput()` which displays text in monospaced code style. This example further shows table output and plot output.
@@ -140,7 +179,11 @@ Sometimes we want to add, remove or change currently loaded UI widgets condition
 
 In the example below, the output plot is displayed only if the selected dataset is **iris**.
 
-```{r}
+:::{.column-page}
+
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
 shinyApp(
 ui=fluidPage(
   selectInput("data_input",label="Select data",
@@ -161,13 +204,19 @@ server=function(input,output) {
 })
 ```
 
+:::
+
 Here, conditional UI is used to selectively display an output widget (plot). Similarly, this idea can be used to selectively display any input or output widget.
 
 ## Updating widgets
 
 Widgets can be updated with new values dynamically. `observe()` and `observeEvent()` functions can monitor the values of interest and update relevant widgets.
 
-```{r}
+:::{.column-page}
+
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
 shinyApp(
 ui=fluidPage(
   selectInput("data_input",label="Select data",choices=c("mtcars","faithful","iris")),
@@ -189,7 +238,13 @@ server=function(input,output,session) {
   })
 },
 options=list(height=600))
+
+
+
+
 ```
+
+:::
 
 In this example, the user selects a dataset and a column from the selected dataset to be plotted as a histogram. The column name selection widget must automatically update it's choices depending on the selected dataset. This achieved using `observe()` where the `updateSelectInput()` function updates the selection choices. Notice that a third option `session` is in use in the server function. ie; `server=function(input,output,session)`. And `session` is also the first argument in `updateSelectInput()`. Session keeps track of values in the current session.
 
@@ -199,7 +254,11 @@ When changing the datasets, we can see that there is a short red error message. 
 
 You might've noticed that shiny tends to update changes immediately as the input widgets change. This may not be desirable in all circumstances. For example, if the apps runs a heavy calculation, it is more efficient to grab all the changes and execute in one step rather than executing the heavy calculation after every input change. To illustrate this, we have an example below where we plot an image which has the title as input text. Try adding a long title to it.
 
-```{r}
+```{shinylive-r}
+#| standalone: true
+#| layout: vertical
+#| viewerHeight: 500
+#| components: [editor, viewer]
 shinyApp(
   ui=fluidPage(
     textInput("in_title",label="Title",value="Title"),
@@ -217,7 +276,11 @@ The plot changes as soon as the input text field is changed. And as we type in t
 
 We can add an action button such that the plot is changed only when the button is clicked.
 
-```{r}
+```{shinylive-r}
+#| standalone: true
+#| layout: vertical
+#| viewerHeight: 550
+#| components: [editor, viewer]
 shinyApp(
   ui=fluidPage(
     textInput("in_title",label="Title",value="Title"),
@@ -239,7 +302,10 @@ Now, changes to any of the input fields do not initiate the plot function. The p
 
 Shiny returns an error when a variable is NULL, NA or empty. This is similar to normal R operation. The errors show up as bright red text. By using careful error handling, we can print more informative and less distracting error messages. We also have the option of hiding error messages.
 
+In this example, we have a list of datasets to select which is then printed as a table. The first and default option is an empty string which cannot be printed as a table and therefore returns an error.
+
 ```{r}
+#| eval: false
 shinyApp(
 ui=fluidPage(
   selectInput("data_input",label="Select data",
@@ -254,13 +320,14 @@ server=function(input, output) {
 options=list(height="350px"))
 ```
 
-In this example, we have a list of datasets to select which is then printed as a table. The first and default option is an empty string which cannot be printed as a table and therefore returns an error.
+![](assets/error-validation-1.jpg)
 
 We can add an extra line to the above app so that the selected string is validated before running downstream commands in the `getdata({})` reactive function. The function `validate()` is used to validate inputs. `validate()` can be used with `need()` function or a custom function.
 
 Below we use the `need()` function to check the input. It checks if the input is NULL, NA or an empty string and returns a specified message if TRUE. `try()` is optional and is used to catch any other unexpected errors.
 
 ```{r}
+#| eval: false
 shinyApp(
 ui=fluidPage(
   selectInput("data_input",label="Select data",
@@ -282,9 +349,12 @@ options=list(height="350px"))
 
 Now we see an informative gray message (less scary) asking the user to select a dataset.
 
+![](assets/error-validation-2.jpg)
+
 We can use a custom function instead of using `need()`. Below, we have created a function called `valfun()` that checks if the input is NULL, NA or an empty string. This is then used in `validate()`.
 
 ```{r}
+#| eval: false
 valfn <- function(x) if(is.null(x) | is.na(x) | x=="") return("Input data is incorrect.")
 
 shinyApp(
@@ -306,9 +376,12 @@ server=function(input, output) {
 options=list(height="350px"))
 ```
 
+![](assets/error-validation-3.jpg)
+
 The last option is to simple hide the error. This may be used in situations where there is no input needed from the user. We use `req()` to check if the input is valid, else stop execution there till the condition becomes true.
 
 ```{r}
+#| eval: false
 shinyApp(
 ui=fluidPage(
   selectInput("data_input",label="Select data",
@@ -328,11 +401,17 @@ server=function(input, output) {
 options=list(height="350px"))
 ```
 
+![](assets/error-validation-4.jpg)
+
 As expected there is no error or any message at all. This is not always the best to use this option as we need the user to do something. An informative message may be better than nothing.
 
 Finally, instead of printing messages about the error or hiding the error, we can try to resolve the errors from the previous section in a more robust manner. `shiny::req(input$header_input)` is added to ensure that a valid column name string is available before running any of the `renderPlot()` commands. Second, we add `validate(need(input$header_input %in% colnames(getdata()),message="Incorrect column name."))` to ensure that the column name is actually a column in the currently selected dataset.
 
-```{r}
+:::{.column-page}
+
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
 shinyApp(
 ui=fluidPage(
   selectInput("data_input",label="Select data",choices=c("mtcars","faithful","iris")),
@@ -354,7 +433,13 @@ server=function(input,output,session) {
   })
 },
 options=list(height=600))
+
+
+
+
 ```
+
+:::
 
 Now, we do not see any error messages. Note that shiny apps on shinyapps.io do not display the complete regular R error message for security reasons. It returns a generic error message in the app. One needs to inspect the error logs to view the actual error message.
 
@@ -364,7 +449,10 @@ It is often desirable to let the user down data tables and plots as images. This
 
 In the example below, we are downloading a table as a csv text file. We define a button that accepts the action input from the user. The `downloadHandler()` function has the file name argument, and the content argument where we specify the `write.csv()` command. Note that this example needs to be opened in a browser and may not in the RStudio preview. In the RStudio preview, click on **Open in Browser**.
 
-```{r}
+```{shinylive-r}
+#| standalone: true
+#| layout: vertical
+#| components: [editor, viewer]
 shinyApp(
   ui=fluidPage(
     selectInput("data_input",label="Select data",
@@ -394,7 +482,11 @@ shinyApp(
 
 In this next example, we are downloading a plot. In the content part of `downloadHandler()`, we specify commands to export a PNG image. Note that this example needs to be opened in a browser and may not in the RStudio preview. In the RStudio preview, click on **Open in Browser**.
 
-```{r}
+:::{.column-page}
+
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
 shinyApp(
   ui=fluidPage(
     selectInput("data_input",label="Select data",
@@ -424,6 +516,32 @@ shinyApp(
   options=list(height="500px")
 )
 ```
+
+:::
+
+## Shinylive
+
+[Shinylive](https://shiny.posit.co/py/docs/shinylive.html) is a framework that allows shiny applications to run in the browser without a server. This is made possible by the recent development of [WebR](https://docs.r-wasm.org/webr/). [This video](https://www.youtube.com/watch?v=j1M6YyU2ZX8) is a great introduction to the topic. Examples of shinylive apps can be seen [here](https://shinylive.io/r/examples/).
+
+Shinylive can be used in three ways: 
+
+**Convert**: Convert existing shiny apps into shinylive apps. This can be achieved using the R package `shinylive` and function `shinylive::export()`. This generates an html file and all necessary assets which can be hosted as a static site. This may not always work depending on the complexity of the app and packages used.
+
+```{r}
+#| eval: false
+shinylive::export(app_dir="myapp", output_dir="site")
+httpuv::runStaticServer("site")
+```
+
+**Fiddle**: Shiny apps can be developed in the browser on [shinylive.io](https://shinylive.io/r/examples/). Apps can be shared via unique URL. Apps can be saved to Github Gist.
+
+**Include**: The third option is the develop and include an app in a notebook. This option is covered in more detail below under interactive documents.
+
+There are some caveats.
+
+- Not ready for production use. This is a nascent technology that is experimental and actively developed, therefore likely to be unstable
+- Apps can be slow to very slow to load depending on complexity and how many packages need to be installed
+- You cannot just install any R package. They need to be compiled specifically for WebR. Only the most popular packages are currently available
 
 ## Interactive documents
 ### Shiny in Rmarkdown
@@ -501,6 +619,128 @@ It is also possible to run individual chunks in shiny using `context` chunk para
 ````
 
 More information about using shiny and quarto together is [here](https://quarto.org/docs/interactive/shiny/).
+
+### Shinylive in Quarto
+
+Shinylive has a [quarto extension](https://quarto-ext.github.io/shinylive/) making it convenient to include shinylive apps into quarto documents. The interactive shiny apps in this document were created using this extension.
+
+Here is a step by step guide to get started with shinylive in quarto.
+
+- Install **shinylive** R package
+
+```{r}
+#| eval: false
+install.packages("shinylive")
+```
+
+- Add **shinylive** quarto extension
+
+```{bash}
+#| eval: false
+#| filename: Shell
+quarto add quarto-ext/shinylive
+```
+
+- Add shinylive as a filter
+
+```
+filters:
+  - shinylive
+```
+
+- R code block with shiny component must use language `shinylive-r` rather than `r`
+- Chunk parameter `#| standalone: true` must be defined
+
+````
+```{{shinylive-r}}
+#| standalone: true
+```
+````
+
+````
+```{{shinylive-r}}
+#| standalone: true
+
+shinyApp(
+  ui=fluidPage(
+    sliderInput("value", label="Value", min=1, max=50, step=1, value=2),
+    textOutput("out")
+  ),
+  server=function(input, output, session) {
+    output$out <- renderText(paste0("Squared: ",input$value^2))
+  }
+)
+```
+````
+
+```{shinylive-r}
+#| standalone: true
+
+shinyApp(
+  ui=fluidPage(
+    sliderInput("value", label="Value", min=1, max=50, step=1, value=2),
+    textOutput("out")
+  ),
+  server=function(input, output, session) {
+    output$out <- renderText(paste0("Squared: ",input$value^2))
+  }
+)
+```
+
+- Chunk parameter `#| components: [editor, viewer]` shows the editor and viewer side by side
+- Chunk parameter `#| layout: vertical` displays editor and viewer vertically
+- Packages are installed using `webr::install()`
+
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
+#| layout: vertical
+#| viewerHeight: 450
+
+webr::install(c("ggplot2", "bslib"))
+
+library(bslib)
+library(ggplot2)
+
+pc <- prcomp(iris[,c("Sepal.Length", "Petal.Length", "Sepal.Width", "Petal.Width")], center = TRUE, scale. = TRUE)
+dfr <- cbind(iris,as.data.frame(pc$x))
+
+ui <- page_sidebar(
+  title = "Iris",
+  sidebar = sidebar(
+    selectInput("x",
+      label = "X axis",
+      choices = c("PC1","PC2","PC3","PC4"),
+      selected = "PC1"
+    ),
+
+    selectInput("y",
+      label = "Y axis",
+      choices = c("PC1","PC2","PC3","PC4"),
+      selected = "PC2"
+    )
+  ),
+  plotOutput("plot", height = "350px")
+)
+
+server <- function(input, output, session) {
+  
+  output$plot <- renderPlot({
+    x <- input$x
+    y <- input$y
+    v <- input$v
+    
+    ggplot(dfr, aes(x = !!sym(x), y = !!sym(y), col = Species)) +
+      geom_point() +
+      theme_bw() + 
+      theme(legend.position = "top")
+  })
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+Refer to the shinylive extension [documentation](https://quarto-ext.github.io/shinylive/).
 
 ## ggplot2 builder
 
@@ -635,9 +875,13 @@ Now try changing the colours of plot elements and hopefully, it should change.
 
 {{< fa clipboard-list >}}  You can add more options to the input if you like, for example; rectangular elements such as backgrounds.
 
-```{r}
-#| code-fold: true
-#| eval: false
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
+#| layout: vertical
+#| viewerHeight: 600
+
+webr::install(c("ggplot2", "colourpicker"))
 
 library(shiny)
 library(ggplot2)
@@ -693,8 +937,6 @@ shinyApp(
     }
 )
 ```
-
-![](assets/ggplot-builder-3.png)
 
 ## Data explorer
 
@@ -808,18 +1050,46 @@ output$out_plot <- renderPlot({
 
 This is finally added to the server function.
 
-```{r,data-explorer}
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
+#| layout: vertical
+#| viewerHeight: 500
+
+library(shiny)
+
+shinyApp(
+  ui=fluidPage(
+    titlePanel("Data explorer"),
+    sidebarLayout(
+      sidebarPanel(
+          selectInput("in_x","X axis variable", choices=colnames(iris), selected=colnames(iris)[1], multiple=FALSE),
+          selectInput("in_y","Y axis variable", choices=colnames(iris), selected=colnames(iris)[2], multiple=FALSE),
+          selectInput("in_col","Colour variable", choices=colnames(iris), selected=colnames(iris)[3], multiple=FALSE)
+      ),
+      mainPanel(
+        plotOutput("out_plot")
+      )
+    )
+  ),
+  server=function(input,output){
+    output$out_plot <- renderPlot({
+      ggplot(iris,aes(!!sym(input$in_x),y=!!sym(input$in_y),col=!!sym(input$in_col)))+
+        geom_point()
+    })
+  }
+)
 ```
 
 You can expand this app to other datasets and map more variables to ggplot etc. Can you add the functionality to [download the plots](https://shiny.rstudio.com/gallery/file-download.html)? Or perhaps to [upload a csv file](https://shiny.rstudio.com/articles/upload.html) and plot from that file?
 
 ## Color generator
 
-A shiny app to create a distinct color generator.
+A shiny app to create a palette of distinct colors.
 
 **Topics covered**
 
--   UI layout using bslib
+-   UI layout using **bslib** (Bootstrap 5 UI)
 -   Input and output widgets and reactivity
 -   Use of custom CSS and custom HTML
 
@@ -964,6 +1234,8 @@ The app will now generate colors as hex values, but we can't see the colors. It 
 
 This function is creating a span element for each color. These spans are organised inside a div. The div and spans have a parent-child relationship. The span elements are laid out in a grid manner using some custom CSS. The custom CSS is added to the head of the app. We have also added a bit of CSS to add some space above the app so it doesn't touch the top.
 
+<br>
+
 ```{r}
 #| eval: false
 
@@ -1088,9 +1360,11 @@ Let's build the basic scaffolding for our app including the input widgets. Let's
 
 We use a sidebar layout. The input controls go on the sidebar panel and the output goes on the main panel. So we need 5 numeric inputs. We can set some default values as well as reasonable min and max values and steps to increase or decrease. The output will be verbatim text, so we use `verbatimTextOutput()` widget.
 
-```{r}
-#| fig-height: 6
-#| fig-width: 8
+:::{.column-page}
+
+```{shinylive-r}
+#| standalone: true
+#| components: [editor, viewer]
 library(shiny)
 
 shinyApp(
@@ -1115,6 +1389,8 @@ shinyApp(
 )
 ```
 
+:::
+
 The app should visually look close to our final end result. Check that the widgets work.
 
 The next step is to wire up the inputs to the `rnapower()` function and return the result to the output text field.
@@ -1122,8 +1398,7 @@ The next step is to wire up the inputs to the `rnapower()` function and return t
 {{< fa clipboard-list >}} Try to see if you can get this to work.
 
 ```{r}
-#| fig-height: 6
-#| fig-width: 8
+#| eval: false
 library(shiny)
 library(RNASeqPower)
 
@@ -1162,6 +1437,7 @@ The function can estimate not only **sample size**, but **cv**, **effect**, **al
 {{< fa clipboard-list >}} Try to add a selection based conditional UI. `?selectInput()`, `?uiOutput()`, `?renderUI()`.
 
 ```{r}
+#| eval: false
 #| fig-height: 6
 #| fig-width: 8
 library(shiny)
@@ -1303,6 +1579,7 @@ Blank space are removed, the string is split by comma into a list of strings, th
 {{< fa clipboard-list >}} Update the app such that all numeric inputs are replaced by text inputs and the server logic is able to parse the strings into numbers.
 
 ```{r}
+#| eval: false
 #| fig-height: 6
 #| fig-width: 8
 library(shiny)
@@ -1422,6 +1699,7 @@ It is good practice to check whether the current code can be cleaned-up/polished
 {{< fa clipboard-list >}} Try to figure out how the code can be reorganized and simplified.
 
 ```{r}
+#| eval: false
 #| fig-height: 6
 #| fig-width: 8
 library(shiny)
@@ -1496,6 +1774,7 @@ Here are the limits we want to set:
 {{< fa clipboard-list >}} Try to figure out how to add input validation. `?shiny::validate()`.
 
 ```{r}
+#| eval: false
 #| fig-height: 6
 #| fig-width: 8
 library(shiny)
@@ -1585,6 +1864,7 @@ This part is purely cosmetic. We can add a custom theme from R package `shinythe
 {{< fa clipboard-list >}} Try changing the theme and pick one that you like. Check out `?shinythemes`. The themes can be visualized on [Bootswatch](https://bootswatch.com/).
 
 ```{r}
+#| eval: false
 #| fig-height: 6
 #| fig-width: 8
 library(shiny)
@@ -1687,1029 +1967,28 @@ The packages used are automatically detected and are installed on to the instanc
 setRepositories(c(1,2),graphics=FALSE)
 ```
 
-This completes this app tutorial. Hope you have enjoyed this build and learned something interesting along the way. There are few more example apps below, but that is optional.
+This completes this app tutorial. Hope you have enjoyed this build and learned something interesting along the way.
 
-## Calendar app
+## Session
 
-A shiny app to create a calendar planner plot.
+Information about R packages and versions.
 
-**Topics covered**
+### Shinylive
 
--   UI layout using pre-defined function (pageWithSidebar)
--   Input and output widgets and reactivity
--   Use of date-time
--   Customised ggplot
--   Download image files
--   Update inputs using observe
--   Validating inputs with custom error messages
-
-The following R packages will be required for this app: `ggplot2`, `shiny`, `colourpicker`.
-
-Below is a preview of the finished app.
-
-![](assets/calendar-preview.png)
-
-The idea of this app is to create and display a calendar styled planner. Below is a preview of the expected output.
-
-![](assets/calendar_plot.png)
-
-The image is a plot created in ggplot. X axis showing week numbers, y axis showing weekdays, facet titles showing months and dates are colored by categories. We can split this into two parts. The first part is preparing the code for the core task at hand (ie; generating the plot) and the second part is creating a graphical user interface around it using shiny apps to enable the user to input values and adjust dates, categories, plot parameters etc.
-
-### Creating the plot
-
-The first step is to figure out how to create this plot in ggplot. The data will be contained in a data.frame. The data.frame is created based on start and end dates.
-
-```{r}
-start_date <- as.Date("2023-06-01")
-end_date <- as.Date("2023-07-05")
-dfr <- data.frame(date=seq(start_date,end_date,by=1))
-head(dfr)
-```
-
-We can add some code to get specific information from these dates such as the day, week, month and numeric date. Finally we
-
-```{r}
-dfr$day <- factor(strftime(dfr$date,format="%a"),levels=rev(c("Mon","Tue","Wed","Thu","Fri","Sat","Sun")))
-dfr$week <- factor(strftime(dfr$date,format="%V"))
-dfr$month <- strftime(dfr$date,format="%B")
-dfr$month <- factor(dfr$month,levels=unique(dfr$month))
-dfr$ddate <- factor(strftime(dfr$date,format="%d"))
-head(dfr)
-```
-
-Finally, we add a column called track which will hold the categorical information for colouring dates by activity.
-
-```{r}
-dfr$track <- "Available"
-dfr$track[dfr$day=="Sat"|dfr$day=="Sun"] <- "Weekend"
-head(dfr)
-```
-
-This is enough information to plot.
-
-```{r}
-#| fig-height: 4.5
-#| fig-width: 7
-ggplot(dfr,aes(x=week,y=day))+
-      geom_tile(aes(fill=track))+
-      geom_text(aes(label=ddate))+
-      facet_grid(~month,scales="free",space="free")+
-      theme_bw()
-```
-
-We can add more activities to the track column. Or in other words, I refer to it as adding more tracks.
-
-```{r}
-#| fig-height: 4.5
-#| fig-width: 7
-dfr$track[dfr$date>=as.Date("2023-06-13") & dfr$date<=as.Date("2023-06-17")] <- "RaukR"
-dfr$track[dfr$date==as.Date("2023-06-24")] <- "Midsummer"
-
-ggplot(dfr,aes(x=week,y=day))+
-      geom_tile(aes(fill=track))+
-      geom_text(aes(label=ddate))+
-      facet_grid(~month,scales="free",space="free")+
-      theme_bw()
-```
-
-Now, we can customize the plot as you prefer. I am modifying the axes labels, changing colors and removing most of the plot elements.
-
-```{r}
-#| fig-height: 4.5
-#| fig-width: 7
-all_cols <- c("#bebada","#fb8072","#80b1d3","#fdb462")
-  
-ggplot(dfr,aes(x=week,y=day))+
-      geom_tile(aes(fill=track))+
-      geom_text(aes(label=ddate))+
-      scale_fill_manual(values=all_cols)+
-      facet_grid(~month,scales="free",space="free")+
-      labs(x="Week",y="")+
-      theme_bw(base_size=14)+
-      theme(legend.title=element_blank(),
-            panel.grid=element_blank(),
-            panel.border=element_blank(),
-            axis.ticks=element_blank(),
-            axis.title=element_text(colour="grey30"),
-            strip.background=element_blank(),
-            legend.key.size=unit(0.3,"cm"),
-            legend.spacing.x=unit(0.2,"cm"))
-```
-
-Our plot is now ready and we have the code to create this plot. The next step is to build a shiny app around it.
-
-### Building the app
-
-#### Layout
-
-We need to first have a plan for the app page, which UI elements to include and how they will be laid out and structured. My plan is as shown in the preview image.
-
-![](assets/calendar-preview.png)
-
-There is a horizontal top bar for the title and two columns below. The left column will contain the input widgets and control. The right column will contain the plot output. Since, this is a commonly used layout, it is available as a predefined function in shiny called `pageWithSidebar()`. It takes three arguments `headerPanel`, `sidebarPanel` and `mainPanel` which is self explanatory.
-
-```{r}
-#| eval: false
-shinyApp(
-ui=fluidPage(
-  pageWithSidebar(
-    headerPanel(),
-    sidebarPanel(),
-    mainPanel())
-  ),
-server=function(input,output){}
-)
-```
-
-#### UI
-
-Then we fill in the panels with widgets and contents.
-
-```{r}
-#| fig-height: 6
-#| fig-width: 8
-shinyApp(
-ui=fluidPage(
-  pageWithSidebar(
-    headerPanel(title="Calendar Planner",windowTitle="Calendar Planner"),
-    sidebarPanel(
-      h3("Duration"),
-      fluidRow(
-          column(6,
-              dateInput("in_duration_date_start","From",value=format(Sys.time(),"%Y-%m-%d"))
-          ),
-          column(6,
-              dateInput("in_duration_date_end","To",value=format(as.Date(Sys.time())+30,"%Y-%m-%d"))
-          )
-      )
-    ),
-    mainPanel())
-  ),
-server=function(input,output){},
-  options=list(height="400px")
-)
-```
-
-We have defined a part of the side bar panel with a title **Duration**. `fluidRow()` is an html tag used to create rows. Above, in the side bar panel, a row is defined and two columns are defined inside. Each column is filled with date input widgets for start and end dates. We use the columns here to place date input widgets side by side. To place widgets one below the other, the columns can simply be removed. The default value for the start date is set to current date and the end date is set to current date + 30 days.
-
-Now we add more sections to the side bar panel, namely track input variables and plot settings variables. We also added custom colors. Custom colors can be selected using the input widget `colourpicker::colourInput()`.
-
-```{r}
-#| fig-height: 6
-#| fig-width: 8
-cols <- toupper(c(
-  "#bebada","#fb8072","#80b1d3","#fdb462","#b3de69","#fccde5","#FDBF6F","#A6CEE3",
-  "#56B4E9","#B2DF8A","#FB9A99","#CAB2D6","#A9C4E2","#79C360","#FDB762","#9471B4",
-  "#A4A4A4","#fbb4ae","#b3cde3","#ccebc5","#decbe4","#fed9a6","#ffffcc","#e5d8bd",
-  "#fddaec","#f2f2f2","#8dd3c7","#d9d9d9"))
-  
-shinyApp(
-ui=fluidPage(
-  pageWithSidebar(
-    headerPanel(title="Calendar Planner",windowTitle="Calendar Planner"),
-    sidebarPanel(
-      h3("Duration"),
-      fluidRow(
-          column(6,
-              dateInput("in_duration_date_start","From",value=format(Sys.time(),"%Y-%m-%d"))
-          ),
-          column(6,
-              dateInput("in_duration_date_end","To",value=format(as.Date(Sys.time())+30,"%Y-%m-%d"))
-          )
-      ),
-      h3("Tracks"),
-      fluidRow(
-          column(3,
-              textInput("in_track_name_1",label="Name",value="Vacation",placeholder="Vacation")
-          ),
-          column(3,
-              dateInput("in_track_date_start_1",label="From",value=format(Sys.time(),"%Y-%m-%d"))
-          ),
-          column(3,
-              dateInput("in_track_date_end_1",label="To",value=format(as.Date(Sys.time())+30,"%Y-%m-%d"))
-          ),
-          column(3,
-              colourpicker::colourInput("in_track_colour_1",label="Colour",
-                                        palette="limited",allowedCols=cols,value=cols[1])
-          )
-      ),
-      fluidRow(
-          column(3,
-              textInput("in_track_name_2",label="Name",value="Offline",placeholder="Offline")
-          ),
-          column(3,
-              dateInput("in_track_date_start_2",label="From",value=format(Sys.time(),"%Y-%m-%d"))
-          ),
-          column(3,
-              dateInput("in_track_date_end_2",label="To",value=format(as.Date(Sys.time())+30,"%Y-%m-%d"))
-          ),
-          column(3,
-              colourpicker::colourInput("in_track_colour_2",label="Colour",
-                                        palette="limited",allowedCols=cols,value=cols[2])
-          )
-      ),
-      fluidRow(
-          column(6,
-              colourpicker::colourInput("in_track_colour_available",label="Track colour (Available)",
-                                        palette="limited",allowedCols=cols,value=cols[length(cols)-1])
-          ),
-          column(6,
-              colourpicker::colourInput("in_track_colour_weekend",label="Track colour (Weekend)",
-                                        palette="limited",allowedCols=cols,value=cols[length(cols)])
-          )
-      ),
-      tags$br(),
-      h3("Settings"),
-      selectInput("in_legend_position",label="Legend position",
-                  choices=c("top","right","left","bottom"),selected="right",multiple=F),
-      fluidRow(
-          column(6,
-              selectInput("in_legend_justification",label="Legend justification",
-                          choices=c("left","right"),selected="right",multiple=F)
-          ),
-          column(6,
-              selectInput("in_legend_direction",label="Legend direction",
-                          choices=c("vertical","horizontal"),selected="vertical",multiple=F)
-          )
-      ),
-      fluidRow(
-          column(6,
-              numericInput("in_themefontsize",label="Theme font size",value=8,step=0.5)
-          ),
-          column(6,
-              numericInput("in_datefontsize",label="Date font size",value=2.5,step=0.1)
-          )
-      ),
-      fluidRow(
-          column(6,
-              numericInput("in_monthfontsize",label="Month font size",value=8,step=0.5)
-          ),
-          column(6,
-              numericInput("in_legendfontsize",label="Legend font size",value=5,step=0.5)
-          )
-      )
-    ),
-    mainPanel(
-      plotOutput("out_plot")
-    ))
-  ),
-server=function(input,output){}
-)
-```
-
-![](assets/calendar-2.png)
-
-The track start and end dates are by default set to the same as that of duration start and end dates. We will adjust this later. Under the settings section, we have added a few useful plot variables to adjust sizes and spacing of plot elements. They are set to reasonable defaults. These variables will be passed on to the ggplot plotting function.
-
-We can end with column with the download options. Input fields are height, width, resolution and file format. Last we add a button for download.
-
-```{r}
-#| eval: false
-h3("Download"),
-helpText("Width is automatically calculated based on the number of weeks. File type is only applicable to download and does not change preview."),
-fluidRow(
-    column(6,
-        numericInput("in_height","Height (cm)",step=0.5,value=5.5)
-    ),
-    column(6,
-        numericInput("in_width","Width (cm)",step=0.5,value=NA)
-    )
-),
-fluidRow(
-    column(6,
-        selectInput("in_res","Res/DPI",choices=c("200","300","400","500"),selected="200")
-    ),
-    column(6,
-        selectInput("in_format","File type",choices=c("png","tiff","jpeg","pdf"),selected="png",multiple=FALSE,selectize=TRUE)
-    )
-),
-downloadButton("btn_downloadplot","Download Plot"),
-tags$hr(),
-helpText("RaukR")
-```
-
-In the main panel, we add the plot output function that will hold the output plot. We also add a slider for image preview scaling and the output image. The idea behind the preview scaling is to allow the user to increase or decrease the size of the plot in the browser without affecting the download size. The part of the UI code to add the preview slider is below:
-
-```{r}
-#| eval: false
-mainPanel(
-  sliderInput("in_scale","Image preview scale",min=0.1,max=3,step=0.10,value=1),
-  helpText("Scale only controls preview here and does not affect download."),
-  tags$br(),
-  imageOutput("out_plot")
-)
-```
-
-This should now look like this. Some additional styling has been added to divs.
-
-```{r}
-#| eval: false
-## load colours
-cols <- toupper(c(
-  "#bebada","#fb8072","#80b1d3","#fdb462","#b3de69","#fccde5","#FDBF6F","#A6CEE3",
-  "#56B4E9","#B2DF8A","#FB9A99","#CAB2D6","#A9C4E2","#79C360","#FDB762","#9471B4",
-  "#A4A4A4","#fbb4ae","#b3cde3","#ccebc5","#decbe4","#fed9a6","#ffffcc","#e5d8bd",
-  "#fddaec","#f2f2f2","#8dd3c7","#d9d9d9"))
-
+```{shinylive-r}
+#| standalone: true
 shinyApp(
   ui=fluidPage(
-    pageWithSidebar(
-      headerPanel(title="Calendar Planner",windowTitle="Calendar Planner"),
-      sidebarPanel(
-        h3("Duration"),
-        fluidRow(
-          column(6,style=list("padding-right: 5px;"),
-                 dateInput("in_duration_date_start","From",value=format(Sys.time(),"%Y-%m-%d"))
-          ),
-          column(6,style=list("padding-left: 5px;"),
-                 dateInput("in_duration_date_end","To",value=format(as.Date(Sys.time())+30,"%Y-%m-%d"))
-          )
-        ),
-        h3("Tracks"),
-        fluidRow(
-          column(3,style=list("padding-right: 3px;"),
-                 textInput("in_track_name_1",label="Name",value="Vacation",placeholder="Vacation")
-          ),
-          column(3,style=list("padding-right: 3px; padding-left: 3px;"),
-                 dateInput("in_track_date_start_1",label="From",value=format(Sys.time(),"%Y-%m-%d"))
-          ),
-          column(3,style=list("padding-right: 3px; padding-left: 3px;"),
-                 dateInput("in_track_date_end_1",label="To",value=format(as.Date(Sys.time())+30,"%Y-%m-%d"))
-          ),
-          column(3,style=list("padding-left: 3px;"),
-                 colourpicker::colourInput("in_track_colour_1",label="Colour",
-                                           palette="limited",allowedCols=cols,value=cols[1])
-          )
-        ),
-        fluidRow(
-          column(3,style=list("padding-right: 3px;"),
-                 textInput("in_track_name_2",label="Name",value="Offline",placeholder="Offline")
-          ),
-          column(3,style=list("padding-right: 3px; padding-left: 3px;"),
-                 dateInput("in_track_date_start_2",label="From",value=format(Sys.time(),"%Y-%m-%d"))
-          ),
-          column(3,style=list("padding-right: 3px; padding-left: 3px;"),
-                 dateInput("in_track_date_end_2",label="To",value=format(as.Date(Sys.time())+30,"%Y-%m-%d"))
-          ),
-          column(3,style=list("padding-left: 3px;"),
-                 colourpicker::colourInput("in_track_colour_2",label="Colour",
-                                           palette="limited",allowedCols=cols,value=cols[2])
-          )
-        ),
-        fluidRow(
-          column(6,style=list("padding-right: 5px;"),
-                 colourpicker::colourInput("in_track_colour_available",label="Track colour (Available)",
-                                           palette="limited",allowedCols=cols,value=cols[length(cols)-1])
-          ),
-          column(6,style=list("padding-left: 5px;"),
-                 colourpicker::colourInput("in_track_colour_weekend",label="Track colour (Weekend)",
-                                           palette="limited",allowedCols=cols,value=cols[length(cols)])
-          )
-        ),
-        tags$br(),
-        h3("Settings"),
-        selectInput("in_legend_position",label="Legend position",
-                    choices=c("top","right","left","bottom"),selected="right",multiple=F),
-        fluidRow(
-          column(6,style=list("padding-right: 5px;"),
-                 selectInput("in_legend_justification",label="Legend justification",
-                             choices=c("left","right"),selected="right",multiple=F)
-          ),
-          column(6,style=list("padding-left: 5px;"),
-                 selectInput("in_legend_direction",label="Legend direction",
-                             choices=c("vertical","horizontal"),selected="vertical",multiple=F)
-          )
-        ),
-        fluidRow(
-          column(6,style=list("padding-right: 5px;"),
-                 numericInput("in_themefontsize",label="Theme font size",value=8,step=0.5)
-          ),
-          column(6,style=list("padding-left: 5px;"),
-                 numericInput("in_datefontsize",label="Date font size",value=2.5,step=0.1)
-          )
-        ),
-        fluidRow(
-          column(6,style=list("padding-right: 5px;"),
-                 numericInput("in_monthfontsize",label="Month font size",value=8,step=0.5)
-          ),
-          column(6,style=list("padding-left: 5px;"),
-                 numericInput("in_legendfontsize",label="Legend font size",value=5,step=0.5)
-          )
-        ),
-        tags$br(),
-        h3("Download"),
-        helpText("Width is automatically calculated based on the number of weeks. File type is only applicable to download and does not change preview."),
-        fluidRow(
-          column(6,style=list("padding-right: 5px;"),
-                 numericInput("in_height","Height (cm)",step=0.5,value=5.5)
-          ),
-          column(6,style=list("padding-left: 5px;"),
-                 numericInput("in_width","Width (cm)",step=0.5,value=NA)
-          )
-        ),
-        fluidRow(
-          column(6,style=list("padding-right: 5px;"),
-                 selectInput("in_res","Res/DPI",choices=c("200","300","400","500"),selected="200")
-          ),
-          column(6,style=list("padding-left: 5px;"),
-                 selectInput("in_format","File type",choices=c("png","tiff","jpeg","pdf"),selected="png",multiple=FALSE,selectize=TRUE)
-          )
-        ),
-        downloadButton("btn_downloadplot","Download Plot"),
-        tags$hr(),
-        helpText("RaukR")
-      ),
-      mainPanel(
-        sliderInput("in_scale","Image preview scale",min=0.1,max=3,step=0.10,value=1),
-        helpText("Scale only controls preview here and does not affect download."),
-        tags$br(),
-        imageOutput("out_plot")
-      )
-    )
+    verbatimTextOutput("session")
   ),
-  server=function(input,output){}
-)
-```
-
-![](assets/calendar-3.png)
-
-#### Server
-
-We can start adding content into the server function to actually enable functionality.
-
-The server code can be organized into 5 blocks.
-
-1.  `fn_plot()`: Reactive function that generates ggplot object
-2.  out_plot: Plots the ggplot object
-3.  `fn_downloadplotname()`: Function to create download image name
-4.  `fn_downloadplot()`: Function to create and download the image
-5.  `btn_downloadplot`: Download handler that runs `fn_downloadplot` on button trigger
-6.  observe: Observer that updates input values
-
-Here is a flow diagram of how these blocks work.
-
-```         
-     1 > [2]
-     v
-3 > [4] < 5
-
-    {6}
-```
-
-The core block 1 creates the preview plot in block 2. The download handler block 5 calls block 1 to generate the plot which is downloaded using block 4. Block 6 is standalone observer.
-
-Reactive values used across multiple functions can be stored using `reactiveValues()`. These can be written to or accessed from within a reactive environment.
-
-```         
-store <- reactiveValues(week=NULL)
-```
-
-We have our core function `fn_plot()` (block 1). Inputs are validated and gathered from input widgets. We are using `shiny::req()` to silently check that necessary input variables are available before running through the function. We use `validate()` with `need()` to run some basic sanity checks namely that track names are not duplicated and to ensure that start-dates precede end-dates. Necessary date-time calculations are performed. The calendar plot is created and returned.
-
-```{r}
-#| eval: false
-## RFN: fn_plot -----------------------------------------------------------
-## core plotting function, returns a ggplot object
-
-fn_plot <- reactive({
-
-  shiny::req(input$in_duration_date_start)
-  shiny::req(input$in_duration_date_end)
-
-  shiny::req(input$in_track_date_start_1)
-  shiny::req(input$in_track_date_end_1)
-  shiny::req(input$in_track_name_1)
-  shiny::req(input$in_track_colour_1)
-
-  shiny::req(input$in_track_date_start_2)
-  shiny::req(input$in_track_date_end_2)
-  shiny::req(input$in_track_name_2)
-  shiny::req(input$in_track_colour_2)
-
-  shiny::req(input$in_legend_position)
-  shiny::req(input$in_legend_justification)
-  shiny::req(input$in_legend_direction)
-  shiny::req(input$in_themefontsize)
-  shiny::req(input$in_datefontsize)
-  shiny::req(input$in_monthfontsize)
-  shiny::req(input$in_legendfontsize)
-
-  validate(need(input$in_track_name_1!=input$in_track_name_2,"Duplicate track names are not allowed."))
-  validate(need(as.Date(input$in_duration_date_start) < as.Date(input$in_duration_date_end),"End duration date must be later than start duration date."))
-
-  # prepare dates
-  dfr <- data.frame(date=seq(as.Date(input$in_duration_date_start),as.Date(input$in_duration_date_end),by=1))
-  dfr$day <- factor(strftime(dfr$date,format="%a"),levels=rev(c("Mon","Tue","Wed","Thu","Fri","Sat","Sun")))
-  dfr$week <- factor(strftime(dfr$date,format="%V"))
-  dfr$month <- strftime(dfr$date,format="%B")
-  dfr$month <- factor(dfr$month,levels=unique(dfr$month))
-  dfr$ddate <- factor(strftime(dfr$date,format="%d"))
-
-  #add tracks
-  dfr$track <- "Available"
-  dfr$track[dfr$day=="Sat" | dfr$day=="Sun"] <- "Weekend"
-
-  temp_start_date_1 <- as.Date(input$in_track_date_start_1)
-  temp_end_date_1 <- as.Date(input$in_track_date_end_1)
-  temp_track_name_1 <- input$in_track_name_1
-  temp_track_col_1 <- input$in_track_colour_1
-  validate(need(temp_start_date_1 < temp_end_date_1,"End track duration date must be later than start track duration date."))
-  dfr$track[dfr$date>=temp_start_date_1 & dfr$date<=temp_end_date_1] <- temp_track_name_1
-
-  temp_start_date_2 <- as.Date(input$in_track_date_start_2)
-  temp_end_date_2 <- as.Date(input$in_track_date_end_2)
-  temp_track_name_2 <- input$in_track_name_2
-  temp_track_col_2 <- input$in_track_colour_2
-  validate(need(temp_start_date_2 < temp_end_date_2,"End track duration date must be later than start track duration date."))
-  dfr$track[dfr$date>=temp_start_date_2 & dfr$date<=temp_end_date_2] <- temp_track_name_2
-
-  # create order factor
-  fc <- vector(mode="character")
-  if("Available" %in% unique(dfr$track)) fc <- c(fc,"Available")
-  fc <- c(fc,temp_track_name_1,temp_track_name_2)
-  if("Weekend" %in% unique(dfr$track)) fc <- c(fc,"Weekend")
-  dfr$track <- factor(dfr$track,levels=fc)
-
-  # prepare colours
-  all_cols <- c(input$in_track_colour_available,temp_track_col_1,temp_track_col_2,input$in_track_colour_weekend)
-
-  # plot
-  p <- ggplot(dfr,aes(x=week,y=day))+
-    geom_tile(aes(fill=track))+
-    geom_text(aes(label=ddate),size=input$in_datefontsize)+
-    scale_fill_manual(values=all_cols)+
-    facet_grid(~month,scales="free",space="free")+
-    labs(x="Week",y="")+
-    theme_bw(base_size=input$in_themefontsize)+
-    theme(legend.title=element_blank(),
-          panel.grid=element_blank(),
-          panel.border=element_blank(),
-          axis.ticks=element_blank(),
-          axis.title=element_text(colour="grey30"),
-          strip.background=element_blank(),
-          strip.text=element_text(size=input$in_monthfontsize),
-          legend.position=input$in_legend_position,
-          legend.justification=input$in_legend_justification,
-          legend.direction=input$in_legend_direction,
-          legend.text=element_text(size=input$in_legendfontsize),
-          legend.key.size=unit(0.3,"cm"),
-          legend.spacing.x=unit(0.2,"cm"))
-
-  # add number of weeks to reactive value
-  store$week <- length(levels(dfr$week))
-
-  return(p)
-})
-```
-
-Here is the block that generates the output image. Image dimensions and resolution is obtained from input widgets. Default width is computed based on number of weeks. This is why the number of weeks was stored as a reactive value. The plot is exported to the working directly and then displayed in the browser. The scale slider allows the plot preview to be scaled in the browser.
-
-```{r}
-#| eval: false
-## OUT: out_plot ------------------------------------------------------------
-## plots figure
-
-output$out_plot <- renderImage({
-
-  shiny::req(fn_plot())
-  shiny::req(input$in_height)
-  shiny::req(input$in_res)
-  shiny::req(input$in_scale)
-
-  height <- as.numeric(input$in_height)
-  width <- as.numeric(input$in_width)
-  res <- as.numeric(input$in_res)
-
-  if(is.na(width)) {
-    width <- (store$week*1.2)
-    if(width < 4.5) width <- 4.5
-  }
-
-  p <- fn_plot()
-  ggsave("calendar_plot.png",p,height=height,width=width,units="cm",dpi=res)
-
-  return(list(src="calendar_plot.png",
-              contentType="image/png",
-              width=round(((width*res)/2.54)*input$in_scale,0),
-              height=round(((height*res)/2.54)*input$in_scale,0),
-              alt="calendar_plot"))
-}, deleteFile=TRUE)
-```
-
-The `fn_downloadplotname()` function simply generates the output filename depending on the filetype extension.
-
-```{r}
-#| eval: false
-# FN: fn_downloadplotname ----------------------------------------------------
-# creates filename for download plot
-
-fn_downloadplotname <- function()
-{
-  return(paste0("calendar_plot.",input$in_format))
-}
-```
-
-The `fn_downloadplot()` function uses `fn_plot()` to create the image and then export the image.
-
-```{r}
-#| eval: false
-## FN: fn_downloadplot -------------------------------------------------
-## function to download plot
-
-fn_downloadplot <- function(){
-  shiny::req(fn_plot())
-  shiny::req(input$in_height)
-  shiny::req(input$in_res)
-  shiny::req(input$in_scale)
-
-  height <- as.numeric(input$in_height)
-  width <- as.numeric(input$in_width)
-  res <- as.numeric(input$in_res)
-  format <- input$in_format
-
-  if(is.na(width)) width <- (store$week*1)+1
-
-  p <- fn_plot()
-  if(format=="pdf" | format=="svg"){
-    ggsave(fn_downloadplotname(),p,height=height,width=width,units="cm",dpi=res)
-    #embed_fonts(fn_downloadplotname())
-  }else{
-    ggsave(fn_downloadplotname(),p,height=height,width=width,units="cm",dpi=res)
-  }
-}
-```
-
-The download handler then downloads the file.
-
-```{r}
-#| eval: false
-## DHL: btn_downloadplot ----------------------------------------------------
-## download handler for downloading plot
-
-output$btn_downloadplot <- downloadHandler(
-  filename=fn_downloadplotname,
-  content=function(file) {
-    fn_downloadplot()
-    file.copy(fn_downloadplotname(),file,overwrite=T)
+  server=function(input, output, session) {
+    output$session <- renderPrint(cat(capture.output(sessionInfo())))
   }
 )
 ```
 
-Finally, we have the observer function. The observer continuously monitors change in input widgets of interest (here start and end duration) and updates other widget values.
-
+### R
+  
 ```{r}
-## OBS: tracks dates ---------------------------------------------------------
-
-observe({
-  
-  shiny::req(input$in_duration_date_start)
-  shiny::req(input$in_duration_date_end)
-  
-  validate(need(as.Date(input$in_duration_date_start) < as.Date(input$in_duration_date_end),"End duration date must be later than start duration date."))
-  
-  # create date intervals
-  dseq <- seq(as.Date(input$in_duration_date_start),as.Date(input$in_duration_date_end),by=1)
-  r1 <- unique(as.character(cut(dseq,breaks=3)))
-  
-  updateDateInput(session,"in_track_date_start_1",label="From",value=as.Date(r1[1],"%Y-%m-%d"))
-  updateDateInput(session,"in_track_date_end_1",label="To",value=as.Date(r1[1+1],"%Y-%m-%d")-1)
-  updateDateInput(session,"in_track_date_start_2",label="From",value=as.Date(r1[2],"%Y-%m-%d"))
-  updateDateInput(session,"in_track_date_end_2",label="To",value=as.Date(r1[2+1],"%Y-%m-%d")-1)
-  
-})
+sessionInfo()
 ```
-
-The complete code for the app is as below.
-
-```{r}
-#| eval: false
-## load libraries
-library(ggplot2)
-library(shiny)
-library(colourpicker)
-
-## load colours
-cols <- toupper(c(
-  "#bebada","#fb8072","#80b1d3","#fdb462","#b3de69","#fccde5","#FDBF6F","#A6CEE3",
-  "#56B4E9","#B2DF8A","#FB9A99","#CAB2D6","#A9C4E2","#79C360","#FDB762","#9471B4",
-  "#A4A4A4","#fbb4ae","#b3cde3","#ccebc5","#decbe4","#fed9a6","#ffffcc","#e5d8bd",
-  "#fddaec","#f2f2f2","#8dd3c7","#d9d9d9"))
-
-shinyApp(
-
-# UI ---------------------------------------------------------------------------
-
-ui=fluidPage(
-  pageWithSidebar(
-    headerPanel(title="Calendar Planner",windowTitle="Calendar Planner"),
-    sidebarPanel(
-      h3("Duration"),
-      fluidRow(
-          column(6,style=list("padding-right: 5px;"),
-              dateInput("in_duration_date_start","From",value=format(Sys.time(),"%Y-%m-%d"))
-          ),
-          column(6,style=list("padding-left: 5px;"),
-              dateInput("in_duration_date_end","To",value=format(as.Date(Sys.time())+30,"%Y-%m-%d"))
-          )
-      ),
-      h3("Tracks"),
-      fluidRow(
-          column(3,style=list("padding-right: 3px;"),
-              textInput("in_track_name_1",label="Name",value="Vacation",placeholder="Vacation")
-          ),
-          column(3,style=list("padding-right: 3px; padding-left: 3px;"),
-              dateInput("in_track_date_start_1",label="From",value=format(Sys.time(),"%Y-%m-%d"))
-          ),
-          column(3,style=list("padding-right: 3px; padding-left: 3px;"),
-              dateInput("in_track_date_end_1",label="To",value=format(as.Date(Sys.time())+30,"%Y-%m-%d"))
-          ),
-          column(3,style=list("padding-left: 3px;"),
-              colourpicker::colourInput("in_track_colour_1",label="Colour",
-                                        palette="limited",allowedCols=cols,value=cols[1])
-          )
-      ),
-      fluidRow(
-          column(3,style=list("padding-right: 3px;"),
-              textInput("in_track_name_2",label="Name",value="Offline",placeholder="Offline")
-          ),
-          column(3,style=list("padding-right: 3px; padding-left: 3px;"),
-              dateInput("in_track_date_start_2",label="From",value=format(Sys.time(),"%Y-%m-%d"))
-          ),
-          column(3,style=list("padding-right: 3px; padding-left: 3px;"),
-              dateInput("in_track_date_end_2",label="To",value=format(as.Date(Sys.time())+30,"%Y-%m-%d"))
-          ),
-          column(3,style=list("padding-left: 3px;"),
-              colourpicker::colourInput("in_track_colour_2",label="Colour",
-                                        palette="limited",allowedCols=cols,value=cols[2])
-          )
-      ),
-      fluidRow(
-          column(6,style=list("padding-right: 5px;"),
-              colourpicker::colourInput("in_track_colour_available",label="Track colour (Available)",
-                                        palette="limited",allowedCols=cols,value=cols[length(cols)-1])
-          ),
-          column(6,style=list("padding-left: 5px;"),
-              colourpicker::colourInput("in_track_colour_weekend",label="Track colour (Weekend)",
-                                        palette="limited",allowedCols=cols,value=cols[length(cols)])
-          )
-      ),
-      tags$br(),
-      h3("Settings"),
-      selectInput("in_legend_position",label="Legend position",
-                  choices=c("top","right","left","bottom"),selected="right",multiple=F),
-      fluidRow(
-          column(6,style=list("padding-right: 5px;"),
-              selectInput("in_legend_justification",label="Legend justification",
-                          choices=c("left","right"),selected="right",multiple=F)
-          ),
-          column(6,style=list("padding-left: 5px;"),
-              selectInput("in_legend_direction",label="Legend direction",
-                          choices=c("vertical","horizontal"),selected="vertical",multiple=F)
-          )
-      ),
-      fluidRow(
-          column(6,style=list("padding-right: 5px;"),
-              numericInput("in_themefontsize",label="Theme font size",value=8,step=0.5)
-          ),
-          column(6,style=list("padding-left: 5px;"),
-              numericInput("in_datefontsize",label="Date font size",value=2.5,step=0.1)
-          )
-      ),
-      fluidRow(
-          column(6,style=list("padding-right: 5px;"),
-              numericInput("in_monthfontsize",label="Month font size",value=8,step=0.5)
-          ),
-          column(6,style=list("padding-left: 5px;"),
-              numericInput("in_legendfontsize",label="Legend font size",value=5,step=0.5)
-          )
-      ),
-      tags$br(),
-      h3("Download"),
-      helpText("Width is automatically calculated based on the number of weeks. File type is only applicable to download and does not change preview."),
-      fluidRow(
-          column(6,style=list("padding-right: 5px;"),
-              numericInput("in_height","Height (cm)",step=0.5,value=5.5)
-          ),
-          column(6,style=list("padding-left: 5px;"),
-              numericInput("in_width","Width (cm)",step=0.5,value=NA)
-          )
-      ),
-      fluidRow(
-          column(6,style=list("padding-right: 5px;"),
-              selectInput("in_res","Res/DPI",choices=c("200","300","400","500"),selected="200")
-          ),
-          column(6,style=list("padding-left: 5px;"),
-              selectInput("in_format","File type",choices=c("png","tiff","jpeg","pdf"),selected="png",multiple=FALSE,selectize=TRUE)
-          )
-      ),
-      downloadButton("btn_downloadplot","Download Plot"),
-      tags$hr(),
-      helpText("RaukR")
-    ),
-    mainPanel(
-      sliderInput("in_scale","Image preview scale",min=0.1,max=3,step=0.10,value=1),
-      helpText("Scale only controls preview here and does not affect download."),
-      tags$br(),
-      imageOutput("out_plot")
-    )
-  )
-),
-
-# SERVER -----------------------------------------------------------------------
-
-server=function(input, output, session) {
-
-  store <- reactiveValues(week=NULL)
-
-  ## RFN: fn_plot -----------------------------------------------------------
-  ## core plotting function, returns a ggplot object
-
-  fn_plot <- reactive({
-
-    shiny::req(input$in_duration_date_start)
-    shiny::req(input$in_duration_date_end)
-
-    shiny::req(input$in_track_date_start_1)
-    shiny::req(input$in_track_date_end_1)
-    shiny::req(input$in_track_name_1)
-    shiny::req(input$in_track_colour_1)
-
-    shiny::req(input$in_track_date_start_2)
-    shiny::req(input$in_track_date_end_2)
-    shiny::req(input$in_track_name_2)
-    shiny::req(input$in_track_colour_2)
-
-    shiny::req(input$in_legend_position)
-    shiny::req(input$in_legend_justification)
-    shiny::req(input$in_legend_direction)
-    shiny::req(input$in_themefontsize)
-    shiny::req(input$in_datefontsize)
-    shiny::req(input$in_monthfontsize)
-    shiny::req(input$in_legendfontsize)
-
-    validate(need(input$in_track_name_1!=input$in_track_name_2,"Duplicate track names are not allowed."))
-    validate(need(as.Date(input$in_duration_date_start) < as.Date(input$in_duration_date_end),"End duration date must be later than start duration date."))
-
-    # prepare dates
-    dfr <- data.frame(date=seq(as.Date(input$in_duration_date_start),as.Date(input$in_duration_date_end),by=1))
-    dfr$day <- factor(strftime(dfr$date,format="%a"),levels=rev(c("Mon","Tue","Wed","Thu","Fri","Sat","Sun")))
-    dfr$week <- factor(strftime(dfr$date,format="%V"))
-    dfr$month <- strftime(dfr$date,format="%B")
-    dfr$month <- factor(dfr$month,levels=unique(dfr$month))
-    dfr$ddate <- factor(strftime(dfr$date,format="%d"))
-
-    #add tracks
-    dfr$track <- "Available"
-    dfr$track[dfr$day=="Sat" | dfr$day=="Sun"] <- "Weekend"
-
-    temp_start_date_1 <- as.Date(input$in_track_date_start_1)
-    temp_end_date_1 <- as.Date(input$in_track_date_end_1)
-    temp_track_name_1 <- input$in_track_name_1
-    temp_track_col_1 <- input$in_track_colour_1
-    validate(need(temp_start_date_1 < temp_end_date_1,"End track duration date must be later than start track duration date."))
-    dfr$track[dfr$date>=temp_start_date_1 & dfr$date<=temp_end_date_1] <- temp_track_name_1
-
-    temp_start_date_2 <- as.Date(input$in_track_date_start_2)
-    temp_end_date_2 <- as.Date(input$in_track_date_end_2)
-    temp_track_name_2 <- input$in_track_name_2
-    temp_track_col_2 <- input$in_track_colour_2
-    validate(need(temp_start_date_2 < temp_end_date_2,"End track duration date must be later than start track duration date."))
-    dfr$track[dfr$date>=temp_start_date_2 & dfr$date<=temp_end_date_2] <- temp_track_name_2
-
-    # create order factor
-    fc <- vector(mode="character")
-    if("Available" %in% unique(dfr$track)) fc <- c(fc,"Available")
-    fc <- c(fc,temp_track_name_1,temp_track_name_2)
-    if("Weekend" %in% unique(dfr$track)) fc <- c(fc,"Weekend")
-    dfr$track <- factor(dfr$track,levels=fc)
-
-    # prepare colours
-    all_cols <- c(input$in_track_colour_available,temp_track_col_1,temp_track_col_2,input$in_track_colour_weekend)
-
-    # plot
-    p <- ggplot(dfr,aes(x=week,y=day))+
-      geom_tile(aes(fill=track))+
-      geom_text(aes(label=ddate),size=input$in_datefontsize)+
-      scale_fill_manual(values=all_cols)+
-      facet_grid(~month,scales="free",space="free")+
-      labs(x="Week",y="")+
-      theme_bw(base_size=input$in_themefontsize)+
-      theme(legend.title=element_blank(),
-            panel.grid=element_blank(),
-            panel.border=element_blank(),
-            axis.ticks=element_blank(),
-            axis.title=element_text(colour="grey30"),
-            strip.background=element_blank(),
-            strip.text=element_text(size=input$in_monthfontsize),
-            legend.position=input$in_legend_position,
-            legend.justification=input$in_legend_justification,
-            legend.direction=input$in_legend_direction,
-            legend.text=element_text(size=input$in_legendfontsize),
-            legend.key.size=unit(0.3,"cm"),
-            legend.spacing.x=unit(0.2,"cm"))
-
-    # add number of weeks to reactive value
-    store$week <- length(levels(dfr$week))
-
-    return(p)
-  })
-
-  ## OUT: out_plot ------------------------------------------------------------
-  ## plots figure
-
-  output$out_plot <- renderImage({
-
-    shiny::req(fn_plot())
-    shiny::req(input$in_height)
-    shiny::req(input$in_res)
-    shiny::req(input$in_scale)
-
-    height <- as.numeric(input$in_height)
-    width <- as.numeric(input$in_width)
-    res <- as.numeric(input$in_res)
-
-    if(is.na(width)) {
-      width <- (store$week*1.2)
-      if(width < 4.5) width <- 4.5
-    }
-
-    p <- fn_plot()
-    ggsave("calendar_plot.png",p,height=height,width=width,units="cm",dpi=res)
-
-    return(list(src="calendar_plot.png",
-                contentType="image/png",
-                width=round(((width*res)/2.54)*input$in_scale,0),
-                height=round(((height*res)/2.54)*input$in_scale,0),
-                alt="calendar_plot"))
-  }, deleteFile=TRUE)
-
-  # FN: fn_downloadplotname ----------------------------------------------------
-  # creates filename for download plot
-
-  fn_downloadplotname <- function()
-  {
-    return(paste0("calendar_plot.",input$in_format))
-  }
-
-  ## FN: fn_downloadplot -------------------------------------------------
-  ## function to download plot
-
-  fn_downloadplot <- function(){
-    shiny::req(fn_plot())
-    shiny::req(input$in_height)
-    shiny::req(input$in_res)
-    shiny::req(input$in_scale)
-
-    height <- as.numeric(input$in_height)
-    width <- as.numeric(input$in_width)
-    res <- as.numeric(input$in_res)
-    format <- input$in_format
-
-    if(is.na(width)) width <- (store$week*1)+1
-
-    p <- fn_plot()
-    if(format=="pdf" | format=="svg"){
-      ggsave(fn_downloadplotname(),p,height=height,width=width,units="cm",dpi=res)
-      #embed_fonts(fn_downloadplotname())
-    }else{
-      ggsave(fn_downloadplotname(),p,height=height,width=width,units="cm",dpi=res)
-
-    }
-  }
-
-  ## DHL: btn_downloadplot ----------------------------------------------------
-  ## download handler for downloading plot
-
-  output$btn_downloadplot <- downloadHandler(
-    filename=fn_downloadplotname,
-    content=function(file) {
-      fn_downloadplot()
-      file.copy(fn_downloadplotname(),file,overwrite=T)
-    }
-  )
-
-  ## OBS: tracks dates ---------------------------------------------------------
-  
-  observe({
-    
-    shiny::req(input$in_duration_date_start)
-    shiny::req(input$in_duration_date_end)
-    
-    validate(need(as.Date(input$in_duration_date_start) < as.Date(input$in_duration_date_end),"End duration date must be later than start duration date."))
-    
-    # create date intervals
-    dseq <- seq(as.Date(input$in_duration_date_start),as.Date(input$in_duration_date_end),by=1)
-    r1 <- unique(as.character(cut(dseq,breaks=3)))
-    
-    updateDateInput(session,"in_track_date_start_1",label="From",value=as.Date(r1[1],"%Y-%m-%d"))
-    updateDateInput(session,"in_track_date_end_1",label="To",value=as.Date(r1[1+1],"%Y-%m-%d")-1)
-    updateDateInput(session,"in_track_date_start_2",label="From",value=as.Date(r1[2],"%Y-%m-%d"))
-    updateDateInput(session,"in_track_date_end_2",label="To",value=as.Date(r1[2+1],"%Y-%m-%d")-1)
-    
-  })
-})
-```
-
-![](assets/calendar-preview.png)
-
-Hopefully, this has not been too overwhelming. Shiny app code may look over-complicated on the first look, but it is easier to understand what is happening by breaking it apart into smaller chunks and understanding how the various components are connected. It is crucial to plan out the structure of your app well in advanced as it is easy to get confused. Remember to name functions and variables sensibly. Use text output widgets and/or print statements in the code to keep track of internal variable values during run-time. Go forth and build awesome apps!
