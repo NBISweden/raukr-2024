@@ -654,93 +654,6 @@ $\begin{eqnarray} P(|X-\mu| > k) & = & P(|X-\mu|^2 > k^2)\\ & \leq & \frac{\math
 :::
 :::
 
-## Tables
-
-
-For simple cases, tables can be manually created in markdown.
-
-::: {.grid}
-::: {.g-col-7}
-
-```         
-|speed|dist|
-|-----|----|
-|4    |   2|
-|4    |  10|
-|7    |   4|
-```
-
-:::
-::: {.g-col-5}
-
-| speed | dist |
-|-------|------|
-| 4     | 2    |
-| 4     | 10   |
-| 7     | 4    |
-
-:::
-:::
-
-Table caption and numbering can be added as such:
-
-::: {.grid}
-::: {.g-col-7}
-
-```         
-|speed|dist|
-|-----|----|
-|4    |   2|
-|4    |  10|
-|7    |   4|
-
-: These are exciting results. {#tbl-mylabel}
-```
-
-:::
-::: {.g-col-5}
-
-| speed | dist |
-|-------|------|
-| 4     | 2    |
-| 4     | 10   |
-| 7     | 4    |
-
-: These are exciting results. {#tbl-mylabel}
-
-:::
-:::
-
-Tables can also be generated through code which is not covered here.
-
-### Margin table
-
-A table placed in the margin.
-
-```
-::: {.column-margin}
-
-| speed | dist |
-|-------|------|
-| 4     | 2    |
-| 4     | 10   |
-| 7     | 4    |
-
-:::
-```
-
-::: {.column-margin}
-
-| speed | dist |
-|-------|------|
-| 4     | 2    |
-| 4     | 10   |
-| 7     | 4    |
-
-:::
-
-More information about [tables](https://quarto.org/docs/authoring/tables.html).
-
 ## Icons
 
 ### Bootstrap icons
@@ -1229,6 +1142,63 @@ For simple cases, tables can be manually created in markdown.
 | 7     | 4    |
 
 :::
+:::
+
+Table caption and numbering can be added as such:
+
+::: {.grid}
+::: {.g-col-7}
+
+```         
+|speed|dist|
+|-----|----|
+|4    |   2|
+|4    |  10|
+|7    |   4|
+
+: These are exciting results. {#tbl-mylabel}
+```
+
+:::
+::: {.g-col-5}
+
+| speed | dist |
+|-------|------|
+| 4     | 2    |
+| 4     | 10   |
+| 7     | 4    |
+
+: These are exciting results. {#tbl-mylabel}
+
+:::
+:::
+
+More information about [tables](https://quarto.org/docs/authoring/tables.html).
+
+### Margin table
+
+A table placed in the margin.
+
+```
+::: {.column-margin}
+
+| speed | dist |
+|-------|------|
+| 4     | 2    |
+| 4     | 10   |
+| 7     | 4    |
+
+:::
+```
+
+::: {.column-margin}
+
+| speed | dist |
+|-------|------|
+| 4     | 2    |
+| 4     | 10   |
+| 7     | 4    |
+
 :::
 
 ### kable
