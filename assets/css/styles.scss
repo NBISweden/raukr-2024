@@ -198,7 +198,7 @@ div.callout-important .callout-icon::before {
   display: -ms-grid;
   display: grid;
   gap: 1em;
-  grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+  grid-template-columns: repeat(auto-fit, minmax(150px,1fr));
 }
 
 .profile-child {
@@ -206,8 +206,8 @@ div.callout-important .callout-icon::before {
 }
 
 .profile-child img {
-  height: 200px;
-  width: 200px;
+  height: 150px;
+  width: 150px;
   -o-object-fit: cover;
   object-fit: cover;
   border-radius: 50%;
