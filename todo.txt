@@ -1,10 +1,11 @@
+- [x] Rebuild all pages with schedule and contents
 - [] Debugging slide disabled in _quarto.yml
 - [x] Add schedule
-- [] Check key dates
+- [x] Check key dates
 - [] Add TAs to about
 - [] Add note about funding
-- [] Update README
-- [] Add 2019 group photo
+- [x] Update README
+- [x] Add 2019 group photo
 - [x] Create renv/docker container
 - [] End slide template
 - [] Bold text formatting doesn't work on Ubuntu
