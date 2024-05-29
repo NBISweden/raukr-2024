@@ -44,14 +44,6 @@ Bioinformatics Data Scientist, NBIS
 Administrator, NBIS
 
 :::
-::: {.profile-child}
-
-![](assets/images/profile/nina-norgren.jpg){.nolightbox}
-
-[**Nina Norgren**](https://www.umu.se/personal/nina-norgren/)  
-Coordinator for Training, NBIS
-
-:::
 :::
 
 ## Contact
