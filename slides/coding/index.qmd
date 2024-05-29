@@ -1,5 +1,5 @@
 ---
-title: "Best Coding Practises"
+title: "Best Coding Practices"
 author: "Marcin Kierczak"
 image: "assets/featured.jpg"
 format: revealjs
