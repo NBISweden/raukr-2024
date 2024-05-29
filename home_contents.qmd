@@ -1,5 +1,6 @@
 ---
-title: "Course Materials"
+title: "Contents"
+subtitle: "Course materials including presentations (slides) and practical exercises (labs)"
 toc: false
 date: ""
 sidebar: false
@@ -9,6 +10,10 @@ format:
 execute:
   freeze: false
 ---
+
+::: {.callout-note}
+The contents are being updated.
+:::
 
 :::{.contents-table .column-body-outset}
 
