@@ -32,7 +32,7 @@ This workshop is aimed at both Ph.D. students and researchers within life scienc
 
 We can accomodate ~42 participants. Selection criteria include correct entry requirements, motivation to attend the workshop as well as gender and geographical balance. We do accept international applicants, but applicants affiliated to a Swedish institution are prioritized.
 
-Once the registration period concludes, we will review your application and notify you of our decision. If accepted, you will have three working days to confirm your participation. Failure to do so would imply your inability to attend, and we will proceed accordingly. Once you confirmed, our course administrator will proceed with invoicing.
+Once the registration period concludes, we will review your application and notify you of our decision. If and when accepted, you will have three working days to notify us if you cannot participate and want to decline the acceptance. Failure to do so would imply your inability to attend, and we will proceed accordingly. Once you confirmed, our course administrator will proceed with invoicing.
 
 ## Fee
 
@@ -228,4 +228,4 @@ tibble::tribble(
 
 Before proceeding, please ensure you have read all the information on this page as well as our [FAQs](home_faq.html). Click below to access the online registration form.
 
-[[**Register Here >**]{.btn .btn-primary .large}](https://nbis.typeform.com/RaukR2024)
+[**Registration is closed**]{.badge .badge-primary .large}
