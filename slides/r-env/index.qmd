@@ -245,7 +245,7 @@ renv::snapshot()
 
 ## renv.lock anatomy {auto-animate="true"}
 
-```{json}
+```json
 #| eval: false
 
 {
@@ -280,7 +280,7 @@ renv::snapshot()
 
 ## renv.lock anatomy • R version {auto-animate="true"}
 
-```{json}
+```json
 #| eval: false
 #| code-line-numbers: "3"
 
@@ -316,7 +316,7 @@ renv::snapshot()
 
 ## renv.lock anatomy • Active repositories {auto-animate="true"}
 
-```{json}
+```json
 #| eval: false
 #| code-line-numbers: "4-10"
 
@@ -352,7 +352,7 @@ renv::snapshot()
 
 ## renv.lock anatomy • R packages {auto-animate="true"}
 
-```{json}
+```json
 #| eval: false
 #| code-line-numbers: "14-27"
 
@@ -391,7 +391,7 @@ renv::snapshot()
 ::: {.columns}
 ::: {.column width="60%"}
 
-```{json}
+```json
 #| eval: false
 
 "remotes": {
