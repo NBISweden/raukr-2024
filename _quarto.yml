@@ -18,6 +18,8 @@ website:
         href: "index.html"
       - text: "Schedule"
         href: "home_schedule.html"
+      - text: "Contents"
+        href: "home_contents.html"
       - text: "Program"
         href: "home_program.html"
       - text: "Registration"
@@ -28,6 +30,8 @@ website:
         href: "home_faq.html"
       - text: About
         href: "home_about.html"
+      - icon: github
+        href: https://github.com/NBISweden/raukr-2024
   page-footer:
     border: false
     left: "{{< meta current_year >}} NBIS | [GPL-3 License](https://choosealicense.com/licenses/gpl-3.0/)"
