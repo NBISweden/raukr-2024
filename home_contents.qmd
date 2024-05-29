@@ -1,6 +1,6 @@
 ---
 title: "Contents"
-subtitle: "Course materials including presentations (slides) and practical exercises (labs)"
+description: "Course materials including presentations (slides) and practical exercises (labs)"
 toc: false
 date: ""
 sidebar: false
@@ -45,3 +45,5 @@ The contents are being updated.
 |[**18-Jun-2024 (Tue)**]{.badge .badge-secondary}                               |||
 |Project environments using Renv        |Roy Francis                            |[Slides](slides/r-env/index.html)|
 :::
+
+[[Slides]{.btn .btn-sm .btn-secondary}](slides/index.html) [[Labs]{.btn .btn-sm .btn-secondary}](labs/index.html) 
