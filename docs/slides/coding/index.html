@@ -14,7 +14,7 @@
   <meta name="generator" content="quarto-1.4.549">
 
   <meta name="author" content="Marcin Kierczak">
-  <title>Best Coding Practises</title>
+  <title>Best Coding Practices</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -404,10 +404,10 @@
     
     <div class="title-parent title-one">
       <div class="title-child-text">
-        <h1 class="title">Best Coding Practises</h1>
+        <h1 class="title">Best Coding Practices</h1>
                 <p class="subtitle">RaukR 2024 • Advanced R for Bioinformatics</p>
                         <p class="author">Marcin Kierczak</p>
-                                <p class="date">19-Feb-2024</p>
+                                <p class="date">29-May-2024</p>
               </div>
     </div>
     
@@ -453,12 +453,12 @@
 <ul>
 <li><p><strong>Debugging</strong> — my code does not run 😿</p></li>
 <li><p><strong>Profiling</strong> — now it does run but… out of memory 💣</p></li>
-<li><p><strong>Optimization</strong> — making things better 👨‍🏭</p></li>
+<li><p><strong>Optimization</strong> — making things better 👷‍♀️</p></li>
 </ul>
 </div>
 <div class="fragment">
 <ul>
-<li><p><strong>Vectorization</strong> — more details on optimization via vectorization 🏹</p></li>
+<li><p><strong>Vectorization</strong> — more details on optimization via vectorization 🔚</p></li>
 <li><p><strong>Parallelization</strong> — run things in parallel, rule them all! 💍</p></li>
 </ul>
 </div>
@@ -499,7 +499,7 @@
 </section>
 <section id="naming-style" class="slide level2">
 <h2>Naming Style</h2>
-<p>Variable names that are legal are not necessarily a good style and they may be dangerous ⚡:</p>
+<p>Variable names that are legal are not necessarily a good style and they may be dangerous ☠️:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>F</span>
 <span id="cb1-2"><a></a>T</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -627,9 +627,8 @@
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a><span class="fu">ls</span>(<span class="at">all.names =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] ".First"              ".Last"               ".main"              
-[4] ".QuartoInlineRender" ".Random.seed"        ".the_hidden_answer" 
-[7] "F"                   "T"                  </code></pre>
+<pre><code>[1] ".main"               ".QuartoInlineRender" ".Random.seed"       
+[4] ".the_hidden_answer"  "F"                   "T"                  </code></pre>
 </div>
 </div>
 </div>
@@ -668,7 +667,7 @@
 <ul>
 <li>avoid accessing and modifying globals
 <ul>
-<li>avoid 🚭 <code>a &lt;&lt;- 42</code></li>
+<li>avoid 🚫 <code>a &lt;&lt;- 42</code></li>
 <li>and 🆗 use a <strong>closure</strong> instead</li>
 </ul></li>
 </ul>
@@ -700,7 +699,7 @@
 <li>use <strong>data</strong> as the <strong>very first</strong> argument for <code>%&gt;%</code> pipes sake:
 <ul>
 <li><code>myfun &lt;- function(x, arg)</code> 🆗</li>
-<li><code>myfun &lt;- function(arg, x)</code> 🚭</li>
+<li><code>myfun &lt;- function(arg, x)</code> 🚯</li>
 </ul></li>
 </ul>
 <div class="fragment">
@@ -766,11 +765,11 @@
 <h3 id="thank-you-questions">Thank you! Questions?</h3>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>         _                     
-platform x86_64-conda-linux-gnu
-os       linux-gnu             
-major    4                     
-minor    3.2                   </code></pre>
+<pre><code>         _                  
+platform x86_64-pc-linux-gnu
+os       linux-gnu          
+major    4                  
+minor    3.2                </code></pre>
 </div>
 </div>
 <p><span class="smaller">2024 • <a href="https://www.scilifelab.se/">SciLifeLab</a> • <a href="https://nbis.se/">NBIS</a> • <a href="https://nbisweden.github.io/raukr-2024">RaukR</a></span></p>

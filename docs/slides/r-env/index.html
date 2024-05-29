@@ -407,7 +407,7 @@
         <h1 class="title">Renv: Project environments in R</h1>
                 <p class="subtitle">RaukR 2024 • Advanced R for Bioinformatics</p>
                         <p class="author">Roy Francis</p>
-                                <p class="date">21-Feb-2024</p>
+                                <p class="date">29-May-2024</p>
               </div>
     </div>
     
@@ -623,156 +623,159 @@ renv::snapshot()</code></pre>
 </section>
 <section id="renv.lock-anatomy" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">renv.lock anatomy</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource json number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode json hljs"><span id="cb6-1" class="hljs-ln-code"><a></a><span class="fu">{</span></span>
-<span id="cb6-2" class="hljs-ln-code"><a></a>  <span class="dt">"R"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb6-3" class="hljs-ln-code"><a></a>    <span class="dt">"Version"</span><span class="fu">:</span> <span class="st">"4.3.2"</span><span class="fu">,</span></span>
-<span id="cb6-4" class="hljs-ln-code"><a></a>    <span class="dt">"Repositories"</span><span class="fu">:</span> <span class="ot">[</span></span>
-<span id="cb6-5" class="hljs-ln-code"><a></a>      <span class="fu">{</span></span>
-<span id="cb6-6" class="hljs-ln-code"><a></a>        <span class="dt">"Name"</span><span class="fu">:</span> <span class="st">"CRAN"</span><span class="fu">,</span></span>
-<span id="cb6-7" class="hljs-ln-code"><a></a>        <span class="dt">"URL"</span><span class="fu">:</span> <span class="st">"https://p3m.dev/cran/latest"</span></span>
-<span id="cb6-8" class="hljs-ln-code"><a></a>      <span class="fu">}</span></span>
-<span id="cb6-9" class="hljs-ln-code"><a></a>    <span class="ot">]</span></span>
-<span id="cb6-10" class="hljs-ln-code"><a></a>  <span class="fu">},</span></span>
-<span id="cb6-11" class="hljs-ln-code"><a></a>  <span class="dt">"Bioconductor"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb6-12" class="hljs-ln-code"><a></a>    <span class="dt">"Version"</span><span class="fu">:</span> <span class="st">"3.18"</span></span>
-<span id="cb6-13" class="hljs-ln-code"><a></a>  <span class="fu">},</span></span>
-<span id="cb6-14" class="hljs-ln-code"><a></a>  <span class="dt">"remotes"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb6-15" class="hljs-ln-code"><a></a>    <span class="dt">"Package"</span><span class="fu">:</span> <span class="st">"remotes"</span><span class="fu">,</span></span>
-<span id="cb6-16" class="hljs-ln-code"><a></a>    <span class="dt">"Version"</span><span class="fu">:</span> <span class="st">"2.4.2.1"</span><span class="fu">,</span></span>
-<span id="cb6-17" class="hljs-ln-code"><a></a>    <span class="dt">"Source"</span><span class="fu">:</span> <span class="st">"Repository"</span><span class="fu">,</span></span>
-<span id="cb6-18" class="hljs-ln-code"><a></a>    <span class="dt">"Repository"</span><span class="fu">:</span> <span class="st">"RSPM"</span><span class="fu">,</span></span>
-<span id="cb6-19" class="hljs-ln-code"><a></a>    <span class="dt">"Requirements"</span><span class="fu">:</span> <span class="ot">[</span></span>
-<span id="cb6-20" class="hljs-ln-code"><a></a>      <span class="st">"R"</span><span class="ot">,</span></span>
-<span id="cb6-21" class="hljs-ln-code"><a></a>      <span class="st">"methods"</span><span class="ot">,</span></span>
-<span id="cb6-22" class="hljs-ln-code"><a></a>      <span class="st">"stats"</span><span class="ot">,</span></span>
-<span id="cb6-23" class="hljs-ln-code"><a></a>      <span class="st">"tools"</span><span class="ot">,</span></span>
-<span id="cb6-24" class="hljs-ln-code"><a></a>      <span class="st">"utils"</span></span>
-<span id="cb6-25" class="hljs-ln-code"><a></a>    <span class="ot">]</span><span class="fu">,</span></span>
-<span id="cb6-26" class="hljs-ln-code"><a></a>    <span class="dt">"Hash"</span><span class="fu">:</span> <span class="st">"63d15047eb239f95160112bcadc4fcb9"</span></span>
-<span id="cb6-27" class="hljs-ln-code"><a></a>  <span class="fu">}</span></span>
-<span id="cb6-28" class="hljs-ln-code"><a></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource json number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode json hljs"><span id="cb6-1" class="hljs-ln-code"><a></a><span class="er">#|</span> <span class="er">eval:</span> <span class="er">false</span></span>
+<span id="cb6-2" class="hljs-ln-code"><a></a></span>
+<span id="cb6-3" class="hljs-ln-code"><a></a><span class="fu">{</span></span>
+<span id="cb6-4" class="hljs-ln-code"><a></a>  <span class="dt">"R"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb6-5" class="hljs-ln-code"><a></a>    <span class="dt">"Version"</span><span class="fu">:</span> <span class="st">"4.3.2"</span><span class="fu">,</span></span>
+<span id="cb6-6" class="hljs-ln-code"><a></a>    <span class="dt">"Repositories"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb6-7" class="hljs-ln-code"><a></a>      <span class="fu">{</span></span>
+<span id="cb6-8" class="hljs-ln-code"><a></a>        <span class="dt">"Name"</span><span class="fu">:</span> <span class="st">"CRAN"</span><span class="fu">,</span></span>
+<span id="cb6-9" class="hljs-ln-code"><a></a>        <span class="dt">"URL"</span><span class="fu">:</span> <span class="st">"https://p3m.dev/cran/latest"</span></span>
+<span id="cb6-10" class="hljs-ln-code"><a></a>      <span class="fu">}</span></span>
+<span id="cb6-11" class="hljs-ln-code"><a></a>    <span class="ot">]</span></span>
+<span id="cb6-12" class="hljs-ln-code"><a></a>  <span class="fu">},</span></span>
+<span id="cb6-13" class="hljs-ln-code"><a></a>  <span class="dt">"Bioconductor"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb6-14" class="hljs-ln-code"><a></a>    <span class="dt">"Version"</span><span class="fu">:</span> <span class="st">"3.18"</span></span>
+<span id="cb6-15" class="hljs-ln-code"><a></a>  <span class="fu">},</span></span>
+<span id="cb6-16" class="hljs-ln-code"><a></a>  <span class="dt">"remotes"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb6-17" class="hljs-ln-code"><a></a>    <span class="dt">"Package"</span><span class="fu">:</span> <span class="st">"remotes"</span><span class="fu">,</span></span>
+<span id="cb6-18" class="hljs-ln-code"><a></a>    <span class="dt">"Version"</span><span class="fu">:</span> <span class="st">"2.4.2.1"</span><span class="fu">,</span></span>
+<span id="cb6-19" class="hljs-ln-code"><a></a>    <span class="dt">"Source"</span><span class="fu">:</span> <span class="st">"Repository"</span><span class="fu">,</span></span>
+<span id="cb6-20" class="hljs-ln-code"><a></a>    <span class="dt">"Repository"</span><span class="fu">:</span> <span class="st">"RSPM"</span><span class="fu">,</span></span>
+<span id="cb6-21" class="hljs-ln-code"><a></a>    <span class="dt">"Requirements"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb6-22" class="hljs-ln-code"><a></a>      <span class="st">"R"</span><span class="ot">,</span></span>
+<span id="cb6-23" class="hljs-ln-code"><a></a>      <span class="st">"methods"</span><span class="ot">,</span></span>
+<span id="cb6-24" class="hljs-ln-code"><a></a>      <span class="st">"stats"</span><span class="ot">,</span></span>
+<span id="cb6-25" class="hljs-ln-code"><a></a>      <span class="st">"tools"</span><span class="ot">,</span></span>
+<span id="cb6-26" class="hljs-ln-code"><a></a>      <span class="st">"utils"</span></span>
+<span id="cb6-27" class="hljs-ln-code"><a></a>    <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb6-28" class="hljs-ln-code"><a></a>    <span class="dt">"Hash"</span><span class="fu">:</span> <span class="st">"63d15047eb239f95160112bcadc4fcb9"</span></span>
+<span id="cb6-29" class="hljs-ln-code"><a></a>  <span class="fu">}</span></span>
+<span id="cb6-30" class="hljs-ln-code"><a></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="renv.lock-anatomy-r-version" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">renv.lock anatomy • R version</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7" data-code-line-numbers="3"><pre class="sourceCode numberSource json number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode json hljs"><span id="cb7-1" class="hljs-ln-code"><a></a><span class="fu">{</span></span>
-<span id="cb7-2" class="hljs-ln-code"><a></a>  <span class="dt">"R"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb7-3" class="hljs-ln-code"><a></a>    <span class="dt">"Version"</span><span class="fu">:</span> <span class="st">"4.3.2"</span><span class="fu">,</span></span>
-<span id="cb7-4" class="hljs-ln-code"><a></a>    <span class="dt">"Repositories"</span><span class="fu">:</span> <span class="ot">[</span></span>
-<span id="cb7-5" class="hljs-ln-code"><a></a>      <span class="fu">{</span></span>
-<span id="cb7-6" class="hljs-ln-code"><a></a>        <span class="dt">"Name"</span><span class="fu">:</span> <span class="st">"CRAN"</span><span class="fu">,</span></span>
-<span id="cb7-7" class="hljs-ln-code"><a></a>        <span class="dt">"URL"</span><span class="fu">:</span> <span class="st">"https://p3m.dev/cran/latest"</span></span>
-<span id="cb7-8" class="hljs-ln-code"><a></a>      <span class="fu">}</span></span>
-<span id="cb7-9" class="hljs-ln-code"><a></a>    <span class="ot">]</span></span>
-<span id="cb7-10" class="hljs-ln-code"><a></a>  <span class="fu">},</span></span>
-<span id="cb7-11" class="hljs-ln-code"><a></a>  <span class="dt">"Bioconductor"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb7-12" class="hljs-ln-code"><a></a>    <span class="dt">"Version"</span><span class="fu">:</span> <span class="st">"3.18"</span></span>
+<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource json number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode json hljs"><span id="cb7-1" class="hljs-ln-code"><a></a><span class="er">#|</span> <span class="er">eval:</span> <span class="er">false</span></span>
+<span id="cb7-2" class="hljs-ln-code"><a></a><span class="er">#|</span> <span class="er">code-line-numbers:</span> <span class="er">"3"</span></span>
+<span id="cb7-3" class="hljs-ln-code"><a></a></span>
+<span id="cb7-4" class="hljs-ln-code"><a></a><span class="fu">{</span></span>
+<span id="cb7-5" class="hljs-ln-code"><a></a>  <span class="dt">"R"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb7-6" class="hljs-ln-code"><a></a>    <span class="dt">"Version"</span><span class="fu">:</span> <span class="st">"4.3.2"</span><span class="fu">,</span></span>
+<span id="cb7-7" class="hljs-ln-code"><a></a>    <span class="dt">"Repositories"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb7-8" class="hljs-ln-code"><a></a>      <span class="fu">{</span></span>
+<span id="cb7-9" class="hljs-ln-code"><a></a>        <span class="dt">"Name"</span><span class="fu">:</span> <span class="st">"CRAN"</span><span class="fu">,</span></span>
+<span id="cb7-10" class="hljs-ln-code"><a></a>        <span class="dt">"URL"</span><span class="fu">:</span> <span class="st">"https://p3m.dev/cran/latest"</span></span>
+<span id="cb7-11" class="hljs-ln-code"><a></a>      <span class="fu">}</span></span>
+<span id="cb7-12" class="hljs-ln-code"><a></a>    <span class="ot">]</span></span>
 <span id="cb7-13" class="hljs-ln-code"><a></a>  <span class="fu">},</span></span>
-<span id="cb7-14" class="hljs-ln-code"><a></a>  <span class="dt">"remotes"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb7-15" class="hljs-ln-code"><a></a>    <span class="dt">"Package"</span><span class="fu">:</span> <span class="st">"remotes"</span><span class="fu">,</span></span>
-<span id="cb7-16" class="hljs-ln-code"><a></a>    <span class="dt">"Version"</span><span class="fu">:</span> <span class="st">"2.4.2.1"</span><span class="fu">,</span></span>
-<span id="cb7-17" class="hljs-ln-code"><a></a>    <span class="dt">"Source"</span><span class="fu">:</span> <span class="st">"Repository"</span><span class="fu">,</span></span>
-<span id="cb7-18" class="hljs-ln-code"><a></a>    <span class="dt">"Repository"</span><span class="fu">:</span> <span class="st">"RSPM"</span><span class="fu">,</span></span>
-<span id="cb7-19" class="hljs-ln-code"><a></a>    <span class="dt">"Requirements"</span><span class="fu">:</span> <span class="ot">[</span></span>
-<span id="cb7-20" class="hljs-ln-code"><a></a>      <span class="st">"R"</span><span class="ot">,</span></span>
-<span id="cb7-21" class="hljs-ln-code"><a></a>      <span class="st">"methods"</span><span class="ot">,</span></span>
-<span id="cb7-22" class="hljs-ln-code"><a></a>      <span class="st">"stats"</span><span class="ot">,</span></span>
-<span id="cb7-23" class="hljs-ln-code"><a></a>      <span class="st">"tools"</span><span class="ot">,</span></span>
-<span id="cb7-24" class="hljs-ln-code"><a></a>      <span class="st">"utils"</span></span>
-<span id="cb7-25" class="hljs-ln-code"><a></a>    <span class="ot">]</span><span class="fu">,</span></span>
-<span id="cb7-26" class="hljs-ln-code"><a></a>    <span class="dt">"Hash"</span><span class="fu">:</span> <span class="st">"63d15047eb239f95160112bcadc4fcb9"</span></span>
-<span id="cb7-27" class="hljs-ln-code"><a></a>  <span class="fu">}</span></span>
-<span id="cb7-28" class="hljs-ln-code"><a></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<span id="cb7-14" class="hljs-ln-code"><a></a>  <span class="dt">"Bioconductor"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb7-15" class="hljs-ln-code"><a></a>    <span class="dt">"Version"</span><span class="fu">:</span> <span class="st">"3.18"</span></span>
+<span id="cb7-16" class="hljs-ln-code"><a></a>  <span class="fu">},</span></span>
+<span id="cb7-17" class="hljs-ln-code"><a></a>  <span class="dt">"remotes"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb7-18" class="hljs-ln-code"><a></a>    <span class="dt">"Package"</span><span class="fu">:</span> <span class="st">"remotes"</span><span class="fu">,</span></span>
+<span id="cb7-19" class="hljs-ln-code"><a></a>    <span class="dt">"Version"</span><span class="fu">:</span> <span class="st">"2.4.2.1"</span><span class="fu">,</span></span>
+<span id="cb7-20" class="hljs-ln-code"><a></a>    <span class="dt">"Source"</span><span class="fu">:</span> <span class="st">"Repository"</span><span class="fu">,</span></span>
+<span id="cb7-21" class="hljs-ln-code"><a></a>    <span class="dt">"Repository"</span><span class="fu">:</span> <span class="st">"RSPM"</span><span class="fu">,</span></span>
+<span id="cb7-22" class="hljs-ln-code"><a></a>    <span class="dt">"Requirements"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb7-23" class="hljs-ln-code"><a></a>      <span class="st">"R"</span><span class="ot">,</span></span>
+<span id="cb7-24" class="hljs-ln-code"><a></a>      <span class="st">"methods"</span><span class="ot">,</span></span>
+<span id="cb7-25" class="hljs-ln-code"><a></a>      <span class="st">"stats"</span><span class="ot">,</span></span>
+<span id="cb7-26" class="hljs-ln-code"><a></a>      <span class="st">"tools"</span><span class="ot">,</span></span>
+<span id="cb7-27" class="hljs-ln-code"><a></a>      <span class="st">"utils"</span></span>
+<span id="cb7-28" class="hljs-ln-code"><a></a>    <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb7-29" class="hljs-ln-code"><a></a>    <span class="dt">"Hash"</span><span class="fu">:</span> <span class="st">"63d15047eb239f95160112bcadc4fcb9"</span></span>
+<span id="cb7-30" class="hljs-ln-code"><a></a>  <span class="fu">}</span></span>
+<span id="cb7-31" class="hljs-ln-code"><a></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="renv.lock-anatomy-active-repositories" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">renv.lock anatomy • Active repositories</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8" data-code-line-numbers="4-10"><pre class="sourceCode numberSource json number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode json hljs"><span id="cb8-1" class="hljs-ln-code"><a></a><span class="fu">{</span></span>
-<span id="cb8-2" class="hljs-ln-code"><a></a>  <span class="dt">"R"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb8-3" class="hljs-ln-code"><a></a>    <span class="dt">"Version"</span><span class="fu">:</span> <span class="st">"4.3.2"</span><span class="fu">,</span></span>
-<span id="cb8-4" class="hljs-ln-code"><a></a>    <span class="dt">"Repositories"</span><span class="fu">:</span> <span class="ot">[</span></span>
-<span id="cb8-5" class="hljs-ln-code"><a></a>      <span class="fu">{</span></span>
-<span id="cb8-6" class="hljs-ln-code"><a></a>        <span class="dt">"Name"</span><span class="fu">:</span> <span class="st">"CRAN"</span><span class="fu">,</span></span>
-<span id="cb8-7" class="hljs-ln-code"><a></a>        <span class="dt">"URL"</span><span class="fu">:</span> <span class="st">"https://p3m.dev/cran/latest"</span></span>
-<span id="cb8-8" class="hljs-ln-code"><a></a>      <span class="fu">}</span></span>
-<span id="cb8-9" class="hljs-ln-code"><a></a>    <span class="ot">]</span></span>
-<span id="cb8-10" class="hljs-ln-code"><a></a>  <span class="fu">},</span></span>
-<span id="cb8-11" class="hljs-ln-code"><a></a>  <span class="dt">"Bioconductor"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb8-12" class="hljs-ln-code"><a></a>    <span class="dt">"Version"</span><span class="fu">:</span> <span class="st">"3.18"</span></span>
+<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource json number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode json hljs"><span id="cb8-1" class="hljs-ln-code"><a></a><span class="er">#|</span> <span class="er">eval:</span> <span class="er">false</span></span>
+<span id="cb8-2" class="hljs-ln-code"><a></a><span class="er">#|</span> <span class="er">code-line-numbers:</span> <span class="er">"4-10"</span></span>
+<span id="cb8-3" class="hljs-ln-code"><a></a></span>
+<span id="cb8-4" class="hljs-ln-code"><a></a><span class="fu">{</span></span>
+<span id="cb8-5" class="hljs-ln-code"><a></a>  <span class="dt">"R"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb8-6" class="hljs-ln-code"><a></a>    <span class="dt">"Version"</span><span class="fu">:</span> <span class="st">"4.3.2"</span><span class="fu">,</span></span>
+<span id="cb8-7" class="hljs-ln-code"><a></a>    <span class="dt">"Repositories"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb8-8" class="hljs-ln-code"><a></a>      <span class="fu">{</span></span>
+<span id="cb8-9" class="hljs-ln-code"><a></a>        <span class="dt">"Name"</span><span class="fu">:</span> <span class="st">"CRAN"</span><span class="fu">,</span></span>
+<span id="cb8-10" class="hljs-ln-code"><a></a>        <span class="dt">"URL"</span><span class="fu">:</span> <span class="st">"https://p3m.dev/cran/latest"</span></span>
+<span id="cb8-11" class="hljs-ln-code"><a></a>      <span class="fu">}</span></span>
+<span id="cb8-12" class="hljs-ln-code"><a></a>    <span class="ot">]</span></span>
 <span id="cb8-13" class="hljs-ln-code"><a></a>  <span class="fu">},</span></span>
-<span id="cb8-14" class="hljs-ln-code"><a></a>  <span class="dt">"remotes"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb8-15" class="hljs-ln-code"><a></a>    <span class="dt">"Package"</span><span class="fu">:</span> <span class="st">"remotes"</span><span class="fu">,</span></span>
-<span id="cb8-16" class="hljs-ln-code"><a></a>    <span class="dt">"Version"</span><span class="fu">:</span> <span class="st">"2.4.2.1"</span><span class="fu">,</span></span>
-<span id="cb8-17" class="hljs-ln-code"><a></a>    <span class="dt">"Source"</span><span class="fu">:</span> <span class="st">"Repository"</span><span class="fu">,</span></span>
-<span id="cb8-18" class="hljs-ln-code"><a></a>    <span class="dt">"Repository"</span><span class="fu">:</span> <span class="st">"RSPM"</span><span class="fu">,</span></span>
-<span id="cb8-19" class="hljs-ln-code"><a></a>    <span class="dt">"Requirements"</span><span class="fu">:</span> <span class="ot">[</span></span>
-<span id="cb8-20" class="hljs-ln-code"><a></a>      <span class="st">"R"</span><span class="ot">,</span></span>
-<span id="cb8-21" class="hljs-ln-code"><a></a>      <span class="st">"methods"</span><span class="ot">,</span></span>
-<span id="cb8-22" class="hljs-ln-code"><a></a>      <span class="st">"stats"</span><span class="ot">,</span></span>
-<span id="cb8-23" class="hljs-ln-code"><a></a>      <span class="st">"tools"</span><span class="ot">,</span></span>
-<span id="cb8-24" class="hljs-ln-code"><a></a>      <span class="st">"utils"</span></span>
-<span id="cb8-25" class="hljs-ln-code"><a></a>    <span class="ot">]</span><span class="fu">,</span></span>
-<span id="cb8-26" class="hljs-ln-code"><a></a>    <span class="dt">"Hash"</span><span class="fu">:</span> <span class="st">"63d15047eb239f95160112bcadc4fcb9"</span></span>
-<span id="cb8-27" class="hljs-ln-code"><a></a>  <span class="fu">}</span></span>
-<span id="cb8-28" class="hljs-ln-code"><a></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<span id="cb8-14" class="hljs-ln-code"><a></a>  <span class="dt">"Bioconductor"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb8-15" class="hljs-ln-code"><a></a>    <span class="dt">"Version"</span><span class="fu">:</span> <span class="st">"3.18"</span></span>
+<span id="cb8-16" class="hljs-ln-code"><a></a>  <span class="fu">},</span></span>
+<span id="cb8-17" class="hljs-ln-code"><a></a>  <span class="dt">"remotes"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb8-18" class="hljs-ln-code"><a></a>    <span class="dt">"Package"</span><span class="fu">:</span> <span class="st">"remotes"</span><span class="fu">,</span></span>
+<span id="cb8-19" class="hljs-ln-code"><a></a>    <span class="dt">"Version"</span><span class="fu">:</span> <span class="st">"2.4.2.1"</span><span class="fu">,</span></span>
+<span id="cb8-20" class="hljs-ln-code"><a></a>    <span class="dt">"Source"</span><span class="fu">:</span> <span class="st">"Repository"</span><span class="fu">,</span></span>
+<span id="cb8-21" class="hljs-ln-code"><a></a>    <span class="dt">"Repository"</span><span class="fu">:</span> <span class="st">"RSPM"</span><span class="fu">,</span></span>
+<span id="cb8-22" class="hljs-ln-code"><a></a>    <span class="dt">"Requirements"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb8-23" class="hljs-ln-code"><a></a>      <span class="st">"R"</span><span class="ot">,</span></span>
+<span id="cb8-24" class="hljs-ln-code"><a></a>      <span class="st">"methods"</span><span class="ot">,</span></span>
+<span id="cb8-25" class="hljs-ln-code"><a></a>      <span class="st">"stats"</span><span class="ot">,</span></span>
+<span id="cb8-26" class="hljs-ln-code"><a></a>      <span class="st">"tools"</span><span class="ot">,</span></span>
+<span id="cb8-27" class="hljs-ln-code"><a></a>      <span class="st">"utils"</span></span>
+<span id="cb8-28" class="hljs-ln-code"><a></a>    <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb8-29" class="hljs-ln-code"><a></a>    <span class="dt">"Hash"</span><span class="fu">:</span> <span class="st">"63d15047eb239f95160112bcadc4fcb9"</span></span>
+<span id="cb8-30" class="hljs-ln-code"><a></a>  <span class="fu">}</span></span>
+<span id="cb8-31" class="hljs-ln-code"><a></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="renv.lock-anatomy-r-packages" class="slide level2" data-auto-animate="true">
 <h2 data-id="quarto-animate-title">renv.lock anatomy • R packages</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9" data-code-line-numbers="14-27"><pre class="sourceCode numberSource json number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode json hljs"><span id="cb9-1" class="hljs-ln-code"><a></a><span class="fu">{</span></span>
-<span id="cb9-2" class="hljs-ln-code"><a></a>  <span class="dt">"R"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb9-3" class="hljs-ln-code"><a></a>    <span class="dt">"Version"</span><span class="fu">:</span> <span class="st">"4.3.2"</span><span class="fu">,</span></span>
-<span id="cb9-4" class="hljs-ln-code"><a></a>    <span class="dt">"Repositories"</span><span class="fu">:</span> <span class="ot">[</span></span>
-<span id="cb9-5" class="hljs-ln-code"><a></a>      <span class="fu">{</span></span>
-<span id="cb9-6" class="hljs-ln-code"><a></a>        <span class="dt">"Name"</span><span class="fu">:</span> <span class="st">"CRAN"</span><span class="fu">,</span></span>
-<span id="cb9-7" class="hljs-ln-code"><a></a>        <span class="dt">"URL"</span><span class="fu">:</span> <span class="st">"https://p3m.dev/cran/latest"</span></span>
-<span id="cb9-8" class="hljs-ln-code"><a></a>      <span class="fu">}</span></span>
-<span id="cb9-9" class="hljs-ln-code"><a></a>    <span class="ot">]</span></span>
-<span id="cb9-10" class="hljs-ln-code"><a></a>  <span class="fu">},</span></span>
-<span id="cb9-11" class="hljs-ln-code"><a></a>  <span class="dt">"Bioconductor"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb9-12" class="hljs-ln-code"><a></a>    <span class="dt">"Version"</span><span class="fu">:</span> <span class="st">"3.18"</span></span>
+<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource json number-lines code-with-copy" data-id="quarto-animate-code"><code class="sourceCode json hljs"><span id="cb9-1" class="hljs-ln-code"><a></a><span class="er">#|</span> <span class="er">eval:</span> <span class="er">false</span></span>
+<span id="cb9-2" class="hljs-ln-code"><a></a><span class="er">#|</span> <span class="er">code-line-numbers:</span> <span class="er">"14-27"</span></span>
+<span id="cb9-3" class="hljs-ln-code"><a></a></span>
+<span id="cb9-4" class="hljs-ln-code"><a></a><span class="fu">{</span></span>
+<span id="cb9-5" class="hljs-ln-code"><a></a>  <span class="dt">"R"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb9-6" class="hljs-ln-code"><a></a>    <span class="dt">"Version"</span><span class="fu">:</span> <span class="st">"4.3.2"</span><span class="fu">,</span></span>
+<span id="cb9-7" class="hljs-ln-code"><a></a>    <span class="dt">"Repositories"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb9-8" class="hljs-ln-code"><a></a>      <span class="fu">{</span></span>
+<span id="cb9-9" class="hljs-ln-code"><a></a>        <span class="dt">"Name"</span><span class="fu">:</span> <span class="st">"CRAN"</span><span class="fu">,</span></span>
+<span id="cb9-10" class="hljs-ln-code"><a></a>        <span class="dt">"URL"</span><span class="fu">:</span> <span class="st">"https://p3m.dev/cran/latest"</span></span>
+<span id="cb9-11" class="hljs-ln-code"><a></a>      <span class="fu">}</span></span>
+<span id="cb9-12" class="hljs-ln-code"><a></a>    <span class="ot">]</span></span>
 <span id="cb9-13" class="hljs-ln-code"><a></a>  <span class="fu">},</span></span>
-<span id="cb9-14" class="hljs-ln-code"><a></a>  <span class="dt">"remotes"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb9-15" class="hljs-ln-code"><a></a>    <span class="dt">"Package"</span><span class="fu">:</span> <span class="st">"remotes"</span><span class="fu">,</span></span>
-<span id="cb9-16" class="hljs-ln-code"><a></a>    <span class="dt">"Version"</span><span class="fu">:</span> <span class="st">"2.4.2.1"</span><span class="fu">,</span></span>
-<span id="cb9-17" class="hljs-ln-code"><a></a>    <span class="dt">"Source"</span><span class="fu">:</span> <span class="st">"Repository"</span><span class="fu">,</span></span>
-<span id="cb9-18" class="hljs-ln-code"><a></a>    <span class="dt">"Repository"</span><span class="fu">:</span> <span class="st">"RSPM"</span><span class="fu">,</span></span>
-<span id="cb9-19" class="hljs-ln-code"><a></a>    <span class="dt">"Requirements"</span><span class="fu">:</span> <span class="ot">[</span></span>
-<span id="cb9-20" class="hljs-ln-code"><a></a>      <span class="st">"R"</span><span class="ot">,</span></span>
-<span id="cb9-21" class="hljs-ln-code"><a></a>      <span class="st">"methods"</span><span class="ot">,</span></span>
-<span id="cb9-22" class="hljs-ln-code"><a></a>      <span class="st">"stats"</span><span class="ot">,</span></span>
-<span id="cb9-23" class="hljs-ln-code"><a></a>      <span class="st">"tools"</span><span class="ot">,</span></span>
-<span id="cb9-24" class="hljs-ln-code"><a></a>      <span class="st">"utils"</span></span>
-<span id="cb9-25" class="hljs-ln-code"><a></a>    <span class="ot">]</span><span class="fu">,</span></span>
-<span id="cb9-26" class="hljs-ln-code"><a></a>    <span class="dt">"Hash"</span><span class="fu">:</span> <span class="st">"63d15047eb239f95160112bcadc4fcb9"</span></span>
-<span id="cb9-27" class="hljs-ln-code"><a></a>  <span class="fu">}</span></span>
-<span id="cb9-28" class="hljs-ln-code"><a></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<span id="cb9-14" class="hljs-ln-code"><a></a>  <span class="dt">"Bioconductor"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb9-15" class="hljs-ln-code"><a></a>    <span class="dt">"Version"</span><span class="fu">:</span> <span class="st">"3.18"</span></span>
+<span id="cb9-16" class="hljs-ln-code"><a></a>  <span class="fu">},</span></span>
+<span id="cb9-17" class="hljs-ln-code"><a></a>  <span class="dt">"remotes"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb9-18" class="hljs-ln-code"><a></a>    <span class="dt">"Package"</span><span class="fu">:</span> <span class="st">"remotes"</span><span class="fu">,</span></span>
+<span id="cb9-19" class="hljs-ln-code"><a></a>    <span class="dt">"Version"</span><span class="fu">:</span> <span class="st">"2.4.2.1"</span><span class="fu">,</span></span>
+<span id="cb9-20" class="hljs-ln-code"><a></a>    <span class="dt">"Source"</span><span class="fu">:</span> <span class="st">"Repository"</span><span class="fu">,</span></span>
+<span id="cb9-21" class="hljs-ln-code"><a></a>    <span class="dt">"Repository"</span><span class="fu">:</span> <span class="st">"RSPM"</span><span class="fu">,</span></span>
+<span id="cb9-22" class="hljs-ln-code"><a></a>    <span class="dt">"Requirements"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb9-23" class="hljs-ln-code"><a></a>      <span class="st">"R"</span><span class="ot">,</span></span>
+<span id="cb9-24" class="hljs-ln-code"><a></a>      <span class="st">"methods"</span><span class="ot">,</span></span>
+<span id="cb9-25" class="hljs-ln-code"><a></a>      <span class="st">"stats"</span><span class="ot">,</span></span>
+<span id="cb9-26" class="hljs-ln-code"><a></a>      <span class="st">"tools"</span><span class="ot">,</span></span>
+<span id="cb9-27" class="hljs-ln-code"><a></a>      <span class="st">"utils"</span></span>
+<span id="cb9-28" class="hljs-ln-code"><a></a>    <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb9-29" class="hljs-ln-code"><a></a>    <span class="dt">"Hash"</span><span class="fu">:</span> <span class="st">"63d15047eb239f95160112bcadc4fcb9"</span></span>
+<span id="cb9-30" class="hljs-ln-code"><a></a>  <span class="fu">}</span></span>
+<span id="cb9-31" class="hljs-ln-code"><a></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="package-metadata" class="slide level2">
 <h2>Package metadata</h2>
 <div class="columns">
 <div class="column" style="width:60%;">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb10-1"><a></a><span class="er">"remotes":</span> <span class="fu">{</span></span>
-<span id="cb10-2"><a></a>  <span class="dt">"Package"</span><span class="fu">:</span> <span class="st">"remotes"</span><span class="fu">,</span></span>
-<span id="cb10-3"><a></a>  <span class="dt">"Version"</span><span class="fu">:</span> <span class="st">"2.4.2.1"</span><span class="fu">,</span></span>
-<span id="cb10-4"><a></a>  <span class="dt">"Source"</span><span class="fu">:</span> <span class="st">"Repository"</span><span class="fu">,</span></span>
-<span id="cb10-5"><a></a>  <span class="dt">"Repository"</span><span class="fu">:</span> <span class="st">"RSPM"</span><span class="fu">,</span></span>
-<span id="cb10-6"><a></a>  <span class="dt">"Requirements"</span><span class="fu">:</span> <span class="ot">[</span></span>
-<span id="cb10-7"><a></a>    <span class="st">"R"</span><span class="ot">,</span></span>
-<span id="cb10-8"><a></a>    <span class="st">"methods"</span><span class="ot">,</span></span>
-<span id="cb10-9"><a></a>    <span class="st">"stats"</span><span class="ot">,</span></span>
-<span id="cb10-10"><a></a>    <span class="st">"tools"</span><span class="ot">,</span></span>
-<span id="cb10-11"><a></a>    <span class="st">"utils"</span></span>
-<span id="cb10-12"><a></a>  <span class="ot">]</span><span class="fu">,</span></span>
-<span id="cb10-13"><a></a>  <span class="dt">"Hash"</span><span class="fu">:</span> <span class="st">"63d15047eb239f95160112bcadc4fcb9"</span></span>
-<span id="cb10-14"><a></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource json number-lines code-with-copy"><code class="sourceCode json"><span id="cb10-1"><a></a><span class="er">#|</span> <span class="er">eval:</span> <span class="er">false</span></span>
+<span id="cb10-2"><a></a></span>
+<span id="cb10-3"><a></a><span class="er">"remotes":</span> <span class="fu">{</span></span>
+<span id="cb10-4"><a></a>  <span class="dt">"Package"</span><span class="fu">:</span> <span class="st">"remotes"</span><span class="fu">,</span></span>
+<span id="cb10-5"><a></a>  <span class="dt">"Version"</span><span class="fu">:</span> <span class="st">"2.4.2.1"</span><span class="fu">,</span></span>
+<span id="cb10-6"><a></a>  <span class="dt">"Source"</span><span class="fu">:</span> <span class="st">"Repository"</span><span class="fu">,</span></span>
+<span id="cb10-7"><a></a>  <span class="dt">"Repository"</span><span class="fu">:</span> <span class="st">"RSPM"</span><span class="fu">,</span></span>
+<span id="cb10-8"><a></a>  <span class="dt">"Requirements"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb10-9"><a></a>    <span class="st">"R"</span><span class="ot">,</span></span>
+<span id="cb10-10"><a></a>    <span class="st">"methods"</span><span class="ot">,</span></span>
+<span id="cb10-11"><a></a>    <span class="st">"stats"</span><span class="ot">,</span></span>
+<span id="cb10-12"><a></a>    <span class="st">"tools"</span><span class="ot">,</span></span>
+<span id="cb10-13"><a></a>    <span class="st">"utils"</span></span>
+<span id="cb10-14"><a></a>  <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb10-15"><a></a>  <span class="dt">"Hash"</span><span class="fu">:</span> <span class="st">"63d15047eb239f95160112bcadc4fcb9"</span></span>
+<span id="cb10-16"><a></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column" style="width:40%;">
 <ul>
 <li><strong>Package</strong>: Package name</li>

@@ -548,13 +548,13 @@
 </div>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>       V1                V2          
- Min.   :-1.8397   Min.   :-1.86597  
- 1st Qu.:-0.9904   1st Qu.:-0.92012  
- Median :-0.4026   Median :-0.40419  
- Mean   :-0.3143   Mean   :-0.06955  
- 3rd Qu.: 0.1949   3rd Qu.: 0.71942  
- Max.   : 1.2051   Max.   : 2.36348  </code></pre>
+<pre><code>       V1                 V2         
+ Min.   :-1.96634   Min.   :-1.9385  
+ 1st Qu.:-0.60982   1st Qu.:-0.4539  
+ Median : 0.22170   Median : 0.4114  
+ Mean   : 0.07356   Mean   : 0.2631  
+ 3rd Qu.: 0.79662   3rd Qu.: 0.8496  
+ Max.   : 2.17988   Max.   : 2.6664  </code></pre>
 </div>
 </div>
 </div>
@@ -589,7 +589,7 @@
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a>M <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(<span class="dv">16</span>), <span class="at">nrow=</span><span class="dv">4</span>); M <span class="sc">%&lt;&gt;%</span> <span class="fu">colSums</span>(); M</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] -2.8564401 -0.6428897  0.1004127 -1.9059971</code></pre>
+<pre><code>[1] -3.598298 -1.504174 -0.698766 -2.299898</code></pre>
 </div>
 </div>
 </section>
@@ -604,7 +604,7 @@
 </div>
 <div class="fragment">
 <hr>
-<p>even simple placeholder <code>_</code> is available now. But ⚡ only for <strong>named</strong> arguments.</p>
+<p>even simple placeholder <code>_</code> is available now. But 💀 only for <strong>named</strong> arguments.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a>mtcars <span class="sc">|&gt;</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> disp, <span class="at">data =</span> _)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -631,9 +631,9 @@ Coefficients:
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a>M <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">4</span>) <span class="sc">%&gt;%</span> <span class="fu">matrix</span>(<span class="at">nrow =</span> <span class="dv">2</span>)</span>
 <span id="cb18-2"><a></a>M <span class="sc">%&gt;%</span> <span class="st">`</span><span class="at">%*%</span><span class="st">`</span>(., .)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>         [,1]     [,2]
-[1,] 2.347638 3.118010
-[2,] 1.076296 2.971927</code></pre>
+<pre><code>            [,1]       [,2]
+[1,] -0.04176768  0.2417154
+[2,] -2.44204176 -0.3047041</code></pre>
 </div>
 </div>
 </div>
@@ -735,16 +735,16 @@ Use 'functions' to extract the individual functions. </code></pre>
 <pre><code># A tibble: 50 × 4
        x      y     z outcome
    &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
- 1     1 0.405   1.16   0.417
- 2     1 0.802   1.64   0.564
- 3     1 0.0525  1.00   2.01 
- 4     1 0.160   1.03   0.155
- 5     1 0.486   1.24  -0.399
- 6     1 0.0352  1.00  -0.221
- 7     1 0.168   1.03   0.173
- 8     1 0.540   1.29  -0.663
- 9     1 0.432   1.19   0.300
-10     1 0.530   1.28   0.229
+ 1     1 0.568   1.32  -0.953
+ 2     1 0.140   1.02  -0.267
+ 3     1 0.669   1.45  -0.291
+ 4     1 0.267   1.07  -0.439
+ 5     1 0.533   1.28  -0.490
+ 6     1 0.483   1.23   0.851
+ 7     1 0.129   1.02  -0.782
+ 8     1 0.798   1.64  -0.520
+ 9     1 0.946   1.89   0.223
+10     1 0.0507  1.00  -0.269
 # ℹ 40 more rows</code></pre>
 </div>
 </div>
@@ -1507,11 +1507,11 @@ Levels: mountains swamps seaside</code></pre>
 <pre><code># A tibble: 5 × 3
   cut     `2008` `2009`
   &lt;ord&gt;    &lt;int&gt;  &lt;dbl&gt;
-1 Ideal      326    329
-2 Premium    326    329
-3 Good       327    330
-4 Premium    334    337
-5 Good       335    338</code></pre>
+1 Ideal      326    328
+2 Premium    326    328
+3 Good       327    329
+4 Premium    334    336
+5 Good       335    337</code></pre>
 </div>
 </div>
 </div><div class="column" style="width:50%;">
@@ -1524,9 +1524,9 @@ Levels: mountains swamps seaside</code></pre>
   cut     year  price
   &lt;ord&gt;   &lt;chr&gt; &lt;dbl&gt;
 1 Ideal   2008    326
-2 Ideal   2009    329
+2 Ideal   2009    328
 3 Premium 2008    326
-4 Premium 2009    329
+4 Premium 2009    328
 5 Good    2008    327</code></pre>
 </div>
 </div>
@@ -1667,8 +1667,8 @@ Levels: mountains swamps seaside</code></pre>
   &lt;ord&gt;     &lt;chr&gt;     &lt;ord&gt;   &lt;int&gt;
 1 Fair      Aus       &lt;NA&gt;       NA
 2 Fair      Eur       &lt;NA&gt;       NA
-3 Good      Aus       SI2       335
-4 Good      Eur       VS1       327
+3 Good      Aus       VS1       327
+4 Good      Eur       SI2       335
 5 Very Good Aus       VVS2      336
 6 Very Good Eur       &lt;NA&gt;       NA
 7 Premium   Aus       SI1       326</code></pre>
