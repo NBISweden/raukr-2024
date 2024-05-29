@@ -9,8 +9,8 @@ format:
 
 ## Guest instructors
 
-::: {.profile-parent}
-::: {.profile-child}
+::: {.guest-parent}
+::: {.guest-child}
 
 ![](assets/images/profile/jenny-bryan.jpg){.nolightbox}
 
@@ -22,7 +22,7 @@ Data science professor
 Vancouver, Canada
 
 :::
-::: {.profile-child}
+::: {.guest-child}
 
 ![](assets/images/profile/henrik-bengtsson.jpg){.nolightbox}
 

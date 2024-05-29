@@ -213,6 +213,27 @@ div.callout-important .callout-icon::before {
   border-radius: 50%;
 }
 
+/* guest */
+
+.guest-parent {
+  display: -ms-grid;
+  display: grid;
+  gap: 1em;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.guest-child {
+  text-align: center;
+}
+
+.guest-child img {
+  height: 250px;
+  width: 250px;
+  -o-object-fit: cover;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
 /* gallery */
 
 .raukr-gallery-parent {
