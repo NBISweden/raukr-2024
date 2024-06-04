@@ -5,18 +5,44 @@ image: "assets/featured.jpg"
 format: revealjs
 ---
 
-## Publishing
+## Quarto
+
+::: {.columns}
+::: {.column width="50%"}
 
 - [Literate programming](https://en.wikipedia.org/wiki/Literate_programming): Combining code with narrative
+- Reproducible research
 - Documentation and reporting
-- Presentation
-- Websites
-- E-books
-- PDFs
+  - Websites, Presentations, e-books, PDFs ...
 
-. . .
-
+::: {.fragment}
 [[https://quarto.org/docs/gallery/](https://quarto.org/docs/gallery/)]{.large}
+:::
+:::
+::: {.column width="50%"}
+
+![](assets/examples.jpg)
+
+:::
+:::
+
+::: {.notes}
+
+Literate programming is a programming paradigm introduced by Donald Knuth in 1984. The key concept behind literate programming is to treat a program as a work of literature, understandable to human beings. In this paradigm, documentation and source code are interwoven in a way that presents the logic and structure of the program in a readable and understandable manner.
+
+In traditional programming, the source code is primary and documentation is secondary, often added as comments or in separate documentation files. In literate programming, the source code and documentation are combined, and the documentation is primary. The idea is that the program is written for humans to read and understand, and the actual source code is secondary, extracted and compiled by special tools.
+
+Some key features of literate programming include:
+
+Intertwined Documentation and Code: The documentation explains the logic, design decisions, and overall structure of the code, while the source code is presented within this narrative.
+
+Structured Narrative: The program is presented in a top-down manner, where the higher-level structure and concepts are introduced first, followed by the detailed implementation.
+
+Readable for Humans: The main goal is to make the program easy to read and understand by other humans, which aids in maintenance, debugging, and collaborative development.
+
+Emphasis on Explanation: The documentation within the literate programming code often includes detailed explanations of algorithms, data structures, and design decisions.
+
+:::
 
 ## [Quarto](https://quarto.org/)
 
@@ -25,22 +51,30 @@ format: revealjs
 :::: {.columns}
 ::: {.column width="70"}
 
-- Command-line tool enabling weaving code and documentation using Python, R, Julia, and Observable.
+- **Command-line tool** enabling weaving code and documentation using Python, R, Julia, and Observable.
 - Supports Knitr (plain text, markdown) or Jupyter engines.
+
+::: {.fragment}
+
 - Supports many IDEs
   - RStudio
   - JupyterLab
   - VS Code
   - Neovim
+
+:::
+::: {.fragment}
+
 - Numerous output formats
   - Documents (HTML, PDF, MS Word)
   - Presentations (RevealJS, Powerpoint, Beamer)
-  - Websites, Blogs, E-Books
+  - Websites, Blogs, e-Books
   - Interactive (ObservableJS, Shiny)
 
 :::
+:::
 
-::: {.column width="30"}
+::: {.column .fragment width="30"}
 
 - Features and components
   - Scientific markdown
@@ -53,37 +87,94 @@ format: revealjs
 :::
 ::::
 
-## How it all works
+## Installation
 
-![](assets/flow.jpg){width="90%"}
+- Install the latest [quarto executable](https://quarto.org/docs/get-started/)
+- R package **quarto** to run quarto from R
+- If using [RStudio](https://posit.co/download/rstudio-desktop/), you need a version *v2022.07.1* or newer
+- [Visual Studio Code](https://code.visualstudio.com/) along with quarto extension is a great option too
 
-## Output formats
-
-::: {style='text-align="left"'}
-
-|Rmd                    |Quarto                      |
-|-----------------------|----------------------------|
-|html_document          |html                        |
-|pdf_document           |pdf                         |
-|word_document          |docx                        |
-|beamer_presentation    |beamer                      |
-|powerpoint_presentation|pptx                        |
-|revealjs               |revealjs                    |
-|xaringan               |                            |
-|distill/tufte          |quarto article layout       |
-|html_document2         |quarto crossref             |
-|pdf_document2          |quarto crossref             |
-|word_document2         |quarto crossref             |
-|blogdown/distill       |quarto website/quarto blog  |
-|bookdown               |quarto books                |
-|shiny documents        |quarto interactive documents|
-|pagedown               |TBA                         |
-|rticles                |TBA                         |
-|flexdashboard          |TBA                         |
-
+:::: {.columns}
+::: {.column width="50%"}
+![](assets/rstudio-preview.png)
 :::
 
-## Quarto anatomy
+::: {.column width="50%"}
+![](assets/vscode-preview.png)
+:::
+::::
+
+## Quarto Notebook
+
+- Create a quarto document, ie; a file that ends in `.qmd`  
+  - In RStudio, **File > New File > Quarto Document**
+- Add YAML matter to top
+
+```
+---
+title: "This is a title"
+format: html
+---
+```
+
+- Text & visual editor
+- Live preview
+  - From R console `quarto::quarto_preview("report.qmd")`
+  - From terminal `quarto preview report.qmd`
+- Render
+  - Interactively using the **Render** button
+  - From R console `quarto::quarto_render("report.qmd")`
+  - From terminal `quarto render report.qmd`
+
+::: {.notes}
+R Notebook demonstration.
+- Text editor
+- Visual editor
+:::
+
+## PDF
+
+:::: {.columns}
+::: {.column width="40%"}
+
+- Render to PDF format
+- Requires LaTeX installation
+  - Default engine is xelatex
+  - A lightweight option is R package **tinytex**
+  - Change `pdf-engine` as needed
+- Change YAML options
+
+  ```yaml
+  format: pdf
+  pdf-engine: pdflatex
+  ```
+
+- [Typst format](https://quarto.org/docs/output-formats/typst.html)
+
+  ```yaml
+  format: typst
+  ```
+  
+:::
+::: {.column width="60%"}
+
+![](assets/demo-pdf.png)
+
+:::
+::::
+
+[For PDF options, see [here](https://quarto.org/docs/reference/formats/pdf.html)]{.smaller}
+
+## Presentation
+
+- Create presentations as HTML (RevealJS) or Powerpoint
+- Change format to `revealjs`
+
+![](assets/demo-revealjs.png){width="60%"}
+
+[For RevealJS options, see [here](https://quarto.org/docs/reference/formats/presentations/revealjs.html)]{.smaller}
+
+## Quarto document anatomy
 
 :::: {.columns}
 ::: {.column width="50%"}
@@ -116,7 +207,7 @@ head(iris)
 :::
 ::::
 
-## Quarto anatomy
+## Quarto document anatomy
 
 :::: {.columns}
 ::: {.column width="50%"}
@@ -434,88 +525,36 @@ date()
 [Chunk option documentation](https://quarto.org/docs/computations/execution-options.html)
 :::
 
-## Installation
+## How it all works
 
-- Install the latest [quarto executable](https://quarto.org/docs/get-started/)
-- R package **quarto** to run quarto from R
-- If using [RStudio](https://posit.co/download/rstudio-desktop/), you need a version *v2022.07.1* or newer
-- Optionally, [Visual Studio Code](https://code.visualstudio.com/) along with quarto extension is a great option too
+. . . 
 
-:::: {.columns}
-::: {.column width="50%"}
-![](assets/rstudio-preview.png)
-:::
+`quarto render index.qmd`
 
-::: {.column width="50%"}
-![](assets/vscode-preview.png)
-:::
-::::
+. . .
 
-## Quarto Notebook
-
-- Create a file that ends in `.qmd`  
-- In RStudio, **File > New File > Quarto Document**
-- Add YAML matter to top
-
+```{mermaid}
+%%| eval: true
+%%| echo: false
+ 
+flowchart LR
+  input-md(YAML + Markdown\n.md) --> engine-md([MARKDOWN engine]) --> markdown(Markdown\n.md)
+  input-qmd(YAML + Markdown + Code\n.qmd, .rmd) --> engine-knitr-a([KNITR engine\nR, Python, Julia, Bash]) --> markdown
+  input-jupyter(JupyterLab\n.ipynb) --> engine-jupyter([JUPYTER engine\nPython]) --> markdown
+  input-rnw(YAML + Markdown + Code\n.qmd, .rnw) --> engine-knitr-b([KNITR engine\nR, Python, Julia, Bash]) --> tex(Tex\n .tex)
+  markdown --> render([RENDER\nPandoc Lua])
+  tex --> render
+  render --> output-md(Markdown\nGFM, Docusaurus)
+  render --> output-html(Reports, Websites, RevealJS slides, Blogs, Manuscripts ...\n.html)
+  render --> output-pdf(PDF, Beamer slides\n.pdf)
+  render --> output-docx(Word\n.docx)
+  render --> output-pptx(Powerpoint\n.pptx)
+  render --> output-wikis(Wikis)
+  output-html --> publish([PUBLISH]) --> hosting(Github pages\n Quarto pub\n Netlify)
+  publish --> confluence(Confluence)
 ```
----
-title: "This is a title"
-format: html
----
-```
 
-- Text & visual editor
-- Live preview
-  - From R console `quarto::quarto_preview("report.qmd")`
-  - From terminal `quarto preview report.qmd`
-- Render
-  - Interactively using the **Render** button
-  - From R console `quarto::quarto_render("report.qmd")`
-  - From terminal `quarto render report.qmd`
-
-::: {.notes}
-R Notebook demonstration.
-- Text editor
-- Visual editor
-:::
-
-## PDF
-
-:::: {.columns}
-::: {.column width="40%"}
-
-- Render to PDF format
-- Requires LaTeX installation
-  - Default engine is xelatex
-  - A lightweight option is R package **tinytex**
-  - Change `pdf-engine` as needed
-- Change YAML options
-
-  ```yaml
-  format: pdf
-  pdf-engine: pdflatex
-  ```
-
-:::
-::: {.column width="60%"}
-
-![](assets/demo-pdf.png)
-
-:::
-::::
-
-[For PDF options, see [here](https://quarto.org/docs/reference/formats/pdf.html)]{.smaller}
-
-## Presentation
-
-- Create presentations as HTML (RevealJS) or Powerpoint
-- Change format to `revealjs`
-
-![](assets/demo-revealjs.png){width="60%"}
-
-[For RevealJS options, see [here](https://quarto.org/docs/reference/formats/presentations/revealjs.html)]{.smaller}
-
-## Parameterised reports
+## Parameterized reports
 
 - Parameters can be passed into a document during rendering
 - Define parameters/defaults in YAML
@@ -537,7 +576,7 @@ params$alpha
 ```
 ````
 
-- Pass parameters through command-line
+- Pass parameters through command-line or params file
 
 `quarto render document.qmd -P alpha:0.2 -P ratio:0.3`
 
@@ -633,9 +672,9 @@ iris %>%
 :::
 ::::
 
-## OJS
+## ObservableJS
 
-- Quarto supports [ObservableJS](https://observablehq.com/) for interactive visualisations in the browser.
+Quarto supports [OJS](https://observablehq.com/) for interactive visualizations in the browser
 
 :::: {.columns}
 ::: {.column width="50%"}
@@ -647,15 +686,9 @@ ojs_define(ojsd = irism)
 ```
 
 ```{ojs}
+//| eval: false
 ojsdata = transpose(ojsd)
-```
-
-```{ojs}
 viewof x = Inputs.select(Object.keys(ojsdata[0]), {value: "sepal_length", multiple: false, label: "X axis"})
-```
-
-```{ojs}
-//| echo: false
 viewof y = Inputs.select(Object.keys(ojsdata[0]), {value: "sepal_width", multiple: false, label: "Y axis"})
 ```
 
@@ -677,6 +710,9 @@ Plot.plot({
 
 ```{ojs}
 //| echo: false
+ojsdata = transpose(ojsd)
+viewof x = Inputs.select(Object.keys(ojsdata[0]), {value: "sepal_length", multiple: false, label: "X axis"})
+viewof y = Inputs.select(Object.keys(ojsdata[0]), {value: "sepal_width", multiple: false, label: "Y axis"})
 Plot.plot({
   marks: [
     Plot.dot(ojsdata, {
@@ -715,7 +751,7 @@ help            - Show this help or the help of a sub-command.
 
 ```
 >  quarto --version
-1.3.340
+1.4.549
 ```
 
 ## Extending Quarto
@@ -728,10 +764,25 @@ help            - Show this help or the help of a sub-command.
 ## Acknowledgements
 
 - [quarto.org](https://quarto.org/)
-- [Quarto workshop by Tom Mock](https://www.youtube.com/watch?v=yvi5uXQMvu4)
-- [Quarto introduction by Julia Müller](https://www.youtube.com/watch?v=shVSmYna3GM)
 - [Authoring Quarto](https://rstudio-conf-2022.github.io/get-started-quarto/materials/02-authoring.html#/authoring-quarto)
 - [Datacamp cheatsheet](https://res.cloudinary.com/dyd911kmh/image/upload/v1676540721/Marketing/Blog/Quarto_Cheat_Sheet.pdf)
+
+. . .
+
+::: {.columns}
+::: {.column}
+
+{{< video https://www.youtube.com/watch?v=7lCOjGrwclQ width="100%" height="400px" >}}  
+**Getting to know Quarto**, Julia Müller, R-Ladies Freiburg 2022
+
+:::
+::: {.column}
+
+{{< video https://www.youtube.com/watch?v=yvi5uXQMvu4 width="100%" height="400px" >}}  
+**Welcome to Quarto**, Tom Mock, Posit Meetup 2023
+
+:::
+:::
 
 ## {background-image="/assets/images/cover.jpg"}
 
@@ -768,3 +819,29 @@ R.version[c("platform","os","major","minor")]
 - Interactivity
   - Client-side interactivity using ObservableJS
   - Server-side interactivity using Shiny
+
+## Output formats
+
+::: {style='text-align="left"'}
+
+|Rmd                    |Quarto                      |
+|-----------------------|----------------------------|
+|html_document          |html                        |
+|pdf_document           |pdf                         |
+|word_document          |docx                        |
+|beamer_presentation    |beamer                      |
+|powerpoint_presentation|pptx                        |
+|revealjs               |revealjs                    |
+|xaringan               |                            |
+|distill/tufte          |quarto article layout       |
+|html_document2         |quarto crossref             |
+|pdf_document2          |quarto crossref             |
+|word_document2         |quarto crossref             |
+|blogdown/distill       |quarto website/quarto blog  |
+|bookdown               |quarto books                |
+|shiny documents        |quarto interactive documents|
+|pagedown               |TBA                         |
+|rticles                |TBA                         |
+|flexdashboard          |TBA                         |
+
+:::

@@ -7,9 +7,11 @@ format: html
 ---
 
 ::: callout-note
-These are exercises to get you started with quarto. Refer to the [official quarto documentation](https://quarto.org).
+These are exercises to get you started with quarto. Refer to the official [quarto documentation](https://quarto.org) for help.
 
-- Quarto usage
+We aim to cover the following topics:
+
+- Basic usage
 - Markdown markup
 - Set up a quarto notebook
 - Add content and export to some common formats
@@ -28,9 +30,11 @@ library(stringr)
 
 ## Introduction
 
-Create a quarto document by creating a text file with **.qmd** extension. In RStudio, go to **File > New File > Quarto Document**. You are given the option to set title, author etc as well as output format. Set the output format as html. This document is a quarto notebook or R notebook. You can set the display mode to be **Source** or **Visual** (where text formatting is shown).
+Create a quarto document by creating a text file with **.qmd** extension. In RStudio, go to **File > New File > Quarto Document**. You are given the option to set title, author etc as well as output format. Set the output format as **html**. This document that you are working in is a quarto notebook or R notebook. You can set the display mode to be **Source** or **Visual** (where text formatting is shown).
 
-You could just enter some text in the qmd file and render it and that would render a plain HTML file by default. And that's fine. But, it is often useful to enter some metadata information such as title, author etc. And this is defined in the YAML matter.
+A quarto file usually consists of a YAML header, text in markdown format and if needed some code in code chunks. All of these are optional. An empty qmd file is a valid quarto file which will render to produce a blank html document.
+
+![](assets/anatomy-parts.png)
 
 ### YAML
 
@@ -81,7 +85,7 @@ Here is some more text
 ![](assets/report-b.png)
 :::
 
-Date is now set as **last-modified** which means it is automatically updated whenever the document is rendered. The date format is adjusted by setting **date-format: "DD-MMM-YYYY"**. In addition, the output format is now explicitly specified. The table of contents is enabled and it's depth is set to 4. Section numberings are enabled and depth is set to 4. Try changing some of these arguments to see how it affects the output.
+Date is now set as **last-modified** which means it is automatically updated whenever the document is rendered. The date format is adjusted by setting **date-format: "DD-MMM-YYYY"**. In addition, the output format is now explicitly specified. The table of contents is enabled and it's depth is set to 4. Section numbering is enabled and depth is set to 4. Try changing some of these arguments to see how it affects the output.
 
 Here is a more complex version:
 
@@ -128,13 +132,20 @@ date()
 ![](assets/report-c.png)
 :::
 
-**title-block-banner: true** displays the blue banner. **code-fold: true** folds the code and reduces clutter. **code-copy: true** adds a copy icon in the code chunk and allows the code to be copied easily. **code-tools: true** adds options to the top right of the document to allow the user to show/hide all code chunks and view source code. **df-print: kable** sets the default method of displaying tables. **standalone: false** specifies if all assets and libraries must be integrated into the output html file as a standalone document.
+- **title-block-banner: true** displays the blue banner
+- **code-fold: true** folds the code and reduces clutter
+- **code-copy: true** adds a copy icon in the code chunk and allows the code to be copied easily
+- **code-tools: true** adds options to the top right of the document to allow the user to show/hide all code chunks and view source code
+- **df-print: kable** sets the default method of displaying tables
+- **standalone: false** specifies if all assets and libraries must be integrated into the output html file as a standalone document. Standalone document may not always work with complex html files such as those with interactive graphics.
 
 For a complete guide to YAML metadata for HTML, see [here](https://quarto.org/docs/reference/formats/html.html#metadata).
 
-### Text
+### Markdown text
 
-The above level 2 heading was created by specifying `# Section 1`. Other headings can be specified similarly.
+Markdown is a markup language similar to HTML, but simple and human-readable. There exists several variants of markdown with slight differences. Quarto uses [Pandoc flavored markdown](https://pandoc.org/MANUAL#pandocs-markdown).
+
+Headings are specified as such:
 
 ```
 ## Level 2 heading  
@@ -144,12 +155,12 @@ The above level 2 heading was created by specifying `# Section 1`. Other heading
 ###### Level 6 heading
 ```
 
-This `*This is italic text*` becomes *This is italic text*.  
-THis `**This is italic text**` becomes **This is bold text**.  
+This `*italic text*` becomes *italic text*.  
+This `**bold text**` becomes **bold text**.  
 Subscript written like this `H~2~O` renders as H~2~O.  
 Superscript written like this `2^10^` renders as 2^10^.  
 
-Bullet points are usually specified using `-`.
+Bullet points are usually specified using `-`
 
 ```
 - Point one
@@ -178,11 +189,11 @@ Lists can also be created inside block quotes.
 > 1.  This is a list inside a block quote.
 > 2.  Second item.
 
-Links can be created using `[this](https://quarto.org)` like [this](https://quarto.org).
+Links can be created using `[this](https://quarto.org)` which renders like [this](https://quarto.org).
 
 ### Images
 
-Images can be displayed from a relative local location using `![This is a caption](assets/gotland.jpg)`. For example:
+Images can be displayed from a relative local location or a full URL using `![This is a caption](assets/gotland.jpg)`. For example:
 
 ![This is a caption](assets/gotland.jpg)
 
@@ -197,6 +208,10 @@ For finer control, raw HTML can be used. For example;
 ```
 
 <img src="assets/gotland.jpg" width="150px"/>
+
+::: {.callout-note}
+Using raw HTML would only work if the output format is an HTML format.
+:::
 
 Images can also be displayed using R code. Chunks option `out.width` in RMarkdown can be used to control image display size.
 
@@ -390,7 +405,7 @@ R Plots can be plotted like below:
 ```{{r}}
 #| label: fig-plot-a
 #| fig-cap: This is a figure caption.
-#| fig-height:6
+#| fig-height: 6
 #| fig-width: 6
 plot(x=iris$Petal.Length,y=iris$Petal.Width)
 ```
@@ -439,6 +454,8 @@ Sometimes TeX converters may need additional libraries which may need to be inst
 
 See [here](https://quarto.org/docs/reference/formats/pdf.html) for more PDF options.
 
+An alternative to using TeX based PDF generation is to use [Typst](https://typst.app/). Quarto support the Typst engine natively. More information about using Typst can be found in the quarto [typst documentation](https://quarto.org/docs/output-formats/typst.html).
+
 ## Report
 
 In this example, we will recreate the parameterized report shown below:
@@ -454,7 +471,7 @@ The source code for the page is available on the page by clicking the code-tools
 
 The aim of the report is to subset the iris dataset and create a report on the subsetted data. This is a parameterized report because the species to subset is provided as a parameter to the document during run time.
 
-This is how the YAML metadata is organised:
+This is how the YAML metadata is organized:
 
 ````
 ---
@@ -466,8 +483,6 @@ format:
     title-block-banner: true
     toc: true
     number-sections: true
-    theme: pulse
-    highlight: kate
     code-tools: true
     fig-align: left
 
@@ -476,12 +491,11 @@ params:
 ---
 ````
 
-- Since this a parameterized report, `params` is defined in the YAML metadata. Here we have one parameter `name` with default value **setosa**. The parameter can be passed in while rendering the document. If no parameter is passed, the default value is used.
+- Since this a parameterized report, `params` is defined in the YAML metadata. Parameters have to be defined with defaults. Here we have one parameter `name` with default value **setosa**. A different argument to the parameter can be passed in while rendering the document. If no parameter is passed, the default value is used.
 - The title takes this parameter to create a title with the name.
 - The output format is set to `html`.
 - Table of contents (`toc`) is enabled.
 - `title-block-banner` is enabled
-- The theme is set to `pulse`. More themes are available at [bootswatch](https://bootswatch.com)
 - `code-tools` creates a widget on the top right side of the document to view source code.
 
 A heading is created through code using param value.
@@ -562,7 +576,7 @@ Right column
 ::::
 ```
 
-- Speaker view is created like this:
+- Speaker notes are created like this:
 
 ```
 ::: {.notes}
@@ -570,7 +584,7 @@ Speaker notes go here.
 :::
 ```
 
-This can be viewed by pressing the <kbd>S</kbd> key.
+The presenter view is enabled by pressing the <kbd>S</kbd> key.
 
 - The presentation theme can be changed
 
@@ -636,7 +650,7 @@ project:
   type: book
 ```
 
-Then running `quarto render` renders the output into a directory named `_site`. The output can be changed to **docs** for example for GitHub Pages.
+Then running `quarto render` renders the output into a directory named `_site`. The output can be changed, for example, to **docs** for GitHub Pages.
 
 ```
 project:
@@ -646,4 +660,7 @@ project:
 
 The output format by default is HTML. This can be changed or modified by adding `format` to the config file or to individual qmd files. The parameters defined in the config file will be shared by all other qmd files.
 
+To create a project in RStudio, go to **File > New Project **, then select directory and then a project type such as website, blog or book. Try creating one based on what interests you. Website and blog documentation is [here](https://quarto.org/docs/websites/) and books are [here](https://quarto.org/docs/books/).
+
 For more project options, see [here](https://quarto.org/docs/reference/projects/options.html).
+
