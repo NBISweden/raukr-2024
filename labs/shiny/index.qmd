@@ -697,16 +697,19 @@ shinyApp(
 #| layout: vertical
 #| viewerHeight: 450
 
-webr::install(c("ggplot2", "bslib"))
+webr::install(c("ggplot2", "bslib", "palmerpenguins", "htmltools"))
 
+library(htmltools)
 library(bslib)
 library(ggplot2)
+library(palmerpenguins)
+data("penguins")
 
-pc <- prcomp(iris[,c("Sepal.Length", "Petal.Length", "Sepal.Width", "Petal.Width")], center = TRUE, scale. = TRUE)
-dfr <- cbind(iris,as.data.frame(pc$x))
+pdata <- na.omit(penguins)
+pc <- prcomp(pdata[,c("bill_length_mm", "bill_depth_mm", "flipper_length_mm", "body_mass_g")], center = TRUE, scale. = TRUE)
+dfr <- cbind(pdata,as.data.frame(pc$x))
 
 ui <- page_sidebar(
-  title = "Iris",
   sidebar = sidebar(
     selectInput("x",
       label = "X axis",
@@ -718,26 +721,41 @@ ui <- page_sidebar(
       label = "Y axis",
       choices = c("PC1","PC2","PC3","PC4"),
       selected = "PC2"
+    ),
+    selectInput("v",
+      label = "Color",
+      choices = c("species", "island", "sex"),
+      selected = "cut"
     )
   ),
-  plotOutput("plot", height = "350px")
+  imageOutput("plot", height = "350px")
 )
 
 server <- function(input, output, session) {
   
-  output$plot <- renderPlot({
+  output$plot <- renderImage({
     x <- input$x
     y <- input$y
     v <- input$v
     
-    ggplot(dfr, aes(x = !!sym(x), y = !!sym(y), col = Species)) +
+    p <- ggplot(dfr, aes(x = !!sym(x), y = !!sym(y), col = !!sym(v))) +
       geom_point() +
       theme_bw() + 
       theme(legend.position = "top")
-  })
+
+    file <- htmltools::capturePlot(
+      print(p), 
+      tempfile(fileext = ".svg"),
+      grDevices::svg,
+      width = 4, 
+      height = 4
+    )
+    
+    list(src = file)
+  }, deleteFile = TRUE)
 }
 
-shinyApp(ui = ui, server = server)
+app <- shinyApp(ui = ui, server = server)
 ```
 
 Refer to the shinylive extension [documentation](https://quarto-ext.github.io/shinylive/).

@@ -146,7 +146,6 @@ For anything beyond extremely basic plots, base plotting quickly become complex.
   - [Gadfly](http://gadflyjl.org/stable/) in Julia
   - [gramm](https://se.mathworks.com/matlabcentral/fileexchange/54465-gramm-complete-data-visualization-toolbox-ggplot2-r-like) in MatLab
   - [GGPlot](https://metacpan.org/pod/Chart::GGPlot) in Perl
-  - [Vega](https://vega.github.io/vega/) in Javascript
   - [PlotNine](https://plotnine.readthedocs.io/en/stable/) , [ggpy](https://github.com/yhat/ggpy), [lets-plot](https://lets-plot.org/) in Python
 
 ::: {.notes}
@@ -1054,7 +1053,8 @@ p + newtheme
 ![](assets/bbc.jpg){width="95%"}
 
 ::: {.smaller}
-[How BBC works with R graphics](https://medium.com/bbc-visual-and-data-journalism/how-the-bbc-visual-and-data-journalism-team-works-with-graphics-in-r-ed0b35693535)
+[How BBC works with R graphics](https://medium.com/bbc-visual-and-data-journalism/how-the-bbc-visual-and-data-journalism-team-works-with-graphics-in-r-ed0b35693535) 
+[Visual design by Cedric Scherer](https://www.cedricscherer.com/)
 :::
 
 ## Position
@@ -1141,7 +1141,7 @@ q <- ggplot(us,aes(x=state,y=value,fill=type))+geom_bar(stat="identity")
 patchwork::wrap_plots(p,q)
 ```
 
-[Refer to [patchwork](https://patchwork.data-imaginist.com/) documentation.]{.smaller}
+[Refer to [patchwork](https://patchwork.data-imaginist.com/) documentation. Some notable alternatives are [ggpubr](https://rpkgs.datanovia.com/ggpubr/) and [cowplot](https://wilkelab.org/cowplot/articles/plot_grid.html).]{.smaller}
 
 ::: {.notes}
 
@@ -1198,7 +1198,6 @@ Most interactive plotting libraries are not as complete as `ggplot2`. Therefore,
 
 ## Extensions
 
-- [**patchwork**](https://patchwork.data-imaginist.com/): Combining plots
 - [**ggrepel**](https://ggrepel.slowkow.com/index.html): Text labels including overlap control 
 - [**ggforce**](https://ggforce.data-imaginist.com/): Circles, splines, hulls, voronoi etc
 - [**ggpmisc**](https://github.com/aphalo/ggpmisc): Miscellaneaous features
@@ -1212,7 +1211,7 @@ Most interactive plotting libraries are not as complete as `ggplot2`. Therefore,
 A collection of ggplot extension packages: [https://exts.ggplot2.tidyverse.org/](https://exts.ggplot2.tidyverse.org/).  
 Curated list of ggplot2 links: [https://github.com/erikgahner/awesome-ggplot2](https://github.com/erikgahner/awesome-ggplot2).  
 
-## Help
+## Learning & Help
 
 :::: {.columns}
 ::: {.column width="30%"}
