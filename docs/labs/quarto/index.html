@@ -211,7 +211,7 @@ background-size: cover;
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">01-Feb-2024</p>
+        <p class="date">04-Jun-2024</p>
       </div>
     </div>
     
@@ -230,7 +230,7 @@ background-size: cover;
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a>
   <ul>
   <li><a href="#yaml" id="toc-yaml" class="nav-link" data-scroll-target="#yaml"><span class="header-section-number">1.1</span> YAML</a></li>
-  <li><a href="#text" id="toc-text" class="nav-link" data-scroll-target="#text"><span class="header-section-number">1.2</span> Text</a></li>
+  <li><a href="#markdown-text" id="toc-markdown-text" class="nav-link" data-scroll-target="#markdown-text"><span class="header-section-number">1.2</span> Markdown text</a></li>
   <li><a href="#images" id="toc-images" class="nav-link" data-scroll-target="#images"><span class="header-section-number">1.3</span> Images</a></li>
   <li><a href="#code" id="toc-code" class="nav-link" data-scroll-target="#code"><span class="header-section-number">1.4</span> Code</a></li>
   <li><a href="#tables" id="toc-tables" class="nav-link" data-scroll-target="#tables"><span class="header-section-number">1.5</span> Tables</a></li>
@@ -265,9 +265,10 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>These are exercises to get you started with quarto. Refer to the <a href="https://quarto.org">official quarto documentation</a>.</p>
+<p>These are exercises to get you started with quarto. Refer to the official <a href="https://quarto.org">quarto documentation</a> for help.</p>
+<p>We aim to cover the following topics:</p>
 <ul>
-<li>Quarto usage</li>
+<li>Basic usage</li>
 <li>Markdown markup</li>
 <li>Set up a quarto notebook</li>
 <li>Add content and export to some common formats
@@ -289,8 +290,9 @@ Note
 </div>
 <section id="introduction" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">1</span> Introduction</h2>
-<p>Create a quarto document by creating a text file with <strong>.qmd</strong> extension. In RStudio, go to <strong>File &gt; New File &gt; Quarto Document</strong>. You are given the option to set title, author etc as well as output format. Set the output format as html. This document is a quarto notebook or R notebook. You can set the display mode to be <strong>Source</strong> or <strong>Visual</strong> (where text formatting is shown).</p>
-<p>You could just enter some text in the qmd file and render it and that would render a plain HTML file by default. And that’s fine. But, it is often useful to enter some metadata information such as title, author etc. And this is defined in the YAML matter.</p>
+<p>Create a quarto document by creating a text file with <strong>.qmd</strong> extension. In RStudio, go to <strong>File &gt; New File &gt; Quarto Document</strong>. You are given the option to set title, author etc as well as output format. Set the output format as <strong>html</strong>. This document that you are working in is a quarto notebook or R notebook. You can set the display mode to be <strong>Source</strong> or <strong>Visual</strong> (where text formatting is shown).</p>
+<p>A quarto file usually consists of a YAML header, text in markdown format and if needed some code in code chunks. All of these are optional. An empty qmd file is a valid quarto file which will render to produce a blank html document.</p>
+<p><a href="assets/anatomy-parts.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="assets/anatomy-parts.png" class="img-fluid"></a></p>
 <section id="yaml" class="level3" data-number="1.1">
 <h3 data-number="1.1" class="anchored" data-anchor-id="yaml"><span class="header-section-number">1.1</span> YAML</h3>
 <p>The content on the top of the quarto document within three dashes is the YAML matter. This is optional. It is really up to the author to decide how much information needs to be entered here. Here are some common base level YAML parameters.</p>
@@ -302,7 +304,7 @@ author: "John Doe"
 date: "25-Apr-2022"
 ---</code></pre>
 <div class="shadow">
-<p><a href="assets/report-a.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="assets/report-a.png" class="img-fluid"></a></p>
+<p><a href="assets/report-a.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="assets/report-a.png" class="img-fluid"></a></p>
 </div>
 <p>The default output format is html and this can be changed or arguments for this can be adjusted by specifying this in the yaml. Here is an updated version:</p>
 <pre><code>---
@@ -328,9 +330,9 @@ This is some text
 
 Here is some more text</code></pre>
 <div class="shadow">
-<p><a href="assets/report-b.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="assets/report-b.png" class="img-fluid"></a></p>
+<p><a href="assets/report-b.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="assets/report-b.png" class="img-fluid"></a></p>
 </div>
-<p>Date is now set as <strong>last-modified</strong> which means it is automatically updated whenever the document is rendered. The date format is adjusted by setting <strong>date-format: “DD-MMM-YYYY”</strong>. In addition, the output format is now explicitly specified. The table of contents is enabled and it’s depth is set to 4. Section numberings are enabled and depth is set to 4. Try changing some of these arguments to see how it affects the output.</p>
+<p>Date is now set as <strong>last-modified</strong> which means it is automatically updated whenever the document is rendered. The date format is adjusted by setting <strong>date-format: “DD-MMM-YYYY”</strong>. In addition, the output format is now explicitly specified. The table of contents is enabled and it’s depth is set to 4. Section numbering is enabled and depth is set to 4. Try changing some of these arguments to see how it affects the output.</p>
 <p>Here is a more complex version:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "My report"</span></span>
@@ -369,24 +371,32 @@ Here is some more text</code></pre>
 <span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a><span class="in">date()</span></span>
 <span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="shadow">
-<p><a href="assets/report-c.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="assets/report-c.png" class="img-fluid"></a></p>
+<p><a href="assets/report-c.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="assets/report-c.png" class="img-fluid"></a></p>
 </div>
-<p><strong>title-block-banner: true</strong> displays the blue banner. <strong>code-fold: true</strong> folds the code and reduces clutter. <strong>code-copy: true</strong> adds a copy icon in the code chunk and allows the code to be copied easily. <strong>code-tools: true</strong> adds options to the top right of the document to allow the user to show/hide all code chunks and view source code. <strong>df-print: kable</strong> sets the default method of displaying tables. <strong>standalone: false</strong> specifies if all assets and libraries must be integrated into the output html file as a standalone document.</p>
+<ul>
+<li><strong>title-block-banner: true</strong> displays the blue banner</li>
+<li><strong>code-fold: true</strong> folds the code and reduces clutter</li>
+<li><strong>code-copy: true</strong> adds a copy icon in the code chunk and allows the code to be copied easily</li>
+<li><strong>code-tools: true</strong> adds options to the top right of the document to allow the user to show/hide all code chunks and view source code</li>
+<li><strong>df-print: kable</strong> sets the default method of displaying tables</li>
+<li><strong>standalone: false</strong> specifies if all assets and libraries must be integrated into the output html file as a standalone document. Standalone document may not always work with complex html files such as those with interactive graphics.</li>
+</ul>
 <p>For a complete guide to YAML metadata for HTML, see <a href="https://quarto.org/docs/reference/formats/html.html#metadata">here</a>.</p>
 </section>
-<section id="text" class="level3" data-number="1.2">
-<h3 data-number="1.2" class="anchored" data-anchor-id="text"><span class="header-section-number">1.2</span> Text</h3>
-<p>The above level 2 heading was created by specifying <code># Section 1</code>. Other headings can be specified similarly.</p>
+<section id="markdown-text" class="level3" data-number="1.2">
+<h3 data-number="1.2" class="anchored" data-anchor-id="markdown-text"><span class="header-section-number">1.2</span> Markdown text</h3>
+<p>Markdown is a markup language similar to HTML, but simple and human-readable. There exists several variants of markdown with slight differences. Quarto uses <a href="https://pandoc.org/MANUAL#pandocs-markdown">Pandoc flavored markdown</a>.</p>
+<p>Headings are specified as such:</p>
 <pre><code>## Level 2 heading  
 ### Level 3 heading  
 #### Level 4 heading  
 ##### Level 5 heading  
 ###### Level 6 heading</code></pre>
-<p>This <code>*This is italic text*</code> becomes <em>This is italic text</em>.<br>
-THis <code>**This is italic text**</code> becomes <strong>This is bold text</strong>.<br>
+<p>This <code>*italic text*</code> becomes <em>italic text</em>.<br>
+This <code>**bold text**</code> becomes <strong>bold text</strong>.<br>
 Subscript written like this <code>H~2~O</code> renders as H<sub>2</sub>O.<br>
 Superscript written like this <code>2^10^</code> renders as 2<sup>10</sup>.</p>
-<p>Bullet points are usually specified using <code>-</code>.</p>
+<p>Bullet points are usually specified using <code>-</code></p>
 <pre><code>- Point one
 - Point two</code></pre>
 <ul>
@@ -408,27 +418,40 @@ Superscript written like this <code>2^10^</code> renders as 2<sup>10</sup>.</p>
 <li>Second item.</li>
 </ol>
 </blockquote>
-<p>Links can be created using <code>[this](https://quarto.org)</code> like <a href="https://quarto.org">this</a>.</p>
+<p>Links can be created using <code>[this](https://quarto.org)</code> which renders like <a href="https://quarto.org">this</a>.</p>
 </section>
 <section id="images" class="level3" data-number="1.3">
 <h3 data-number="1.3" class="anchored" data-anchor-id="images"><span class="header-section-number">1.3</span> Images</h3>
-<p>Images can be displayed from a relative local location using <code>![This is a caption](assets/gotland.jpg)</code>. For example:</p>
+<p>Images can be displayed from a relative local location or a full URL using <code>![This is a caption](assets/gotland.jpg)</code>. For example:</p>
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
-<p><a href="assets/gotland.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-4" data-glightbox="description: .lightbox-desc-4" title="This is a caption"><img src="assets/gotland.jpg" class="img-fluid figure-img" alt="This is a caption"></a></p>
+<p><a href="assets/gotland.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-5" data-glightbox="description: .lightbox-desc-5" title="This is a caption"><img src="assets/gotland.jpg" class="img-fluid figure-img" alt="This is a caption"></a></p>
 <figcaption>This is a caption</figcaption>
 </figure>
 </div>
 <p>By default, the image is displayed at full scale or until it fills the display width. The image dimension can be adjusted <code>![This is a caption](assets/gotland.jpg){width=40%}</code>.</p>
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
-<p><a href="assets/gotland.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-5" data-glightbox="description: .lightbox-desc-5" title="This is a caption"><img src="assets/gotland.jpg" class="img-fluid figure-img" style="width:40.0%" alt="This is a caption"></a></p>
+<p><a href="assets/gotland.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-6" data-glightbox="description: .lightbox-desc-6" title="This is a caption"><img src="assets/gotland.jpg" class="img-fluid figure-img" style="width:40.0%" alt="This is a caption"></a></p>
 <figcaption>This is a caption</figcaption>
 </figure>
 </div>
 <p>For finer control, raw HTML can be used. For example;</p>
 <pre><code>&lt;img src="assets/gotland.jpg" width="150px"&gt;</code></pre>
 <p><img src="assets/gotland.jpg" width="150px"></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Using raw HTML would only work if the output format is an HTML format.</p>
+</div>
+</div>
 <p>Images can also be displayed using R code. Chunks option <code>out.width</code> in RMarkdown can be used to control image display size.</p>
 <p>This image is displayed at a size of 200 pixels.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
@@ -439,7 +462,7 @@ Superscript written like this <code>2^10^</code> renders as 2<sup>10</sup>.</p>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><a href="assets/gotland.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="assets/gotland.jpg" class="img-fluid figure-img" width="200"></a></p>
+<p><a href="assets/gotland.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="assets/gotland.jpg" class="img-fluid figure-img" width="200"></a></p>
 </figure>
 </div>
 </div>
@@ -453,7 +476,7 @@ Superscript written like this <code>2^10^</code> renders as 2<sup>10</sup>.</p>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><a href="assets/gotland.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="assets/gotland.jpg" class="img-fluid figure-img" width="75"></a></p>
+<p><a href="assets/gotland.jpg" class="lightbox" data-gallery="quarto-lightbox-gallery-8"><img src="assets/gotland.jpg" class="img-fluid figure-img" width="75"></a></p>
 </figure>
 </div>
 </div>
@@ -676,7 +699,7 @@ Table&nbsp;2: This is a caption
 <div class="sourceCode" id="cb23"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: fig-plot-a</span></span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap: This is a figure caption.</span></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-height:6</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-height: 6</span></span>
 <span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-width: 6</span></span>
 <span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="in">plot(x=iris$Petal.Length,y=iris$Petal.Width)</span></span>
 <span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -685,7 +708,7 @@ Table&nbsp;2: This is a caption
 <div id="fig-plot-a" class="quarto-figure quarto-figure-left quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-plot-a-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/fig-plot-a-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8" data-glightbox="description: .lightbox-desc-8"><img src="index_files/figure-html/fig-plot-a-1.png" class="img-fluid figure-img" width="576"></a>
+<a href="index_files/figure-html/fig-plot-a-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9" data-glightbox="description: .lightbox-desc-9"><img src="index_files/figure-html/fig-plot-a-1.png" class="img-fluid figure-img" width="576"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-plot-a-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: This is a figure caption.
@@ -717,6 +740,7 @@ Figure&nbsp;1: This is a figure caption.
 <p>The <strong>format</strong> argument in the YAML matter must be changed to <code>pdf</code>, and the <strong>pdf-engine</strong> option may need to be changed as needed. If using <strong>tinytex</strong>, set <strong>pdf-engine: pdflatex</strong>.</p>
 <p>Sometimes TeX converters may need additional libraries which may need to be installed. And all features of HTML are not supported on TeX which may return errors.</p>
 <p>See <a href="https://quarto.org/docs/reference/formats/pdf.html">here</a> for more PDF options.</p>
+<p>An alternative to using TeX based PDF generation is to use <a href="https://typst.app/">Typst</a>. Quarto support the Typst engine natively. More information about using Typst can be found in the quarto <a href="https://quarto.org/docs/output-formats/typst.html">typst documentation</a>.</p>
 </section>
 </section>
 </section>
@@ -729,7 +753,7 @@ Figure&nbsp;1: This is a figure caption.
 <p><br></p>
 <p>The source code for the page is available on the page by clicking the code-tools icon on top right.</p>
 <p>The aim of the report is to subset the iris dataset and create a report on the subsetted data. This is a parameterized report because the species to subset is provided as a parameter to the document during run time.</p>
-<p>This is how the YAML metadata is organised:</p>
+<p>This is how the YAML metadata is organized:</p>
 <pre><code>---
 subtitle: "Parameterized report"
 author: "John Doe"
@@ -739,8 +763,6 @@ format:
     title-block-banner: true
     toc: true
     number-sections: true
-    theme: pulse
-    highlight: kate
     code-tools: true
     fig-align: left
 
@@ -748,12 +770,11 @@ params:
   name: setosa
 ---</code></pre>
 <ul>
-<li>Since this a parameterized report, <code>params</code> is defined in the YAML metadata. Here we have one parameter <code>name</code> with default value <strong>setosa</strong>. The parameter can be passed in while rendering the document. If no parameter is passed, the default value is used.</li>
+<li>Since this a parameterized report, <code>params</code> is defined in the YAML metadata. Parameters have to be defined with defaults. Here we have one parameter <code>name</code> with default value <strong>setosa</strong>. A different argument to the parameter can be passed in while rendering the document. If no parameter is passed, the default value is used.</li>
 <li>The title takes this parameter to create a title with the name.</li>
 <li>The output format is set to <code>html</code>.</li>
 <li>Table of contents (<code>toc</code>) is enabled.</li>
 <li><code>title-block-banner</code> is enabled</li>
-<li>The theme is set to <code>pulse</code>. More themes are available at <a href="https://bootswatch.com">bootswatch</a></li>
 <li><code>code-tools</code> creates a widget on the top right side of the document to view source code.</li>
 </ul>
 <p>A heading is created through code using param value.</p>
@@ -817,12 +838,12 @@ Right column
 
 ::::</code></pre>
 <ul>
-<li>Speaker view is created like this:</li>
+<li>Speaker notes are created like this:</li>
 </ul>
 <pre><code>::: {.notes}
 Speaker notes go here.
 :::</code></pre>
-<p>This can be viewed by pressing the <kbd>S</kbd> key.</p>
+<p>The presenter view is enabled by pressing the <kbd>S</kbd> key.</p>
 <ul>
 <li>The presentation theme can be changed</li>
 </ul>
@@ -870,18 +891,19 @@ Content for `Tab B`
 <p>And for a book:</p>
 <pre><code>project:
   type: book</code></pre>
-<p>Then running <code>quarto render</code> renders the output into a directory named <code>_site</code>. The output can be changed to <strong>docs</strong> for example for GitHub Pages.</p>
+<p>Then running <code>quarto render</code> renders the output into a directory named <code>_site</code>. The output can be changed, for example, to <strong>docs</strong> for GitHub Pages.</p>
 <pre><code>project:
   type: website
   output_dir: docs</code></pre>
 <p>The output format by default is HTML. This can be changed or modified by adding <code>format</code> to the config file or to individual qmd files. The parameters defined in the config file will be shared by all other qmd files.</p>
+<p>To create a project in RStudio, go to <strong>File &gt; New Project </strong>, then select directory and then a project type such as website, blog or book. Try creating one based on what interests you. Website and blog documentation is <a href="https://quarto.org/docs/websites/">here</a> and books are <a href="https://quarto.org/docs/books/">here</a>.</p>
 <p>For more project options, see <a href="https://quarto.org/docs/reference/projects/options.html">here</a>.</p>
 
 
 <div class="hidden" aria-hidden="true">
-<span class="glightbox-desc lightbox-desc-4">This is a caption</span>
 <span class="glightbox-desc lightbox-desc-5">This is a caption</span>
-<span class="glightbox-desc lightbox-desc-8">Figure&nbsp;1: This is a figure caption.</span>
+<span class="glightbox-desc lightbox-desc-6">This is a caption</span>
+<span class="glightbox-desc lightbox-desc-9">Figure&nbsp;1: This is a figure caption.</span>
 </div>
 </section>
 
@@ -1288,7 +1310,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","descPosition":"bottom","selector":".lightbox","loop":false,"closeEffect":"zoom"});
+<script>var lightboxQuarto = GLightbox({"selector":".lightbox","descPosition":"bottom","loop":false,"closeEffect":"zoom","openEffect":"zoom"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;

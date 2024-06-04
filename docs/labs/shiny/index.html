@@ -218,7 +218,7 @@ background-size: cover;
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">29-May-2024</p>
+        <p class="date">04-Jun-2024</p>
       </div>
     </div>
     
@@ -873,16 +873,19 @@ shinyApp(
 #| layout: vertical
 #| viewerHeight: 450
 
-webr::install(c("ggplot2", "bslib"))
+webr::install(c("ggplot2", "bslib", "palmerpenguins", "htmltools"))
 
+library(htmltools)
 library(bslib)
 library(ggplot2)
+library(palmerpenguins)
+data("penguins")
 
-pc &lt;- prcomp(iris[,c("Sepal.Length", "Petal.Length", "Sepal.Width", "Petal.Width")], center = TRUE, scale. = TRUE)
-dfr &lt;- cbind(iris,as.data.frame(pc$x))
+pdata &lt;- na.omit(penguins)
+pc &lt;- prcomp(pdata[,c("bill_length_mm", "bill_depth_mm", "flipper_length_mm", "body_mass_g")], center = TRUE, scale. = TRUE)
+dfr &lt;- cbind(pdata,as.data.frame(pc$x))
 
 ui &lt;- page_sidebar(
-  title = "Iris",
   sidebar = sidebar(
     selectInput("x",
       label = "X axis",
@@ -894,26 +897,41 @@ ui &lt;- page_sidebar(
       label = "Y axis",
       choices = c("PC1","PC2","PC3","PC4"),
       selected = "PC2"
+    ),
+    selectInput("v",
+      label = "Color",
+      choices = c("species", "island", "sex"),
+      selected = "cut"
     )
   ),
-  plotOutput("plot", height = "350px")
+  imageOutput("plot", height = "350px")
 )
 
 server &lt;- function(input, output, session) {
   
-  output$plot &lt;- renderPlot({
+  output$plot &lt;- renderImage({
     x &lt;- input$x
     y &lt;- input$y
     v &lt;- input$v
     
-    ggplot(dfr, aes(x = !!sym(x), y = !!sym(y), col = Species)) +
+    p &lt;- ggplot(dfr, aes(x = !!sym(x), y = !!sym(y), col = !!sym(v))) +
       geom_point() +
       theme_bw() + 
       theme(legend.position = "top")
-  })
+
+    file &lt;- htmltools::capturePlot(
+      print(p), 
+      tempfile(fileext = ".svg"),
+      grDevices::svg,
+      width = 4, 
+      height = 4
+    )
+    
+    list(src = file)
+  }, deleteFile = TRUE)
 }
 
-shinyApp(ui = ui, server = server)</code></pre>
+app &lt;- shinyApp(ui = ui, server = server)</code></pre>
 <p>Refer to the shinylive extension <a href="https://quarto-ext.github.io/shinylive/">documentation</a>.</p>
 </section>
 </section>
@@ -2067,9 +2085,9 @@ loaded via a namespace (and not attached):
  [5] fastmap_1.1.1     xfun_0.41         hues_0.2.0        magrittr_2.0.3   
  [9] knitr_1.45        htmltools_0.5.7   rmarkdown_2.25    lifecycle_1.0.4  
 [13] promises_1.2.1    cli_3.6.2         xtable_1.8-4      compiler_4.3.2   
-[17] tools_4.3.2       ellipsis_0.3.2    mime_0.12         evaluate_0.23    
-[21] colorspace_2.1-0  Rcpp_1.0.12       yaml_2.3.8        rlang_1.1.3      
-[25] jsonlite_1.8.8    htmlwidgets_1.6.4</code></pre>
+[17] rstudioapi_0.15.0 tools_4.3.2       ellipsis_0.3.2    mime_0.12        
+[21] evaluate_0.23     colorspace_2.1-0  Rcpp_1.0.12       yaml_2.3.8       
+[25] rlang_1.1.3       jsonlite_1.8.8    htmlwidgets_1.6.4</code></pre>
 </div>
 </div>
 
@@ -2519,7 +2537,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","loop":false,"selector":".lightbox","descPosition":"bottom","closeEffect":"zoom"});
+<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","selector":".lightbox","closeEffect":"zoom","loop":false,"descPosition":"bottom"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;
