@@ -41,7 +41,7 @@ The contents are being updated.
 |[**WEEK 2**]{.badge .badge-secondary}                                          |||
 |[**17-Jun-2024 (Mon)**]{.badge .badge-secondary}                               |||
 |Statistics and machine learning in R   |Nikolay Oskolkov                       |[Slides](slides/ml/index.html), [Lab](labs/ml/index.html)|
-|Futurverse 2                           |Henrik Bengtsson, Posit                ||
+|Futurverse 2                           |Henrik Bengtsson, UCSF                 ||
 |[**18-Jun-2024 (Tue)**]{.badge .badge-secondary}                               |||
 |Project environments using Renv        |Roy Francis                            |[Slides](slides/r-env/index.html)|
 :::
