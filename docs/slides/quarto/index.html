@@ -423,60 +423,23 @@
         <h1 class="title">Literate programming with Quarto</h1>
                 <p class="subtitle">RaukR 2024 • Advanced R for Bioinformatics</p>
                         <p class="author">Roy Francis</p>
-                                <p class="date">04-Jun-2024</p>
+                                <p class="date">07-Jun-2024</p>
               </div>
     </div>
     
   </div>
 </section>
 <section id="quarto" class="slide level2">
-<h2>Quarto</h2>
-<div class="columns">
-<div class="column" style="width:50%;">
-<ul>
-<li><a href="https://en.wikipedia.org/wiki/Literate_programming">Literate programming</a>: Combining code with narrative</li>
-<li>Reproducible research</li>
-<li>Documentation and reporting
-<ul>
-<li>Websites, Presentations, e-books, PDFs …</li>
-</ul></li>
-</ul>
-<div class="fragment">
-<p><span class="large"><a href="https://quarto.org/docs/gallery/">https://quarto.org/docs/gallery/</a></span></p>
-</div>
-</div><div class="column" style="width:50%;">
-<p><img data-src="assets/examples.jpg"></p>
-</div>
-</div>
-<aside class="notes">
-<p>Literate programming is a programming paradigm introduced by Donald Knuth in 1984. The key concept behind literate programming is to treat a program as a work of literature, understandable to human beings. In this paradigm, documentation and source code are interwoven in a way that presents the logic and structure of the program in a readable and understandable manner.</p>
-<p>In traditional programming, the source code is primary and documentation is secondary, often added as comments or in separate documentation files. In literate programming, the source code and documentation are combined, and the documentation is primary. The idea is that the program is written for humans to read and understand, and the actual source code is secondary, extracted and compiled by special tools.</p>
-<p>Some key features of literate programming include:</p>
-<p>Intertwined Documentation and Code: The documentation explains the logic, design decisions, and overall structure of the code, while the source code is presented within this narrative.</p>
-<p>Structured Narrative: The program is presented in a top-down manner, where the higher-level structure and concepts are introduced first, followed by the detailed implementation.</p>
-<p>Readable for Humans: The main goal is to make the program easy to read and understand by other humans, which aids in maintenance, debugging, and collaborative development.</p>
-<p>Emphasis on Explanation: The documentation within the literate programming code often includes detailed explanations of algorithms, data structures, and design decisions.</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="quarto-1" class="slide level2">
 <h2><a href="https://quarto.org/">Quarto</a></h2>
-<p><strong>An open-source scientific and technical publishing system built on Pandoc.</strong></p>
+<p><strong>An open-source scientific and technical publishing system built on Pandoc</strong></p>
 <div class="columns">
 <div class="column" style="width:70;">
+<div class="fragment">
 <ul>
 <li><strong>Command-line tool</strong> enabling weaving code and documentation using Python, R, Julia, and Observable.</li>
 <li>Supports Knitr (plain text, markdown) or Jupyter engines.</li>
 </ul>
+</div>
 <div class="fragment">
 <ul>
 <li>Supports many IDEs
@@ -514,11 +477,51 @@
 </div>
 </div>
 </section>
+<section id="quarto-1" class="slide level2">
+<h2>Quarto</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><img data-src="assets/literate-programming.jpg" width="350"></p>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Literate_programming">Literate programming</a>: Combining code with narrative</li>
+<li>Reproducible research</li>
+<li>Documentation and reporting
+<ul>
+<li>Websites, Presentations, e-books, PDFs …</li>
+</ul></li>
+</ul>
+<div class="fragment">
+<p><span class="large"><a href="https://quarto.org/docs/gallery/">https://quarto.org/docs/gallery/</a></span></p>
+</div>
+</div><div class="column" style="width:50%;">
+<p><img data-src="assets/examples.jpg"></p>
+</div>
+</div>
+<aside class="notes">
+<p>Literate programming is a programming paradigm introduced by Donald Knuth in 1984. The key concept behind literate programming is to treat a program as a work of literature, understandable to human beings. In this paradigm, documentation and source code are interwoven in a way that presents the logic and structure of the program in a readable and understandable manner.</p>
+<p>In traditional programming, the source code is primary and documentation is secondary, often added as comments or in separate documentation files. In literate programming, the source code and documentation are combined, and the documentation is primary. The idea is that the program is written for humans to read and understand, and the actual source code is secondary, extracted and compiled by special tools.</p>
+<p>Some key features of literate programming include:</p>
+<p>Intertwined Documentation and Code: The documentation explains the logic, design decisions, and overall structure of the code, while the source code is presented within this narrative.</p>
+<p>Structured Narrative: The program is presented in a top-down manner, where the higher-level structure and concepts are introduced first, followed by the detailed implementation.</p>
+<p>Readable for Humans: The main goal is to make the program easy to read and understand by other humans, which aids in maintenance, debugging, and collaborative development.</p>
+<p>Emphasis on Explanation: The documentation within the literate programming code often includes detailed explanations of algorithms, data structures, and design decisions.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
 <section id="installation" class="slide level2">
 <h2>Installation</h2>
 <ul>
 <li>Install the latest <a href="https://quarto.org/docs/get-started/">quarto executable</a></li>
-<li>R package <strong>quarto</strong> to run quarto from R</li>
+<li>R package <strong>quarto</strong> is a wrapper that runs quarto from R</li>
 <li>If using <a href="https://posit.co/download/rstudio-desktop/">RStudio</a>, you need a version <em>v2022.07.1</em> or newer</li>
 <li><a href="https://code.visualstudio.com/">Visual Studio Code</a> along with quarto extension is a great option too</li>
 </ul>
@@ -545,17 +548,6 @@ format: html
 ---</code></pre>
 <ul>
 <li>Text &amp; visual editor</li>
-<li>Live preview
-<ul>
-<li>From R console <code>quarto::quarto_preview("report.qmd")</code></li>
-<li>From terminal <code>quarto preview report.qmd</code></li>
-</ul></li>
-<li>Render
-<ul>
-<li>Interactively using the <strong>Render</strong> button</li>
-<li>From R console <code>quarto::quarto_render("report.qmd")</code></li>
-<li>From terminal <code>quarto render report.qmd</code></li>
-</ul></li>
 </ul>
 <aside class="notes">
 <p>R Notebook demonstration. - Text editor - Visual editor</p>
@@ -857,7 +849,7 @@ Link to [this](somewhere.com)
 <li>R code can be executed inline</li>
 </ul>
 <p>Today’s date is <code>`r date()`</code><br>
-Today’s date is Tue Jun 4 16:41:06 2024</p>
+Today’s date is Fri Jun 7 20:03:24 2024</p>
 <ul>
 <li>R code can be executed in code chunks</li>
 </ul>
@@ -870,7 +862,7 @@ Today’s date is Tue Jun 4 16:41:06 2024</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a><span class="fu">date</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "Tue Jun  4 16:41:06 2024"</code></pre>
+<pre><code>[1] "Fri Jun  7 20:03:24 2024"</code></pre>
 </div>
 </div>
 </section>
@@ -900,6 +892,22 @@ Today’s date is Tue Jun 4 16:41:06 2024</p>
 <aside><div>
 <p><a href="https://quarto.org/docs/computations/execution-options.html">Chunk option documentation</a></p>
 </div></aside></section>
+<section id="rendering" class="slide level2">
+<h2>Rendering</h2>
+<ul>
+<li>Live preview
+<ul>
+<li>From R console <code>quarto::quarto_preview("report.qmd")</code></li>
+<li>From terminal <code>quarto preview report.qmd</code></li>
+</ul></li>
+<li>Render
+<ul>
+<li>Interactively using the <strong>Render</strong> button</li>
+<li>From R console <code>quarto::quarto_render("report.qmd")</code></li>
+<li>From terminal <code>quarto render report.qmd</code></li>
+</ul></li>
+</ul>
+</section>
 <section id="how-it-all-works" class="slide level2">
 <h2>How it all works</h2>
 <div class="fragment">
@@ -1004,9 +1012,9 @@ search: false</code></pre>
 <section id="interactive-documents" class="slide level2">
 <h2>Interactive documents</h2>
 <ul>
-<li>Make documents interactive using ObservableJS, Shiny or htmlwidgets</li>
-<li>Shiny requires a server</li>
+<li>Make documents interactive using htmlwidgets, Shiny or ObservableJS</li>
 <li>ObservableJS and htmlwidgets run in the browser</li>
+<li>Shiny generally requires a server</li>
 </ul>
 <p><span class="smaller">Interactive <a href="https://quarto.org/docs/interactive/">documentation</a></span></p>
 </section>
@@ -1025,8 +1033,8 @@ search: false</code></pre>
 </div><div class="column" style="width:45%;">
 <div class="cell">
 <div class="cell-output-display">
-<div id="htmlwidget-8bde24c9584c1d3d86fe" style="width:550px;height:400px;" class="plotly html-widget"></div>
-<script type="application/json" data-for="htmlwidget-8bde24c9584c1d3d86fe">{"x":{"visdat":{"cd228470484":["function () ","plotlyVisDat"]},"cur_data":"cd228470484","attrs":{"cd228470484":{"x":{},"y":{},"color":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter","mode":"markers","inherit":true}},"layout":{"width":550,"height":400,"margin":{"b":40,"l":60,"t":25,"r":10},"xaxis":{"domain":[0,1],"automargin":true,"title":"Sepal.Length"},"yaxis":{"domain":[0,1],"automargin":true,"title":"Sepal.Width"},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[5.0999999999999996,4.9000000000000004,4.7000000000000002,4.5999999999999996,5,5.4000000000000004,4.5999999999999996,5,4.4000000000000004,4.9000000000000004,5.4000000000000004,4.7999999999999998,4.7999999999999998,4.2999999999999998,5.7999999999999998,5.7000000000000002,5.4000000000000004,5.0999999999999996,5.7000000000000002,5.0999999999999996,5.4000000000000004,5.0999999999999996,4.5999999999999996,5.0999999999999996,4.7999999999999998,5,5,5.2000000000000002,5.2000000000000002,4.7000000000000002,4.7999999999999998,5.4000000000000004,5.2000000000000002,5.5,4.9000000000000004,5,5.5,4.9000000000000004,4.4000000000000004,5.0999999999999996,5,4.5,4.4000000000000004,5,5.0999999999999996,4.7999999999999998,5.0999999999999996,4.5999999999999996,5.2999999999999998,5],"y":[3.5,3,3.2000000000000002,3.1000000000000001,3.6000000000000001,3.8999999999999999,3.3999999999999999,3.3999999999999999,2.8999999999999999,3.1000000000000001,3.7000000000000002,3.3999999999999999,3,3,4,4.4000000000000004,3.8999999999999999,3.5,3.7999999999999998,3.7999999999999998,3.3999999999999999,3.7000000000000002,3.6000000000000001,3.2999999999999998,3.3999999999999999,3,3.3999999999999999,3.5,3.3999999999999999,3.2000000000000002,3.1000000000000001,3.3999999999999999,4.0999999999999996,4.2000000000000002,3.1000000000000001,3.2000000000000002,3.5,3.6000000000000001,3,3.3999999999999999,3.5,2.2999999999999998,3.2000000000000002,3.5,3.7999999999999998,3,3.7999999999999998,3.2000000000000002,3.7000000000000002,3.2999999999999998],"type":"scatter","mode":"markers","name":"setosa","marker":{"color":"rgba(102,194,165,1)","line":{"color":"rgba(102,194,165,1)"}},"textfont":{"color":"rgba(102,194,165,1)"},"error_y":{"color":"rgba(102,194,165,1)"},"error_x":{"color":"rgba(102,194,165,1)"},"line":{"color":"rgba(102,194,165,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[7,6.4000000000000004,6.9000000000000004,5.5,6.5,5.7000000000000002,6.2999999999999998,4.9000000000000004,6.5999999999999996,5.2000000000000002,5,5.9000000000000004,6,6.0999999999999996,5.5999999999999996,6.7000000000000002,5.5999999999999996,5.7999999999999998,6.2000000000000002,5.5999999999999996,5.9000000000000004,6.0999999999999996,6.2999999999999998,6.0999999999999996,6.4000000000000004,6.5999999999999996,6.7999999999999998,6.7000000000000002,6,5.7000000000000002,5.5,5.5,5.7999999999999998,6,5.4000000000000004,6,6.7000000000000002,6.2999999999999998,5.5999999999999996,5.5,5.5,6.0999999999999996,5.7999999999999998,5,5.5999999999999996,5.7000000000000002,5.7000000000000002,6.2000000000000002,5.0999999999999996,5.7000000000000002],"y":[3.2000000000000002,3.2000000000000002,3.1000000000000001,2.2999999999999998,2.7999999999999998,2.7999999999999998,3.2999999999999998,2.3999999999999999,2.8999999999999999,2.7000000000000002,2,3,2.2000000000000002,2.8999999999999999,2.8999999999999999,3.1000000000000001,3,2.7000000000000002,2.2000000000000002,2.5,3.2000000000000002,2.7999999999999998,2.5,2.7999999999999998,2.8999999999999999,3,2.7999999999999998,3,2.8999999999999999,2.6000000000000001,2.3999999999999999,2.3999999999999999,2.7000000000000002,2.7000000000000002,3,3.3999999999999999,3.1000000000000001,2.2999999999999998,3,2.5,2.6000000000000001,3,2.6000000000000001,2.2999999999999998,2.7000000000000002,3,2.8999999999999999,2.8999999999999999,2.5,2.7999999999999998],"type":"scatter","mode":"markers","name":"versicolor","marker":{"color":"rgba(252,141,98,1)","line":{"color":"rgba(252,141,98,1)"}},"textfont":{"color":"rgba(252,141,98,1)"},"error_y":{"color":"rgba(252,141,98,1)"},"error_x":{"color":"rgba(252,141,98,1)"},"line":{"color":"rgba(252,141,98,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[6.2999999999999998,5.7999999999999998,7.0999999999999996,6.2999999999999998,6.5,7.5999999999999996,4.9000000000000004,7.2999999999999998,6.7000000000000002,7.2000000000000002,6.5,6.4000000000000004,6.7999999999999998,5.7000000000000002,5.7999999999999998,6.4000000000000004,6.5,7.7000000000000002,7.7000000000000002,6,6.9000000000000004,5.5999999999999996,7.7000000000000002,6.2999999999999998,6.7000000000000002,7.2000000000000002,6.2000000000000002,6.0999999999999996,6.4000000000000004,7.2000000000000002,7.4000000000000004,7.9000000000000004,6.4000000000000004,6.2999999999999998,6.0999999999999996,7.7000000000000002,6.2999999999999998,6.4000000000000004,6,6.9000000000000004,6.7000000000000002,6.9000000000000004,5.7999999999999998,6.7999999999999998,6.7000000000000002,6.7000000000000002,6.2999999999999998,6.5,6.2000000000000002,5.9000000000000004],"y":[3.2999999999999998,2.7000000000000002,3,2.8999999999999999,3,3,2.5,2.8999999999999999,2.5,3.6000000000000001,3.2000000000000002,2.7000000000000002,3,2.5,2.7999999999999998,3.2000000000000002,3,3.7999999999999998,2.6000000000000001,2.2000000000000002,3.2000000000000002,2.7999999999999998,2.7999999999999998,2.7000000000000002,3.2999999999999998,3.2000000000000002,2.7999999999999998,3,2.7999999999999998,3,2.7999999999999998,3.7999999999999998,2.7999999999999998,2.7999999999999998,2.6000000000000001,3,3.3999999999999999,3.1000000000000001,3,3.1000000000000001,3.1000000000000001,3.1000000000000001,2.7000000000000002,3.2000000000000002,3.2999999999999998,3,2.5,3,3.3999999999999999,3],"type":"scatter","mode":"markers","name":"virginica","marker":{"color":"rgba(141,160,203,1)","line":{"color":"rgba(141,160,203,1)"}},"textfont":{"color":"rgba(141,160,203,1)"},"error_y":{"color":"rgba(141,160,203,1)"},"error_x":{"color":"rgba(141,160,203,1)"},"line":{"color":"rgba(141,160,203,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-c83ee442caf28e1580d0" style="width:550px;height:400px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-c83ee442caf28e1580d0">{"x":{"visdat":{"ae5647072beb":["function () ","plotlyVisDat"]},"cur_data":"ae5647072beb","attrs":{"ae5647072beb":{"x":{},"y":{},"color":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter","mode":"markers","inherit":true}},"layout":{"width":550,"height":400,"margin":{"b":40,"l":60,"t":25,"r":10},"xaxis":{"domain":[0,1],"automargin":true,"title":"Sepal.Length"},"yaxis":{"domain":[0,1],"automargin":true,"title":"Sepal.Width"},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[5.0999999999999996,4.9000000000000004,4.7000000000000002,4.5999999999999996,5,5.4000000000000004,4.5999999999999996,5,4.4000000000000004,4.9000000000000004,5.4000000000000004,4.7999999999999998,4.7999999999999998,4.2999999999999998,5.7999999999999998,5.7000000000000002,5.4000000000000004,5.0999999999999996,5.7000000000000002,5.0999999999999996,5.4000000000000004,5.0999999999999996,4.5999999999999996,5.0999999999999996,4.7999999999999998,5,5,5.2000000000000002,5.2000000000000002,4.7000000000000002,4.7999999999999998,5.4000000000000004,5.2000000000000002,5.5,4.9000000000000004,5,5.5,4.9000000000000004,4.4000000000000004,5.0999999999999996,5,4.5,4.4000000000000004,5,5.0999999999999996,4.7999999999999998,5.0999999999999996,4.5999999999999996,5.2999999999999998,5],"y":[3.5,3,3.2000000000000002,3.1000000000000001,3.6000000000000001,3.8999999999999999,3.3999999999999999,3.3999999999999999,2.8999999999999999,3.1000000000000001,3.7000000000000002,3.3999999999999999,3,3,4,4.4000000000000004,3.8999999999999999,3.5,3.7999999999999998,3.7999999999999998,3.3999999999999999,3.7000000000000002,3.6000000000000001,3.2999999999999998,3.3999999999999999,3,3.3999999999999999,3.5,3.3999999999999999,3.2000000000000002,3.1000000000000001,3.3999999999999999,4.0999999999999996,4.2000000000000002,3.1000000000000001,3.2000000000000002,3.5,3.6000000000000001,3,3.3999999999999999,3.5,2.2999999999999998,3.2000000000000002,3.5,3.7999999999999998,3,3.7999999999999998,3.2000000000000002,3.7000000000000002,3.2999999999999998],"type":"scatter","mode":"markers","name":"setosa","marker":{"color":"rgba(102,194,165,1)","line":{"color":"rgba(102,194,165,1)"}},"textfont":{"color":"rgba(102,194,165,1)"},"error_y":{"color":"rgba(102,194,165,1)"},"error_x":{"color":"rgba(102,194,165,1)"},"line":{"color":"rgba(102,194,165,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[7,6.4000000000000004,6.9000000000000004,5.5,6.5,5.7000000000000002,6.2999999999999998,4.9000000000000004,6.5999999999999996,5.2000000000000002,5,5.9000000000000004,6,6.0999999999999996,5.5999999999999996,6.7000000000000002,5.5999999999999996,5.7999999999999998,6.2000000000000002,5.5999999999999996,5.9000000000000004,6.0999999999999996,6.2999999999999998,6.0999999999999996,6.4000000000000004,6.5999999999999996,6.7999999999999998,6.7000000000000002,6,5.7000000000000002,5.5,5.5,5.7999999999999998,6,5.4000000000000004,6,6.7000000000000002,6.2999999999999998,5.5999999999999996,5.5,5.5,6.0999999999999996,5.7999999999999998,5,5.5999999999999996,5.7000000000000002,5.7000000000000002,6.2000000000000002,5.0999999999999996,5.7000000000000002],"y":[3.2000000000000002,3.2000000000000002,3.1000000000000001,2.2999999999999998,2.7999999999999998,2.7999999999999998,3.2999999999999998,2.3999999999999999,2.8999999999999999,2.7000000000000002,2,3,2.2000000000000002,2.8999999999999999,2.8999999999999999,3.1000000000000001,3,2.7000000000000002,2.2000000000000002,2.5,3.2000000000000002,2.7999999999999998,2.5,2.7999999999999998,2.8999999999999999,3,2.7999999999999998,3,2.8999999999999999,2.6000000000000001,2.3999999999999999,2.3999999999999999,2.7000000000000002,2.7000000000000002,3,3.3999999999999999,3.1000000000000001,2.2999999999999998,3,2.5,2.6000000000000001,3,2.6000000000000001,2.2999999999999998,2.7000000000000002,3,2.8999999999999999,2.8999999999999999,2.5,2.7999999999999998],"type":"scatter","mode":"markers","name":"versicolor","marker":{"color":"rgba(252,141,98,1)","line":{"color":"rgba(252,141,98,1)"}},"textfont":{"color":"rgba(252,141,98,1)"},"error_y":{"color":"rgba(252,141,98,1)"},"error_x":{"color":"rgba(252,141,98,1)"},"line":{"color":"rgba(252,141,98,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[6.2999999999999998,5.7999999999999998,7.0999999999999996,6.2999999999999998,6.5,7.5999999999999996,4.9000000000000004,7.2999999999999998,6.7000000000000002,7.2000000000000002,6.5,6.4000000000000004,6.7999999999999998,5.7000000000000002,5.7999999999999998,6.4000000000000004,6.5,7.7000000000000002,7.7000000000000002,6,6.9000000000000004,5.5999999999999996,7.7000000000000002,6.2999999999999998,6.7000000000000002,7.2000000000000002,6.2000000000000002,6.0999999999999996,6.4000000000000004,7.2000000000000002,7.4000000000000004,7.9000000000000004,6.4000000000000004,6.2999999999999998,6.0999999999999996,7.7000000000000002,6.2999999999999998,6.4000000000000004,6,6.9000000000000004,6.7000000000000002,6.9000000000000004,5.7999999999999998,6.7999999999999998,6.7000000000000002,6.7000000000000002,6.2999999999999998,6.5,6.2000000000000002,5.9000000000000004],"y":[3.2999999999999998,2.7000000000000002,3,2.8999999999999999,3,3,2.5,2.8999999999999999,2.5,3.6000000000000001,3.2000000000000002,2.7000000000000002,3,2.5,2.7999999999999998,3.2000000000000002,3,3.7999999999999998,2.6000000000000001,2.2000000000000002,3.2000000000000002,2.7999999999999998,2.7999999999999998,2.7000000000000002,3.2999999999999998,3.2000000000000002,2.7999999999999998,3,2.7999999999999998,3,2.7999999999999998,3.7999999999999998,2.7999999999999998,2.7999999999999998,2.6000000000000001,3,3.3999999999999999,3.1000000000000001,3,3.1000000000000001,3.1000000000000001,3.1000000000000001,2.7000000000000002,3.2000000000000002,3.2999999999999998,3,2.5,3,3.3999999999999999,3],"type":"scatter","mode":"markers","name":"virginica","marker":{"color":"rgba(141,160,203,1)","line":{"color":"rgba(141,160,203,1)"}},"textfont":{"color":"rgba(141,160,203,1)"},"error_y":{"color":"rgba(141,160,203,1)"},"error_x":{"color":"rgba(141,160,203,1)"},"line":{"color":"rgba(141,160,203,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </div>
@@ -1043,9 +1051,9 @@ search: false</code></pre>
 <span id="cb25-3"><a></a><span class="fu">ojs_define</span>(<span class="at">ojsd =</span> irism)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-eval="false">
-<div class="sourceCode cell-code" id="cb26" data-startfrom="690" data-source-offset="-0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 689;"><span id="cb26-690"><a></a>ojsdata <span class="op">=</span> <span class="fu">transpose</span>(ojsd)</span>
-<span id="cb26-691"><a></a>viewof x <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">select</span>(<span class="bu">Object</span><span class="op">.</span><span class="fu">keys</span>(ojsdata[<span class="dv">0</span>])<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="st">"sepal_length"</span><span class="op">,</span> <span class="dt">multiple</span><span class="op">:</span> <span class="kw">false</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"X axis"</span>})</span>
-<span id="cb26-692"><a></a>viewof y <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">select</span>(<span class="bu">Object</span><span class="op">.</span><span class="fu">keys</span>(ojsdata[<span class="dv">0</span>])<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="st">"sepal_width"</span><span class="op">,</span> <span class="dt">multiple</span><span class="op">:</span> <span class="kw">false</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Y axis"</span>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26" data-startfrom="697" data-source-offset="-0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 696;"><span id="cb26-697"><a></a>ojsdata <span class="op">=</span> <span class="fu">transpose</span>(ojsd)</span>
+<span id="cb26-698"><a></a>viewof x <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">select</span>(<span class="bu">Object</span><span class="op">.</span><span class="fu">keys</span>(ojsdata[<span class="dv">0</span>])<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="st">"sepal_length"</span><span class="op">,</span> <span class="dt">multiple</span><span class="op">:</span> <span class="kw">false</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"X axis"</span>})</span>
+<span id="cb26-699"><a></a>viewof y <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">select</span>(<span class="bu">Object</span><span class="op">.</span><span class="fu">keys</span>(ojsdata[<span class="dv">0</span>])<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="st">"sepal_width"</span><span class="op">,</span> <span class="dt">multiple</span><span class="op">:</span> <span class="kw">false</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Y axis"</span>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <div id="ojs-cell-1-1" data-nodetype="declaration">
@@ -1069,14 +1077,14 @@ search: false</code></pre>
 </div>
 </div>
 <div class="cell" data-eval="false">
-<div class="sourceCode cell-code" id="cb27" data-startfrom="696" data-source-offset="0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 695;"><span id="cb27-696"><a></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
-<span id="cb27-697"><a></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
-<span id="cb27-698"><a></a>    Plot<span class="op">.</span><span class="fu">dot</span>(ojsdata<span class="op">,</span> {</span>
-<span id="cb27-699"><a></a>      <span class="dt">x</span><span class="op">:</span> x<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> y<span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"species"</span><span class="op">,</span></span>
-<span id="cb27-700"><a></a>      <span class="dt">title</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> <span class="vs">`</span><span class="sc">${</span>d<span class="op">.</span><span class="at">species</span><span class="sc">}</span><span class="vs"> </span><span class="sc">\n</span><span class="vs"> Petal length: </span><span class="sc">${</span>d<span class="op">.</span><span class="at">petal_length</span><span class="sc">}</span><span class="vs"> </span><span class="sc">\n</span><span class="vs"> Sepal length: </span><span class="sc">${</span>d<span class="op">.</span><span class="at">sepal_length</span><span class="sc">}</span><span class="vs">`</span>})</span>
-<span id="cb27-701"><a></a>  ]<span class="op">,</span></span>
-<span id="cb27-702"><a></a>  <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span></span>
-<span id="cb27-703"><a></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27" data-startfrom="703" data-source-offset="0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 702;"><span id="cb27-703"><a></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb27-704"><a></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb27-705"><a></a>    Plot<span class="op">.</span><span class="fu">dot</span>(ojsdata<span class="op">,</span> {</span>
+<span id="cb27-706"><a></a>      <span class="dt">x</span><span class="op">:</span> x<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> y<span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"species"</span><span class="op">,</span></span>
+<span id="cb27-707"><a></a>      <span class="dt">title</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> <span class="vs">`</span><span class="sc">${</span>d<span class="op">.</span><span class="at">species</span><span class="sc">}</span><span class="vs"> </span><span class="sc">\n</span><span class="vs"> Petal length: </span><span class="sc">${</span>d<span class="op">.</span><span class="at">petal_length</span><span class="sc">}</span><span class="vs"> </span><span class="sc">\n</span><span class="vs"> Sepal length: </span><span class="sc">${</span>d<span class="op">.</span><span class="at">sepal_length</span><span class="sc">}</span><span class="vs">`</span>})</span>
+<span id="cb27-708"><a></a>  ]<span class="op">,</span></span>
+<span id="cb27-709"><a></a>  <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span></span>
+<span id="cb27-710"><a></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div id="ojs-cell-2" data-nodetype="expression">
 
@@ -1085,17 +1093,17 @@ search: false</code></pre>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code hidden" id="cb28" data-startfrom="713" data-source-offset="-0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 712;"><span id="cb28-713"><a></a>ojsdata <span class="op">=</span> <span class="fu">transpose</span>(ojsd)</span>
-<span id="cb28-714"><a></a>viewof x <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">select</span>(<span class="bu">Object</span><span class="op">.</span><span class="fu">keys</span>(ojsdata[<span class="dv">0</span>])<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="st">"sepal_length"</span><span class="op">,</span> <span class="dt">multiple</span><span class="op">:</span> <span class="kw">false</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"X axis"</span>})</span>
-<span id="cb28-715"><a></a>viewof y <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">select</span>(<span class="bu">Object</span><span class="op">.</span><span class="fu">keys</span>(ojsdata[<span class="dv">0</span>])<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="st">"sepal_width"</span><span class="op">,</span> <span class="dt">multiple</span><span class="op">:</span> <span class="kw">false</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Y axis"</span>})</span>
-<span id="cb28-716"><a></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
-<span id="cb28-717"><a></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
-<span id="cb28-718"><a></a>    Plot<span class="op">.</span><span class="fu">dot</span>(ojsdata<span class="op">,</span> {</span>
-<span id="cb28-719"><a></a>      <span class="dt">x</span><span class="op">:</span> x<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> y<span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"species"</span><span class="op">,</span></span>
-<span id="cb28-720"><a></a>      <span class="dt">title</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> <span class="vs">`</span><span class="sc">${</span>d<span class="op">.</span><span class="at">species</span><span class="sc">}</span><span class="vs"> </span><span class="sc">\n</span><span class="vs"> Petal length: </span><span class="sc">${</span>d<span class="op">.</span><span class="at">petal_length</span><span class="sc">}</span><span class="vs"> </span><span class="sc">\n</span><span class="vs"> Sepal length: </span><span class="sc">${</span>d<span class="op">.</span><span class="at">sepal_length</span><span class="sc">}</span><span class="vs">`</span>})</span>
-<span id="cb28-721"><a></a>  ]<span class="op">,</span></span>
-<span id="cb28-722"><a></a>  <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span></span>
-<span id="cb28-723"><a></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code hidden" id="cb28" data-startfrom="720" data-source-offset="-0"><pre class="sourceCode numberSource js number-lines code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line 719;"><span id="cb28-720"><a></a>ojsdata <span class="op">=</span> <span class="fu">transpose</span>(ojsd)</span>
+<span id="cb28-721"><a></a>viewof x <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">select</span>(<span class="bu">Object</span><span class="op">.</span><span class="fu">keys</span>(ojsdata[<span class="dv">0</span>])<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="st">"sepal_length"</span><span class="op">,</span> <span class="dt">multiple</span><span class="op">:</span> <span class="kw">false</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"X axis"</span>})</span>
+<span id="cb28-722"><a></a>viewof y <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">select</span>(<span class="bu">Object</span><span class="op">.</span><span class="fu">keys</span>(ojsdata[<span class="dv">0</span>])<span class="op">,</span> {<span class="dt">value</span><span class="op">:</span> <span class="st">"sepal_width"</span><span class="op">,</span> <span class="dt">multiple</span><span class="op">:</span> <span class="kw">false</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">"Y axis"</span>})</span>
+<span id="cb28-723"><a></a>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb28-724"><a></a>  <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb28-725"><a></a>    Plot<span class="op">.</span><span class="fu">dot</span>(ojsdata<span class="op">,</span> {</span>
+<span id="cb28-726"><a></a>      <span class="dt">x</span><span class="op">:</span> x<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> y<span class="op">,</span> <span class="dt">fill</span><span class="op">:</span> <span class="st">"species"</span><span class="op">,</span></span>
+<span id="cb28-727"><a></a>      <span class="dt">title</span><span class="op">:</span> (d) <span class="kw">=&gt;</span> <span class="vs">`</span><span class="sc">${</span>d<span class="op">.</span><span class="at">species</span><span class="sc">}</span><span class="vs"> </span><span class="sc">\n</span><span class="vs"> Petal length: </span><span class="sc">${</span>d<span class="op">.</span><span class="at">petal_length</span><span class="sc">}</span><span class="vs"> </span><span class="sc">\n</span><span class="vs"> Sepal length: </span><span class="sc">${</span>d<span class="op">.</span><span class="at">sepal_length</span><span class="sc">}</span><span class="vs">`</span>})</span>
+<span id="cb28-728"><a></a>  ]<span class="op">,</span></span>
+<span id="cb28-729"><a></a>  <span class="dt">grid</span><span class="op">:</span> <span class="kw">true</span></span>
+<span id="cb28-730"><a></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <div id="ojs-cell-3-1" data-nodetype="declaration">
@@ -1126,6 +1134,29 @@ search: false</code></pre>
 </div>
 </div>
 </div>
+</div>
+</section>
+<section id="publish" class="slide level2">
+<h2>Publish</h2>
+<p>Quarto supports directly publishing to several popular services</p>
+<div class="fragment">
+<ul>
+<li><a href="https://quartopub.com/">Quarto Pub</a>: Free public publishing for Quarto documents, websites, and books</li>
+<li>GitHub pages</li>
+<li>Netlify</li>
+<li>Confluence</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li><code>quarto publish quarto-pub</code></li>
+<li><code>_publish.yml</code> stores information</li>
+</ul>
+<pre><code>- source: project
+  quarto-pub:
+    - id: "5f3abafe-68f9-4c1d-835b-9d668b892001"
+      url: "https://njones.quarto.pub/blog"</code></pre>
+<p><span class="smaller">Publishing <a href="https://quarto.org/docs/publishing/">documentation</a></span></p>
 </div>
 </section>
 <section id="quarto-from-the-terminal" class="slide level2">
@@ -1172,7 +1203,7 @@ help            - Show this help or the help of a sub-command. </code></pre>
 <div class="fragment">
 <div class="columns">
 <div class="column">
-<iframe data-external="1" src="https://www.youtube.com/embed/7lCOjGrwclQ" width="100%" height="400px" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+<iframe data-external="1" src="https://www.youtube.com/embed/shVSmYna3GM" width="100%" height="400px" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
 <p><strong>Getting to know Quarto</strong>, Julia Müller, R-Ladies Freiburg 2022</p>
 </div><div class="column">
 <iframe data-external="1" src="https://www.youtube.com/embed/yvi5uXQMvu4" width="100%" height="400px" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
@@ -1212,20 +1243,13 @@ minor    3.2                </code></pre>
 <li>Many additional functionality out of the box
 <ul>
 <li>Page layouts</li>
-<li>Figure layouts</li>
-<li>Figure captions and numbering</li>
+<li>Figure layouts, Figure captions and numbering</li>
 <li>Call-Outs</li>
-<li>Cross referencing</li>
-<li>Citation</li>
-<li>Bibliography</li>
+<li>Cross referencing, Citation, Bibliography</li>
 <li>Margin content</li>
 </ul></li>
 <li>Quarto supports htmlwidgets in R and jupyter widgets for Python/Julia</li>
-<li>Interactivity
-<ul>
 <li>Client-side interactivity using ObservableJS</li>
-<li>Server-side interactivity using Shiny</li>
-</ul></li>
 </ul>
 </section>
 <section id="output-formats" class="slide level2">
@@ -1297,15 +1321,15 @@ minor    3.2                </code></pre>
 </tr>
 <tr class="odd">
 <td>pagedown</td>
-<td>TBA</td>
+<td></td>
 </tr>
 <tr class="even">
 <td>rticles</td>
-<td>TBA</td>
+<td></td>
 </tr>
 <tr class="odd">
 <td>flexdashboard</td>
-<td>TBA</td>
+<td></td>
 </tr>
 </tbody>
 </table>

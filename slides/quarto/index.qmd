@@ -5,10 +5,57 @@ image: "assets/featured.jpg"
 format: revealjs
 ---
 
+## [Quarto](https://quarto.org/)
+
+**An open-source scientific and technical publishing system built on Pandoc**
+
+:::: {.columns}
+::: {.column width="70"}
+
+::: {.fragment}
+- **Command-line tool** enabling weaving code and documentation using Python, R, Julia, and Observable.
+- Supports Knitr (plain text, markdown) or Jupyter engines.
+:::
+
+::: {.fragment}
+
+- Supports many IDEs
+  - RStudio
+  - JupyterLab
+  - VS Code
+  - Neovim
+
+:::
+::: {.fragment}
+
+- Numerous output formats
+  - Documents (HTML, PDF, MS Word)
+  - Presentations (RevealJS, Powerpoint, Beamer)
+  - Websites, Blogs, e-Books
+  - Interactive (ObservableJS, Shiny)
+
+:::
+:::
+
+::: {.column .fragment width="30"}
+
+- Features and components
+  - Scientific markdown
+  - Tables & Figures
+  - Equations
+  - Citations
+  - Call-Out
+  - Layout
+
+:::
+::::
+
 ## Quarto
 
 ::: {.columns}
 ::: {.column width="50%"}
+
+![](assets/literate-programming.jpg){width="350px"}
 
 - [Literate programming](https://en.wikipedia.org/wiki/Literate_programming): Combining code with narrative
 - Reproducible research
@@ -44,53 +91,10 @@ Emphasis on Explanation: The documentation within the literate programming code 
 
 :::
 
-## [Quarto](https://quarto.org/)
-
-**An open-source scientific and technical publishing system built on Pandoc.**
-
-:::: {.columns}
-::: {.column width="70"}
-
-- **Command-line tool** enabling weaving code and documentation using Python, R, Julia, and Observable.
-- Supports Knitr (plain text, markdown) or Jupyter engines.
-
-::: {.fragment}
-
-- Supports many IDEs
-  - RStudio
-  - JupyterLab
-  - VS Code
-  - Neovim
-
-:::
-::: {.fragment}
-
-- Numerous output formats
-  - Documents (HTML, PDF, MS Word)
-  - Presentations (RevealJS, Powerpoint, Beamer)
-  - Websites, Blogs, e-Books
-  - Interactive (ObservableJS, Shiny)
-
-:::
-:::
-
-::: {.column .fragment width="30"}
-
-- Features and components
-  - Scientific markdown
-  - Tables & Figures
-  - Equations
-  - Citations
-  - Call-Out
-  - Layout
-
-:::
-::::
-
 ## Installation
 
 - Install the latest [quarto executable](https://quarto.org/docs/get-started/)
-- R package **quarto** to run quarto from R
+- R package **quarto** is a wrapper that runs quarto from R
 - If using [RStudio](https://posit.co/download/rstudio-desktop/), you need a version *v2022.07.1* or newer
 - [Visual Studio Code](https://code.visualstudio.com/) along with quarto extension is a great option too
 
@@ -118,13 +122,6 @@ format: html
 ```
 
 - Text & visual editor
-- Live preview
-  - From R console `quarto::quarto_preview("report.qmd")`
-  - From terminal `quarto preview report.qmd`
-- Render
-  - Interactively using the **Render** button
-  - From R console `quarto::quarto_render("report.qmd")`
-  - From terminal `quarto render report.qmd`
 
 ::: {.notes}
 R Notebook demonstration.
@@ -525,6 +522,16 @@ date()
 [Chunk option documentation](https://quarto.org/docs/computations/execution-options.html)
 :::
 
+## Rendering
+
+- Live preview
+  - From R console `quarto::quarto_preview("report.qmd")`
+  - From terminal `quarto preview report.qmd`
+- Render
+  - Interactively using the **Render** button
+  - From R console `quarto::quarto_render("report.qmd")`
+  - From terminal `quarto render report.qmd`
+
 ## How it all works
 
 . . . 
@@ -634,9 +641,9 @@ search: false
 
 ## Interactive documents
 
-- Make documents interactive using ObservableJS, Shiny or htmlwidgets
-- Shiny requires a server
+- Make documents interactive using htmlwidgets, Shiny or ObservableJS
 - ObservableJS and htmlwidgets run in the browser
+- Shiny generally requires a server
 
 [Interactive [documentation](https://quarto.org/docs/interactive/)]{.smaller}
 
@@ -727,6 +734,31 @@ Plot.plot({
 
 ::::
 
+## Publish
+
+Quarto supports directly publishing to several popular services
+
+::: {.fragment}
+- [Quarto Pub](https://quartopub.com/): Free public publishing for Quarto documents, websites, and books
+- GitHub pages
+- Netlify
+- Confluence
+:::
+
+::: {.fragment}
+- `quarto publish quarto-pub`
+- `_publish.yml` stores information
+
+```
+- source: project
+  quarto-pub:
+    - id: "5f3abafe-68f9-4c1d-835b-9d668b892001"
+      url: "https://njones.quarto.pub/blog"
+```
+
+[Publishing [documentation](https://quarto.org/docs/publishing/)]{.smaller}
+:::
+
 ## Quarto from the terminal
 
 ```         
@@ -772,7 +804,7 @@ help            - Show this help or the help of a sub-command.
 ::: {.columns}
 ::: {.column}
 
-{{< video https://www.youtube.com/watch?v=7lCOjGrwclQ width="100%" height="400px" >}}  
+{{< video https://www.youtube.com/watch?v=shVSmYna3GM width="100%" height="400px" >}}  
 **Getting to know Quarto**, Julia Müller, R-Ladies Freiburg 2022
 
 :::
@@ -808,17 +840,12 @@ R.version[c("platform","os","major","minor")]
 - CSS classes are easier to use using `:::` notation
 - Many additional functionality out of the box
   - Page layouts
-  - Figure layouts
-  - Figure captions and numbering
+  - Figure layouts, Figure captions and numbering
   - Call-Outs
-  - Cross referencing
-  - Citation
-  - Bibliography
+  - Cross referencing, Citation, Bibliography
   - Margin content
 - Quarto supports htmlwidgets in R and jupyter widgets for Python/Julia
-- Interactivity
-  - Client-side interactivity using ObservableJS
-  - Server-side interactivity using Shiny
+- Client-side interactivity using ObservableJS
 
 ## Output formats
 
@@ -840,8 +867,8 @@ R.version[c("platform","os","major","minor")]
 |blogdown/distill       |quarto website/quarto blog  |
 |bookdown               |quarto books                |
 |shiny documents        |quarto interactive documents|
-|pagedown               |TBA                         |
-|rticles                |TBA                         |
-|flexdashboard          |TBA                         |
+|pagedown               |                            |
+|rticles                |                            |
+|flexdashboard          |                            |
 
 :::
