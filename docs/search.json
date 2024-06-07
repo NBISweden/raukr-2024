@@ -704,7 +704,7 @@
     "href": "slides/quarto/index.html#rmarkdown",
     "title": "Literate programming with Quarto",
     "section": "RMarkdown",
-    "text": "RMarkdown\n\nMarkdown + embedded R chunks\nRMarkdown mostly uses Pandoc markdown\nR code can be executed inline\n\nToday’s date is `r date()`\nToday’s date is Fri Jun 7 20:03:24 2024\n\nR code can be executed in code chunks\n\n```{r}\ndate()\n```\n\nBy default, input source code and output results are displayed.\n\n\ndate()\n\n[1] \"Fri Jun  7 20:03:24 2024\""
+    "text": "RMarkdown\n\nMarkdown + embedded R chunks\nRMarkdown mostly uses Pandoc markdown\nR code can be executed inline\n\nToday’s date is `r date()`\nToday’s date is Fri Jun 7 20:11:27 2024\n\nR code can be executed in code chunks\n\n```{r}\ndate()\n```\n\nBy default, input source code and output results are displayed.\n\n\ndate()\n\n[1] \"Fri Jun  7 20:11:27 2024\""
   },
   {
     "objectID": "slides/quarto/index.html#rmarkdown-chunk-options",

@@ -55,7 +55,7 @@ format: revealjs
 ::: {.columns}
 ::: {.column width="50%"}
 
-![](assets/literate-programming.jpg){width="350px"}
+![](assets/literate-programming.jpg){width="200px"}
 
 - [Literate programming](https://en.wikipedia.org/wiki/Literate_programming): Combining code with narrative
 - Reproducible research
