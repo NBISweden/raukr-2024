@@ -641,7 +641,7 @@
     "href": "slides/quarto/index.html#quarto",
     "title": "Literate programming with Quarto",
     "section": "Quarto",
-    "text": "Quarto\n\n\n\nLiterate programming: Combining code with narrative\nReproducible research\nDocumentation and reporting\n\nWebsites, Presentations, e-books, PDFs …\n\n\n\nhttps://quarto.org/docs/gallery/\n\n\n\n\n\n\nLiterate programming is a programming paradigm introduced by Donald Knuth in 1984. The key concept behind literate programming is to treat a program as a work of literature, understandable to human beings. In this paradigm, documentation and source code are interwoven in a way that presents the logic and structure of the program in a readable and understandable manner.\nIn traditional programming, the source code is primary and documentation is secondary, often added as comments or in separate documentation files. In literate programming, the source code and documentation are combined, and the documentation is primary. The idea is that the program is written for humans to read and understand, and the actual source code is secondary, extracted and compiled by special tools.\nSome key features of literate programming include:\nIntertwined Documentation and Code: The documentation explains the logic, design decisions, and overall structure of the code, while the source code is presented within this narrative.\nStructured Narrative: The program is presented in a top-down manner, where the higher-level structure and concepts are introduced first, followed by the detailed implementation.\nReadable for Humans: The main goal is to make the program easy to read and understand by other humans, which aids in maintenance, debugging, and collaborative development.\nEmphasis on Explanation: The documentation within the literate programming code often includes detailed explanations of algorithms, data structures, and design decisions."
+    "text": "Quarto\nAn open-source scientific and technical publishing system built on Pandoc\n\n\n\n\nCommand-line tool enabling weaving code and documentation using Python, R, Julia, and Observable.\nSupports Knitr (plain text, markdown) or Jupyter engines.\n\n\n\n\nSupports many IDEs\n\nRStudio\nJupyterLab\nVS Code\nNeovim\n\n\n\n\n\nNumerous output formats\n\nDocuments (HTML, PDF, MS Word)\nPresentations (RevealJS, Powerpoint, Beamer)\nWebsites, Blogs, e-Books\nInteractive (ObservableJS, Shiny)\n\n\n\n\n\nFeatures and components\n\nScientific markdown\nTables & Figures\nEquations\nCitations\nCall-Out\nLayout"
   },
   {
     "objectID": "slides/quarto/index.html#how-it-all-works",
@@ -655,7 +655,7 @@
     "href": "slides/quarto/index.html#output-formats",
     "title": "Literate programming with Quarto",
     "section": "Output formats",
-    "text": "Output formats\n\n\n\n\nRmd\nQuarto\n\n\n\n\nhtml_document\nhtml\n\n\npdf_document\npdf\n\n\nword_document\ndocx\n\n\nbeamer_presentation\nbeamer\n\n\npowerpoint_presentation\npptx\n\n\nrevealjs\nrevealjs\n\n\nxaringan\n\n\n\ndistill/tufte\nquarto article layout\n\n\nhtml_document2\nquarto crossref\n\n\npdf_document2\nquarto crossref\n\n\nword_document2\nquarto crossref\n\n\nblogdown/distill\nquarto website/quarto blog\n\n\nbookdown\nquarto books\n\n\nshiny documents\nquarto interactive documents\n\n\npagedown\nTBA\n\n\nrticles\nTBA\n\n\nflexdashboard\nTBA"
+    "text": "Output formats\n\n\n\n\nRmd\nQuarto\n\n\n\n\nhtml_document\nhtml\n\n\npdf_document\npdf\n\n\nword_document\ndocx\n\n\nbeamer_presentation\nbeamer\n\n\npowerpoint_presentation\npptx\n\n\nrevealjs\nrevealjs\n\n\nxaringan\n\n\n\ndistill/tufte\nquarto article layout\n\n\nhtml_document2\nquarto crossref\n\n\npdf_document2\nquarto crossref\n\n\nword_document2\nquarto crossref\n\n\nblogdown/distill\nquarto website/quarto blog\n\n\nbookdown\nquarto books\n\n\nshiny documents\nquarto interactive documents\n\n\npagedown\n\n\n\nrticles\n\n\n\nflexdashboard"
   },
   {
     "objectID": "slides/quarto/index.html#quarto-anatomy",
@@ -704,7 +704,7 @@
     "href": "slides/quarto/index.html#rmarkdown",
     "title": "Literate programming with Quarto",
     "section": "RMarkdown",
-    "text": "RMarkdown\n\nMarkdown + embedded R chunks\nRMarkdown mostly uses Pandoc markdown\nR code can be executed inline\n\nToday’s date is `r date()`\nToday’s date is Tue Jun 4 16:41:06 2024\n\nR code can be executed in code chunks\n\n```{r}\ndate()\n```\n\nBy default, input source code and output results are displayed.\n\n\ndate()\n\n[1] \"Tue Jun  4 16:41:06 2024\""
+    "text": "RMarkdown\n\nMarkdown + embedded R chunks\nRMarkdown mostly uses Pandoc markdown\nR code can be executed inline\n\nToday’s date is `r date()`\nToday’s date is Fri Jun 7 20:03:24 2024\n\nR code can be executed in code chunks\n\n```{r}\ndate()\n```\n\nBy default, input source code and output results are displayed.\n\n\ndate()\n\n[1] \"Fri Jun  7 20:03:24 2024\""
   },
   {
     "objectID": "slides/quarto/index.html#rmarkdown-chunk-options",
@@ -718,14 +718,14 @@
     "href": "slides/quarto/index.html#installation",
     "title": "Literate programming with Quarto",
     "section": "Installation",
-    "text": "Installation\n\nInstall the latest quarto executable\nR package quarto to run quarto from R\nIf using RStudio, you need a version v2022.07.1 or newer\nVisual Studio Code along with quarto extension is a great option too"
+    "text": "Installation\n\nInstall the latest quarto executable\nR package quarto is a wrapper that runs quarto from R\nIf using RStudio, you need a version v2022.07.1 or newer\nVisual Studio Code along with quarto extension is a great option too"
   },
   {
     "objectID": "slides/quarto/index.html#quarto-notebook",
     "href": "slides/quarto/index.html#quarto-notebook",
     "title": "Literate programming with Quarto",
     "section": "Quarto Notebook",
-    "text": "Quarto Notebook\n\nCreate a quarto document, ie; a file that ends in .qmd\n\nIn RStudio, File &gt; New File &gt; Quarto Document\n\nAdd YAML matter to top\n\n---\ntitle: \"This is a title\"\nformat: html\n---\n\nText & visual editor\nLive preview\n\nFrom R console quarto::quarto_preview(\"report.qmd\")\nFrom terminal quarto preview report.qmd\n\nRender\n\nInteractively using the Render button\nFrom R console quarto::quarto_render(\"report.qmd\")\nFrom terminal quarto render report.qmd\n\n\n\nR Notebook demonstration. - Text editor - Visual editor"
+    "text": "Quarto Notebook\n\nCreate a quarto document, ie; a file that ends in .qmd\n\nIn RStudio, File &gt; New File &gt; Quarto Document\n\nAdd YAML matter to top\n\n---\ntitle: \"This is a title\"\nformat: html\n---\n\nText & visual editor\n\n\nR Notebook demonstration. - Text editor - Visual editor"
   },
   {
     "objectID": "slides/quarto/index.html#pdf",
@@ -760,7 +760,7 @@
     "href": "slides/quarto/index.html#interactive-documents",
     "title": "Literate programming with Quarto",
     "section": "Interactive documents",
-    "text": "Interactive documents\n\nMake documents interactive using ObservableJS, Shiny or htmlwidgets\nShiny requires a server\nObservableJS and htmlwidgets run in the browser\n\nInteractive documentation"
+    "text": "Interactive documents\n\nMake documents interactive using htmlwidgets, Shiny or ObservableJS\nObservableJS and htmlwidgets run in the browser\nShiny generally requires a server\n\nInteractive documentation"
   },
   {
     "objectID": "slides/quarto/index.html#htmlwidgets",
@@ -809,7 +809,7 @@
     "href": "slides/quarto/index.html#compared-to-rmd",
     "title": "Literate programming with Quarto",
     "section": "Compared to Rmd",
-    "text": "Compared to Rmd\n\nQuarto is a command-line tool independent of R\nSupports multiple languages seamlessly (R, Python, Julia, Observable)\nYAML options maybe slightly different in quarto. Quarto uses hyphens instead of underscores.\n\ntoc_depth becomes toc-depth\nnumber_sections becomes number-sections\ncode_folding becomes code-fold\n\nChunk options are specified inside the chunk like #| echo: false rather than r{echo=FALSE}\nMany more chunk options are available including figure captions and layout\nCSS classes are easier to use using ::: notation\nMany additional functionality out of the box\n\nPage layouts\nFigure layouts\nFigure captions and numbering\nCall-Outs\nCross referencing\nCitation\nBibliography\nMargin content\n\nQuarto supports htmlwidgets in R and jupyter widgets for Python/Julia\nInteractivity\n\nClient-side interactivity using ObservableJS\nServer-side interactivity using Shiny"
+    "text": "Compared to Rmd\n\nQuarto is a command-line tool independent of R\nSupports multiple languages seamlessly (R, Python, Julia, Observable)\nYAML options maybe slightly different in quarto. Quarto uses hyphens instead of underscores.\n\ntoc_depth becomes toc-depth\nnumber_sections becomes number-sections\ncode_folding becomes code-fold\n\nChunk options are specified inside the chunk like #| echo: false rather than r{echo=FALSE}\nMany more chunk options are available including figure captions and layout\nCSS classes are easier to use using ::: notation\nMany additional functionality out of the box\n\nPage layouts\nFigure layouts, Figure captions and numbering\nCall-Outs\nCross referencing, Citation, Bibliography\nMargin content\n\nQuarto supports htmlwidgets in R and jupyter widgets for Python/Julia\nClient-side interactivity using ObservableJS"
   },
   {
     "objectID": "slides/packages/index.html#what-is-an-r-package",
@@ -2209,7 +2209,7 @@
     "href": "home_contents.html",
     "title": "Contents",
     "section": "",
-    "text": "Note\n\n\n\nThe contents are being updated.\n\n\n\n\n\n\nTopic\nAuthor\nLinks\n\n\n\n\nWEEK 1\n\n\n\n\n10-Jun-2024 (Mon)\n\n\n\n\nIntroduction to RaukR\nMarcin Kierczak & Sebastian DiLorenzo\n\n\n\nBest Coding Practices in R\nMarcin Kierczak\nSlides, Lab\n\n\nLiterate programming with Quarto\nRoy Francis\nSlides, Lab\n\n\nDebugging, Profiling and Optimization\nMarcin Kierczak\nSlides, Lab\n\n\n11-Jun-2024 (Tue)\n\n\n\n\nObject-oriented programming\nMarcin Kierczak\nSlides, Lab\n\n\ngit with R\nSebastian DiLorenzo\nSlides, Lab\n\n\nPlotting with ggplot2\nRoy Francis\nSlides, Lab\n\n\n12-Jun-2024 (Wed)\n\n\n\n\nTidyverse\nMarcin Kierczak\nSlides, Lab\n\n\nFuturverse 1\nHenrik Bengtsson, UCSF\n\n\n\n13-Jun-2024 (Thu)\n\n\n\n\nHow to repeat yourself with Purrr\nJenny Bryan, Posit\n\n\n\nWeb apps with Shiny\nRoy Francis\nSlides, Lab\n\n\n14-Jun-2024 (Fri)\n\n\n\n\nR Packages\nJenny Bryan, Posit\n\n\n\nreticulate: Combining R with Python\nNina Norgren\nSlides, Lab\n\n\nWEEK 2\n\n\n\n\n17-Jun-2024 (Mon)\n\n\n\n\nStatistics and machine learning in R\nNikolay Oskolkov\nSlides, Lab\n\n\nFuturverse 2\nHenrik Bengtsson, Posit\n\n\n\n18-Jun-2024 (Tue)\n\n\n\n\nProject environments using Renv\nRoy Francis\nSlides\n\n\n\n\nSlides Labs"
+    "text": "Note\n\n\n\nThe contents are being updated.\n\n\n\n\n\n\nTopic\nAuthor\nLinks\n\n\n\n\nWEEK 1\n\n\n\n\n10-Jun-2024 (Mon)\n\n\n\n\nIntroduction to RaukR\nMarcin Kierczak & Sebastian DiLorenzo\n\n\n\nBest Coding Practices in R\nMarcin Kierczak\nSlides, Lab\n\n\nLiterate programming with Quarto\nRoy Francis\nSlides, Lab\n\n\nDebugging, Profiling and Optimization\nMarcin Kierczak\nSlides, Lab\n\n\n11-Jun-2024 (Tue)\n\n\n\n\nObject-oriented programming\nMarcin Kierczak\nSlides, Lab\n\n\ngit with R\nSebastian DiLorenzo\nSlides, Lab\n\n\nPlotting with ggplot2\nRoy Francis\nSlides, Lab\n\n\n12-Jun-2024 (Wed)\n\n\n\n\nTidyverse\nMarcin Kierczak\nSlides, Lab\n\n\nFuturverse 1\nHenrik Bengtsson, UCSF\n\n\n\n13-Jun-2024 (Thu)\n\n\n\n\nHow to repeat yourself with Purrr\nJenny Bryan, Posit\n\n\n\nWeb apps with Shiny\nRoy Francis\nSlides, Lab\n\n\n14-Jun-2024 (Fri)\n\n\n\n\nR Packages\nJenny Bryan, Posit\n\n\n\nreticulate: Combining R with Python\nNina Norgren\nSlides, Lab\n\n\nWEEK 2\n\n\n\n\n17-Jun-2024 (Mon)\n\n\n\n\nStatistics and machine learning in R\nNikolay Oskolkov\nSlides, Lab\n\n\nFuturverse 2\nHenrik Bengtsson, UCSF\n\n\n\n18-Jun-2024 (Tue)\n\n\n\n\nProject environments using Renv\nRoy Francis\nSlides\n\n\n\n\nSlides Labs"
   },
   {
     "objectID": "home_gallery.html#raukr-2019",
@@ -2377,7 +2377,7 @@
     "href": "labs/index.html",
     "title": "Labs",
     "section": "",
-    "text": "Best Coding Practices\n\n\n\nMarcin Kierczak\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDebugging, Profiling and Optimizing Code\n\n\n\nMarcin Kierczak\n\n\n\n\n\n\n\n\n\n\n\n\nDemo Lab\n\n\n\nRoy Francis\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFunctions & Scripts\n\n\n\nSebastian DiLorenzo, Markus Mayrhofer\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLiterate programming with Quarto\n\n\n\nRoy Francis\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMathematical statistics and machine learning in R\n\n\n\nNikolay Oskolkov\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nObject-Oriented Programming in R\n\n\n\nMarcin Kierczak\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nParallelization\n\n\n\nSebastian DiLorenzo\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPlotting with ggplot2\n\n\n\nRoy Francis\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nR packages\n\n\n\nSebastian DiLorenzo\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nReproducible research\n\n\n\nRoy Francis\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTidy work in Tidyverse\n\n\n\nMarcin Kierczak\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nVectorization\n\n\n\nMarcin Kierczak\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWeb apps with Shiny\n\n\n\nRoy Francis\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ngit and R\n\n\n\nSebastian DiLorenzo\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nreticulate\n\n\n\nNina Norgren\n\n\n\n\n\n\n\n\nNo matching items"
+    "text": "Best Coding Practices\n\n\n\nMarcin Kierczak\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDebugging, Profiling and Optimizing Code\n\n\n\nMarcin Kierczak\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFunctions & Scripts\n\n\n\nSebastian DiLorenzo, Markus Mayrhofer\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLiterate programming with Quarto\n\n\n\nRoy Francis\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMathematical statistics and machine learning in R\n\n\n\nNikolay Oskolkov\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nObject-Oriented Programming in R\n\n\n\nMarcin Kierczak\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPlotting with ggplot2\n\n\n\nRoy Francis\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nR packages\n\n\n\nSebastian DiLorenzo\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTidy work in Tidyverse\n\n\n\nMarcin Kierczak\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nVectorization\n\n\n\nMarcin Kierczak\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWeb apps with Shiny\n\n\n\nRoy Francis\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ngit and R\n\n\n\nSebastian DiLorenzo\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nreticulate\n\n\n\nNina Norgren\n\n\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "labs/oop/index.html",
@@ -2951,7 +2951,7 @@
     "href": "slides/index.html",
     "title": "Slides",
     "section": "",
-    "text": "Best Coding Practices\n\n\n\nMarcin Kierczak\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDemo Slides\n\n\n\nRoy Francis\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFunctions and scripts\n\n\n\nSebastian DiLorenzo\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nInteractive web apps with Shiny\n\n\n\nRoy Francis\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLiterate programming with Quarto\n\n\n\nRoy Francis\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMathematical statistics and machine learning in R\n\n\n\nNikolay Oskolkov\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nObject-Oriented Programming Models in R\n\n\n\nMarcin Kierczak\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nParallelization in R\n\n\n\nSebastian DiLorenzo\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPlotting with ggplot2\n\n\n\nRoy Francis\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nR packages\n\n\n\nSebastian DiLorenzo\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nRenv: Project environments in R\n\n\n\nRoy Francis\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nReproducible research in R\n\n\n\nRoy Francis\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nReticulate\n\n\n\nNina Norgren\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTidy work in Tidyverse\n\n\n\nMarcin Kierczak\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nVectorization in R\n\n\n\nMarcin Kierczak\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ngit and R\n\n\n\nSebastian DiLorenzo\n\n\n\n\n\n\n\n\nNo matching items"
+    "text": "Best Coding Practices\n\n\n\nMarcin Kierczak\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nDemo Slides\n\n\n\nRoy Francis\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFunctions and scripts\n\n\n\nSebastian DiLorenzo\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nInteractive web apps with Shiny\n\n\n\nRoy Francis\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLiterate programming with Quarto\n\n\n\nRoy Francis\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMathematical statistics and machine learning in R\n\n\n\nNikolay Oskolkov\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nObject-Oriented Programming Models in R\n\n\n\nMarcin Kierczak\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPlotting with ggplot2\n\n\n\nRoy Francis\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nR packages\n\n\n\nSebastian DiLorenzo\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nRenv: Project environments in R\n\n\n\nRoy Francis\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nReticulate\n\n\n\nNina Norgren\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTidy work in Tidyverse\n\n\n\nMarcin Kierczak\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nVectorization in R\n\n\n\nMarcin Kierczak\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ngit and R\n\n\n\nSebastian DiLorenzo\n\n\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "slides/oop/index.html#object-oriented-programming",
@@ -4057,7 +4057,7 @@
     "href": "slides/quarto/index.html#quarto-1",
     "title": "Literate programming with Quarto",
     "section": "Quarto",
-    "text": "Quarto\nAn open-source scientific and technical publishing system built on Pandoc.\n\n\n\nCommand-line tool enabling weaving code and documentation using Python, R, Julia, and Observable.\nSupports Knitr (plain text, markdown) or Jupyter engines.\n\n\n\nSupports many IDEs\n\nRStudio\nJupyterLab\nVS Code\nNeovim\n\n\n\n\n\nNumerous output formats\n\nDocuments (HTML, PDF, MS Word)\nPresentations (RevealJS, Powerpoint, Beamer)\nWebsites, Blogs, e-Books\nInteractive (ObservableJS, Shiny)\n\n\n\n\n\nFeatures and components\n\nScientific markdown\nTables & Figures\nEquations\nCitations\nCall-Out\nLayout"
+    "text": "Quarto\n\n\n\n\nLiterate programming: Combining code with narrative\nReproducible research\nDocumentation and reporting\n\nWebsites, Presentations, e-books, PDFs …\n\n\n\nhttps://quarto.org/docs/gallery/\n\n\n\n\n\n\nLiterate programming is a programming paradigm introduced by Donald Knuth in 1984. The key concept behind literate programming is to treat a program as a work of literature, understandable to human beings. In this paradigm, documentation and source code are interwoven in a way that presents the logic and structure of the program in a readable and understandable manner.\nIn traditional programming, the source code is primary and documentation is secondary, often added as comments or in separate documentation files. In literate programming, the source code and documentation are combined, and the documentation is primary. The idea is that the program is written for humans to read and understand, and the actual source code is secondary, extracted and compiled by special tools.\nSome key features of literate programming include:\nIntertwined Documentation and Code: The documentation explains the logic, design decisions, and overall structure of the code, while the source code is presented within this narrative.\nStructured Narrative: The program is presented in a top-down manner, where the higher-level structure and concepts are introduced first, followed by the detailed implementation.\nReadable for Humans: The main goal is to make the program easy to read and understand by other humans, which aids in maintenance, debugging, and collaborative development.\nEmphasis on Explanation: The documentation within the literate programming code often includes detailed explanations of algorithms, data structures, and design decisions."
   },
   {
     "objectID": "slides/quarto/index.html#parameterized-reports",
@@ -4079,5 +4079,19 @@
     "title": "Plotting with ggplot2",
     "section": "Learning & Help",
     "text": "Learning & Help\n\n\n\nggplot2 book\n\n\nThe R cookbook\n\n\n\n\nggplot2 official reference\n\nRStudio cheatsheet\n\nr-statistics ggplot2 cheatsheet\n\nStackOverflow\n\nBlogs, R-Bloggers, Cedric Scherer etc."
+  },
+  {
+    "objectID": "slides/quarto/index.html#rendering",
+    "href": "slides/quarto/index.html#rendering",
+    "title": "Literate programming with Quarto",
+    "section": "Rendering",
+    "text": "Rendering\n\nLive preview\n\nFrom R console quarto::quarto_preview(\"report.qmd\")\nFrom terminal quarto preview report.qmd\n\nRender\n\nInteractively using the Render button\nFrom R console quarto::quarto_render(\"report.qmd\")\nFrom terminal quarto render report.qmd"
+  },
+  {
+    "objectID": "slides/quarto/index.html#publish",
+    "href": "slides/quarto/index.html#publish",
+    "title": "Literate programming with Quarto",
+    "section": "Publish",
+    "text": "Publish\nQuarto supports directly publishing to several popular services\n\n\nQuarto Pub: Free public publishing for Quarto documents, websites, and books\nGitHub pages\nNetlify\nConfluence\n\n\n\n\nquarto publish quarto-pub\n_publish.yml stores information\n\n- source: project\n  quarto-pub:\n    - id: \"5f3abafe-68f9-4c1d-835b-9d668b892001\"\n      url: \"https://njones.quarto.pub/blog\"\nPublishing documentation"
   }
 ]

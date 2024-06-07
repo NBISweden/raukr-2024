@@ -6,6 +6,9 @@ listing:
   grid-columns: 4
   fields: [image, title, author]
   image-placeholder: "/assets/images/featured.jpg"
+  contents: 
+    - "*.qmd"
+    - "!demo/*.qmd"
 date: ""
 toc: false
 sidebar: false
