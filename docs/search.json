@@ -2559,14 +2559,14 @@
     "href": "slides/coding/index.html#learning-outcomes",
     "title": "Best Coding Practices",
     "section": "Learning Outcomes",
-    "text": "Learning Outcomes\n\nAfter this module:\n\nYou will be aware of different coding styles.\n\n\n\nYou will know what styles are good 🦸 and bad 🦹 and why ❓.\n\n\n\n\nYou will know how to decompose a problem before you even start coding.\n\n\n\n\nYou will understand when there is time for writing a function.\n\n\n\n\nYour code will reach new level of awesomeness! 🆒."
+    "text": "Learning Outcomes\n\nAfter this module:\n\nYou will be aware of different coding styles.\n\n\n\nYou will know what styles are good 🦸 and bad 🦹 and why.\n\n\n\n\nYou will be reminded about dividing a problem before your start conquering(coding).\n\n\n\n\nYou will understand when it is time to write a function.\n\n\n\n\nYou will have a basic understanding of using github copilot with RStudio 🤖.\n\n\n\n\nYour code will reach new level of awesomeness! 🆒."
   },
   {
     "objectID": "slides/coding/index.html#topics-of-this-block",
     "href": "slides/coding/index.html#topics-of-this-block",
     "title": "Best Coding Practices",
     "section": "Topics of This Block",
-    "text": "Topics of This Block\n\n\nStyle — _howTo_style.yourCode?\nStructure — how to think 🤔 about the code and manufacture your own building 🚧 blocks\n\n\n\nDebugging — my code does not run 😿\nProfiling — now it does run but… out of memory 💣\nOptimization — making things better 👷‍♀️\n\n\n\n\nVectorization — more details on optimization via vectorization 🔚\nParallelization — run things in parallel, rule them all! 💍"
+    "text": "Topics of This Block\n\n\nStyle — _howTo_style.yourCode?\nStructure — how to think 🤔 about the code and manufacture your own building 🚧 blocks\n\n\n\nVectorization — more details on optimization via vectorization 🔂\nParallelization — run things in parallel, rule them all! 💍\n\n\n\n\nDebugging — my code does not run 😭\nProfiling — now it does run but… out of memory 💣\nOptimization — making things better 👷"
   },
   {
     "objectID": "slides/coding/index.html#what-is-coding-style",
@@ -2580,14 +2580,14 @@
     "href": "slides/coding/index.html#naming-conventions",
     "title": "Best Coding Practices",
     "section": "Naming Conventions",
-    "text": "Naming Conventions\nA syntactically valid name:\n\nConsists of:\n\nletters: abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ\ndigits: 0123456789\nperiod: .\nunderscore: _\n\nBegins with a letter or the period (.) not followed by a number\nCannot be one of the reserved words: if, else, repeat, while, function, for, in, next, break, TRUE, FALSE, NULL, Inf, NaN, NA, NA_integer_, NA_real_, NA_complex_, NA_character_\nAlso cannot be: c, q, t, C, D, I as they are reserved function names."
+    "text": "Naming Conventions\nA syntactically valid name:\n\nConsists of:\n\nletters: abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ\ndigits: 0123456789\nperiod: .\nunderscore: _\n\nBegins with a letter or the period (.), if . should not followed by a number\nCannot be one of the reserved words: if, else, repeat, while, function, for, in, next, break, TRUE, FALSE, NULL, Inf, NaN, NA, NA_integer_, NA_real_, NA_complex_, NA_character_\nAlso cannot be: c, q, t, C, D, I as they are reserved function names."
   },
   {
     "objectID": "slides/coding/index.html#naming-style",
     "href": "slides/coding/index.html#naming-style",
     "title": "Best Coding Practices",
     "section": "Naming Style",
-    "text": "Naming Style\nVariable names that are legal are not necessarily a good style and they may be dangerous ☠️:\n\nF\nT\n\n[1] FALSE\n[1] TRUE\n\n\n\nF + T  \n\n[1] 1\n\n\n\nF &lt;- 3  \nF + T  \n\n[1] 4\n\n\ndo not do this!\n\nunless you are a politician 🕴…\nAvoid T and F as variable names."
+    "text": "Naming Style\nVariable names that are legal are not necessarily a good style and they may be dangerous 💀:\n\nF\nT\n\n[1] FALSE\n[1] TRUE\n\n\n\nF + T  \n\n[1] 1\n\n\n\nF &lt;- 3  \nF + T  \n\n[1] 4\n\n\ndo not do this!\n\nunless you are a politician 🕴…\nAvoid T and F as variable names."
   },
   {
     "objectID": "slides/coding/index.html#customary-variable-names",
@@ -2615,7 +2615,7 @@
     "href": "slides/coding/index.html#structure-your-code",
     "title": "Best Coding Practices",
     "section": "Structure Your Code",
-    "text": "Structure Your Code\nDecompose the problem 🧩 🧩!\n  \nsource: Wikimedia Commons\n\n\n\ndivide et impera / top-down approach — split your BIG problem into a number of small sub-problems recursively and, at some level, encapsulate your code in functional blocks (functions)\n\n\n\n\na function should be performing a small task, it should be a logical program unit\n\n\n\nwhen should I write a function ❓\n\n\n\none screen 💻 rule (resolution…),\nre-use twice rule of 👍.\n\n\n\nconsider creating an S4 or even an R6 class — data-type safety!"
+    "text": "Structure Your Code\nDecompose the problem 🧩 🧩!\n  \nsource: Wikimedia Commons\n\n\n\ndivide et impera / top-down approach — split your BIG problem into a number of small sub-problems recursively and, at some level, encapsulate your code in functional blocks (functions)\n\n\n\n\na function should be performing a small task, it should be a logical program unit\n\n\n\nwhen should I write a function ❓\n\n\n\none screen 💻 rule (resolution…),\nre-use twice rule of 👍."
   },
   {
     "objectID": "slides/coding/index.html#how-to-write-functions",
@@ -2629,7 +2629,7 @@
     "href": "slides/coding/index.html#how-to-write-functions-1",
     "title": "Best Coding Practices",
     "section": "How to write functions",
-    "text": "How to write functions\n\nuse data as the very first argument for %&gt;% pipes sake:\n\nmyfun &lt;- function(x, arg) 🆗\nmyfun &lt;- function(arg, x) 🚯\n\n\n\n\nset arguments to defaults — better too many args than too few:\n\nmyfun &lt;- function(x, seed = 42) 🆗\nmyfun &lt;- function(x, ...) 🚭\n\n\n\n\n\nremember that global defaults can be changed by options"
+    "text": "How to write functions\n\nuse data as the very first argument for %&gt;% pipes sake:\n\nmyfun &lt;- function(x, arg) 🆗\nmyfun &lt;- function(arg, x) 🙅\n\n\n\n\nset arguments to defaults — better too many args than too few:\n\nmyfun &lt;- function(x, seed = 42) 🆗\nmyfun &lt;- function(x, ...) 🚯\n\n\n\n\n\nremember that global defaults can be changed by options"
   },
   {
     "objectID": "slides/coding/index.html#wrapper-function",
@@ -2650,7 +2650,7 @@
     "href": "slides/coding/index.html#section-1",
     "title": "Best Coding Practices",
     "section": "",
-    "text": "Thank you! Questions?\n\n\n         _                  \nplatform x86_64-pc-linux-gnu\nos       linux-gnu          \nmajor    4                  \nminor    3.2                \n\n\n2024 • SciLifeLab • NBIS • RaukR"
+    "text": "Thank you! Questions?\n\n\n         _                     \nplatform aarch64-apple-darwin20\nos       darwin20              \nmajor    4                     \nminor    4.0                   \n\n\n2024 • SciLifeLab • NBIS • RaukR"
   },
   {
     "objectID": "slides/ggplot/index.html#graphs",
@@ -4093,5 +4093,19 @@
     "title": "Literate programming with Quarto",
     "section": "Publish",
     "text": "Publish\nQuarto supports directly publishing to several popular services\n\n\nQuarto Pub: Free public publishing for Quarto documents, websites, and books\nGitHub pages\nNetlify\nConfluence\n\n\n\n\nquarto publish quarto-pub\n_publish.yml stores information\n\n- source: project\n  quarto-pub:\n    - id: \"5f3abafe-68f9-4c1d-835b-9d668b892001\"\n      url: \"https://njones.quarto.pub/blog\"\nPublishing documentation"
+  },
+  {
+    "objectID": "slides/coding/index.html#todays-topics",
+    "href": "slides/coding/index.html#todays-topics",
+    "title": "Best Coding Practices",
+    "section": "Todays topics",
+    "text": "Todays topics\n\n\nStyle — _howTo_style.yourCode?\nStructure — how to think 🤔 about the code and manufacture your own building 🚧 blocks\n\n\n\nDocumentation — how to use quarto for reproducibility, convenience and code integration 📖\n\n\n\n\nDebugging — my code does not run 😞\nProfiling — now it does run but… out of memory 💣\nOptimization — making things better 👷"
+  },
+  {
+    "objectID": "slides/coding/index.html#github-copilot-rstudio",
+    "href": "slides/coding/index.html#github-copilot-rstudio",
+    "title": "Best Coding Practices",
+    "section": "Github copilot ❤️ RStudio",
+    "text": "Github copilot ❤️ RStudio\n\n source: https://github.com/edu/students"
   }
 ]

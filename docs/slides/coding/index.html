@@ -11,9 +11,9 @@
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/quarto-contrib/reveal-logo-1.0.0/reveal-logo.js" defer="true"></script>
 <link href="../../site_libs/quarto-contrib/reveal-logo-1.0.0/reveal-logo.css" rel="stylesheet"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.4.549">
+  <meta name="generator" content="quarto-1.5.43">
 
-  <meta name="author" content="Marcin Kierczak">
+  <meta name="author" content="Marcin Kierczak, Sebastian DiLorenzo">
   <title>Best Coding Practices</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -45,7 +45,7 @@
     }
     @media print {
     pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
     }
     pre.numberSource code
       { counter-reset: source-line 0; }
@@ -73,7 +73,7 @@
     code span.at { color: #657422; } /* Attribute */
     code span.bn { color: #ad0000; } /* BaseN */
     code span.bu { } /* BuiltIn */
-    code span.cf { color: #003b4f; } /* ControlFlow */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
     code span.ch { color: #20794d; } /* Char */
     code span.cn { color: #8f5902; } /* Constant */
     code span.co { color: #5e5e5e; } /* Comment */
@@ -87,7 +87,7 @@
     code span.fu { color: #4758ab; } /* Function */
     code span.im { color: #00769e; } /* Import */
     code span.in { color: #5e5e5e; } /* Information */
-    code span.kw { color: #003b4f; } /* Keyword */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
     code span.op { color: #5e5e5e; } /* Operator */
     code span.ot { color: #003b4f; } /* Other */
     code span.pp { color: #ad0000; } /* Preprocessor */
@@ -406,8 +406,8 @@
       <div class="title-child-text">
         <h1 class="title">Best Coding Practices</h1>
                 <p class="subtitle">RaukR 2024 • Advanced R for Bioinformatics</p>
-                        <p class="author">Marcin Kierczak</p>
-                                <p class="date">29-May-2024</p>
+                        <p class="author">Marcin Kierczak, Sebastian DiLorenzo</p>
+                                <p class="date">09-Jun-2024</p>
               </div>
     </div>
     
@@ -423,17 +423,22 @@
 </ul>
 <div class="fragment">
 <ul>
-<li>You will know what styles are good 🦸 and bad 🦹 and why ❓.</li>
+<li>You will know what styles are good 🦸 and bad 🦹 and why.</li>
 </ul>
 </div>
 <div class="fragment">
 <ul>
-<li>You will know how to decompose a problem before you even start coding.</li>
+<li>You will be reminded about dividing a problem before your start conquering(coding).</li>
 </ul>
 </div>
 <div class="fragment">
 <ul>
-<li>You will understand when there is time for writing a function.</li>
+<li>You will understand when it is time to write a function.</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>You will have a basic understanding of using github copilot with RStudio 🤖.</li>
 </ul>
 </div>
 <div class="fragment">
@@ -442,8 +447,8 @@
 </ul>
 </div>
 </section>
-<section id="topics-of-this-block" class="slide level2">
-<h2>Topics of This Block</h2>
+<section id="todays-topics" class="slide level2">
+<h2>Todays topics</h2>
 <p><br></p>
 <ul>
 <li><p><strong>Style</strong> — _howTo_style.yourCode?</p></li>
@@ -451,15 +456,14 @@
 </ul>
 <div class="fragment">
 <ul>
-<li><p><strong>Debugging</strong> — my code does not run 😿</p></li>
-<li><p><strong>Profiling</strong> — now it does run but… out of memory 💣</p></li>
-<li><p><strong>Optimization</strong> — making things better 👷‍♀️</p></li>
+<li><strong>Documentation</strong> — how to use quarto for reproducibility, convenience and code integration 📖</li>
 </ul>
 </div>
 <div class="fragment">
 <ul>
-<li><p><strong>Vectorization</strong> — more details on optimization via vectorization 🔚</p></li>
-<li><p><strong>Parallelization</strong> — run things in parallel, rule them all! 💍</p></li>
+<li><p><strong>Debugging</strong> — my code does not run 😞</p></li>
+<li><p><strong>Profiling</strong> — now it does run but… out of memory 💣</p></li>
+<li><p><strong>Optimization</strong> — making things better 👷</p></li>
 </ul>
 </div>
 </section>
@@ -492,14 +496,14 @@
 <li>period: <code>.</code></li>
 <li>underscore: <code>_</code></li>
 </ul></li>
-<li><p>Begins with a letter or the period (<code>.</code>) <strong>not</strong> followed by a number</p></li>
+<li><p>Begins with a letter or the period (<code>.</code>), if <code>.</code> should <strong>not</strong> followed by a number</p></li>
 <li><p>Cannot be one of the <em>reserved words</em>: <code>if</code>, <code>else</code>, <code>repeat</code>, <code>while</code>, <code>function</code>, <code>for</code>, <code>in</code>, <code>next</code>, <code>break</code>, <code>TRUE</code>, <code>FALSE</code>, <code>NULL</code>, <code>Inf</code>, <code>NaN</code>, <code>NA</code>, <code>NA_integer_</code>, <code>NA_real_</code>, <code>NA_complex_</code>, <code>NA_character_</code></p></li>
 <li><p>Also cannot be: <code>c</code>, <code>q</code>, <code>t</code>, <code>C</code>, <code>D</code>, <code>I</code> as they are reserved function names.</p></li>
 </ul>
 </section>
 <section id="naming-style" class="slide level2">
 <h2>Naming Style</h2>
-<p>Variable names that are legal are not necessarily a good style and they may be dangerous ☠️:</p>
+<p>Variable names that are legal are not necessarily a good style and they may be dangerous 💀:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>F</span>
 <span id="cb1-2"><a></a>T</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -658,9 +662,6 @@
 <li>re-use twice rule of 👍.</li>
 </ul>
 </div>
-<div class="fragment">
-<p>consider creating an S4 or even an R6 class — data-type safety!</p>
-</div>
 </section>
 <section id="how-to-write-functions" class="slide level2">
 <h2>How to write functions</h2>
@@ -699,7 +700,7 @@
 <li>use <strong>data</strong> as the <strong>very first</strong> argument for <code>%&gt;%</code> pipes sake:
 <ul>
 <li><code>myfun &lt;- function(x, arg)</code> 🆗</li>
-<li><code>myfun &lt;- function(arg, x)</code> 🚯</li>
+<li><code>myfun &lt;- function(arg, x)</code> 🙅</li>
 </ul></li>
 </ul>
 <div class="fragment">
@@ -707,7 +708,7 @@
 <li>set arguments to defaults — better too many args than too few:
 <ul>
 <li><code>myfun &lt;- function(x, seed = 42)</code> 🆗</li>
-<li><code>myfun &lt;- function(x, ...)</code> 🚭</li>
+<li><code>myfun &lt;- function(x, ...)</code> 🚯</li>
 </ul></li>
 </ul>
 </div>
@@ -760,16 +761,21 @@
 <p><span class="center"><img data-src="assets/goto.png" height="300"> <br> <span class="smaller">source: http://www.xkcd/com/292</span></span></p>
 </div>
 </section>
+<section id="github-copilot-rstudio" class="slide level2">
+<h2>Github copilot ❤️ RStudio</h2>
+<p><span class="center"><img data-src="assets/copilot.png" height="500"><br>
+<br> <span class="smaller">source: https://github.com/edu/students</span></span></p>
+</section>
 <section id="section-1" class="slide level2" data-background-image="../../assets/images/cover.jpg">
 <h2></h2>
 <h3 id="thank-you-questions">Thank you! Questions?</h3>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>         _                  
-platform x86_64-pc-linux-gnu
-os       linux-gnu          
-major    4                  
-minor    3.2                </code></pre>
+<pre><code>         _                     
+platform aarch64-apple-darwin20
+os       darwin20              
+major    4                     
+minor    4.0                   </code></pre>
 </div>
 </div>
 <p><span class="smaller">2024 • <a href="https://www.scilifelab.se/">SciLifeLab</a> • <a href="https://nbis.se/">NBIS</a> • <a href="https://nbisweden.github.io/raukr-2024">RaukR</a></span></p>
@@ -1070,18 +1076,7 @@ minor    3.2                </code></pre>
         }
         return false;
       }
-      const clipboard = new window.ClipboardJS('.code-copy-button', {
-        text: function(trigger) {
-          const codeEl = trigger.previousElementSibling.cloneNode(true);
-          for (const childEl of codeEl.children) {
-            if (isCodeAnnotation(childEl)) {
-              childEl.remove();
-            }
-          }
-          return codeEl.innerText;
-        }
-      });
-      clipboard.on('success', function(e) {
+      const onCopySuccess = function(e) {
         // button target
         const button = e.trigger;
         // don't keep focus
@@ -1113,7 +1108,47 @@ minor    3.2                </code></pre>
         }, 1000);
         // clear code selection
         e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
       });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        // For code content inside modals, clipBoardJS needs to be initialized with a container option
+        // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
+        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+        var mailtoRegex = new RegExp(/^mailto:/);
+          var filterRegex = new RegExp("https:\/\/nbisweden\.github\.io\/raukr-2024\/");
+        var isInternal = (href) => {
+            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+        }
+        // Inspect non-navigation links and adorn them if external
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+        for (var i=0; i<links.length; i++) {
+          const link = links[i];
+          if (!isInternal(link.href)) {
+            // undo the damage that might have been done by quarto-nav.js in the case of
+            // links that we want to consider external
+            if (link.dataset.originalHref !== undefined) {
+              link.href = link.dataset.originalHref;
+            }
+          }
+        }
       function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
         const config = {
           allowHTML: true,
@@ -1150,7 +1185,11 @@ minor    3.2                </code></pre>
           try { href = new URL(href).hash; } catch {}
           const id = href.replace(/^#\/?/, "");
           const note = window.document.getElementById(id);
-          return note.innerHTML;
+          if (note) {
+            return note.innerHTML;
+          } else {
+            return "";
+          }
         });
       }
       const findCites = (el) => {

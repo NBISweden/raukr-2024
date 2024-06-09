@@ -1,6 +1,6 @@
 ---
 title: "Best Coding Practices"
-author: "Marcin Kierczak"
+author: "Marcin Kierczak, Sebastian DiLorenzo"
 image: "assets/featured.jpg"
 format: revealjs
 ---
@@ -23,21 +23,28 @@ After this module:
 
 . . .
 
-- You will know what styles are good `r emo::ji('good')` and bad `r emo::ji('bad')` and why `r emo::ji('question')`.
+- You will know what styles are good `r emo::ji('good')` and bad `r emo::ji('bad')` and why.
 
 . . .
 
-- You will know how to decompose a problem before you even start coding.
+- You will be reminded about dividing a problem before your start conquering(coding).
 
 . . .
 
-- You will understand when there is time for writing a function.
+- You will understand when it is time to write a function.
+
+. . .
+
+- You will have a basic understanding of using github copilot with RStudio `r emo::ji('robot')`.
 
 . . .
 
 - Your code will reach new level of awesomeness! `r emo::ji('cool')`.
 
-## Topics of This Block
+
+
+
+## Todays topics
 
 <br>
 
@@ -47,17 +54,16 @@ After this module:
 
 . . .
 
+- **Documentation** &mdash; how to use quarto for reproducibility, convenience and code integration `r emo::ji('book')`
+
+. . .
+
 - **Debugging** &mdash; my code does not run `r emo::ji('sad')`
 
 - **Profiling** &mdash; now it does run but... out of memory `r emo::ji('bomb')`
 
 - **Optimization** &mdash; making things better `r emo::ji('worker')`
 
-. . .
-
-- **Vectorization** &mdash; more details on optimization via vectorization `r emo::ji('arrow')`
-
-- **Parallelization** &mdash; run things in parallel, rule them all! `r emo::ji('ring')`
 
 ## What is Coding Style?
 
@@ -84,7 +90,7 @@ A syntactically valid name:
   - period: `.`
   - underscore: `_`
 
-- Begins with a letter or the period (`.`) **not** followed by a number
+- Begins with a letter or the period (`.`), if `.` should **not** followed by a number
 
 - Cannot be one of the *reserved words*: `if`, `else`, `repeat`, `while`, `function`, `for`, `in`, `next`, `break`, `TRUE`, `FALSE`, `NULL`, `Inf`, `NaN`, `NA`, `NA_integer_`, `NA_real_`, `NA_complex_`, `NA_character_`
 
@@ -251,10 +257,6 @@ Decompose the problem `r emo::ji('puzzle')` `r emo::ji('puzzle')`!
 - one screen `r emo::ji('screen')` rule (resolution...),
 - re-use twice rule of `r emo::ji('thumbs_up')`.
 
-. . .
-
-consider creating an S4 or even an R6 class &mdash; data-type safety!
-
 ## How to write functions
 
 - avoid accessing and modifying globals
@@ -338,6 +340,14 @@ my_awesome_plot(1:5, las = 1)
 ![](assets/goto.png){height="300px"}
 <br>
 [source: http://www.xkcd/com/292]{.smaller}
+]{.center}
+
+## Github copilot `r emo::ji('heart')` RStudio
+
+[
+![](assets/copilot.png){height="500px"}  
+<br>
+[source: https://github.com/edu/students]{.smaller}
 ]{.center}
 
 ## {background-image="/assets/images/cover.jpg"}
