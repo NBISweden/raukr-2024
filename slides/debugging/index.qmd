@@ -1,5 +1,5 @@
 ---
-title: "Debugging, Profiling, and Optimization"
+title: "Debugging, Profiling, and a Bit of Optimization"
 author: "Marcin Kierczak"
 image: "assets/featured.jpg"
 format: revealjs
@@ -20,7 +20,7 @@ library(ggplot2)
 # remotes::install_github("hadley/emo")
 library(emo)
 # remotes::install_github("cdeterman/gpuR")
-# library(gpuR)
+library(gpuR)
 ```
 
 ## Run Forrest, run!
@@ -532,7 +532,7 @@ And let us summarise:
 
 ```{r summaryRprof}
 summary <- summaryRprof("profiler_test.out", memory = "both")
-unlink("profiler_test.out")
+#unlink("profiler_test.out")
 knitr::kable(summary$by.self)
 ```
 
@@ -541,7 +541,7 @@ knitr::kable(summary$by.self)
 There are also packages available that enable even more advanced profiling:
 
 ```{r profr_package}
-#| eval: false
+#| eval: true
 
 library(profr)
 Rprof("profiler_test2.out", interval = 0.01)
@@ -554,9 +554,9 @@ This returns a table that can be visualised:
 
 ```{r}
 #| include: false
-# save(profile_df, file = 'profiler_test2.Rdat')
+save(profile_df, file = 'profiler_test2.Rdat')
 load("profiler_test2.Rdat")
-unlink("profiler_test2.Rdat")
+#unlink("profiler_test2.Rdat")
 ```
 
 ```{r show_profr_result}
