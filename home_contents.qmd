@@ -17,12 +17,12 @@ The contents are being updated.
 
 :::{.contents-table .column-body-outset}
 
-|Topic                                  |Author                                 |Links|
+|Topic                                  |Presenter                              |Links|
 |---------------------------------------|---------------------------------------|-----|
 |[**WEEK 1**]{.badge .badge-secondary}                                          |||
 |[**10-Jun-2024 (Mon)**]{.badge .badge-secondary}                               |||
-|Introduction to RaukR                  |Marcin Kierczak & Sebastian DiLorenzo  ||
-|Best Coding Practices in R             |Marcin Kierczak                        |[Slides](slides/coding/index.html), [Lab](labs/coding/index.html)|
+|Introduction to RaukR                  |Marcin Kierczak, Sebastian DiLorenzo   ||
+|Best Coding Practices in R             |Marcin Kierczak, Sebastian DiLorenzo   |[Slides](slides/coding/index.html), [Lab](labs/coding/index.html)|
 |Literate programming with Quarto       |Roy Francis                            |[Slides](slides/quarto/index.html), [Lab](labs/quarto/index.html)|
 |Debugging, Profiling and Optimization  |Marcin Kierczak                        |[Slides](slides/debugging/index.html), [Lab](labs/debugging/index.html)|
 |[**11-Jun-2024 (Tue)**]{.badge .badge-secondary}                               |||
