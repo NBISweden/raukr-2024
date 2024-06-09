@@ -12,7 +12,7 @@ library(bsplus)
 ```
 
 ::: {.callout-note}
-The objective of this lab is to improve your coding skills by focusing on coding style, code benchmarking and optimization. Below, you will find a number of tasks connected to the topics covered in the *Best Coding Practices* lecture. Some tasks extend lectures content and require you to find some more information online. Please, note that while we are providing example solutions to many tasks, these are only **examples**. If you solve a task in a different way it does not matter your solution is wrong. In fact, it may be better than our solution. If in doubt, ask PI for help. We are here for you!
+The objective of this lab is to improve your coding skills by focusing on coding style, code benchmarking and optimization. Below, you will find a number of tasks connected to the topics covered in the *Best Coding Practices* lecture. Some tasks extend lectures content and require you to find some more information online. Please, note that while we are providing example solutions to many tasks, these are only **examples**. If you solve a task in a different way it does not matter your solution is wrong. In fact, it may be better than our solution. If in doubt, ask a TA for help. We are here for you!
 :::
 
 ## Coding Style
@@ -130,7 +130,12 @@ Assign a vector of three last months (abbreviated in English) in a year to a hid
 
 ```{r}
 #| eval: false
+
+# If we do not know the length of the vector
 .my_months <- rev(rev(month.abb)[1:3])
+
+# or
+.my_months <- month.abb[(length(month.abb)-2):length(month.abb)]
 ```
 
 :::
@@ -299,7 +304,7 @@ my_plot <- function(x, ...) {
 
 :::
 
-### Task: Adding Arguments to a Function.
+### Bonus task: Adding Arguments to a Function.
 
 What if you want to pass some additional parameters to a function and, sadly, the authors forgot to add `...` to the list of function arguments. There is a way out -- you can bind extra arguments supplied as `alist` structure to the original function arguments retrieved by `formals`. Try to fix the function below, so that the call `red_plot(1, 1, col = 'red', pch = 19)` will result in points being represented by red circles. Do use `alist` and `formals` and do not edit the `red_plot` itself!
 
@@ -333,7 +338,7 @@ red_plot(1, 1, col = 'red', pch = 19) # Works!
 
 :::
 
-### Task: Using `options`.
+### Bonus task: Using `options`.
 
 Use `options` to change the default prompt in R to `hello :-) >`.
 
