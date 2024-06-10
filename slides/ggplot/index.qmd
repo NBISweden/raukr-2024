@@ -74,6 +74,10 @@ A more modern example dataset is datasaurus dozen. A set of 13 xy datasets that 
 Typical R plots with default settings in base R and ggplot2.
 :::
 
+##
+
+![](assets/base-ggplot.jpg)
+
 ## ggplot2 vs Base Graphics
 
 :::: {.columns}
@@ -828,6 +832,21 @@ The coordinate system defines the surface used to represent numbers. Most plots 
 
 :::
 
+## 
+
+::: {.columns}
+::: {.column}
+![](assets/pie.png)
+:::
+::: {.column}
+![](assets/brain-power.jpg)
+:::
+:::
+
+##
+
+![](assets/meme-plotting-takes-long.jpg)
+
 ## Theming
 
 :::: {.columns}
@@ -1232,6 +1251,32 @@ Curated list of ggplot2 links: [https://github.com/erikgahner/awesome-ggplot2](h
 
 :::
 ::::
+
+## Bonus
+
+:::: {.columns}
+::: {.column .fragment width="40%"}
+
+![](assets/ggcats.png)  
+[ggcats](https://github.com/R-CoderDotCom/ggcats)
+
+:::
+::: {.column .fragment width="60%"}
+
+![](assets/ggcats-1.png)
+
+:::
+::::
+
+## Bonus
+
+::: {.fragment}
+
+![](assets/ggdogs.png){width="80%"}  
+
+[ggdogs](https://github.com/R-CoderDotCom/ggdogs)
+
+:::
 
 ## {background-image="/assets/images/cover.jpg"}
 
