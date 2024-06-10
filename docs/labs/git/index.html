@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.549">
+<meta name="generator" content="quarto-1.5.43">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -35,7 +35,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -135,7 +135,7 @@ background-size: cover;
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -179,7 +179,7 @@ background-size: cover;
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
-          <div class="quarto-navbar-tools">
+            <div class="quarto-navbar-tools">
 </div>
       </div> <!-- /container-fluid -->
     </nav>
@@ -211,7 +211,7 @@ background-size: cover;
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">28-Jan-2024</p>
+        <p class="date">10-Jun-2024</p>
       </div>
     </div>
     
@@ -316,13 +316,15 @@ Note
 </ol>
 <p><a href="assets/diff.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="assets/diff.png" class="img-fluid"></a></p>
 <ol start="9" type="1">
-<li>Go ahead and <code>commit</code> the changes you made. No need to <code>push</code> them to GitHub. Now lets go into our mental model and say that you did not like those changes. You have done something you regret, or broken something, and you want to go back. One of the main points of version control after all is the ability to go back. For this you will have to use the <em>terminal pane</em> in RStudio. In essence, what you are doing now is using git from the terminal in your local repository, this is because the git operations necessary to go back are not currently built into RStudio. Here are the commands we will be using:</li>
+<li>Go ahead and <code>commit</code> the changes you made. No need to <code>push</code> them to GitHub. Now lets go into our mental model and say that you did not like those changes. You have done something you regret, or broken something, and you want to go back. One of the main points of version control after all is the ability to go back. To <code>revert</code> to the last commit state you can use the <em>Revert..</em> button in RStudios <em>git pane</em>, it is in a dropdown from the cogwheel. Go ahead and test it!<br>
+If you want to go further back to an older commit you will have to use the <em>terminal pane</em> in RStudio. In essence, you are using git from the terminal in your local repository. Here are the commands:</li>
 </ol>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> reset HEAD~1</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> restore <span class="op">&lt;</span>our R script<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><code>git reset HEAD~n</code> steps you back in your <code>commit</code> history <code>n</code> <code>commit</code>s. In this case <code>HEAD~1</code> means <em>go one <code>commit</code> back</em>. Look at your R script, are the changes you made still there? They should be. You have gone back one <code>commit</code>, not removed the changes you made during that <code>commit</code>. But now that we are on this <code>commit</code> you can <code>git restore</code> your R script file to take it back to the way it was at the start of current <code>commit</code>. Go ahead and try it out and make sure it works as you would expect it to!</p>
+<hr>
 <p>Now you should have all the tools you need to work with git in a basic capacity, starting from a new project on your device. Notice that you do not need to start from a new project, you can also take a folder with lots of work you have already performed and make it an R project and initialize git in it. It will of course only track changes from that point, not what you have done previously, but it is still a good idea!</p>
 <p>The point here being that starting from scratch or starting from a bunch of work that you have already done, or starting by creating a GitHub repository and pulling that into RStudio using <em>File &gt; New Project &gt; Version Control &gt; Git</em> , there are tools for any situation and it is not too late to start working reproducibly, collaboratively and with backups using git!</p>
 </section>
@@ -354,7 +356,7 @@ Note
 <h3 data-number="3.2" class="anchored" data-anchor-id="merge-conflicts"><span class="header-section-number">3.2</span> Merge conflicts</h3>
 <p>Earlier we thought about the issue of changes being introduces in the same file and position in your local copy of a repository and in the GitHub version of the repository at the same time. A so called “merge conflict”. This can also happen if you are working on two branches, introduce changes in the same places, and then try to merge! But you should try not to worry too much about merge conflicts, they can be solved if you know what you are doing.</p>
 <ol type="1">
-<li><p>Introducing changes in the same part of your code on your main and new branch. <code>commit</code> the changes.</p></li>
+<li><p>Introduce changes in the same part of your code on your main and new branch. <code>commit</code> the changes.</p></li>
 <li><p>Use <code>git merge &lt;name of branch&gt;</code> from the main branch. This should result in the merge conflict.</p></li>
 </ol>
 <p>The output you should get from the <code>merge</code> is similar to:</p>
@@ -364,7 +366,7 @@ Note
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Automatic</span> merge failed<span class="kw">;</span> <span class="ex">fix</span> conflicts and then commit the result.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>You can also use <code>git status</code> from terminal to check which file is modified and why.</p>
-<p>Once a merge conflict occurs the file effected is modified to reflect the conflicting areas. It can look something like this:</p>
+<p>Once a merge conflict occurs the file affected is modified to reflect the conflicting areas. It can look something like this:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Hello world!"</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -384,7 +386,7 @@ Note
 </section>
 <section id="forks-and-pull-requests" class="level3" data-number="3.3">
 <h3 data-number="3.3" class="anchored" data-anchor-id="forks-and-pull-requests"><span class="header-section-number">3.3</span> Forks and pull requests</h3>
-<p>Forking a repository on GitHub means creating a local copy of the repository on your GitHub user. This can be very useful if you want to make some changes to a repository that you do not have <code>push</code> access to, for example. It is also a great way collaborate because it adds more backups of the repository and because of “pull requests”, which are a way of implementing your local changes to the source repository where the owner of the repository has the power to review and choose whether to accept them or not.</p>
+<p>Forking a repository on GitHub means creating a copy of the repository on your GitHub user. This can be very useful if you want to make some changes to a repository that you do not have <code>push</code> access to, for example. It is also a great way collaborate because it adds more backups of the repository and because of “pull requests”, which are a way of implementing your local changes to the source repository where the owner of the repository has the power to review and choose whether to accept them or not.</p>
 <p>For example, in this RaukR course we have a repository for all the teaching materials that all teachers have forked, made changes to and then submitted a pull request back to the source repository.</p>
 <p>To fork a repository you can either use the GitHub website of the repository you want to fork, or you can use <code>usethis</code>. If you are using RStudio it will also automatically create a R project for the local repository.</p>
 <div class="cell">
@@ -403,20 +405,21 @@ Note
 <li>Opens a new RStudio instance in the new local repo (and RStudio Project).</li>
 </ul>
 </blockquote>
-<p>We have not covered “upstream” and “remote” in our git vocabulary yet. Basically remotes are connections for your repository, and being upstream means being a repository closer to the source than your repository, which is downstream (as it is a fork). So the sentence “Configures the source repo as the upstream remote” translates to adding a connection specifying that the source repository is where your repository came from. This connection is used update your fork with any future changes that occur in the source repository.</p>
+<p>We have not covered “upstream” and “remote” in our git vocabulary yet. Basically remotes are connections for your repository, and being upstream means being a repository closer to the source than your repository, which is downstream (as it is a fork). So the sentence “Configures the source repo as the upstream remote” translates to adding a connection specifying that the source repository is where your repository came from. This connection is used to update your fork with any future changes that occur in the source repository.</p>
 <ol type="1">
 <li>Fork the repository <a href="https://github.com/Sebastian-D/testgit">https://github.com/Sebastian-D/testgit</a> using one of the methods described. Also clone a local copy of it. Make sure you can find your fork on GitHub.</li>
 </ol>
-<p>Now we are ready to make some changes to the code in the our local repository. But before this we should create a new branch for the pull request. For this we can use <code>usethis::pr_init(branch = "branchName")</code>. This will also automatically switch to the branch.</p>
+<p>Now we are ready to make some changes to the code in our local repository. But before this we should create a new branch for the pull request. For this we can use <code>usethis::pr_init(branch = "branchName")</code>. This will also automatically switch to the branch.</p>
 <ol start="2" type="1">
-<li>Create a branch then make some changes to the repository. In the mental model you are implementing some feature or fixing some bug.</li>
+<li><p>Create a branch then make some changes to the repository. In the mental model you are implementing some feature or fixing some bug.</p></li>
+<li><p><code>add</code> and <code>commit</code> the changes with a commit message.</p></li>
 </ol>
 <p>To submit a pull request you can use <code>pr_push()</code>. This should open a browser where you can submit the pull request. If the maintainer of the source repository wants to modify the pull request he can either do this himself or suggest some changes to you, whereupon you make the changes the run <code>pr_push()</code> again.</p>
-<ol start="3" type="1">
-<li>Submit the pull request! Go ahead and view it on GitHub.</li>
+<ol start="4" type="1">
+<li>Submit the <code>pull</code> request! Go ahead and view it on GitHub.</li>
 </ol>
 <p>There is a whole family of pr-* functions for both the person submitting the pull the request and the maintainer of the source repository that will review and accept/decline the pull request. I really recommend you read <a href="https://usethis.r-lib.org/articles/pr-functions.html">here</a> if you think this is of interest!</p>
-<p>Good job completing the exercises! git and GitHub are big topics, but know a little gets you a long way and then you discover the rest when you need it!</p>
+<p>Good job completing the exercises! git and GitHub are big topics, but knowing a little gets you a long way and then you discover the rest when you need it!</p>
 
 
 </section>
@@ -458,18 +461,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -501,7 +493,47 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/nbisweden\.github\.io\/raukr-2024\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -536,7 +568,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
@@ -820,35 +856,42 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       &nbsp;
     </div>
     <div class="nav-footer-right">
-<p>Published with <a href="https://quarto.org/">Quarto</a> v1.4.549
+<p>Published with <a href="https://quarto.org/">Quarto</a> v1.5.43
 </p>
 </div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","selector":".lightbox","loop":false,"openEffect":"zoom","descPosition":"bottom"});
-window.onload = () => {
-  lightboxQuarto.on('slide_before_load', (data) => {
-    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-    const href = trigger.getAttribute('href');
-    if (href !== null) {
-      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
-      if (imgEl !== null) {
-        const srcAttr = imgEl.getAttribute("src");
-        if (srcAttr && srcAttr.startsWith("data:")) {
-          slideConfig.href = srcAttr;
-        }
-      }
-    } 
-  });
-
-  lightboxQuarto.on('slide_after_load', (data) => {
-    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-    if (window.Quarto?.typesetMath) {
-      window.Quarto.typesetMath(slideNode);
+<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","selector":".lightbox","closeEffect":"zoom","loop":false,"openEffect":"zoom"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
     }
-  });
-
-};
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
           </script>
 
 
