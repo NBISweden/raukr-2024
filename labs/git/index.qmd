@@ -83,7 +83,8 @@ Let's go through the common situation of starting a new project and connecting i
 
 ![](assets/diff.png)
 
-9. Go ahead and `commit` the changes you made. No need to `push` them to GitHub. Now lets go into our mental model and say that you did not like those changes. You have done something you regret, or broken something, and you want to go back. One of the main points of version control after all is the ability to go back. For this you will have to use the *terminal pane* in RStudio. In essence, what you are doing now is using git from the terminal in your local repository, this is because the git operations necessary to go back are not currently built into RStudio. Here are the commands we will be using:
+9. Go ahead and `commit` the changes you made. No need to `push` them to GitHub. Now lets go into our mental model and say that you did not like those changes. You have done something you regret, or broken something, and you want to go back. One of the main points of version control after all is the ability to go back. To `revert` to the last commit state you can use the *Revert..* button in RStudios *git pane*, it is in a dropdown from the cogwheel. Go ahead and test it!  
+If you want to go further back to an older commit you will have to use the *terminal pane* in RStudio. In essence, you are using git from the terminal in your local repository. Here are the commands:
 
 ```{bash}
 #| eval: false
@@ -94,6 +95,7 @@ git restore <our R script>
 
 `git reset HEAD~n` steps you back in your `commit` history `n` `commit`s. In this case `HEAD~1` means *go one `commit` back*. Look at your R script, are the changes you made still there? They should be. You have gone back one `commit`, not removed the changes you made during that `commit`. But now that we are on this `commit` you can `git restore` your R script file to take it back to the way it was at the start of current `commit`. Go ahead and try it out and make sure it works as you would expect it to!
 
+---
 Now you should have all the tools you need to work with git in a basic capacity, starting from a new project on your device. Notice that you do not need to start from a new project, you can also take a folder with lots of work you have already performed and make it an R project and initialize git in it. It will of course only track changes from that point, not what you have done previously, but it is still a good idea!
 
 The point here being that starting from scratch or starting from a bunch of work that you have already done, or starting by creating a GitHub repository and pulling that into RStudio using *File > New Project > Version Control > Git* , there are tools for any situation and it is not too late to start working reproducibly, collaboratively and with backups using git!
@@ -129,7 +131,7 @@ Congratulations, you now know how to create a branch, switch between branches, a
 
 Earlier we thought about the issue of changes being introduces in the same file and position in your local copy of a repository and in the GitHub version of the repository at the same time. A so called "merge conflict". This can also happen if you are working on two branches, introduce changes in the same places, and then try to merge! But you should try not to worry too much about merge conflicts, they can be solved if you know what you are doing.
 
-1. Introducing changes in the same part of your code on your main and new branch. `commit` the changes.
+1. Introduce changes in the same part of your code on your main and new branch. `commit` the changes.
 
 2.  Use `git merge <name of branch>` from the main branch. This should result in the merge conflict.
 
@@ -145,8 +147,9 @@ Automatic merge failed; fix conflicts and then commit the result.
 
 You can also use `git status` from terminal to check which file is modified and why.
 
-Once a merge conflict occurs the file effected is modified to reflect the conflicting areas. It can look something like this:
-``` {bash}
+Once a merge conflict occurs the file affected is modified to reflect the conflicting areas. It can look something like this:
+
+```{bash}
 #| eval: FALSE
 
 #Hello world!"
@@ -169,7 +172,7 @@ Good job! You know know how to resolve merge conflicts!
 
 ### Forks and pull requests
 
-Forking a repository on GitHub means creating a local copy of the repository on your GitHub user. This can be very useful if you want to make some changes to a repository that you do not have `push` access to, for example. It is also a great way collaborate because it adds more backups of the repository and because of "pull requests", which are a way of implementing your local changes to the source repository where the owner of the repository has the power to review and choose whether to accept them or not.
+Forking a repository on GitHub means creating a copy of the repository on your GitHub user. This can be very useful if you want to make some changes to a repository that you do not have `push` access to, for example. It is also a great way collaborate because it adds more backups of the repository and because of "pull requests", which are a way of implementing your local changes to the source repository where the owner of the repository has the power to review and choose whether to accept them or not.
 
 For example, in this RaukR course we have a repository for all the teaching materials that all teachers have forked, made changes to and then submitted a pull request back to the source repository.
 
@@ -192,18 +195,20 @@ This command does a lot of things, from [happygitwithr](https://happygitwithr.co
 > - Sets the upstream tracking branch for main (or whatever the default branch is) to upstream/main.
 > - Opens a new RStudio instance in the new local repo (and RStudio Project).
 
-We have not covered "upstream" and "remote" in our git vocabulary yet. Basically remotes are connections for your repository, and being upstream means being a repository closer to the source than your repository, which is downstream (as it is a fork). So the sentence "Configures the source repo as the upstream remote" translates to adding a connection specifying that the source repository is where your repository came from. This connection is used update your fork with any future changes that occur in the source repository.
+We have not covered "upstream" and "remote" in our git vocabulary yet. Basically remotes are connections for your repository, and being upstream means being a repository closer to the source than your repository, which is downstream (as it is a fork). So the sentence "Configures the source repo as the upstream remote" translates to adding a connection specifying that the source repository is where your repository came from. This connection is used to update your fork with any future changes that occur in the source repository.
 
 1. Fork the repository [https://github.com/Sebastian-D/testgit](https://github.com/Sebastian-D/testgit) using one of the methods described. Also clone a local copy of it. Make sure you can find your fork on GitHub.
 
-Now we are ready to make some changes to the code in the our local repository. But before this we should create a new branch for the pull request. For this we can use `usethis::pr_init(branch = "branchName")`. This will also automatically switch to the branch.
+Now we are ready to make some changes to the code in our local repository. But before this we should create a new branch for the pull request. For this we can use `usethis::pr_init(branch = "branchName")`. This will also automatically switch to the branch.
 
 2. Create a branch then make some changes to the repository. In the mental model you are implementing some feature or fixing some bug.
 
+3. `add` and `commit` the changes with a commit message.
+
 To submit a pull request you can use `pr_push()`. This should open a browser where you can submit the pull request. If the maintainer of the source repository wants to modify the pull request he can either do this himself or suggest some changes to you, whereupon you make the changes the run `pr_push()` again.
 
-3. Submit the pull request! Go ahead and view it on GitHub.
+4. Submit the `pull` request! Go ahead and view it on GitHub.
 
 There is a whole family of pr-* functions for both the person submitting the pull the request and the maintainer of the source repository that will review and accept/decline the pull request. I really recommend you read [here](https://usethis.r-lib.org/articles/pr-functions.html) if you think this is of interest!
 
-Good job completing the exercises! git and GitHub are big topics, but know a little gets you a long way and then you discover the rest when you need it!
+Good job completing the exercises! git and GitHub are big topics, but knowing a little gets you a long way and then you discover the rest when you need it!
