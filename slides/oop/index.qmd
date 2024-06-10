@@ -16,10 +16,9 @@ library(ggplot2)
 
 ## Object Oriented Programming
 
-- A programming paradigm.
-- We work with objects.
+- A programming paradigm -- we work with objects.
+- Plato's cave: ideal objects -- classes, reflections -- instances.
 - Reflects many real-life systems -- easy to model things.
-- Plato's cave (?): ideal objects -- classes, reflections -- instances.
 
 . . .
 
@@ -31,17 +30,27 @@ library(ggplot2)
 - **S4** -- a bit more advanced OOP, common in, e.g. Bioconductor,
 - RC -- Reference Classes, the most advanced and close to, e.g. Java OOP, extension of S4,
 - **R6** -- simplified RC, extension of S3, `require(R6)`
+- **S7** -- best of S3 + S4 = S7 `require(S7)`. Still in dev phase.
 
 ## S4 classes
 
-S4 classes are more advanced as you actually define the structure of the data within the object of your particular class:
+S4 classes are more advanced than S3 as you actually define the structure of the data within the object of your particular class:
 
 ```{r S4}
 # declare class
 setClass('gene', representation(name='character', coords='numeric'))
+```
+
+. . .
+
+```{r}
 # instantiate class
 my.gene <- new("gene", name = "ANK3", coords = c(1.4e6, 1.412e6))
+```
 
+. . .
+
+```{r}
 # declare class
 .intragenic_region <- setClass(Class = 'intragenic_region', 
                                slots = c(name='character', coords='numeric'))
@@ -193,6 +202,7 @@ Examples:
 To see the code of a method:
 
 ```{r}
+#| eval: false
 getS3method('summary', 'lm') %>% 
   head(n = 5)
 ```
@@ -292,7 +302,7 @@ my_plot <- function(...) {
 
 Even more patterns [here](https://github.com/tidylab/R6P).
 
-## Safe S3 -- Constructor 
+## Safe S3 Design Pattern -- Constructor 
 
 ```{r}
 new_Animal <- function(species, age) {
@@ -307,7 +317,7 @@ new_Animal <- function(species, age) {
 }
 ```
 
-## Safe S3 -- Validator 
+## Safe S3 Design Pattern -- Validator 
 
 ```{r} 
 validate_Animal <- function(x) {
@@ -324,7 +334,7 @@ validate_Animal <- function(x) {
 }
 ```
 
-## Safe S3 -- Helper
+## Safe S3 Design Pattern -- Helper
 
 ```{r}
 Animal <- function(x) {
