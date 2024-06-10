@@ -11,7 +11,7 @@
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/quarto-contrib/reveal-logo-1.0.0/reveal-logo.js" defer="true"></script>
 <link href="../../site_libs/quarto-contrib/reveal-logo-1.0.0/reveal-logo.css" rel="stylesheet"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.4.549">
+  <meta name="generator" content="quarto-1.5.43">
 
   <meta name="author" content="Marcin Kierczak">
   <title>Object-Oriented Programming Models in R</title>
@@ -45,7 +45,7 @@
     }
     @media print {
     pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
     }
     pre.numberSource code
       { counter-reset: source-line 0; }
@@ -73,7 +73,7 @@
     code span.at { color: #657422; } /* Attribute */
     code span.bn { color: #ad0000; } /* BaseN */
     code span.bu { } /* BuiltIn */
-    code span.cf { color: #003b4f; } /* ControlFlow */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
     code span.ch { color: #20794d; } /* Char */
     code span.cn { color: #8f5902; } /* Constant */
     code span.co { color: #5e5e5e; } /* Comment */
@@ -87,7 +87,7 @@
     code span.fu { color: #4758ab; } /* Function */
     code span.im { color: #00769e; } /* Import */
     code span.in { color: #5e5e5e; } /* Information */
-    code span.kw { color: #003b4f; } /* Keyword */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
     code span.op { color: #5e5e5e; } /* Operator */
     code span.ot { color: #003b4f; } /* Other */
     code span.pp { color: #ad0000; } /* Preprocessor */
@@ -407,7 +407,7 @@
         <h1 class="title">Object-Oriented Programming Models in R</h1>
                 <p class="subtitle">RaukR 2024 • Advanced R for Bioinformatics</p>
                         <p class="author">Marcin Kierczak</p>
-                                <p class="date">19-Feb-2024</p>
+                                <p class="date">10-Jun-2024</p>
               </div>
     </div>
     
@@ -417,10 +417,9 @@
 <section id="object-oriented-programming" class="slide level2">
 <h2>Object Oriented Programming</h2>
 <ul>
-<li>A programming paradigm.</li>
-<li>We work with objects.</li>
+<li>A programming paradigm – we work with objects.</li>
+<li>Plato’s cave: ideal objects – classes, reflections – instances.</li>
 <li>Reflects many real-life systems – easy to model things.</li>
-<li>Plato’s cave (?): ideal objects – classes, reflections – instances.</li>
 </ul>
 <div class="fragment">
 <p><img data-src="assets/oop_concept.png" height="400"></p>
@@ -433,36 +432,44 @@
 <li><strong>S4</strong> – a bit more advanced OOP, common in, e.g.&nbsp;Bioconductor,</li>
 <li>RC – Reference Classes, the most advanced and close to, e.g.&nbsp;Java OOP, extension of S4,</li>
 <li><strong>R6</strong> – simplified RC, extension of S3, <code>require(R6)</code></li>
+<li><strong>S7</strong> – best of S3 + S4 = S7 <code>require(S7)</code>. Still in dev phase.</li>
 </ul>
 </section>
 <section id="s4-classes" class="slide level2">
 <h2>S4 classes</h2>
-<p>S4 classes are more advanced as you actually define the structure of the data within the object of your particular class:</p>
+<p>S4 classes are more advanced than S3 as you actually define the structure of the data within the object of your particular class:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="co"># declare class</span></span>
-<span id="cb1-2"><a></a><span class="fu">setClass</span>(<span class="st">'gene'</span>, <span class="fu">representation</span>(<span class="at">name=</span><span class="st">'character'</span>, <span class="at">coords=</span><span class="st">'numeric'</span>))</span>
-<span id="cb1-3"><a></a><span class="co"># instantiate class</span></span>
-<span id="cb1-4"><a></a>my.gene <span class="ot">&lt;-</span> <span class="fu">new</span>(<span class="st">"gene"</span>, <span class="at">name =</span> <span class="st">"ANK3"</span>, <span class="at">coords =</span> <span class="fu">c</span>(<span class="fl">1.4e6</span>, <span class="fl">1.412e6</span>))</span>
-<span id="cb1-5"><a></a></span>
-<span id="cb1-6"><a></a><span class="co"># declare class</span></span>
-<span id="cb1-7"><a></a>.intragenic_region <span class="ot">&lt;-</span> <span class="fu">setClass</span>(<span class="at">Class =</span> <span class="st">'intragenic_region'</span>, </span>
-<span id="cb1-8"><a></a>                               <span class="at">slots =</span> <span class="fu">c</span>(<span class="at">name=</span><span class="st">'character'</span>, <span class="at">coords=</span><span class="st">'numeric'</span>))</span>
-<span id="cb1-9"><a></a></span>
-<span id="cb1-10"><a></a><span class="co"># instantiate class</span></span>
-<span id="cb1-11"><a></a><span class="co"># but since SetClass returns a low-level constructor</span></span>
-<span id="cb1-12"><a></a>my.intra1 <span class="ot">&lt;-</span> <span class="fu">.intragenic_region</span>(<span class="at">name =</span> <span class="st">'int1'</span>, </span>
-<span id="cb1-13"><a></a>                  <span class="at">coords =</span> <span class="fu">c</span>(<span class="fl">1.7e6</span>, <span class="fl">1.717e6</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a></a><span class="fu">setClass</span>(<span class="st">'gene'</span>, <span class="fu">representation</span>(<span class="at">name=</span><span class="st">'character'</span>, <span class="at">coords=</span><span class="st">'numeric'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a><span class="co"># instantiate class</span></span>
+<span id="cb2-2"><a></a>my.gene <span class="ot">&lt;-</span> <span class="fu">new</span>(<span class="st">"gene"</span>, <span class="at">name =</span> <span class="st">"ANK3"</span>, <span class="at">coords =</span> <span class="fu">c</span>(<span class="fl">1.4e6</span>, <span class="fl">1.412e6</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="co"># declare class</span></span>
+<span id="cb3-2"><a></a>.intragenic_region <span class="ot">&lt;-</span> <span class="fu">setClass</span>(<span class="at">Class =</span> <span class="st">'intragenic_region'</span>, </span>
+<span id="cb3-3"><a></a>                               <span class="at">slots =</span> <span class="fu">c</span>(<span class="at">name=</span><span class="st">'character'</span>, <span class="at">coords=</span><span class="st">'numeric'</span>))</span>
+<span id="cb3-4"><a></a></span>
+<span id="cb3-5"><a></a><span class="co"># instantiate class</span></span>
+<span id="cb3-6"><a></a><span class="co"># but since SetClass returns a low-level constructor</span></span>
+<span id="cb3-7"><a></a>my.intra1 <span class="ot">&lt;-</span> <span class="fu">.intragenic_region</span>(<span class="at">name =</span> <span class="st">'int1'</span>, </span>
+<span id="cb3-8"><a></a>                  <span class="at">coords =</span> <span class="fu">c</span>(<span class="fl">1.7e6</span>, <span class="fl">1.717e6</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </div>
 </section>
 <section id="inheritance-in-s4" class="slide level2">
 <h2>Inheritance in S4</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a>.ext_gene <span class="ot">&lt;-</span> <span class="fu">setClass</span>(<span class="at">Class =</span> <span class="st">'ext_gene'</span>,<span class="at">contains =</span> <span class="st">"gene"</span>,</span>
-<span id="cb2-2"><a></a>  <span class="at">slots =</span> <span class="fu">c</span>(<span class="at">gene =</span> <span class="st">'gene'</span>, <span class="at">feature_name =</span> <span class="st">'character'</span>, <span class="at">feature_value =</span> <span class="st">'character'</span>)</span>
-<span id="cb2-3"><a></a>)</span>
-<span id="cb2-4"><a></a>ANK3 <span class="ot">&lt;-</span> <span class="fu">.ext_gene</span>(<span class="at">name =</span> <span class="st">'ANK3'</span>, <span class="at">coords =</span> <span class="fu">c</span>(<span class="fl">1.4e6</span>, <span class="fl">1.412e6</span>),</span>
-<span id="cb2-5"><a></a>                  <span class="at">feature_name =</span> <span class="st">'num_introns'</span>, <span class="at">feature_value =</span> <span class="st">'5'</span>)</span>
-<span id="cb2-6"><a></a><span class="fu">str</span>(ANK3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a>.ext_gene <span class="ot">&lt;-</span> <span class="fu">setClass</span>(<span class="at">Class =</span> <span class="st">'ext_gene'</span>,<span class="at">contains =</span> <span class="st">"gene"</span>,</span>
+<span id="cb4-2"><a></a>  <span class="at">slots =</span> <span class="fu">c</span>(<span class="at">gene =</span> <span class="st">'gene'</span>, <span class="at">feature_name =</span> <span class="st">'character'</span>, <span class="at">feature_value =</span> <span class="st">'character'</span>)</span>
+<span id="cb4-3"><a></a>)</span>
+<span id="cb4-4"><a></a>ANK3 <span class="ot">&lt;-</span> <span class="fu">.ext_gene</span>(<span class="at">name =</span> <span class="st">'ANK3'</span>, <span class="at">coords =</span> <span class="fu">c</span>(<span class="fl">1.4e6</span>, <span class="fl">1.412e6</span>),</span>
+<span id="cb4-5"><a></a>                  <span class="at">feature_name =</span> <span class="st">'num_introns'</span>, <span class="at">feature_value =</span> <span class="st">'5'</span>)</span>
+<span id="cb4-6"><a></a><span class="fu">str</span>(ANK3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Formal class 'ext_gene' [package ".GlobalEnv"] with 5 slots
   ..@ gene         :Formal class 'gene' [package ".GlobalEnv"] with 2 slots
@@ -479,13 +486,13 @@
 <h2>Sealed Class</h2>
 <p>Preventing double class definition:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="fu">setClass</span>(<span class="st">'Not_Sealed'</span>)</span>
-<span id="cb4-2"><a></a><span class="fu">setClass</span>(<span class="st">'Not_Sealed'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="fu">setClass</span>(<span class="st">'Not_Sealed'</span>)</span>
+<span id="cb6-2"><a></a><span class="fu">setClass</span>(<span class="st">'Not_Sealed'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>But to prevent this:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">setClass</span>(<span class="st">'Sealed'</span>, <span class="at">sealed =</span> T)</span>
-<span id="cb5-2"><a></a><span class="fu">setClass</span>(<span class="st">'Sealed'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="fu">setClass</span>(<span class="st">'Sealed'</span>, <span class="at">sealed =</span> T)</span>
+<span id="cb7-2"><a></a><span class="fu">setClass</span>(<span class="st">'Sealed'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in setClass("Sealed"): "Sealed" has a sealed class definition and cannot be redefined</code></pre>
 </div>
@@ -495,8 +502,8 @@
 <h2>S4 class – slots</h2>
 <p>The variables within an S4 class are stored in the so-called <strong>slots</strong>. In the above example, we have 2 such slots: <em>name</em> and <em>coords</em>. Here is how to access them:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a>my.gene<span class="sc">@</span>name <span class="co"># access using @ operator</span></span>
-<span id="cb7-2"><a></a>my.gene<span class="sc">@</span>coords[<span class="dv">2</span>] <span class="co"># access the 2nd element in slot coords</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a>my.gene<span class="sc">@</span>name <span class="co"># access using @ operator</span></span>
+<span id="cb9-2"><a></a>my.gene<span class="sc">@</span>coords[<span class="dv">2</span>] <span class="co"># access the 2nd element in slot coords</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "ANK3"
 [1] 1412000</code></pre>
@@ -507,12 +514,12 @@
 <h2>S4 class – methods</h2>
 <p>The power of classes lies in the fact that they define both the data types in particular slots and operations (functions) we can perform on them. Let us define a <em>generic print function</em> for an S4 class:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a><span class="fu">setMethod</span>(<span class="st">'print'</span>, <span class="st">'gene'</span>, </span>
-<span id="cb9-2"><a></a>          <span class="cf">function</span>(x) {</span>
-<span id="cb9-3"><a></a>              <span class="fu">cat</span>(<span class="st">'GENE: '</span>, x<span class="sc">@</span>name, <span class="st">' --&gt; '</span>)</span>
-<span id="cb9-4"><a></a>              <span class="fu">cat</span>(<span class="st">'['</span>, x<span class="sc">@</span>coords, <span class="st">']'</span>)</span>
-<span id="cb9-5"><a></a>          })</span>
-<span id="cb9-6"><a></a><span class="fu">print</span>(my.gene) <span class="co"># and we use the newly defined print</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a><span class="fu">setMethod</span>(<span class="st">'print'</span>, <span class="st">'gene'</span>, </span>
+<span id="cb11-2"><a></a>          <span class="cf">function</span>(x) {</span>
+<span id="cb11-3"><a></a>              <span class="fu">cat</span>(<span class="st">'GENE: '</span>, x<span class="sc">@</span>name, <span class="st">' --&gt; '</span>)</span>
+<span id="cb11-4"><a></a>              <span class="fu">cat</span>(<span class="st">'['</span>, x<span class="sc">@</span>coords, <span class="st">']'</span>)</span>
+<span id="cb11-5"><a></a>          })</span>
+<span id="cb11-6"><a></a><span class="fu">print</span>(my.gene) <span class="co"># and we use the newly defined print</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>GENE:  ANK3  --&gt; [ 1400000 1412000 ]</code></pre>
 </div>
@@ -525,21 +532,21 @@
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a>obj <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>))</span>
-<span id="cb11-2"><a></a><span class="fu">typeof</span>(obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a>obj <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>))</span>
+<span id="cb13-2"><a></a><span class="fu">typeof</span>(obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "integer"</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a><span class="fu">class</span>(obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a><span class="fu">class</span>(obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "factor"</code></pre>
 </div>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a><span class="fu">attributes</span>(obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a><span class="fu">attributes</span>(obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$levels
 [1] "a" "b" "c"
@@ -549,7 +556,7 @@ $class
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a><span class="fu">str</span>(obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a><span class="fu">str</span>(obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Factor w/ 3 levels "a","b","c": 1 2 3</code></pre>
 </div>
@@ -559,7 +566,7 @@ $class
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a><span class="fu">print</span>(obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a><span class="fu">print</span>(obj)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] a b c
 Levels: a b c</code></pre>
@@ -568,7 +575,7 @@ Levels: a b c</code></pre>
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a><span class="fu">print</span>(<span class="fu">unclass</span>(obj))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a><span class="fu">print</span>(<span class="fu">unclass</span>(obj))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1 2 3
 attr(,"levels")
@@ -581,19 +588,19 @@ attr(,"levels")
 <h2>Custom <code>str</code> Methods</h2>
 <p>Some S3 classes provide a custom <code>str</code>, e.g.:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a>time <span class="ot">&lt;-</span> <span class="fu">strptime</span>(<span class="st">"2018-06-07"</span>, <span class="st">"%Y-%m-%d"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a>time <span class="ot">&lt;-</span> <span class="fu">strptime</span>(<span class="st">"2018-06-07"</span>, <span class="st">"%Y-%m-%d"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a><span class="fu">str</span>(time)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a><span class="fu">str</span>(time)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> POSIXlt[1:1], format: "2018-06-07"</code></pre>
 </div>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a><span class="fu">str</span>(<span class="fu">unclass</span>(time))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a><span class="fu">str</span>(<span class="fu">unclass</span>(time))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>List of 11
  $ sec   : num 0
@@ -604,10 +611,10 @@ attr(,"levels")
  $ year  : int 118
  $ wday  : int 4
  $ yday  : int 157
- $ isdst : int 0
- $ zone  : chr "UTC"
+ $ isdst : int 1
+ $ zone  : chr "CEST"
  $ gmtoff: int NA
- - attr(*, "tzone")= chr [1:3] "Etc/UTC" "UTC" "UTC"
+ - attr(*, "tzone")= chr [1:3] "" "CET" "CEST"
  - attr(*, "balanced")= logi TRUE</code></pre>
 </div>
 </div>
@@ -628,16 +635,8 @@ attr(,"levels")
 </ul>
 <p>To see the code of a method:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a><span class="fu">getS3method</span>(<span class="st">'summary'</span>, <span class="st">'lm'</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb28-2"><a></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>                                                               
-1 function (object, correlation = FALSE, symbolic.cor = FALSE, 
-2     ...)                                                     
-3 {                                                            
-4     z &lt;- object                                              
-5     p &lt;- z$rank                                              </code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a><span class="fu">getS3method</span>(<span class="st">'summary'</span>, <span class="st">'lm'</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb30-2"><a></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
@@ -645,26 +644,26 @@ attr(,"levels")
 <h2>Creating S3 Classes</h2>
 <p>To create an S3 class, simply give a name to a data structure:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a>gf <span class="ot">&lt;-</span> <span class="fu">structure</span>(<span class="fu">list</span>(), <span class="at">class =</span> <span class="st">'genomic_features'</span>)</span>
-<span id="cb30-2"><a></a><span class="fu">class</span>(gf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a></a>gf <span class="ot">&lt;-</span> <span class="fu">structure</span>(<span class="fu">list</span>(), <span class="at">class =</span> <span class="st">'genomic_features'</span>)</span>
+<span id="cb31-2"><a></a><span class="fu">class</span>(gf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "genomic_features"</code></pre>
 </div>
 </div>
 <p>OR</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a></a>gf <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
-<span id="cb32-2"><a></a><span class="fu">class</span>(gf) <span class="ot">&lt;-</span> <span class="st">'genomic_features'</span></span>
-<span id="cb32-3"><a></a><span class="fu">class</span>(gf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a></a>gf <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb33-2"><a></a><span class="fu">class</span>(gf) <span class="ot">&lt;-</span> <span class="st">'genomic_features'</span></span>
+<span id="cb33-3"><a></a><span class="fu">class</span>(gf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "genomic_features"</code></pre>
 </div>
 </div>
 <p>You can use some inheritance too:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a></a>egf <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
-<span id="cb34-2"><a></a><span class="fu">class</span>(egf) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">'genomic_features'</span>, <span class="st">'extended_genomic_features'</span>)</span>
-<span id="cb34-3"><a></a><span class="fu">class</span>(egf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a></a>egf <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb35-2"><a></a><span class="fu">class</span>(egf) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">'genomic_features'</span>, <span class="st">'extended_genomic_features'</span>)</span>
+<span id="cb35-3"><a></a><span class="fu">class</span>(egf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "genomic_features"          "extended_genomic_features"</code></pre>
 </div>
@@ -673,8 +672,8 @@ attr(,"levels")
 <section id="checking-for-correctness" class="slide level2">
 <h2>Checking for Correctness</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a></a>linmod <span class="ot">&lt;-</span> <span class="fu">with</span>(mtcars, <span class="fu">lm</span>(<span class="fu">log</span>(mpg) <span class="sc">~</span> <span class="fu">log</span>(disp)))</span>
-<span id="cb36-2"><a></a>linmod</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a></a>linmod <span class="ot">&lt;-</span> <span class="fu">with</span>(mtcars, <span class="fu">lm</span>(<span class="fu">log</span>(mpg) <span class="sc">~</span> <span class="fu">log</span>(disp)))</span>
+<span id="cb37-2"><a></a>linmod</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -687,8 +686,8 @@ Coefficients:
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a></a><span class="fu">class</span>(linmod) <span class="ot">&lt;-</span> <span class="st">"data.frame"</span></span>
-<span id="cb38-2"><a></a>linmod</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a></a><span class="fu">class</span>(linmod) <span class="ot">&lt;-</span> <span class="st">"data.frame"</span></span>
+<span id="cb39-2"><a></a>linmod</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in `[&lt;-.data.frame`(`*tmp*`, , j, value = c(`(Intercept)` = 5.3809725, : replacement has 2 rows, data has 0</code></pre>
 </div>
@@ -740,21 +739,21 @@ Coefficients:
 <li><strong>decorator</strong> — <code>system_time()</code></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a></a><span class="fu">system.time</span>(x <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="at">n =</span> <span class="dv">100000</span>))</span>
-<span id="cb40-2"><a></a>x[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a></a><span class="fu">system.time</span>(x <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="at">n =</span> <span class="dv">100000</span>))</span>
+<span id="cb41-2"><a></a>x[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
   0.002   0.000   0.003 
-[1] 0.96678012 0.45506493 0.22684051 0.05240007 0.52882557</code></pre>
+[1] 0.3319210 0.7142757 0.6870337 0.5222928 0.4551353</code></pre>
 </div>
 </div>
 <ul>
 <li><strong>wrapper</strong></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a></a>my_plot <span class="ot">&lt;-</span> <span class="cf">function</span>(...) {</span>
-<span id="cb42-2"><a></a>  <span class="fu">plot</span>(..., <span class="at">col =</span> <span class="st">'blue'</span>, <span class="at">las =</span> <span class="dv">1</span>, <span class="at">cex =</span> .<span class="dv">5</span>, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">cex.axis =</span> .<span class="dv">7</span>)</span>
-<span id="cb42-3"><a></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a></a>my_plot <span class="ot">&lt;-</span> <span class="cf">function</span>(...) {</span>
+<span id="cb43-2"><a></a>  <span class="fu">plot</span>(..., <span class="at">col =</span> <span class="st">'blue'</span>, <span class="at">las =</span> <span class="dv">1</span>, <span class="at">cex =</span> .<span class="dv">5</span>, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">cex.axis =</span> .<span class="dv">7</span>)</span>
+<span id="cb43-3"><a></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li><strong>Singleton</strong> <a href="https://gist.github.com/jverzani/1953641">see this gist</a></li>
@@ -762,51 +761,51 @@ Coefficients:
 </ul>
 <p>Even more patterns <a href="https://github.com/tidylab/R6P">here</a>.</p>
 </section>
-<section id="safe-s3-constructor" class="slide level2">
-<h2>Safe S3 – Constructor</h2>
+<section id="safe-s3-design-pattern-constructor" class="slide level2">
+<h2>Safe S3 Design Pattern – Constructor</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a></a>new_Animal <span class="ot">&lt;-</span> <span class="cf">function</span>(species, age) {</span>
-<span id="cb43-2"><a></a>  <span class="fu">stopifnot</span>(<span class="fu">is.character</span>(species))</span>
-<span id="cb43-3"><a></a>  <span class="fu">stopifnot</span>(<span class="fu">is.numeric</span>(age))</span>
-<span id="cb43-4"><a></a>  </span>
-<span id="cb43-5"><a></a>  <span class="fu">structure</span>(</span>
-<span id="cb43-6"><a></a>    species,</span>
-<span id="cb43-7"><a></a>    <span class="at">age =</span> age,</span>
-<span id="cb43-8"><a></a>    <span class="at">class =</span> <span class="st">"Animal"</span></span>
-<span id="cb43-9"><a></a>  )</span>
-<span id="cb43-10"><a></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="safe-s3-validator" class="slide level2">
-<h2>Safe S3 – Validator</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a></a>validate_Animal <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb44-2"><a></a>  species <span class="ot">&lt;-</span> x[<span class="dv">1</span>]</span>
-<span id="cb44-3"><a></a>  age <span class="ot">&lt;-</span> <span class="fu">attr</span>(x, <span class="st">'age'</span>)</span>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a></a>new_Animal <span class="ot">&lt;-</span> <span class="cf">function</span>(species, age) {</span>
+<span id="cb44-2"><a></a>  <span class="fu">stopifnot</span>(<span class="fu">is.character</span>(species))</span>
+<span id="cb44-3"><a></a>  <span class="fu">stopifnot</span>(<span class="fu">is.numeric</span>(age))</span>
 <span id="cb44-4"><a></a>  </span>
-<span id="cb44-5"><a></a>  <span class="cf">if</span> (<span class="fu">is.na</span>(species) <span class="sc">||</span> species <span class="sc">==</span> <span class="st">""</span>) {</span>
-<span id="cb44-6"><a></a>    <span class="fu">stop</span>(<span class="st">'Species name is missing!'</span>, <span class="at">call. =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb44-7"><a></a>  }</span>
-<span id="cb44-8"><a></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.numeric</span>(age) <span class="sc">||</span> age <span class="sc">&lt;</span> <span class="dv">1</span> <span class="sc">||</span> age <span class="sc">&gt;=</span> <span class="dv">100</span>) {</span>
-<span id="cb44-9"><a></a>    <span class="fu">stop</span>(<span class="st">"Invalid age!"</span>, <span class="at">call. =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb44-10"><a></a>  }</span>
-<span id="cb44-11"><a></a>  <span class="fu">return</span>(x)</span>
-<span id="cb44-12"><a></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb44-5"><a></a>  <span class="fu">structure</span>(</span>
+<span id="cb44-6"><a></a>    species,</span>
+<span id="cb44-7"><a></a>    <span class="at">age =</span> age,</span>
+<span id="cb44-8"><a></a>    <span class="at">class =</span> <span class="st">"Animal"</span></span>
+<span id="cb44-9"><a></a>  )</span>
+<span id="cb44-10"><a></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="safe-s3-helper" class="slide level2">
-<h2>Safe S3 – Helper</h2>
+<section id="safe-s3-design-pattern-validator" class="slide level2">
+<h2>Safe S3 Design Pattern – Validator</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a></a>Animal <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb45-2"><a></a>  species <span class="ot">&lt;-</span> x[[<span class="dv">1</span>]] </span>
-<span id="cb45-3"><a></a>  age <span class="ot">&lt;-</span> x[[<span class="dv">2</span>]]</span>
-<span id="cb45-4"><a></a>  <span class="fu">validate_Animal</span>(<span class="fu">new_Animal</span>(species, age))</span>
-<span id="cb45-5"><a></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a></a>validate_Animal <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb45-2"><a></a>  species <span class="ot">&lt;-</span> x[<span class="dv">1</span>]</span>
+<span id="cb45-3"><a></a>  age <span class="ot">&lt;-</span> <span class="fu">attr</span>(x, <span class="st">'age'</span>)</span>
+<span id="cb45-4"><a></a>  </span>
+<span id="cb45-5"><a></a>  <span class="cf">if</span> (<span class="fu">is.na</span>(species) <span class="sc">||</span> species <span class="sc">==</span> <span class="st">""</span>) {</span>
+<span id="cb45-6"><a></a>    <span class="fu">stop</span>(<span class="st">'Species name is missing!'</span>, <span class="at">call. =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb45-7"><a></a>  }</span>
+<span id="cb45-8"><a></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.numeric</span>(age) <span class="sc">||</span> age <span class="sc">&lt;</span> <span class="dv">1</span> <span class="sc">||</span> age <span class="sc">&gt;=</span> <span class="dv">100</span>) {</span>
+<span id="cb45-9"><a></a>    <span class="fu">stop</span>(<span class="st">"Invalid age!"</span>, <span class="at">call. =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb45-10"><a></a>  }</span>
+<span id="cb45-11"><a></a>  <span class="fu">return</span>(x)</span>
+<span id="cb45-12"><a></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="safe-s3-design-pattern-helper" class="slide level2">
+<h2>Safe S3 Design Pattern – Helper</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a></a>Animal <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb46-2"><a></a>  species <span class="ot">&lt;-</span> x[[<span class="dv">1</span>]] </span>
+<span id="cb46-3"><a></a>  age <span class="ot">&lt;-</span> x[[<span class="dv">2</span>]]</span>
+<span id="cb46-4"><a></a>  <span class="fu">validate_Animal</span>(<span class="fu">new_Animal</span>(species, age))</span>
+<span id="cb46-5"><a></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a></a>dog <span class="ot">&lt;-</span> <span class="fu">Animal</span>(<span class="fu">list</span>(<span class="st">'Canis familiaris'</span>, <span class="dv">7</span>))</span>
-<span id="cb46-2"><a></a><span class="fu">class</span>(dog)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a></a>dog <span class="ot">&lt;-</span> <span class="fu">Animal</span>(<span class="fu">list</span>(<span class="st">'Canis familiaris'</span>, <span class="dv">7</span>))</span>
+<span id="cb47-2"><a></a><span class="fu">class</span>(dog)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Animal"</code></pre>
 </div>
@@ -814,12 +813,12 @@ Coefficients:
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a></a>cat <span class="ot">&lt;-</span> <span class="fu">Animal</span>(<span class="fu">list</span>(<span class="st">'Felis felis'</span>, <span class="st">'9'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a></a>cat <span class="ot">&lt;-</span> <span class="fu">Animal</span>(<span class="fu">list</span>(<span class="st">'Felis felis'</span>, <span class="st">'9'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in new_Animal(species, age): is.numeric(age) is not TRUE</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a></a>cat <span class="ot">&lt;-</span> <span class="fu">Animal</span>(<span class="fu">list</span>(<span class="st">'Felis felis'</span>, <span class="dv">9</span>))</span>
-<span id="cb50-2"><a></a><span class="fu">class</span>(cat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a></a>cat <span class="ot">&lt;-</span> <span class="fu">Animal</span>(<span class="fu">list</span>(<span class="st">'Felis felis'</span>, <span class="dv">9</span>))</span>
+<span id="cb51-2"><a></a><span class="fu">class</span>(cat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Animal"</code></pre>
 </div>
@@ -830,16 +829,16 @@ Coefficients:
 <h2>Building S3 Classes – Styles</h2>
 <p>One can build an S3 class on top of any existing base type, e.g.&nbsp;a named list:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a></a>point_in_space_class <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y, z) {</span>
-<span id="cb52-2"><a></a>  <span class="fu">structure</span>(</span>
-<span id="cb52-3"><a></a>    <span class="fu">list</span>(</span>
-<span id="cb52-4"><a></a>      <span class="at">x =</span> x, </span>
-<span id="cb52-5"><a></a>      <span class="at">y =</span> y, </span>
-<span id="cb52-6"><a></a>      <span class="at">z =</span> z</span>
-<span id="cb52-7"><a></a>    ),</span>
-<span id="cb52-8"><a></a>    <span class="at">class =</span> <span class="st">"point_in_space_class"</span></span>
-<span id="cb52-9"><a></a>  )</span>
-<span id="cb52-10"><a></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a></a>point_in_space_class <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y, z) {</span>
+<span id="cb53-2"><a></a>  <span class="fu">structure</span>(</span>
+<span id="cb53-3"><a></a>    <span class="fu">list</span>(</span>
+<span id="cb53-4"><a></a>      <span class="at">x =</span> x, </span>
+<span id="cb53-5"><a></a>      <span class="at">y =</span> y, </span>
+<span id="cb53-6"><a></a>      <span class="at">z =</span> z</span>
+<span id="cb53-7"><a></a>    ),</span>
+<span id="cb53-8"><a></a>    <span class="at">class =</span> <span class="st">"point_in_space_class"</span></span>
+<span id="cb53-9"><a></a>  )</span>
+<span id="cb53-10"><a></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="introduction-to-r6-classes" class="slide level2">
@@ -856,33 +855,33 @@ Coefficients:
 <section id="r6-class-example" class="slide level2">
 <h2>R6 Class Example</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb53" data-code-line-numbers="1|3-4|5-6|6-11|13-14|15-17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a></a><span class="fu">library</span>(R6)</span>
-<span id="cb53-2"><a></a></span>
-<span id="cb53-3"><a></a>Person <span class="ot">&lt;-</span> <span class="fu">R6Class</span>(<span class="st">"Person"</span>,</span>
-<span id="cb53-4"><a></a>  <span class="at">public =</span> <span class="fu">list</span>(</span>
-<span id="cb53-5"><a></a>    <span class="at">name =</span> <span class="cn">NULL</span>,</span>
-<span id="cb53-6"><a></a>    <span class="at">hair =</span> <span class="cn">NULL</span>,</span>
-<span id="cb53-7"><a></a>    <span class="at">initialize =</span> <span class="cf">function</span>(<span class="at">name =</span> <span class="cn">NA</span>, <span class="at">hair =</span> <span class="cn">NA</span>) {</span>
-<span id="cb53-8"><a></a>      <span class="fu">stopifnot</span>(<span class="fu">is.character</span>(name), <span class="fu">is.character</span>(hair))</span>
-<span id="cb53-9"><a></a>      self<span class="sc">$</span>name <span class="ot">&lt;-</span> name</span>
-<span id="cb53-10"><a></a>      self<span class="sc">$</span>hair <span class="ot">&lt;-</span> hair</span>
-<span id="cb53-11"><a></a>      self<span class="sc">$</span><span class="fu">greet</span>()</span>
-<span id="cb53-12"><a></a>    },</span>
-<span id="cb53-13"><a></a>    <span class="at">set_hair =</span> <span class="cf">function</span>(val) {</span>
-<span id="cb53-14"><a></a>      self<span class="sc">$</span>hair <span class="ot">&lt;-</span> val</span>
-<span id="cb53-15"><a></a>    },</span>
-<span id="cb53-16"><a></a>    <span class="at">greet =</span> <span class="cf">function</span>() {</span>
-<span id="cb53-17"><a></a>      <span class="fu">cat</span>(<span class="fu">paste0</span>(<span class="st">"Hello, my name is "</span>, self<span class="sc">$</span>name, <span class="st">".</span><span class="sc">\n</span><span class="st">"</span>))</span>
-<span id="cb53-18"><a></a>    }</span>
-<span id="cb53-19"><a></a>  )</span>
-<span id="cb53-20"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54" data-code-line-numbers="1|3-4|5-6|6-11|13-14|15-17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a></a><span class="fu">library</span>(R6)</span>
+<span id="cb54-2"><a></a></span>
+<span id="cb54-3"><a></a>Person <span class="ot">&lt;-</span> <span class="fu">R6Class</span>(<span class="st">"Person"</span>,</span>
+<span id="cb54-4"><a></a>  <span class="at">public =</span> <span class="fu">list</span>(</span>
+<span id="cb54-5"><a></a>    <span class="at">name =</span> <span class="cn">NULL</span>,</span>
+<span id="cb54-6"><a></a>    <span class="at">hair =</span> <span class="cn">NULL</span>,</span>
+<span id="cb54-7"><a></a>    <span class="at">initialize =</span> <span class="cf">function</span>(<span class="at">name =</span> <span class="cn">NA</span>, <span class="at">hair =</span> <span class="cn">NA</span>) {</span>
+<span id="cb54-8"><a></a>      <span class="fu">stopifnot</span>(<span class="fu">is.character</span>(name), <span class="fu">is.character</span>(hair))</span>
+<span id="cb54-9"><a></a>      self<span class="sc">$</span>name <span class="ot">&lt;-</span> name</span>
+<span id="cb54-10"><a></a>      self<span class="sc">$</span>hair <span class="ot">&lt;-</span> hair</span>
+<span id="cb54-11"><a></a>      self<span class="sc">$</span><span class="fu">greet</span>()</span>
+<span id="cb54-12"><a></a>    },</span>
+<span id="cb54-13"><a></a>    <span class="at">set_hair =</span> <span class="cf">function</span>(val) {</span>
+<span id="cb54-14"><a></a>      self<span class="sc">$</span>hair <span class="ot">&lt;-</span> val</span>
+<span id="cb54-15"><a></a>    },</span>
+<span id="cb54-16"><a></a>    <span class="at">greet =</span> <span class="cf">function</span>() {</span>
+<span id="cb54-17"><a></a>      <span class="fu">cat</span>(<span class="fu">paste0</span>(<span class="st">"Hello, my name is "</span>, self<span class="sc">$</span>name, <span class="st">".</span><span class="sc">\n</span><span class="st">"</span>))</span>
+<span id="cb54-18"><a></a>    }</span>
+<span id="cb54-19"><a></a>  )</span>
+<span id="cb54-20"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="r6-in-action" class="slide level2">
 <h2>R6 in Action</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a></a>kate <span class="ot">&lt;-</span> Person<span class="sc">$</span><span class="fu">new</span>(<span class="at">name =</span> <span class="st">'Kate'</span>, <span class="at">hair =</span> <span class="st">'blond'</span>)</span>
-<span id="cb54-2"><a></a><span class="fu">str</span>(kate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a></a>kate <span class="ot">&lt;-</span> Person<span class="sc">$</span><span class="fu">new</span>(<span class="at">name =</span> <span class="st">'Kate'</span>, <span class="at">hair =</span> <span class="st">'blond'</span>)</span>
+<span id="cb55-2"><a></a><span class="fu">str</span>(kate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Hello, my name is Kate.
 Classes 'Person', 'R6' &lt;Person&gt;
@@ -899,9 +898,9 @@ Classes 'Person', 'R6' &lt;Person&gt;
 <section id="r6-methods" class="slide level2">
 <h2>R6 – methods</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a></a>kate<span class="sc">$</span><span class="fu">greet</span>()</span>
-<span id="cb56-2"><a></a>kate<span class="sc">$</span><span class="fu">set_hair</span>(<span class="st">'red'</span>)</span>
-<span id="cb56-3"><a></a>kate</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a></a>kate<span class="sc">$</span><span class="fu">greet</span>()</span>
+<span id="cb57-2"><a></a>kate<span class="sc">$</span><span class="fu">set_hair</span>(<span class="st">'red'</span>)</span>
+<span id="cb57-3"><a></a>kate</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Hello, my name is Kate.
 &lt;Person&gt;
@@ -918,16 +917,16 @@ Classes 'Person', 'R6' &lt;Person&gt;
 <section id="r6-copy-on-modify" class="slide level2">
 <h2>R6 copy-on-modify</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a></a>kate<span class="sc">$</span>hair</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a></a>kate<span class="sc">$</span>hair</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "red"</code></pre>
 </div>
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a></a>ann <span class="ot">&lt;-</span> kate</span>
-<span id="cb60-2"><a></a>ann<span class="sc">$</span><span class="fu">set_hair</span>(<span class="st">'blue'</span>)</span>
-<span id="cb60-3"><a></a>ann<span class="sc">$</span>hair</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a></a>ann <span class="ot">&lt;-</span> kate</span>
+<span id="cb61-2"><a></a>ann<span class="sc">$</span><span class="fu">set_hair</span>(<span class="st">'blue'</span>)</span>
+<span id="cb61-3"><a></a>ann<span class="sc">$</span>hair</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "blue"</code></pre>
 </div>
@@ -935,7 +934,7 @@ Classes 'Person', 'R6' &lt;Person&gt;
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a></a>kate<span class="sc">$</span>hair</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a></a>kate<span class="sc">$</span>hair</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "blue"</code></pre>
 </div>
@@ -945,17 +944,17 @@ Classes 'Person', 'R6' &lt;Person&gt;
 <section id="r6-clone" class="slide level2">
 <h2>R6 – clone()</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a></a>kate<span class="sc">$</span><span class="fu">set_hair</span>(<span class="st">'brown'</span>)</span>
-<span id="cb64-2"><a></a>kate<span class="sc">$</span>hair</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a></a>kate<span class="sc">$</span><span class="fu">set_hair</span>(<span class="st">'brown'</span>)</span>
+<span id="cb65-2"><a></a>kate<span class="sc">$</span>hair</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "brown"</code></pre>
 </div>
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb66" data-code-line-numbers="1|2-3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a></a>ann <span class="ot">&lt;-</span> kate<span class="sc">$</span><span class="fu">clone</span>()</span>
-<span id="cb66-2"><a></a>kate<span class="sc">$</span>hair</span>
-<span id="cb66-3"><a></a>ann<span class="sc">$</span>hair</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb67" data-code-line-numbers="1|2-3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a></a>ann <span class="ot">&lt;-</span> kate<span class="sc">$</span><span class="fu">clone</span>()</span>
+<span id="cb67-2"><a></a>kate<span class="sc">$</span>hair</span>
+<span id="cb67-3"><a></a>ann<span class="sc">$</span>hair</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "brown"
 [1] "brown"</code></pre>
@@ -964,9 +963,9 @@ Classes 'Person', 'R6' &lt;Person&gt;
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a></a>ann<span class="sc">$</span><span class="fu">set_hair</span>(<span class="st">'blond'</span>)</span>
-<span id="cb68-2"><a></a>kate<span class="sc">$</span>hair</span>
-<span id="cb68-3"><a></a>ann<span class="sc">$</span>hair</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a></a>ann<span class="sc">$</span><span class="fu">set_hair</span>(<span class="st">'blond'</span>)</span>
+<span id="cb69-2"><a></a>kate<span class="sc">$</span>hair</span>
+<span id="cb69-3"><a></a>ann<span class="sc">$</span>hair</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "brown"
 [1] "blond"</code></pre>
@@ -979,11 +978,11 @@ Classes 'Person', 'R6' &lt;Person&gt;
 <h3 id="thank-you-questions">Thank you! Questions?</h3>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>         _                  
-platform x86_64-pc-linux-gnu
-os       linux-gnu          
-major    4                  
-minor    3.2                </code></pre>
+<pre><code>         _                    
+platform x86_64-apple-darwin20
+os       darwin20             
+major    4                    
+minor    4.0                  </code></pre>
 </div>
 </div>
 <p><span class="smaller">2024 • <a href="https://www.scilifelab.se/">SciLifeLab</a> • <a href="https://nbis.se/">NBIS</a> • <a href="https://nbisweden.github.io/raukr-2024">RaukR</a></span></p>
@@ -1284,18 +1283,7 @@ minor    3.2                </code></pre>
         }
         return false;
       }
-      const clipboard = new window.ClipboardJS('.code-copy-button', {
-        text: function(trigger) {
-          const codeEl = trigger.previousElementSibling.cloneNode(true);
-          for (const childEl of codeEl.children) {
-            if (isCodeAnnotation(childEl)) {
-              childEl.remove();
-            }
-          }
-          return codeEl.innerText;
-        }
-      });
-      clipboard.on('success', function(e) {
+      const onCopySuccess = function(e) {
         // button target
         const button = e.trigger;
         // don't keep focus
@@ -1327,7 +1315,47 @@ minor    3.2                </code></pre>
         }, 1000);
         // clear code selection
         e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
       });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        // For code content inside modals, clipBoardJS needs to be initialized with a container option
+        // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
+        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+        var mailtoRegex = new RegExp(/^mailto:/);
+          var filterRegex = new RegExp("https:\/\/nbisweden\.github\.io\/raukr-2024\/");
+        var isInternal = (href) => {
+            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+        }
+        // Inspect non-navigation links and adorn them if external
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+        for (var i=0; i<links.length; i++) {
+          const link = links[i];
+          if (!isInternal(link.href)) {
+            // undo the damage that might have been done by quarto-nav.js in the case of
+            // links that we want to consider external
+            if (link.dataset.originalHref !== undefined) {
+              link.href = link.dataset.originalHref;
+            }
+          }
+        }
       function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
         const config = {
           allowHTML: true,
@@ -1364,7 +1392,11 @@ minor    3.2                </code></pre>
           try { href = new URL(href).hash; } catch {}
           const id = href.replace(/^#\/?/, "");
           const note = window.document.getElementById(id);
-          return note.innerHTML;
+          if (note) {
+            return note.innerHTML;
+          } else {
+            return "";
+          }
         });
       }
       const findCites = (el) => {
