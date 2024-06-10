@@ -1,0 +1,19 @@
+{
+  "listing": "/slides/index.html",
+  "items": [
+    "/slides/coding/index.html",
+    "/slides/demo/index.html",
+    "/slides/scripting/index.html",
+    "/slides/shiny/index.html",
+    "/slides/quarto/index.html",
+    "/slides/ml/index.html",
+    "/slides/oop/index.html",
+    "/slides/ggplot/index.html",
+    "/slides/packages/index.html",
+    "/slides/r-env/index.html",
+    "/slides/reticulate/index.html",
+    "/slides/tidyverse/index.html",
+    "/slides/vectorization/index.html",
+    "/slides/git/index.html"
+  ]
+}
