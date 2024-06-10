@@ -188,12 +188,14 @@ st2 <- system.time(replicate(n = 100, rnorm(n = 10e6)))
 
 ### Task: Microbenchmarking.
 
-While `system.time` might be sufficient most of the time, there is also an excellent package `microbenchmark` that enables more accurate time profiling, aiming at microsecond resolution that most of modern operating systems offer. Most of the benchmarking the `microbenchmark` does is implemented in low-overhead C functions and also the package makes sure to:
+While `system.time` might be sufficient most of the time, there is also a package `microbenchmark` that enables more accurate time profiling, aiming at microsecond resolution that most of modern operating systems offer. Most of the benchmarking the `microbenchmark` does is implemented in low-overhead C functions and also the package makes sure to:
 
 - estimate granularity and resolution of timing for your particular OS,
 - warm up your processor before measuring, i.e. wake the processor up from any idle state or likewise. 
 
 Begin by installing the `microbenchmark` package.
+
+NOTE! We have noticed that for, e.g. M1 and M2 architectures on newer MacBooks it does not work well!
 
 #### Checking System Time.
 
@@ -363,10 +365,14 @@ fill_alloc <- function(N, bag, seed = 42, init = NA) {
   return(M)
 }
 
-summary <- summaryRprof('profiler_test_fillers.out', memory='both')
+# Example of profiling one function: fill_noloop
+Rprof(memory.profiling = T)
+fill_noloop(10000, c(9:0), seed = 100)
+Rprof(NULL)
+summary <- summaryRprof('Rprof.out', memory='both')
 summary$by.self
 
-# answers to the remaining questions are not given
+# answers to the remaining questions are not given here
 ```
 :::
 
