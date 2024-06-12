@@ -322,7 +322,7 @@ parse_double(vec1)
 parse_integer(vec1)
 parse_integer(as.integer(vec1)) # Is it the best way? Hint: rounding.
 parse_double(vec2, na = '?', locale = locale(decimal_mark = ','))
-parse_number(vec2, na = '?', locale = locale(decimal_mark = ','))
+parse_number(vec3, na = '?', locale = locale(decimal_mark = '.'))
 guess_parser(vec4)
 parse_guess(vec4)
 # Yes, you can:
