@@ -31,7 +31,7 @@ The contents are being updated.
 |Plotting with ggplot2                  |Roy Francis                            |[Slides](slides/ggplot/index.html), [Lab](labs/ggplot/index.html)|
 |[**12-Jun-2024 (Wed)**]{.badge .badge-secondary}                               |||
 |Tidyverse                              |Marcin Kierczak                        |[Slides](slides/tidyverse/index.html), [Lab](labs/tidyverse/index.html)|
-|Futurverse 1                           |Henrik Bengtsson, UCSF                 ||
+|Futurverse 1                           |Henrik Bengtsson, UCSF                 |[Web](https://now.futureverse.org/)|
 |[**13-Jun-2024 (Thu)**]{.badge .badge-secondary}                               |||
 |How to repeat yourself with Purrr      |Jenny Bryan, Posit                     ||
 |Web apps with Shiny                    |Roy Francis                            |[Slides](slides/shiny/index.html), [Lab](labs/shiny/index.html)|
