@@ -33,10 +33,10 @@ The contents are being updated.
 |Tidyverse                              |Marcin Kierczak                        |[Slides](slides/tidyverse/index.html), [Lab](labs/tidyverse/index.html)|
 |Futurverse 1                           |Henrik Bengtsson, UCSF                 |[Web](https://now.futureverse.org/)|
 |[**13-Jun-2024 (Thu)**]{.badge .badge-secondary}                               |||
-|How to repeat yourself with Purrr      |Jenny Bryan, Posit                     ||
+|How to repeat yourself with Purrr      |Jenny Bryan, Posit                     |[Repo](https://github.com/jennybc/2024_raukr-purrr-pkg-dev)|
 |Web apps with Shiny                    |Roy Francis                            |[Slides](slides/shiny/index.html), [Lab](labs/shiny/index.html)|
 |[**14-Jun-2024 (Fri)**]{.badge .badge-secondary}                               |||
-|R Packages                             |Jenny Bryan, Posit                     ||
+|R Packages                             |Jenny Bryan, Posit                     |[Repo](https://github.com/jennybc/2024_raukr-purrr-pkg-dev)|
 |reticulate: Combining R with Python    |Nina Norgren                           |[Slides](slides/reticulate/index.html), [Lab](labs/reticulate/index.html)|
 |[**WEEK 2**]{.badge .badge-secondary}                                          |||
 |[**17-Jun-2024 (Mon)**]{.badge .badge-secondary}                               |||
