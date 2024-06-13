@@ -52,4 +52,4 @@ Administrator, NBIS
 
 For queries, write to us at **raukr[at]nbis.se**.  
 
-![](assets/logos/raukr.svg){height="1.2em" style="margin-bottom:-3px;"} &nbsp; ![](assets/logos/nbis-scilifelab.svg){height="1.1em"}
+![](assets/logos/raukr.svg){height="1.2em" style="margin-bottom:-3px;"} &nbsp; ![](assets/logos/nbis-scilifelab.svg){height="1.1em"} &nbsp; ![](assets/logos/pixelgen.jpg){height="1.3em"}
