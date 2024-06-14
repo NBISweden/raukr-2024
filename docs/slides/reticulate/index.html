@@ -11,7 +11,7 @@
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/quarto-contrib/reveal-logo-1.0.0/reveal-logo.js" defer="true"></script>
 <link href="../../site_libs/quarto-contrib/reveal-logo-1.0.0/reveal-logo.css" rel="stylesheet"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.4.549">
+  <meta name="generator" content="quarto-1.5.43">
 
   <meta name="author" content="Nina Norgren">
   <title>Reticulate</title>
@@ -45,7 +45,7 @@
     }
     @media print {
     pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
     }
     pre.numberSource code
       { counter-reset: source-line 0; }
@@ -73,7 +73,7 @@
     code span.at { color: #657422; } /* Attribute */
     code span.bn { color: #ad0000; } /* BaseN */
     code span.bu { } /* BuiltIn */
-    code span.cf { color: #003b4f; } /* ControlFlow */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
     code span.ch { color: #20794d; } /* Char */
     code span.cn { color: #8f5902; } /* Constant */
     code span.co { color: #5e5e5e; } /* Comment */
@@ -87,7 +87,7 @@
     code span.fu { color: #4758ab; } /* Function */
     code span.im { color: #00769e; } /* Import */
     code span.in { color: #5e5e5e; } /* Information */
-    code span.kw { color: #003b4f; } /* Keyword */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
     code span.op { color: #5e5e5e; } /* Operator */
     code span.ot { color: #003b4f; } /* Other */
     code span.pp { color: #ad0000; } /* Preprocessor */
@@ -99,6 +99,7 @@
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto.css">
+  <link rel="stylesheet" href="assets/styles.css">
   <link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -407,7 +408,7 @@
         <h1 class="title">Reticulate</h1>
                 <p class="subtitle">RaukR 2024 • Advanced R for Bioinformatics</p>
                         <p class="author">Nina Norgren</p>
-                                <p class="date">19-Feb-2024</p>
+                                <p class="date">14-Jun-2024</p>
               </div>
     </div>
     
@@ -459,7 +460,7 @@
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a>todays_r_date</span>
 <span id="cb3-2"><a></a><span class="fu">class</span>(todays_r_date)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2024-05-29 15:24:30 UTC"
+<pre><code>[1] "2024-06-14 11:21:47 CEST"
 [1] "POSIXct" "POSIXt" </code></pre>
 </div>
 </div>
@@ -467,18 +468,19 @@
 <div class="fragment">
 <p>Objects are automatically converted to R types, unless otherwise specified</p>
 </div>
-<div class="fragment">
+</section>
+<section id="importing-python-modules-1" class="slide level2">
+<h2>Importing Python modules</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a>datetime <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">"datetime"</span>, <span class="at">convert =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb5-2"><a></a>todays_py_date <span class="ot">&lt;-</span> datetime<span class="sc">$</span>datetime<span class="sc">$</span><span class="fu">now</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 </div>
 <div class="fragment">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a>todays_py_date</span>
 <span id="cb6-2"><a></a><span class="fu">class</span>(todays_py_date)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>datetime.datetime(2024, 5, 29, 15, 24, 30, 833304)
+<pre><code>datetime.datetime(2024, 6, 14, 11, 21, 47, 135665)
 [1] "datetime.datetime"     "datetime.date"         "python.builtin.object"</code></pre>
 </div>
 </div>
@@ -496,7 +498,9 @@
 </div>
 </div>
 <p><code>r_vec</code> is an R object.</p>
-<div class="fragment">
+</section>
+<section id="importing-built-in-python-functions-1" class="slide level2">
+<h2>Importing built-in Python functions</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a>builtins<span class="sc">$</span><span class="fu">len</span>(r_vec); builtins<span class="sc">$</span><span class="fu">max</span>(r_vec)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -505,7 +509,6 @@
 </div>
 </div>
 <p>Python built-in functions still working on R objects</p>
-</div>
 <div class="fragment">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a><span class="fu">max</span>(r_vec)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -523,7 +526,10 @@
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a></a><span class="kw">def</span> add(x, y):</span>
 <span id="cb14-2"><a></a>  <span class="cf">return</span> x <span class="op">+</span> y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="fragment">
+</section>
+<section id="sourcing-scripts-1" class="slide level2">
+<h2>Sourcing scripts</h2>
+<p>Import your own python functions for use in R.</p>
 <p>R code:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a><span class="fu">source_python</span>(<span class="st">"python_functions.py"</span>)</span>
@@ -537,27 +543,34 @@
 [1] "numeric"</code></pre>
 </div>
 </div>
-</div>
-<div class="fragment">
-<p>Type <code>numeric</code> in and type <code>numeric</code> out. But what happens in between?</p>
-</div>
 </section>
-<section id="sourcing-scripts-1" class="slide level2">
+<section id="sourcing-scripts-2" class="slide level2">
+<h2>Sourcing scripts</h2>
+<p>Import your own python functions for use in R.</p>
+<p>R code:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a><span class="fu">source_python</span>(<span class="st">"python_functions.py"</span>)</span>
+<span id="cb17-2"><a></a><span class="fu">class</span>(<span class="dv">4</span>)</span>
+<span id="cb17-3"><a></a>res <span class="ot">&lt;-</span> <span class="fu">add</span>(<span class="dv">4</span>,<span class="dv">5</span>)</span>
+<span id="cb17-4"><a></a>res</span>
+<span id="cb17-5"><a></a><span class="fu">class</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Type <code>numeric</code> in and type <code>numeric</code> out. But what happens in between?</p>
+</section>
+<section id="sourcing-scripts-3" class="slide level2">
 <h2>Sourcing scripts</h2>
 <p>But what happens in between?</p>
 <p>File <code>python_functions.py</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a></a><span class="kw">def</span> add_with_print(x, y):</span>
-<span id="cb17-2"><a></a>  <span class="bu">print</span>(x, <span class="st">'is of the python type '</span>, <span class="bu">type</span>(x))</span>
-<span id="cb17-3"><a></a>  <span class="cf">return</span> x <span class="op">+</span> y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a></a><span class="kw">def</span> add_with_print(x, y):</span>
+<span id="cb18-2"><a></a>  <span class="bu">print</span>(x, <span class="st">'is of the python type '</span>, <span class="bu">type</span>(x))</span>
+<span id="cb18-3"><a></a>  <span class="cf">return</span> x <span class="op">+</span> y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a>res2 <span class="ot">&lt;-</span> <span class="fu">add_with_print</span>(<span class="dv">4</span>,<span class="dv">5</span>)</span>
-<span id="cb18-2"><a></a><span class="fu">py_capture_output</span>(<span class="fu">add_with_print</span>(<span class="dv">4</span>,<span class="dv">5</span>))</span>
-<span id="cb18-3"><a></a><span class="fu">str</span>(res2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a>res2 <span class="ot">&lt;-</span> <span class="fu">add_with_print</span>(<span class="dv">4</span>,<span class="dv">5</span>)</span>
+<span id="cb19-2"><a></a><span class="fu">str</span>(res2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>4.0 is of the python type  &lt;class 'float'&gt;
-[1] "4.0 is of the python type  &lt;class 'float'&gt;\n\n"
  num 9</code></pre>
 </div>
 </div>
@@ -566,8 +579,8 @@
 <h2>Execute Python code</h2>
 <p>Run python string:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a><span class="fu">py_run_string</span>(<span class="st">"result = [1,2,3]*2"</span>)</span>
-<span id="cb20-2"><a></a>py<span class="sc">$</span>result</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a><span class="fu">py_run_string</span>(<span class="st">"result = [1,2,3]*2"</span>)</span>
+<span id="cb21-2"><a></a>py<span class="sc">$</span>result</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1 2 3 1 2 3</code></pre>
 </div>
@@ -578,24 +591,27 @@
 <h2>Execute Python code</h2>
 <p>Run python script <code>my_python_script.py</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a></a><span class="kw">def</span> add(x, y):</span>
-<span id="cb22-2"><a></a>  <span class="cf">return</span> x <span class="op">+</span> y</span>
-<span id="cb22-3"><a></a></span>
-<span id="cb22-4"><a></a><span class="kw">def</span> multiply_by_3(x):</span>
-<span id="cb22-5"><a></a>  <span class="cf">return</span> x<span class="op">*</span><span class="dv">3</span></span>
-<span id="cb22-6"><a></a></span>
-<span id="cb22-7"><a></a><span class="kw">def</span> run_all():</span>
-<span id="cb22-8"><a></a>  x <span class="op">=</span> <span class="dv">5</span></span>
-<span id="cb22-9"><a></a>  y <span class="op">=</span> <span class="dv">8</span></span>
-<span id="cb22-10"><a></a>  added <span class="op">=</span> add(x, y)</span>
-<span id="cb22-11"><a></a>  final <span class="op">=</span> multiply_by_3(added)</span>
-<span id="cb22-12"><a></a>  <span class="cf">return</span> final</span>
-<span id="cb22-13"><a></a></span>
-<span id="cb22-14"><a></a>final <span class="op">=</span> run_all()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a></a><span class="kw">def</span> add(x, y):</span>
+<span id="cb23-2"><a></a>  <span class="cf">return</span> x <span class="op">+</span> y</span>
+<span id="cb23-3"><a></a></span>
+<span id="cb23-4"><a></a><span class="kw">def</span> multiply_by_3(x):</span>
+<span id="cb23-5"><a></a>  <span class="cf">return</span> x<span class="op">*</span><span class="dv">3</span></span>
+<span id="cb23-6"><a></a></span>
+<span id="cb23-7"><a></a><span class="kw">def</span> run_all():</span>
+<span id="cb23-8"><a></a>  x <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb23-9"><a></a>  y <span class="op">=</span> <span class="dv">8</span></span>
+<span id="cb23-10"><a></a>  added <span class="op">=</span> add(x, y)</span>
+<span id="cb23-11"><a></a>  final <span class="op">=</span> multiply_by_3(added)</span>
+<span id="cb23-12"><a></a>  <span class="cf">return</span> final</span>
+<span id="cb23-13"><a></a></span>
+<span id="cb23-14"><a></a>final <span class="op">=</span> run_all()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
+<section id="section" class="slide level2">
+<h2></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a><span class="fu">py_run_file</span>(<span class="st">"my_python_script.py"</span>)</span>
-<span id="cb23-2"><a></a>py<span class="sc">$</span>final</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a><span class="fu">py_run_file</span>(<span class="st">"my_python_script.py"</span>)</span>
+<span id="cb24-2"><a></a>py<span class="sc">$</span>final</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 39</code></pre>
 </div>
@@ -604,12 +620,12 @@
 <section id="python-in-r-markdown" class="slide level2">
 <h2>Python in R Markdown</h2>
 <p>In R Markdown, it is possible to mix in Python chunks:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb25-1"><a></a><span class="in">```{python}</span></span>
-<span id="cb25-2"><a></a><span class="in">import pandas as pd</span></span>
-<span id="cb25-3"><a></a></span>
-<span id="cb25-4"><a></a><span class="in">movies = get_all_movies()</span></span>
-<span id="cb25-5"><a></a><span class="in">print(type(movies))</span></span>
-<span id="cb25-6"><a></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb26-1"><a></a><span class="in">```{python}</span></span>
+<span id="cb26-2"><a></a><span class="in">import pandas as pd</span></span>
+<span id="cb26-3"><a></a></span>
+<span id="cb26-4"><a></a><span class="in">movies = get_all_movies()</span></span>
+<span id="cb26-5"><a></a><span class="in">print(type(movies))</span></span>
+<span id="cb26-6"><a></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;</code></pre>
@@ -620,21 +636,21 @@
 <h2>Python in R Markdown</h2>
 <p>Access the movie object using the <code>py</code> object, which will convert movies to an R object:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a>movies_r <span class="ot">&lt;-</span> py<span class="sc">$</span>movies</span>
-<span id="cb27-2"><a></a>movies_r <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(movies_r)</span>
-<span id="cb27-3"><a></a>subset <span class="ot">&lt;-</span> movies_r <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="dv">5</span><span class="sc">:</span><span class="dv">6</span>, <span class="dv">8</span><span class="sc">:</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a>movies_r <span class="ot">&lt;-</span> py<span class="sc">$</span>movies</span>
+<span id="cb28-2"><a></a>movies_r <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(movies_r)</span>
+<span id="cb28-3"><a></a>subset <span class="ot">&lt;-</span> movies_r <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="dv">5</span><span class="sc">:</span><span class="dv">6</span>, <span class="dv">8</span><span class="sc">:</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="python-in-r-markdown-2" class="slide level2">
 <h2>Python in R Markdown</h2>
 <p>Access the movie object using the <code>py</code> object, which will convert movies to an R object:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a>movies_r <span class="ot">&lt;-</span> py<span class="sc">$</span>movies</span>
-<span id="cb28-2"><a></a>movies_r <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(movies_r)</span>
-<span id="cb28-3"><a></a>subset <span class="ot">&lt;-</span> movies_r <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="dv">5</span><span class="sc">:</span><span class="dv">6</span>, <span class="dv">8</span><span class="sc">:</span><span class="dv">10</span>)</span>
-<span id="cb28-4"><a></a>knitr<span class="sc">::</span><span class="fu">kable</span>(subset[<span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>,],<span class="st">'html'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a>movies_r <span class="ot">&lt;-</span> py<span class="sc">$</span>movies</span>
+<span id="cb29-2"><a></a>movies_r <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(movies_r)</span>
+<span id="cb29-3"><a></a>subset <span class="ot">&lt;-</span> movies_r <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="dv">5</span><span class="sc">:</span><span class="dv">6</span>, <span class="dv">8</span><span class="sc">:</span><span class="dv">10</span>)</span>
+<span id="cb29-4"><a></a>knitr<span class="sc">::</span><span class="fu">kable</span>(subset[<span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>,],<span class="st">'html'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<table data-quarto-postprocess="true">
+<table class="caption-top" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">originalTitle</th>
@@ -705,28 +721,30 @@
 <h2>Python in R Markdown</h2>
 <p>Continue working with the now converted R object in R</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a><span class="fu">ggplot</span>(movies_r, <span class="fu">aes</span>(<span class="at">x=</span>startYear)) <span class="sc">+</span> <span class="fu">geom_bar</span>() <span class="sc">+</span> </span>
-<span id="cb29-2"><a></a>                                     <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>)) <span class="sc">+</span></span>
-<span id="cb29-3"><a></a>                                     <span class="fu">ggtitle</span>(<span class="st">'Number of movies per year'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a><span class="fu">ggplot</span>(movies_r, <span class="fu">aes</span>(<span class="at">x=</span>startYear)) <span class="sc">+</span> <span class="fu">geom_bar</span>() <span class="sc">+</span> </span>
+<span id="cb30-2"><a></a>                                     <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>)) <span class="sc">+</span></span>
+<span id="cb30-3"><a></a>                                     <span class="fu">ggtitle</span>(<span class="st">'Number of movies per year'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="python-in-r-markdown-4" class="slide level2">
 <h2>Python in R Markdown</h2>
 <p>Continue working with the now converted R object in R</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a><span class="fu">ggplot</span>(movies_r, <span class="fu">aes</span>(<span class="at">x=</span>startYear)) <span class="sc">+</span> <span class="fu">geom_bar</span>() <span class="sc">+</span> </span>
-<span id="cb30-2"><a></a>                                     <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>)) <span class="sc">+</span></span>
-<span id="cb30-3"><a></a>                                     <span class="fu">ggtitle</span>(<span class="st">'Number of movies per year'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a></a><span class="fu">ggplot</span>(movies_r, <span class="fu">aes</span>(<span class="at">x=</span>startYear)) <span class="sc">+</span> <span class="fu">geom_bar</span>() <span class="sc">+</span> </span>
+<span id="cb31-2"><a></a>                                     <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>)) <span class="sc">+</span></span>
+<span id="cb31-3"><a></a>                                     <span class="fu">ggtitle</span>(<span class="st">'Number of movies per year'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="index_files/figure-revealjs/unnamed-chunk-21-1.png" width="960" class="r-stretch"></section>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-22-1.png" width="960" class="r-stretch"></section>
 <section id="type-conversions" class="slide level2">
 <h2>Type conversions</h2>
 <p>When calling python code from R, R data types are converted to Python types, and vice versa, when values are returned from Python to R they are converted back to R types.</p>
-<p><span class="large"><strong>Conversion table</strong></span></p>
+</section>
+<section id="conversion-table" class="slide level2">
+<h2>Conversion table</h2>
 <div class="cell">
 <div class="cell-output-display">
-<table data-quarto-postprocess="true">
+<table class="caption-top" data-quarto-postprocess="true">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">R</th>
@@ -791,111 +809,176 @@
 <h2>Type conversions</h2>
 <p><code>python_functions.py</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a></a><span class="kw">def</span> check_python_type(x):</span>
-<span id="cb31-2"><a></a>  <span class="bu">print</span>(<span class="bu">type</span>(x))</span>
-<span id="cb31-3"><a></a>  <span class="cf">return</span> x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="fragment">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a></a><span class="fu">source_python</span>(<span class="st">"python_functions.py"</span>)</span>
-<span id="cb32-2"><a></a></span>
-<span id="cb32-3"><a></a>r_var <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>),<span class="at">nrow=</span><span class="dv">2</span>, <span class="at">ncol=</span><span class="dv">2</span>)</span>
-<span id="cb32-4"><a></a><span class="fu">class</span>(r_var)</span>
-<span id="cb32-5"><a></a><span class="fu">py_capture_output</span>(<span class="fu">check_python_type</span>(r_var))</span>
-<span id="cb32-6"><a></a>r_var2 <span class="ot">&lt;-</span> <span class="fu">check_python_type</span>(r_var)</span>
-<span id="cb32-7"><a></a><span class="fu">class</span>(r_var2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "matrix" "array" 
-[1] "&lt;class 'numpy.ndarray'&gt;\n\n"
-&lt;class 'numpy.ndarray'&gt;
-[1] "matrix" "array" </code></pre>
-</div>
-</div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a></a><span class="kw">def</span> check_python_type(x):</span>
+<span id="cb32-2"><a></a>  <span class="bu">print</span>(<span class="bu">type</span>(x))</span>
+<span id="cb32-3"><a></a>  <span class="cf">return</span> x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="type-conversions-2" class="slide level2">
 <h2>Type conversions</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a></a><span class="fu">source_python</span>(<span class="st">"python_functions.py"</span>, <span class="at">convert=</span><span class="cn">FALSE</span>)</span>
-<span id="cb34-2"><a></a></span>
-<span id="cb34-3"><a></a>r_var <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>),<span class="at">nrow=</span><span class="dv">2</span>, <span class="at">ncol=</span><span class="dv">2</span>)</span>
-<span id="cb34-4"><a></a><span class="fu">class</span>(r_var)</span>
-<span id="cb34-5"><a></a><span class="fu">py_capture_output</span>(<span class="fu">check_python_type</span>(r_var))</span>
-<span id="cb34-6"><a></a>r_var2 <span class="ot">&lt;-</span> <span class="fu">check_python_type</span>(r_var)</span>
-<span id="cb34-7"><a></a><span class="fu">class</span>(r_var2)</span>
-<span id="cb34-8"><a></a>r_var3 <span class="ot">&lt;-</span> <span class="fu">py_to_r</span>(r_var2)</span>
-<span id="cb34-9"><a></a><span class="fu">class</span>(r_var3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a></a><span class="fu">source_python</span>(<span class="st">"python_functions.py"</span>)</span>
+<span id="cb33-2"><a></a></span>
+<span id="cb33-3"><a></a>r_var <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>),<span class="at">nrow=</span><span class="dv">2</span>, <span class="at">ncol=</span><span class="dv">2</span>)</span>
+<span id="cb33-4"><a></a><span class="fu">class</span>(r_var)</span>
+<span id="cb33-5"><a></a>r_var2 <span class="ot">&lt;-</span> <span class="fu">check_python_type</span>(r_var)</span>
+<span id="cb33-6"><a></a><span class="fu">class</span>(r_var2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "matrix" "array" 
-[1] "&lt;class 'numpy.ndarray'&gt;\n\n"
 &lt;class 'numpy.ndarray'&gt;
-[1] "numpy.ndarray"         "python.builtin.object"
 [1] "matrix" "array" </code></pre>
 </div>
 </div>
 </section>
 <section id="type-conversions-3" class="slide level2">
 <h2>Type conversions</h2>
-<ul>
-<li><code>42</code> in R is a floating point number. In Python it is an integer</li>
-</ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a></a><span class="fu">str</span>(<span class="dv">42</span>)</span>
-<span id="cb36-2"><a></a><span class="fu">check_python_type</span>(<span class="dv">42</span>)</span>
-<span id="cb36-3"><a></a><span class="fu">py_capture_output</span>(<span class="fu">check_python_type</span>(<span class="dv">42</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a></a><span class="fu">source_python</span>(<span class="st">"python_functions.py"</span>, <span class="at">convert=</span><span class="cn">FALSE</span>)</span>
+<span id="cb35-2"><a></a></span>
+<span id="cb35-3"><a></a>r_var <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>),<span class="at">nrow=</span><span class="dv">2</span>, <span class="at">ncol=</span><span class="dv">2</span>)</span>
+<span id="cb35-4"><a></a><span class="fu">class</span>(r_var)</span>
+<span id="cb35-5"><a></a>r_var2 <span class="ot">&lt;-</span> <span class="fu">check_python_type</span>(r_var)</span>
+<span id="cb35-6"><a></a><span class="fu">class</span>(r_var2)</span>
+<span id="cb35-7"><a></a>r_var3 <span class="ot">&lt;-</span> <span class="fu">py_to_r</span>(r_var2)</span>
+<span id="cb35-8"><a></a><span class="fu">class</span>(r_var3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> num 42
-&lt;class 'float'&gt;
-42.0
-[1] "&lt;class 'float'&gt;\n\n"</code></pre>
-</div>
-</div>
-<div class="fragment">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a></a><span class="fu">str</span>(<span class="dv">42</span>L)</span>
-<span id="cb38-2"><a></a><span class="fu">check_python_type</span>(<span class="dv">42</span>L)</span>
-<span id="cb38-3"><a></a><span class="fu">py_capture_output</span>(<span class="fu">check_python_type</span>(<span class="dv">42</span>L))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> int 42
-&lt;class 'int'&gt;
-42
-[1] "&lt;class 'int'&gt;\n\n"</code></pre>
-</div>
+<pre><code>[1] "matrix" "array" 
+&lt;class 'numpy.ndarray'&gt;
+[1] "numpy.ndarray"         "python.builtin.object"
+[1] "matrix" "array" </code></pre>
 </div>
 </div>
 </section>
 <section id="type-conversions-4" class="slide level2">
 <h2>Type conversions</h2>
 <ul>
-<li>List conversions of single element vectors, automatically translated to Python scalar</li>
+<li><code>42</code> in R is a floating point number. In Python it is an integer</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a></a><span class="fu">str</span>(<span class="fu">c</span>(<span class="dv">24</span>))</span>
-<span id="cb40-2"><a></a><span class="fu">check_python_type</span>(<span class="fu">c</span>(<span class="dv">24</span>))</span>
-<span id="cb40-3"><a></a><span class="fu">py_capture_output</span>(<span class="fu">check_python_type</span>(<span class="fu">c</span>(<span class="dv">24</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a></a><span class="fu">str</span>(<span class="dv">42</span>)</span>
+<span id="cb37-2"><a></a><span class="fu">check_python_type</span>(<span class="dv">42</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> num 24
+<pre><code> num 42
 &lt;class 'float'&gt;
-24.0
-[1] "&lt;class 'float'&gt;\n\n"</code></pre>
+42.0</code></pre>
 </div>
 </div>
 <div class="fragment">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a></a><span class="fu">str</span>(<span class="fu">list</span>(<span class="dv">24</span>))</span>
-<span id="cb42-2"><a></a><span class="fu">check_python_type</span>(<span class="fu">list</span>(<span class="dv">24</span>))</span>
-<span id="cb42-3"><a></a><span class="fu">py_capture_output</span>(<span class="fu">check_python_type</span>(<span class="fu">list</span>(<span class="dv">24</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a></a><span class="fu">str</span>(<span class="dv">42</span>L)</span>
+<span id="cb39-2"><a></a><span class="fu">check_python_type</span>(<span class="dv">42</span>L)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>List of 1
- $ : num 24
-&lt;class 'list'&gt;
-[24.0]
-[1] "&lt;class 'list'&gt;\n\n"</code></pre>
+<pre><code> int 42
+&lt;class 'int'&gt;
+42</code></pre>
 </div>
 </div>
 </div>
 </section>
-<section id="section" class="slide level2" data-background-image="../../assets/images/cover.jpg">
+<section id="examples-in-bioinformatics" class="slide level2">
+<h2>Examples in bioinformatics</h2>
+<h4 id="random-forest-classifier">Random forest classifier</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a></a><span class="fu">conda_install</span>(<span class="st">"raukr-reticulate"</span>, <span class="st">"scikit-learn"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="section-1" class="slide level2">
+<h2></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a></a><span class="co"># Import scikit-learn's random forest classifier</span></span>
+<span id="cb42-2"><a></a>sklearn <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">"sklearn.ensemble"</span>)</span>
+<span id="cb42-3"><a></a>RandomForestClassifier <span class="ot">&lt;-</span> sklearn<span class="sc">$</span>RandomForestClassifier</span>
+<span id="cb42-4"><a></a></span>
+<span id="cb42-5"><a></a><span class="co"># Create a random forest classifier</span></span>
+<span id="cb42-6"><a></a>clf <span class="ot">&lt;-</span> <span class="fu">RandomForestClassifier</span>(<span class="at">n_estimators=</span><span class="dv">100</span>L)</span>
+<span id="cb42-7"><a></a></span>
+<span id="cb42-8"><a></a><span class="co"># Training data (example)</span></span>
+<span id="cb42-9"><a></a>X_train <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">runif</span>(<span class="dv">1000</span>), <span class="at">ncol=</span><span class="dv">10</span>)</span>
+<span id="cb42-10"><a></a>y_train <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dv">100</span>, <span class="at">replace=</span><span class="cn">TRUE</span>)</span>
+<span id="cb42-11"><a></a></span>
+<span id="cb42-12"><a></a><span class="co"># Train the model</span></span>
+<span id="cb42-13"><a></a>clf<span class="sc">$</span><span class="fu">fit</span>(X_train, y_train)</span>
+<span id="cb42-14"><a></a></span>
+<span id="cb42-15"><a></a><span class="co"># Predict on new data</span></span>
+<span id="cb42-16"><a></a>X_test <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">runif</span>(<span class="dv">200</span>), <span class="at">ncol=</span><span class="dv">10</span>)</span>
+<span id="cb42-17"><a></a>predictions <span class="ot">&lt;-</span> clf<span class="sc">$</span><span class="fu">predict</span>(X_test)</span>
+<span id="cb42-18"><a></a>predictions</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>RandomForestClassifier()
+ [1] 0 0 1 1 1 0 0 1 0 0 1 1 1 0 1 0 1 0 1 1</code></pre>
+</div>
+</div>
+</section>
+<section id="examples-in-bioinformatics-1" class="slide level2">
+<h2>Examples in bioinformatics</h2>
+<h4 id="ensembl-api">ENSEMBL API</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a></a><span class="fu">conda_install</span>(<span class="st">"raukr-reticulate"</span>, <span class="st">"ensembl-rest"</span>, <span class="at">pip=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="section-2" class="slide level2">
+<h2></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a></a><span class="co"># Load the ensembl_rest library</span></span>
+<span id="cb45-2"><a></a>ensembl_rest <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">"ensembl_rest"</span>)</span>
+<span id="cb45-3"><a></a></span>
+<span id="cb45-4"><a></a><span class="co"># Fetch gene information for a given gene ID</span></span>
+<span id="cb45-5"><a></a>gene_info <span class="ot">&lt;-</span> ensembl_rest<span class="sc">$</span><span class="fu">symbol_lookup</span>(<span class="at">species=</span><span class="st">'homo sapiens'</span>, <span class="at">symbol=</span><span class="st">'BRCA2'</span>)</span>
+<span id="cb45-6"><a></a></span>
+<span id="cb45-7"><a></a><span class="co"># Print gene information</span></span>
+<span id="cb45-8"><a></a>gene_info<span class="sc">$</span>description</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "BRCA2 DNA repair associated [Source:HGNC Symbol;Acc:HGNC:1101]"</code></pre>
+</div>
+</div>
+</section>
+<section id="examples-in-bioinformatics-2" class="slide level2">
+<h2>Examples in bioinformatics</h2>
+<h4 id="huggingface-models">Huggingface models</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a></a><span class="fu">conda_install</span>(<span class="st">"raukr-reticulate"</span>, <span class="st">"pytorch"</span>, <span class="at">channel =</span> <span class="st">"pytorch"</span>)</span>
+<span id="cb47-2"><a></a><span class="fu">conda_install</span>(<span class="st">"raukr-reticulate"</span>, <span class="st">"transformers"</span>, <span class="at">pip=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="section-3" class="slide level2">
+<h2></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a></a><span class="co"># Load the transformers library</span></span>
+<span id="cb48-2"><a></a>transformers <span class="ot">&lt;-</span> <span class="fu">import</span>(<span class="st">"transformers"</span>)</span>
+<span id="cb48-3"><a></a></span>
+<span id="cb48-4"><a></a><span class="co"># Load the pipeline for summarization</span></span>
+<span id="cb48-5"><a></a>summarizer <span class="ot">&lt;-</span> transformers<span class="sc">$</span><span class="fu">pipeline</span>(<span class="st">"summarization"</span>, <span class="at">model=</span><span class="st">"Falconsai/text_summarization"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="section-4" class="slide level2 scrollable">
+<h2></h2>
+<p><strong>Text:</strong></p>
+<p>Hugging Face: Revolutionizing Natural Language Processing</p>
+<p>In the rapidly evolving field of Natural Language Processing (NLP), Hugging Face has emerged as a prominent and innovative force. This article will explore the story and significance of Hugging Face, a company that has made remarkable contributions to NLP and AI as a whole. From its inception to its role in democratizing AI, Hugging Face has left an indelible mark on the industry.</p>
+<p>Transformative Innovations Hugging Face is best known for its open-source contributions, particularly the “Transformers” library. This library has become the de facto standard for NLP and enables researchers, developers, and organizations to easily access and utilize state-of-the-art pre-trained language models, such as BERT, GPT-3, and more. These models have countless applications, from chatbots and virtual assistants to language translation and sentiment analysis.</p>
+<ol type="1">
+<li><strong>Transformers Library:</strong> The Transformers library provides a unified interface for more than 50 pre-trained models, simplifying the development of NLP applications. It allows users to fine-tune these models for specific tasks, making it accessible to a wider audience.</li>
+<li><strong>Model Hub:</strong> Hugging Face’s Model Hub is a treasure trove of pre-trained models, making it simple for anyone to access, experiment with, and fine-tune models. Researchers and developers around the world can collaborate and share their models through this platform.</li>
+<li><strong>Hugging Face Transformers Community:</strong> Hugging Face has fostered a vibrant online community where developers, researchers, and AI enthusiasts can share their knowledge, code, and insights. This collaborative spirit has accelerated the growth of NLP.</li>
+</ol>
+</section>
+<section id="section-5" class="slide level2">
+<h2></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a></a><span class="co"># Example text to summarize</span></span>
+<span id="cb49-2"><a></a>text <span class="ot">&lt;-</span> <span class="st">"Hugging Face: Revolutionizing Natural Language Processing. In the rapidly evolving field of Natural Language Processing (NLP), Hugging Face has emerged as a prominent and innovative force. This article will explore the story and significance of Hugging Face, a company that has made remarkable contributions to NLP and AI as a whole. From its inception to its role in democratizing AI, Hugging Face has left an indelible mark on the industry. Transformative Innovations: Hugging Face is best known for its open-source contributions, particularly the Transformers library. This library has become the de facto standard for NLP and enables researchers, developers, and organizations to easily access and utilize state-of-the-art pre-trained language models, such as BERT, GPT-3, and more. These models have countless applications, from chatbots and virtual assistants to language translation and sentiment analysis. 1. Transformers Library: The Transformers library provides a unified interface for more than 50 pre-trained models, simplifying the development of NLP applications. It allows users to fine-tune these models for specific tasks, making it accessible to a wider audience. 2. Model Hub: Hugging Face's Model Hub is a treasure trove of pre-trained models, making it simple for anyone to access, experiment with, and fine-tune models. Researchers and developers around the world can collaborate and share their models through this platform. 3. Hugging Face Transformers Community: Hugging Face has fostered a vibrant online community where developers, researchers, and AI enthusiasts can share their knowledge, code, and insights. This collaborative spirit has accelerated the growth of NLP."</span></span>
+<span id="cb49-3"><a></a></span>
+<span id="cb49-4"><a></a><span class="co"># Perform summarization</span></span>
+<span id="cb49-5"><a></a>summary <span class="ot">&lt;-</span> <span class="fu">summarizer</span>(text, <span class="at">max_length=</span><span class="dv">100</span>L, <span class="at">min_length=</span><span class="dv">10</span>L)</span>
+<span id="cb49-6"><a></a>summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
+[[1]]$summary_text
+[1] "Hugging Face: Revolutionizing Natural Language Processing (NLP) has emerged as a prominent and innovative force . This article will explore the story and significance of Hugging face . The Transformers library has become the de facto standard for NLP and enables researchers, developers, and organizations to easily access and utilize state-of-the-art pre-trained language models ."</code></pre>
+</div>
+</div>
+</section>
+<section id="section-6" class="slide level2" data-background-image="../../assets/images/cover.jpg">
 <h2></h2>
 <h3 id="thank-you-questions">Thank you! Questions?</h3>
 <p><span class="smaller">2024 • <a href="https://www.scilifelab.se/">SciLifeLab</a> • <a href="https://nbis.se/">NBIS</a> • <a href="https://nbisweden.github.io/raukr-2024">RaukR</a></span></p>
@@ -1196,18 +1279,7 @@
         }
         return false;
       }
-      const clipboard = new window.ClipboardJS('.code-copy-button', {
-        text: function(trigger) {
-          const codeEl = trigger.previousElementSibling.cloneNode(true);
-          for (const childEl of codeEl.children) {
-            if (isCodeAnnotation(childEl)) {
-              childEl.remove();
-            }
-          }
-          return codeEl.innerText;
-        }
-      });
-      clipboard.on('success', function(e) {
+      const onCopySuccess = function(e) {
         // button target
         const button = e.trigger;
         // don't keep focus
@@ -1239,7 +1311,47 @@
         }, 1000);
         // clear code selection
         e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
       });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        // For code content inside modals, clipBoardJS needs to be initialized with a container option
+        // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
+        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+        var mailtoRegex = new RegExp(/^mailto:/);
+          var filterRegex = new RegExp("https:\/\/nbisweden\.github\.io\/raukr-2024\/");
+        var isInternal = (href) => {
+            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+        }
+        // Inspect non-navigation links and adorn them if external
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+        for (var i=0; i<links.length; i++) {
+          const link = links[i];
+          if (!isInternal(link.href)) {
+            // undo the damage that might have been done by quarto-nav.js in the case of
+            // links that we want to consider external
+            if (link.dataset.originalHref !== undefined) {
+              link.href = link.dataset.originalHref;
+            }
+          }
+        }
       function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
         const config = {
           allowHTML: true,
@@ -1276,7 +1388,11 @@
           try { href = new URL(href).hash; } catch {}
           const id = href.replace(/^#\/?/, "");
           const note = window.document.getElementById(id);
-          return note.innerHTML;
+          if (note) {
+            return note.innerHTML;
+          } else {
+            return "";
+          }
         });
       }
       const findCites = (el) => {

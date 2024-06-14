@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.549">
+<meta name="generator" content="quarto-1.5.43">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -35,7 +35,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -137,7 +137,7 @@ background-size: cover;
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -181,7 +181,7 @@ background-size: cover;
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
-          <div class="quarto-navbar-tools">
+            <div class="quarto-navbar-tools">
 </div>
       </div> <!-- /container-fluid -->
     </nav>
@@ -213,7 +213,7 @@ background-size: cover;
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">01-Feb-2024</p>
+        <p class="date">14-Jun-2024</p>
       </div>
     </div>
     
@@ -240,7 +240,11 @@ background-size: cover;
   <li><a href="#average-ratings-over-time" id="toc-average-ratings-over-time" class="nav-link" data-scroll-target="#average-ratings-over-time"><span class="header-section-number">2.3.2</span> Average ratings over time</a></li>
   </ul></li>
   </ul></li>
-  <li><a href="#bonus-exercise" id="toc-bonus-exercise" class="nav-link" data-scroll-target="#bonus-exercise"><span class="header-section-number">3</span> Bonus exercise</a></li>
+  <li><a href="#bonus-exercises" id="toc-bonus-exercises" class="nav-link" data-scroll-target="#bonus-exercises"><span class="header-section-number">3</span> Bonus exercises</a>
+  <ul>
+  <li><a href="#find-overlapping-actors" id="toc-find-overlapping-actors" class="nav-link" data-scroll-target="#find-overlapping-actors"><span class="header-section-number">3.1</span> Find overlapping actors</a></li>
+  <li><a href="#try-out-examples-from-slides" id="toc-try-out-examples-from-slides" class="nav-link" data-scroll-target="#try-out-examples-from-slides"><span class="header-section-number">3.2</span> Try out examples from slides</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -276,10 +280,9 @@ Note
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Install Conda if you have not already. Create and activate an environment using Conda.</p>
+<p>Create and activate an environment using Conda.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>reticulate<span class="sc">::</span><span class="fu">install_miniconda</span>()</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">conda_create</span>(<span class="st">"raukr-reticulate"</span>, <span class="at">python_version =</span> <span class="st">"3.9"</span>, <span class="at">packages =</span> <span class="fu">c</span>(<span class="st">"pandas=2.2.0"</span>,<span class="st">"sqlalchemy=2.0.0"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">conda_create</span>(<span class="st">"raukr-reticulate"</span>, <span class="at">python_version =</span> <span class="st">"3.12"</span>, <span class="at">packages =</span> <span class="fu">c</span>(<span class="st">"pandas=2.2.1"</span>,<span class="st">"sqlalchemy=2.0.30"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># activate environment</span></span>
@@ -748,14 +751,9 @@ Show code
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># use pandas to group columns by startYear</span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>movies_grouped <span class="ot">&lt;-</span> movies_py<span class="sc">$</span><span class="fu">groupby</span>(<span class="st">'startYear'</span>)[<span class="st">'averageRating'</span>]<span class="sc">$</span><span class="fu">mean</span>()</span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="co"># convert the pandas dataframe to r dataframe</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="co"># convert to r dataframe</span></span>
 <span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>movies_grouped_r <span class="ot">&lt;-</span> <span class="fu">py_to_r</span>(movies_grouped)</span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>movies_grouped_r <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(movies_grouped_r)</span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(movies_grouped_r)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>'data.frame':   105 obs. of  1 variable:
- $ movies_grouped_r: num  6.3 7.7 7.3 7.42 8 ...</code></pre>
-</div>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>movies_grouped_r <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(movies_grouped_r)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -774,10 +772,10 @@ Show code
 <div id="callout-16" class="callout-16-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add Year column back to dataframe, and rename columns</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>movies_grouped_r <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="fu">rownames</span>(movies_grouped_r), movies_grouped_r)</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(movies_grouped_r) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"startYear"</span>,<span class="st">"averageRating"</span>)</span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>movies_grouped_r[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add Year column back to dataframe, and rename columns</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>movies_grouped_r <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="fu">rownames</span>(movies_grouped_r), movies_grouped_r)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(movies_grouped_r) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"startYear"</span>,<span class="st">"averageRating"</span>)</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>movies_grouped_r[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div data-pagedtable="false">
   <script data-pagedtable-source="" type="application/json">
@@ -804,10 +802,10 @@ Show code
 <div id="callout-17" class="callout-17-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(movies_grouped_r, <span class="fu">aes</span>(<span class="at">x=</span>startYear, <span class="at">y=</span>averageRating)) <span class="sc">+</span> </span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">vjust =</span> <span class="fl">0.5</span>, <span class="at">hjust=</span><span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">ggtitle</span>(<span class="st">'Average ratings over years'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(movies_grouped_r, <span class="fu">aes</span>(<span class="at">x=</span>startYear, <span class="at">y=</span>averageRating)) <span class="sc">+</span> </span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">vjust =</span> <span class="fl">0.5</span>, <span class="at">hjust=</span><span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">ggtitle</span>(<span class="st">'Average ratings over years'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -822,9 +820,11 @@ Show code
 </section>
 </section>
 </section>
-<section id="bonus-exercise" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="bonus-exercise"><span class="header-section-number">3</span> Bonus exercise</h2>
-<p>This is a bonus exercise if you have time left in the end of the exercise. This one is more tricky!</p>
+<section id="bonus-exercises" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="bonus-exercises"><span class="header-section-number">3</span> Bonus exercises</h2>
+<p>Below is 2 bonus exercises if you have time left in the end of the exercise. Do either one or both if you have the time.</p>
+<section id="find-overlapping-actors" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="find-overlapping-actors"><span class="header-section-number">3.1</span> Find overlapping actors</h3>
 <p>Which actors have played together with both Ian McKellen and Patrick Stewart, but when they were in separate movies? Or rephrased, which actor has played with Ian McKellen Lee in one movie, and Patrick Stewart in another movie?</p>
 <p>For example:</p>
 <ol type="1">
@@ -872,9 +872,9 @@ Tip
 </div>
 <p>To find out if your answer is correct, your can import and use the function <code>check_results</code> from the <code>imdb_functions.py</code> file. Replace <code>'Actor Name'</code> with the name of the actor that you think is the answer to the question above.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source_python</span>(<span class="st">"imdb_functions.py"</span>)</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>res_actor <span class="ot">&lt;-</span> <span class="st">'Actor Name'</span></span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="fu">check_results</span>(res_actor, <span class="st">'Ian McKellen'</span>, <span class="st">'Patrick Stewart'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source_python</span>(<span class="st">"imdb_functions.py"</span>)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>res_actor <span class="ot">&lt;-</span> <span class="st">'Actor Name'</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="fu">check_results</span>(res_actor, <span class="st">'Ian McKellen'</span>, <span class="st">'Patrick Stewart'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><br> And if you want to see one suggested solution to this problem:</p>
 <div class="callout callout-style-simple callout-note callout-titled">
@@ -890,72 +890,83 @@ Show code
 <div id="callout-20" class="callout-20-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source_python</span>(<span class="st">"imdb_functions.py"</span>, <span class="at">convert =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>act1 <span class="ot">&lt;-</span> <span class="st">'Ian McKellen'</span></span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>act2 <span class="ot">&lt;-</span> <span class="st">'Patrick Stewart'</span></span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="co"># get movies for Patrick Stewart</span></span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>act1_movies <span class="ot">&lt;-</span> <span class="fu">get_movies</span>(act1)</span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>act1_movies</span>
-<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>movies1_lst <span class="ot">&lt;-</span> <span class="fu">py_to_r</span>(act1_movies[act1])</span>
-<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a><span class="co"># get movies for Ian McKellen</span></span>
-<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>act2_movies <span class="ot">&lt;-</span> <span class="fu">get_movies</span>(act2)</span>
-<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>act2_movies</span>
-<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>movies2_lst <span class="ot">&lt;-</span> <span class="fu">py_to_r</span>(act2_movies[act2])</span>
-<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a><span class="co"># get movies both has played in</span></span>
-<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>overlap <span class="ot">&lt;-</span> <span class="fu">intersect</span>(movies1_lst, movies2_lst)</span>
-<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a><span class="co"># remove overlap from each movielist</span></span>
-<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a>new_movies1_lst <span class="ot">&lt;-</span> <span class="fu">setdiff</span>(movies1_lst, overlap)</span>
-<span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a>new_movies2_lst <span class="ot">&lt;-</span> <span class="fu">setdiff</span>(movies2_lst, overlap)</span>
-<span id="cb33-21"><a href="#cb33-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-22"><a href="#cb33-22" aria-hidden="true" tabindex="-1"></a><span class="co"># get all actors that has played in those movies</span></span>
-<span id="cb33-23"><a href="#cb33-23" aria-hidden="true" tabindex="-1"></a><span class="co"># below we do things the functional way for the first </span></span>
-<span id="cb33-24"><a href="#cb33-24" aria-hidden="true" tabindex="-1"></a><span class="co"># movie list</span></span>
-<span id="cb33-25"><a href="#cb33-25" aria-hidden="true" tabindex="-1"></a>actors_lst <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map</span>(new_movies1_lst, </span>
-<span id="cb33-26"><a href="#cb33-26" aria-hidden="true" tabindex="-1"></a>             <span class="sc">~</span> .x <span class="sc">%&gt;%</span> </span>
-<span id="cb33-27"><a href="#cb33-27" aria-hidden="true" tabindex="-1"></a>             <span class="fu">get_actors</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb33-28"><a href="#cb33-28" aria-hidden="true" tabindex="-1"></a>             <span class="fu">py_to_r</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb33-29"><a href="#cb33-29" aria-hidden="true" tabindex="-1"></a>             .[[.x]] <span class="sc">%&gt;%</span> </span>
-<span id="cb33-30"><a href="#cb33-30" aria-hidden="true" tabindex="-1"></a>             <span class="fu">unlist</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb33-31"><a href="#cb33-31" aria-hidden="true" tabindex="-1"></a>             <span class="fu">str_remove</span>(<span class="st">' </span><span class="sc">\\</span><span class="st">(.*</span><span class="sc">\\</span><span class="st">)'</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb33-32"><a href="#cb33-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unlist</span>() </span>
-<span id="cb33-33"><a href="#cb33-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-34"><a href="#cb33-34" aria-hidden="true" tabindex="-1"></a><span class="co"># remove all duplicates</span></span>
-<span id="cb33-35"><a href="#cb33-35" aria-hidden="true" tabindex="-1"></a>actors_lst_uniq <span class="ot">&lt;-</span> actors_lst <span class="sc">%&gt;%</span> <span class="fu">unique</span>()</span>
-<span id="cb33-36"><a href="#cb33-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-37"><a href="#cb33-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-38"><a href="#cb33-38" aria-hidden="true" tabindex="-1"></a><span class="co"># and now, the same for the second movie list, but the </span></span>
-<span id="cb33-39"><a href="#cb33-39" aria-hidden="true" tabindex="-1"></a><span class="co"># non-functional way, using Python-inspired syntax. </span></span>
-<span id="cb33-40"><a href="#cb33-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-41"><a href="#cb33-41" aria-hidden="true" tabindex="-1"></a>actors_lst2 <span class="ot">&lt;-</span> <span class="fu">character</span>()</span>
-<span id="cb33-42"><a href="#cb33-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-43"><a href="#cb33-43" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (movie <span class="cf">in</span> new_movies2_lst) {</span>
-<span id="cb33-44"><a href="#cb33-44" aria-hidden="true" tabindex="-1"></a>  actors <span class="ot">&lt;-</span> <span class="fu">get_actors</span>(movie)</span>
-<span id="cb33-45"><a href="#cb33-45" aria-hidden="true" tabindex="-1"></a>  actors_r <span class="ot">&lt;-</span> <span class="fu">py_to_r</span>(actors[movie])</span>
-<span id="cb33-46"><a href="#cb33-46" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (actor <span class="cf">in</span> actors_r) {</span>
-<span id="cb33-47"><a href="#cb33-47" aria-hidden="true" tabindex="-1"></a>    a <span class="ot">&lt;-</span> <span class="fu">strsplit</span>(<span class="fu">as.character</span>(actor), <span class="st">'</span><span class="sc">\\</span><span class="st">s*[()]'</span>)[[<span class="dv">1</span>]]</span>
-<span id="cb33-48"><a href="#cb33-48" aria-hidden="true" tabindex="-1"></a>    actors_lst2 <span class="ot">&lt;-</span> <span class="fu">append</span>(actors_lst2, a[<span class="dv">1</span>])</span>
-<span id="cb33-49"><a href="#cb33-49" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb33-50"><a href="#cb33-50" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb33-51"><a href="#cb33-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-52"><a href="#cb33-52" aria-hidden="true" tabindex="-1"></a>actors_lst2_uniq <span class="ot">&lt;-</span> <span class="fu">unique</span>(actors_lst2)</span>
-<span id="cb33-53"><a href="#cb33-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-54"><a href="#cb33-54" aria-hidden="true" tabindex="-1"></a><span class="co"># finally, intersect the two lists with actors to</span></span>
-<span id="cb33-55"><a href="#cb33-55" aria-hidden="true" tabindex="-1"></a><span class="co"># find the ones that played with both actors</span></span>
-<span id="cb33-56"><a href="#cb33-56" aria-hidden="true" tabindex="-1"></a><span class="fu">intersect</span>(actors_lst_uniq, actors_lst2_uniq)</span>
-<span id="cb33-57"><a href="#cb33-57" aria-hidden="true" tabindex="-1"></a><span class="do">## {'Ian McKellen': ['The Keep', 'Six Degrees of Separation', 'Richard III', 'Apt Pupil', 'Gods and Monsters', 'The Lord of the Rings: The Fellowship of the Ring', 'X-Men', 'The Lord of the Rings: The Return of the King', 'The Lord of the Rings: The Two Towers', 'X2: X-Men United', 'The Da Vinci Code', 'Neverwas', 'Flushed Away', 'Stardust', 'The Hobbit: An Unexpected Journey', 'The Hobbit: The Desolation of Smaug', 'X-Men: Days of Future Past', 'The Hobbit: The Battle of the Five Armies', 'Mr. Holmes', 'The Good Liar']}</span></span>
-<span id="cb33-58"><a href="#cb33-58" aria-hidden="true" tabindex="-1"></a><span class="do">## {'Patrick Stewart': ['Star Trek: Generations', 'Star Trek: First Contact', 'Conspiracy Theory', 'Star Trek: Insurrection', 'X-Men', 'Star Trek: Nemesis', 'X2: X-Men United', 'Steamboy', 'X-Men: The Last Stand', 'Earth', 'TMNT', 'African Cats', 'X-Men: Days of Future Past', 'Logan', 'Green Room']}</span></span>
-<span id="cb33-59"><a href="#cb33-59" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] "Hugh Jackman"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source_python</span>(<span class="st">"imdb_functions.py"</span>, <span class="at">convert =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>act1 <span class="ot">&lt;-</span> <span class="st">'Ian McKellen'</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>act2 <span class="ot">&lt;-</span> <span class="st">'Patrick Stewart'</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="co"># get movies for Patrick Stewart</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>act1_movies <span class="ot">&lt;-</span> <span class="fu">get_movies</span>(act1)</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>act1_movies</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>movies1_lst <span class="ot">&lt;-</span> <span class="fu">py_to_r</span>(act1_movies[act1])</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a><span class="co"># get movies for Ian McKellen</span></span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>act2_movies <span class="ot">&lt;-</span> <span class="fu">get_movies</span>(act2)</span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>act2_movies</span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>movies2_lst <span class="ot">&lt;-</span> <span class="fu">py_to_r</span>(act2_movies[act2])</span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a><span class="co"># get movies both has played in</span></span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>overlap <span class="ot">&lt;-</span> <span class="fu">intersect</span>(movies1_lst, movies2_lst)</span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a><span class="co"># remove overlap from each movielist</span></span>
+<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a>new_movies1_lst <span class="ot">&lt;-</span> <span class="fu">setdiff</span>(movies1_lst, overlap)</span>
+<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a>new_movies2_lst <span class="ot">&lt;-</span> <span class="fu">setdiff</span>(movies2_lst, overlap)</span>
+<span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-22"><a href="#cb32-22" aria-hidden="true" tabindex="-1"></a><span class="co"># get all actors that has played in those movies</span></span>
+<span id="cb32-23"><a href="#cb32-23" aria-hidden="true" tabindex="-1"></a><span class="co"># below we do things the functional way for the first </span></span>
+<span id="cb32-24"><a href="#cb32-24" aria-hidden="true" tabindex="-1"></a><span class="co"># movie list</span></span>
+<span id="cb32-25"><a href="#cb32-25" aria-hidden="true" tabindex="-1"></a>actors_lst <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map</span>(new_movies1_lst, </span>
+<span id="cb32-26"><a href="#cb32-26" aria-hidden="true" tabindex="-1"></a>             <span class="sc">~</span> .x <span class="sc">%&gt;%</span> </span>
+<span id="cb32-27"><a href="#cb32-27" aria-hidden="true" tabindex="-1"></a>             <span class="fu">get_actors</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb32-28"><a href="#cb32-28" aria-hidden="true" tabindex="-1"></a>             <span class="fu">py_to_r</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb32-29"><a href="#cb32-29" aria-hidden="true" tabindex="-1"></a>             .[[.x]] <span class="sc">%&gt;%</span> </span>
+<span id="cb32-30"><a href="#cb32-30" aria-hidden="true" tabindex="-1"></a>             <span class="fu">unlist</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb32-31"><a href="#cb32-31" aria-hidden="true" tabindex="-1"></a>             <span class="fu">str_remove</span>(<span class="st">' </span><span class="sc">\\</span><span class="st">(.*</span><span class="sc">\\</span><span class="st">)'</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb32-32"><a href="#cb32-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unlist</span>() </span>
+<span id="cb32-33"><a href="#cb32-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-34"><a href="#cb32-34" aria-hidden="true" tabindex="-1"></a><span class="co"># remove all duplicates</span></span>
+<span id="cb32-35"><a href="#cb32-35" aria-hidden="true" tabindex="-1"></a>actors_lst_uniq <span class="ot">&lt;-</span> actors_lst <span class="sc">%&gt;%</span> <span class="fu">unique</span>()</span>
+<span id="cb32-36"><a href="#cb32-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-37"><a href="#cb32-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-38"><a href="#cb32-38" aria-hidden="true" tabindex="-1"></a><span class="co"># and now, the same for the second movie list, but the </span></span>
+<span id="cb32-39"><a href="#cb32-39" aria-hidden="true" tabindex="-1"></a><span class="co"># non-functional way, using Python-inspired syntax. </span></span>
+<span id="cb32-40"><a href="#cb32-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-41"><a href="#cb32-41" aria-hidden="true" tabindex="-1"></a>actors_lst2 <span class="ot">&lt;-</span> <span class="fu">character</span>()</span>
+<span id="cb32-42"><a href="#cb32-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-43"><a href="#cb32-43" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (movie <span class="cf">in</span> new_movies2_lst) {</span>
+<span id="cb32-44"><a href="#cb32-44" aria-hidden="true" tabindex="-1"></a>  actors <span class="ot">&lt;-</span> <span class="fu">get_actors</span>(movie)</span>
+<span id="cb32-45"><a href="#cb32-45" aria-hidden="true" tabindex="-1"></a>  actors_r <span class="ot">&lt;-</span> <span class="fu">py_to_r</span>(actors[movie])</span>
+<span id="cb32-46"><a href="#cb32-46" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (actor <span class="cf">in</span> actors_r) {</span>
+<span id="cb32-47"><a href="#cb32-47" aria-hidden="true" tabindex="-1"></a>    a <span class="ot">&lt;-</span> <span class="fu">strsplit</span>(<span class="fu">as.character</span>(actor), <span class="st">'</span><span class="sc">\\</span><span class="st">s*[()]'</span>)[[<span class="dv">1</span>]]</span>
+<span id="cb32-48"><a href="#cb32-48" aria-hidden="true" tabindex="-1"></a>    actors_lst2 <span class="ot">&lt;-</span> <span class="fu">append</span>(actors_lst2, a[<span class="dv">1</span>])</span>
+<span id="cb32-49"><a href="#cb32-49" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb32-50"><a href="#cb32-50" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb32-51"><a href="#cb32-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-52"><a href="#cb32-52" aria-hidden="true" tabindex="-1"></a>actors_lst2_uniq <span class="ot">&lt;-</span> <span class="fu">unique</span>(actors_lst2)</span>
+<span id="cb32-53"><a href="#cb32-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-54"><a href="#cb32-54" aria-hidden="true" tabindex="-1"></a><span class="co"># finally, intersect the two lists with actors to</span></span>
+<span id="cb32-55"><a href="#cb32-55" aria-hidden="true" tabindex="-1"></a><span class="co"># find the ones that played with both actors</span></span>
+<span id="cb32-56"><a href="#cb32-56" aria-hidden="true" tabindex="-1"></a><span class="fu">intersect</span>(actors_lst_uniq, actors_lst2_uniq)</span>
+<span id="cb32-57"><a href="#cb32-57" aria-hidden="true" tabindex="-1"></a><span class="do">## {'Ian McKellen': ['The Keep', 'Six Degrees of Separation', 'Richard III', 'Apt Pupil', 'Gods and Monsters', 'The Lord of the Rings: The Fellowship of the Ring', 'X-Men', 'The Lord of the Rings: The Return of the King', 'The Lord of the Rings: The Two Towers', 'X2: X-Men United', 'The Da Vinci Code', 'Neverwas', 'Flushed Away', 'Stardust', 'The Hobbit: An Unexpected Journey', 'The Hobbit: The Desolation of Smaug', 'X-Men: Days of Future Past', 'The Hobbit: The Battle of the Five Armies', 'Mr. Holmes', 'The Good Liar']}</span></span>
+<span id="cb32-58"><a href="#cb32-58" aria-hidden="true" tabindex="-1"></a><span class="do">## {'Patrick Stewart': ['Star Trek: Generations', 'Star Trek: First Contact', 'Conspiracy Theory', 'Star Trek: Insurrection', 'X-Men', 'Star Trek: Nemesis', 'X2: X-Men United', 'Steamboy', 'X-Men: The Last Stand', 'Earth', 'TMNT', 'African Cats', 'X-Men: Days of Future Past', 'Logan', 'Green Room']}</span></span>
+<span id="cb32-59"><a href="#cb32-59" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] "Hugh Jackman"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
 </div>
 <p>Try some other actors and see what you find. For example, try actors that have played with <em>Johnny Depp</em> and <em>Helena Bonham Carter</em>.</p>
+</section>
+<section id="try-out-examples-from-slides" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="try-out-examples-from-slides"><span class="header-section-number">3.2</span> Try out examples from slides</h3>
+<p>In the slides we looked at a few examples of how we can use reticulate to use python libraries in R:</p>
+<ol type="1">
+<li>Random forest classification using Scikit-learn</li>
+<li>Getting gene information from ENSEMBL’s API</li>
+<li>Do Natural language processing using Hugging Face models</li>
+</ol>
+<p>Go back to the slides and try some of them out! Here you would have to read the documentation for the different libraries. Remember these are Python libraries that you import in R, so the syntax has to be updated as we have discussed previously.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -994,18 +1005,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -1037,7 +1037,47 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/nbisweden\.github\.io\/raukr-2024\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -1072,7 +1112,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
@@ -1356,35 +1400,42 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       &nbsp;
     </div>
     <div class="nav-footer-right">
-<p>Published with <a href="https://quarto.org/">Quarto</a> v1.4.549
+<p>Published with <a href="https://quarto.org/">Quarto</a> v1.5.43
 </p>
 </div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"selector":".lightbox","loop":false,"openEffect":"zoom","descPosition":"bottom","closeEffect":"zoom"});
-window.onload = () => {
-  lightboxQuarto.on('slide_before_load', (data) => {
-    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-    const href = trigger.getAttribute('href');
-    if (href !== null) {
-      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
-      if (imgEl !== null) {
-        const srcAttr = imgEl.getAttribute("src");
-        if (srcAttr && srcAttr.startsWith("data:")) {
-          slideConfig.href = srcAttr;
-        }
-      }
-    } 
-  });
-
-  lightboxQuarto.on('slide_after_load', (data) => {
-    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
-    if (window.Quarto?.typesetMath) {
-      window.Quarto.typesetMath(slideNode);
+<script>var lightboxQuarto = GLightbox({"loop":false,"selector":".lightbox","closeEffect":"zoom","descPosition":"bottom","openEffect":"zoom"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
     }
-  });
-
-};
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
           </script>
 
 

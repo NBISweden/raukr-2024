@@ -37,14 +37,13 @@ library(purrr)
 library(stringr)
 ```
 
-Install Conda if you have not already. Create and activate an environment using Conda.
+Create and activate an environment using Conda.
 
 ```{r}
 #| eval: false
-
-reticulate::install_miniconda()
-conda_create("raukr-reticulate", python_version = "3.9", packages = c("pandas=2.2.0","sqlalchemy=2.0.0"))
+conda_create("raukr-reticulate", python_version = "3.12", packages = c("pandas=2.2.1","sqlalchemy=2.0.30"))
 ```
+
 
 ```{r}
 # activate environment
@@ -302,10 +301,9 @@ Use pandas to group the data by startYear, and calculate the average ratings. Ne
 # use pandas to group columns by startYear
 movies_grouped <- movies_py$groupby('startYear')['averageRating']$mean()
 
-# convert the pandas dataframe to r dataframe
+# convert to r dataframe
 movies_grouped_r <- py_to_r(movies_grouped)
 movies_grouped_r <- as.data.frame(movies_grouped_r)
-str(movies_grouped_r)
 ```
 
 :::
@@ -346,9 +344,11 @@ ggplot(movies_grouped_r, aes(x=startYear, y=averageRating)) +
 ```
 :::
 
-## Bonus exercise
+## Bonus exercises
 
-This is a bonus exercise if you have time left in the end of the exercise. This one is more tricky!
+Below is 2 bonus exercises if you have time left in the end of the exercise. Do either one or both if you have the time.
+
+### Find overlapping actors
 
 Which actors have played together with both Ian McKellen and Patrick Stewart, but when they were in separate movies? Or rephrased, which actor has played with Ian McKellen Lee in one movie, and Patrick Stewart in another movie?
 
@@ -459,3 +459,13 @@ intersect(actors_lst_uniq, actors_lst2_uniq)
 :::
 
 Try some other actors and see what you find. For example, try actors that have played with *Johnny Depp* and *Helena Bonham Carter*.
+
+### Try out examples from slides
+
+In the slides we looked at a few examples of how we can use reticulate to use python libraries in R:
+
+1. Random forest classification using Scikit-learn
+2. Getting gene information from ENSEMBL's API
+3. Do Natural language processing using Hugging Face models
+
+Go back to the slides and try some of them out! Here you would have to read the documentation for the different libraries. Remember these are Python libraries that you import in R, so the syntax has to be updated as we have discussed previously. 
