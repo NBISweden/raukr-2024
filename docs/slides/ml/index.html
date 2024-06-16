@@ -407,7 +407,7 @@
         <h1 class="title">Mathematical statistics and machine learning in R</h1>
                 <p class="subtitle">RaukR 2024 • Advanced R for Bioinformatics</p>
                         <p class="author">Nikolay Oskolkov</p>
-                                <p class="date">20-Feb-2024</p>
+                                <p class="date">16-Jun-2024</p>
               </div>
     </div>
     
@@ -421,15 +421,77 @@
 <section id="types-of-data-analysis" class="slide level2">
 <h2>Types of data analysis</h2>
 
-<img data-src="assets/AmountOfData.jpg" class="center r-stretch" style="width:100.0%"></section>
-<section id="low-dimensional-space" class="slide level2">
-<h2>Low dimensional space</h2>
-<div class="cell small">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r small number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>n <span class="ot">&lt;-</span> <span class="dv">20</span> <span class="co"># number of samples</span></span>
-<span id="cb1-2"><a></a>p <span class="ot">&lt;-</span> <span class="dv">2</span>  <span class="co"># number of features / dimensions</span></span>
-<span id="cb1-3"><a></a>Y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n)</span>
-<span id="cb1-4"><a></a>X <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(n <span class="sc">*</span> p), n, p)</span>
-<span id="cb1-5"><a></a><span class="fu">summary</span>(<span class="fu">lm</span>(Y <span class="sc">~</span> X))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<img data-src="assets/AmountOfData.png" class="center r-stretch" style="width:150.0%"></section>
+<section id="some-peculiarities-of-frequentist-statistics" class="slide level2">
+<h2>Some peculiarities of Frequentist statistics</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li>based on Maximum Likelihood principle</li>
+<li>focus <del>too much</del> on summary statistics</li>
+</ul>
+<div class="fragment">
+<p><span class="math display">\[\rm{L}\,(\,x_i \,|\, \mu,\sigma^2\,) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp^{\displaystyle -\frac{\sum\limits_{i=1}^N (x_i-\mu)^2}{2\sigma^2}}\]</span></p>
+</div>
+<div class="fragment">
+<p><span class="math display">\[\frac{\partial \rm{L}\,(\,x_i \,|\, \mu,\sigma^2\,)}{\partial\mu} = 0; \,\, \frac{\partial \rm{L}\,(\,x_i \,|\, \mu,\sigma^2\,)}{\partial\sigma^2} = 0\]</span></p>
+</div>
+<div class="fragment">
+<p><span class="math display">\[\mu = \frac{1}{N}\sum_{i=0}^N x_i \,\,\rm{-}\,\rm{mean \, estimator}\]</span></p>
+<p><span class="math display">\[\sigma^2 = \frac{1}{N}\sum_{i=0}^N (x_i-\mu)^2 \,\,\rm{-}\,\rm{variance \, estimator}\]</span></p>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="fragment">
+<p><img data-src="assets/Anscombes_quartet.png" class="center" style="width:150.0%"> Summary statistics do not always reasonbly describe data (example: Anscombes quartet)</p>
+</div>
+</div>
+</div>
+</section>
+<section id="frequentist-statistics-focus-to-much-on-p-values" class="slide level2">
+<h2>Frequentist statistics: focus <del>to much</del> on p-values</h2>
+<div class="columns">
+<div class="column" style="width:55%;">
+<div class="cell smaller">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r smaller number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>FC<span class="ot">&lt;-</span><span class="fl">1.02</span>; x_mean<span class="ot">&lt;-</span><span class="dv">5</span>; x_sd<span class="ot">&lt;-</span><span class="dv">1</span>; N_vector<span class="ot">&lt;-</span><span class="fu">seq</span>(<span class="at">from=</span><span class="dv">100</span>,<span class="at">to=</span><span class="dv">10000</span>,<span class="at">by=</span><span class="dv">100</span>); pvalue_t<span class="ot">&lt;-</span><span class="fu">vector</span>(); pvalue_lm<span class="ot">&lt;-</span><span class="fu">vector</span>()</span>
+<span id="cb1-2"><a></a><span class="cf">for</span>(N <span class="cf">in</span> N_vector)</span>
+<span id="cb1-3"><a></a>{</span>
+<span id="cb1-4"><a></a>  x1 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(N, x_mean, x_sd); x2 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(N, x_mean<span class="sc">*</span>FC, x_sd)</span>
+<span id="cb1-5"><a></a>  t_test_res<span class="ot">&lt;-</span><span class="fu">t.test</span>(x1, x2); pvalue_t <span class="ot">&lt;-</span> <span class="fu">append</span>(pvalue_t, t_test_res<span class="sc">$</span>p.value)</span>
+<span id="cb1-6"><a></a></span>
+<span id="cb1-7"><a></a>  x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(N, <span class="dv">0</span>, <span class="dv">1</span>); y <span class="ot">&lt;-</span> <span class="fl">0.1</span><span class="sc">*</span>x<span class="sc">+</span><span class="dv">2</span><span class="sc">*</span><span class="fu">rnorm</span>(N, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb1-8"><a></a>  lm_res <span class="ot">&lt;-</span> <span class="fu">summary</span>(<span class="fu">lm</span>(y<span class="sc">~</span>x)); pvalue_lm <span class="ot">&lt;-</span> <span class="fu">append</span>(pvalue_lm, lm_res<span class="sc">$</span>coefficients[<span class="dv">2</span>,<span class="dv">4</span>])</span>
+<span id="cb1-9"><a></a>}</span>
+<span id="cb1-10"><a></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>)); <span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb1-11"><a></a><span class="fu">boxplot</span>(x1, x2, <span class="at">names=</span><span class="fu">c</span>(<span class="st">"X1"</span>,<span class="st">"X2"</span>), <span class="at">ylab=</span><span class="st">"Value"</span>, <span class="at">col=</span><span class="st">"darkred"</span>); <span class="fu">mtext</span>(<span class="st">"Fold change FC = 1.02"</span>)</span>
+<span id="cb1-12"><a></a><span class="fu">plot</span>(pvalue_t<span class="sc">~</span>N_vector,<span class="at">type=</span><span class="st">'o'</span>,<span class="at">xlab=</span><span class="st">"N"</span>,<span class="at">ylab=</span><span class="st">"p-value"</span>,<span class="at">col=</span><span class="st">"darkgreen"</span>); <span class="fu">mtext</span>(<span class="st">"P-value of two-group t-test"</span>)</span>
+<span id="cb1-13"><a></a><span class="fu">plot</span>(y<span class="sc">~</span>x, <span class="at">xlab=</span><span class="st">"X"</span>, <span class="at">ylab=</span><span class="st">"Y"</span>); <span class="fu">abline</span>(<span class="fu">lm</span>(y<span class="sc">~</span>x), <span class="at">col=</span><span class="st">"blue"</span>, <span class="at">lwd=</span><span class="dv">2</span>); <span class="fu">mtext</span>(<span class="st">"Y = 0.1*X + 2*rnorm(N, 0, 1)"</span>)</span>
+<span id="cb1-14"><a></a><span class="fu">plot</span>(pvalue_lm<span class="sc">~</span>N_vector,<span class="at">type=</span><span class="st">'o'</span>,<span class="at">xlab=</span><span class="st">"N"</span>,<span class="at">ylab=</span><span class="st">"p-value"</span>,<span class="at">col=</span><span class="st">"darkgreen"</span>); <span class="fu">mtext</span>(<span class="st">"P-value of linear regression"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-3-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:45%;">
+<div class="fragment">
+<p><img data-src="assets/Pvalue.png" class="center" style="width:100.0%"></p>
+<p>Questionable whether p-value is a best metric for ranking features (biomarkers)</p>
+</div>
+</div>
+</div>
+</section>
+<section id="frequentist-statistics-struggles-with-high-dimensional-data" class="slide level2">
+<h2>Frequentist statistics struggles with high-dimensional data</h2>
+<div class="columns">
+<div class="column" style="width:32%;">
+<div class="cell smaller">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r smaller number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a>n <span class="ot">&lt;-</span> <span class="dv">20</span> <span class="co"># number of samples</span></span>
+<span id="cb2-2"><a></a>p <span class="ot">&lt;-</span> <span class="dv">2</span>  <span class="co"># number of features / dimensions</span></span>
+<span id="cb2-3"><a></a>Y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n)</span>
+<span id="cb2-4"><a></a>X <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(n <span class="sc">*</span> p), n, p)</span>
+<span id="cb2-5"><a></a><span class="fu">summary</span>(<span class="fu">lm</span>(Y <span class="sc">~</span> X))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -450,15 +512,17 @@ Multiple R-squared:  0.02204,   Adjusted R-squared:  -0.09301
 F-statistic: 0.1916 on 2 and 17 DF,  p-value: 0.8274</code></pre>
 </div>
 </div>
-</section>
-<section id="going-to-higher-dimensions" class="slide level2">
-<h2>Going to higher dimensions</h2>
-<div class="cell small">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r small number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a>n <span class="ot">&lt;-</span> <span class="dv">20</span> <span class="co"># number of samples</span></span>
-<span id="cb3-2"><a></a>p <span class="ot">&lt;-</span> <span class="dv">10</span> <span class="co"># number of features / dimensions</span></span>
-<span id="cb3-3"><a></a>Y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n)</span>
-<span id="cb3-4"><a></a>X <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(n <span class="sc">*</span> p), n, p)</span>
-<span id="cb3-5"><a></a><span class="fu">summary</span>(<span class="fu">lm</span>(Y <span class="sc">~</span> X))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="fragment">
+<p>Going to higher dimensions →</p>
+</div>
+</div><div class="column" style="width:35%;">
+<div class="fragment">
+<div class="cell smaller">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r smaller number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a>n <span class="ot">&lt;-</span> <span class="dv">20</span> <span class="co"># number of samples</span></span>
+<span id="cb4-2"><a></a>p <span class="ot">&lt;-</span> <span class="dv">10</span> <span class="co"># number of features / dimensions</span></span>
+<span id="cb4-3"><a></a>Y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n)</span>
+<span id="cb4-4"><a></a>X <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(n <span class="sc">*</span> p), n, p)</span>
+<span id="cb4-5"><a></a><span class="fu">summary</span>(<span class="fu">lm</span>(Y <span class="sc">~</span> X))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -489,15 +553,18 @@ Multiple R-squared:  0.6592,    Adjusted R-squared:  0.2805
 F-statistic: 1.741 on 10 and 9 DF,  p-value: 0.2089</code></pre>
 </div>
 </div>
-</section>
-<section id="even-higher-dimensions" class="slide level2">
-<h2>Even higher dimensions</h2>
-<div class="cell small">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r small number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a>n <span class="ot">&lt;-</span> <span class="dv">20</span> <span class="co"># number of samples</span></span>
-<span id="cb5-2"><a></a>p <span class="ot">&lt;-</span> <span class="dv">20</span> <span class="co"># number of features / dimensions</span></span>
-<span id="cb5-3"><a></a>Y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n)</span>
-<span id="cb5-4"><a></a>X <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(n <span class="sc">*</span> p), n, p)</span>
-<span id="cb5-5"><a></a><span class="fu">summary</span>(<span class="fu">lm</span>(Y <span class="sc">~</span> X))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="fragment">
+<p>Going to even higher dimensions →</p>
+</div>
+</div><div class="column" style="width:33%;">
+<div class="fragment">
+<div class="cell smaller">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r smaller number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a>n <span class="ot">&lt;-</span> <span class="dv">20</span> <span class="co"># number of samples</span></span>
+<span id="cb6-2"><a></a>p <span class="ot">&lt;-</span> <span class="dv">20</span> <span class="co"># number of features / dimensions</span></span>
+<span id="cb6-3"><a></a>Y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n)</span>
+<span id="cb6-4"><a></a>X <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(n <span class="sc">*</span> p), n, p)</span>
+<span id="cb6-5"><a></a><span class="fu">summary</span>(<span class="fu">lm</span>(Y <span class="sc">~</span> X))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -535,16 +602,19 @@ Multiple R-squared:      1, Adjusted R-squared:    NaN
 F-statistic:   NaN on 19 and 0 DF,  p-value: NA</code></pre>
 </div>
 </div>
+</div>
+</div>
+</div>
 </section>
 <section id="equidistant-points-in-high-dimensions" class="slide level2">
 <h2>Equidistant points in high dimensions</h2>
 <div class="cell small">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r small number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a>n <span class="ot">&lt;-</span> <span class="dv">1000</span>; p <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">32</span>, <span class="dv">512</span>); pair_dist <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
-<span id="cb7-2"><a></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(p)) {</span>
-<span id="cb7-3"><a></a>  X <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(n <span class="sc">*</span> p[i]), n, p[i])</span>
-<span id="cb7-4"><a></a>  pair_dist[[i]] <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(<span class="fu">dist</span>(X));</span>
-<span id="cb7-5"><a></a>  pair_dist[[i]] <span class="ot">&lt;-</span> pair_dist[[i]] <span class="sc">/</span> <span class="fu">max</span>(pair_dist[[i]])</span>
-<span id="cb7-6"><a></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r small number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a>n <span class="ot">&lt;-</span> <span class="dv">1000</span>; p <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">32</span>, <span class="dv">512</span>); pair_dist <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb8-2"><a></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(p)) {</span>
+<span id="cb8-3"><a></a>  X <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(n <span class="sc">*</span> p[i]), n, p[i])</span>
+<span id="cb8-4"><a></a>  pair_dist[[i]] <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(<span class="fu">dist</span>(X));</span>
+<span id="cb8-5"><a></a>  pair_dist[[i]] <span class="ot">&lt;-</span> pair_dist[[i]] <span class="sc">/</span> <span class="fu">max</span>(pair_dist[[i]])</span>
+<span id="cb8-6"><a></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="columns">
 <div class="column" style="width:60%;">
@@ -624,14 +694,14 @@ F-statistic:   NaN on 19 and 0 DF,  p-value: NA</code></pre>
 </div>
 <div class="fragment">
 <div class="cell smaller">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r smaller number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a>f <span class="ot">&lt;-</span> <span class="cf">function</span>(x){<span class="fu">return</span>(<span class="dv">2</span><span class="sc">*</span>x)}; a <span class="ot">&lt;-</span> <span class="dv">2</span>; b <span class="ot">&lt;-</span> <span class="dv">4</span>; N <span class="ot">&lt;-</span> <span class="dv">10000</span>; count <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb8-2"><a></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="at">from =</span> a, <span class="at">to =</span> b, <span class="at">by =</span> (b<span class="sc">-</span>a) <span class="sc">/</span> N); y_max <span class="ot">&lt;-</span> <span class="fu">max</span>(<span class="fu">f</span>(x))</span>
-<span id="cb8-3"><a></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>N)</span>
-<span id="cb8-4"><a></a>{</span>
-<span id="cb8-5"><a></a>  x_sample <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">1</span>, a, b); y_sample <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">1</span>, <span class="dv">0</span>, y_max)</span>
-<span id="cb8-6"><a></a>  <span class="cf">if</span>(y_sample <span class="sc">&lt;=</span> <span class="fu">f</span>(x_sample)){count <span class="ot">&lt;-</span> count <span class="sc">+</span> <span class="dv">1</span>}</span>
-<span id="cb8-7"><a></a>}</span>
-<span id="cb8-8"><a></a><span class="fu">paste0</span>(<span class="st">"Integral by Monte Carlo: I = "</span>, (count <span class="sc">/</span> N) <span class="sc">*</span> (b <span class="sc">-</span> a) <span class="sc">*</span> y_max)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r smaller number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a>f <span class="ot">&lt;-</span> <span class="cf">function</span>(x){<span class="fu">return</span>(<span class="dv">2</span><span class="sc">*</span>x)}; a <span class="ot">&lt;-</span> <span class="dv">2</span>; b <span class="ot">&lt;-</span> <span class="dv">4</span>; N <span class="ot">&lt;-</span> <span class="dv">10000</span>; count <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb9-2"><a></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="at">from =</span> a, <span class="at">to =</span> b, <span class="at">by =</span> (b<span class="sc">-</span>a) <span class="sc">/</span> N); y_max <span class="ot">&lt;-</span> <span class="fu">max</span>(<span class="fu">f</span>(x))</span>
+<span id="cb9-3"><a></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>N)</span>
+<span id="cb9-4"><a></a>{</span>
+<span id="cb9-5"><a></a>  x_sample <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">1</span>, a, b); y_sample <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">1</span>, <span class="dv">0</span>, y_max)</span>
+<span id="cb9-6"><a></a>  <span class="cf">if</span>(y_sample <span class="sc">&lt;=</span> <span class="fu">f</span>(x_sample)){count <span class="ot">&lt;-</span> count <span class="sc">+</span> <span class="dv">1</span>}</span>
+<span id="cb9-7"><a></a>}</span>
+<span id="cb9-8"><a></a><span class="fu">paste0</span>(<span class="st">"Integral by Monte Carlo: I = "</span>, (count <span class="sc">/</span> N) <span class="sc">*</span> (b <span class="sc">-</span> a) <span class="sc">*</span> y_max)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Integral by Monte Carlo: I = 11.9248"</code></pre>
 </div>
@@ -678,32 +748,32 @@ F-statistic:   NaN on 19 and 0 DF,  p-value: NA</code></pre>
 </div><div class="column" style="width:50%;">
 <div class="fragment">
 <div class="cell smaller">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r smaller number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a>N <span class="ot">&lt;-</span> <span class="dv">100</span>; n <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">25</span>, <span class="dv">50</span>, <span class="dv">25</span>) <span class="co"># Observed genotype data for N individuals</span></span>
-<span id="cb10-2"><a></a>f_MLE <span class="ot">&lt;-</span> (n[<span class="dv">2</span>] <span class="sc">+</span> <span class="dv">2</span><span class="sc">*</span>n[<span class="dv">3</span>]) <span class="sc">/</span> (<span class="dv">2</span> <span class="sc">*</span> <span class="fu">sum</span>(n)) <span class="co"># MLE of allele frequency</span></span>
-<span id="cb10-3"><a></a></span>
-<span id="cb10-4"><a></a><span class="co"># Define log-likelihood function (log-binomial distribution)</span></span>
-<span id="cb10-5"><a></a>LL <span class="ot">&lt;-</span> <span class="cf">function</span>(n, f){<span class="fu">return</span>((n[<span class="dv">2</span>] <span class="sc">+</span> <span class="dv">2</span><span class="sc">*</span>n[<span class="dv">3</span>])<span class="sc">*</span><span class="fu">log</span>(f) <span class="sc">+</span> (n[<span class="dv">2</span>] <span class="sc">+</span> <span class="dv">2</span><span class="sc">*</span>n[<span class="dv">1</span>])<span class="sc">*</span><span class="fu">log</span>(<span class="dv">1</span><span class="sc">-</span>f))}</span>
-<span id="cb10-6"><a></a><span class="co"># Define log-prior function (log-beta distribution)</span></span>
-<span id="cb10-7"><a></a>LP <span class="ot">&lt;-</span> <span class="cf">function</span>(f, alpha, beta){<span class="fu">return</span>(<span class="fu">dbeta</span>(f, alpha, beta, <span class="at">log =</span> <span class="cn">TRUE</span>))}</span>
-<span id="cb10-8"><a></a></span>
-<span id="cb10-9"><a></a><span class="co"># Run MCMC Metropolis - Hastings sampler</span></span>
-<span id="cb10-10"><a></a>f_poster <span class="ot">&lt;-</span> <span class="fu">vector</span>(); alpha <span class="ot">&lt;-</span> <span class="fl">0.5</span>; beta <span class="ot">&lt;-</span> <span class="fl">0.5</span>; f_cur <span class="ot">&lt;-</span> <span class="fl">0.1</span> <span class="co"># initialization</span></span>
-<span id="cb10-11"><a></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>)</span>
-<span id="cb10-12"><a></a>{</span>
-<span id="cb10-13"><a></a>  f_next <span class="ot">&lt;-</span> <span class="fu">abs</span>(<span class="fu">rnorm</span>(<span class="dv">1</span>, f_cur, <span class="fl">0.1</span>)) <span class="co"># make random step for allele frequency</span></span>
-<span id="cb10-14"><a></a>  </span>
-<span id="cb10-15"><a></a>  LL_cur <span class="ot">&lt;-</span> <span class="fu">LL</span>(n, f_cur); LL_next <span class="ot">&lt;-</span> <span class="fu">LL</span>(n, f_next)</span>
-<span id="cb10-16"><a></a>  LP_cur <span class="ot">&lt;-</span> <span class="fu">LP</span>(f_cur, alpha, beta); LP_next <span class="ot">&lt;-</span> <span class="fu">LP</span>(f_next, alpha, beta)</span>
-<span id="cb10-17"><a></a>  hastings_ratio <span class="ot">&lt;-</span> LL_next <span class="sc">+</span> LP_next <span class="sc">-</span> LL_cur <span class="sc">-</span> LP_cur</span>
-<span id="cb10-18"><a></a>  </span>
-<span id="cb10-19"><a></a>  <span class="cf">if</span>(hastings_ratio <span class="sc">&gt;</span> <span class="fu">log</span>(<span class="fu">runif</span>(<span class="dv">1</span>))){f_cur <span class="ot">&lt;-</span> f_next}; f_poster[i] <span class="ot">&lt;-</span> f_cur</span>
-<span id="cb10-20"><a></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r smaller number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a>N <span class="ot">&lt;-</span> <span class="dv">100</span>; n <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">25</span>, <span class="dv">50</span>, <span class="dv">25</span>) <span class="co"># Observed genotype data for N individuals</span></span>
+<span id="cb11-2"><a></a>f_MLE <span class="ot">&lt;-</span> (n[<span class="dv">2</span>] <span class="sc">+</span> <span class="dv">2</span><span class="sc">*</span>n[<span class="dv">3</span>]) <span class="sc">/</span> (<span class="dv">2</span> <span class="sc">*</span> <span class="fu">sum</span>(n)) <span class="co"># MLE of allele frequency</span></span>
+<span id="cb11-3"><a></a></span>
+<span id="cb11-4"><a></a><span class="co"># Define log-likelihood function (log-binomial distribution)</span></span>
+<span id="cb11-5"><a></a>LL <span class="ot">&lt;-</span> <span class="cf">function</span>(n, f){<span class="fu">return</span>((n[<span class="dv">2</span>] <span class="sc">+</span> <span class="dv">2</span><span class="sc">*</span>n[<span class="dv">3</span>])<span class="sc">*</span><span class="fu">log</span>(f) <span class="sc">+</span> (n[<span class="dv">2</span>] <span class="sc">+</span> <span class="dv">2</span><span class="sc">*</span>n[<span class="dv">1</span>])<span class="sc">*</span><span class="fu">log</span>(<span class="dv">1</span><span class="sc">-</span>f))}</span>
+<span id="cb11-6"><a></a><span class="co"># Define log-prior function (log-beta distribution)</span></span>
+<span id="cb11-7"><a></a>LP <span class="ot">&lt;-</span> <span class="cf">function</span>(f, alpha, beta){<span class="fu">return</span>(<span class="fu">dbeta</span>(f, alpha, beta, <span class="at">log =</span> <span class="cn">TRUE</span>))}</span>
+<span id="cb11-8"><a></a></span>
+<span id="cb11-9"><a></a><span class="co"># Run MCMC Metropolis - Hastings sampler</span></span>
+<span id="cb11-10"><a></a>f_poster <span class="ot">&lt;-</span> <span class="fu">vector</span>(); alpha <span class="ot">&lt;-</span> <span class="fl">0.5</span>; beta <span class="ot">&lt;-</span> <span class="fl">0.5</span>; f_cur <span class="ot">&lt;-</span> <span class="fl">0.1</span> <span class="co"># initialization</span></span>
+<span id="cb11-11"><a></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>)</span>
+<span id="cb11-12"><a></a>{</span>
+<span id="cb11-13"><a></a>  f_next <span class="ot">&lt;-</span> <span class="fu">abs</span>(<span class="fu">rnorm</span>(<span class="dv">1</span>, f_cur, <span class="fl">0.1</span>)) <span class="co"># make random step for allele frequency</span></span>
+<span id="cb11-14"><a></a>  </span>
+<span id="cb11-15"><a></a>  LL_cur <span class="ot">&lt;-</span> <span class="fu">LL</span>(n, f_cur); LL_next <span class="ot">&lt;-</span> <span class="fu">LL</span>(n, f_next)</span>
+<span id="cb11-16"><a></a>  LP_cur <span class="ot">&lt;-</span> <span class="fu">LP</span>(f_cur, alpha, beta); LP_next <span class="ot">&lt;-</span> <span class="fu">LP</span>(f_next, alpha, beta)</span>
+<span id="cb11-17"><a></a>  hastings_ratio <span class="ot">&lt;-</span> LL_next <span class="sc">+</span> LP_next <span class="sc">-</span> LL_cur <span class="sc">-</span> LP_cur</span>
+<span id="cb11-18"><a></a>  </span>
+<span id="cb11-19"><a></a>  <span class="cf">if</span>(hastings_ratio <span class="sc">&gt;</span> <span class="fu">log</span>(<span class="fu">runif</span>(<span class="dv">1</span>))){f_cur <span class="ot">&lt;-</span> f_next}; f_poster[i] <span class="ot">&lt;-</span> f_cur</span>
+<span id="cb11-20"><a></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-11-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-13-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -737,23 +807,23 @@ F-statistic:   NaN on 19 and 0 DF,  p-value: NA</code></pre>
 </div>
 <div class="fragment">
 <div class="cell smaller">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r smaller number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a>K <span class="ot">=</span> <span class="dv">3</span>; <span class="fu">set.seed</span>(<span class="dv">123</span>); c <span class="ot">=</span> X[<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">dim</span>(X)[<span class="dv">1</span>],K),]; <span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>),<span class="at">mai=</span><span class="fu">c</span>(<span class="fl">0.8</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>))</span>
-<span id="cb11-2"><a></a><span class="fu">plot</span>(X, <span class="at">xlab =</span> <span class="st">"X"</span>, <span class="at">ylab =</span> <span class="st">"Y"</span>, <span class="at">pch =</span> <span class="dv">19</span>); <span class="fu">points</span>(c, <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">cex =</span> <span class="dv">3</span>, <span class="at">pch =</span> <span class="dv">19</span>)</span>
-<span id="cb11-3"><a></a><span class="cf">for</span>(t <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span>
-<span id="cb11-4"><a></a>{</span>
-<span id="cb11-5"><a></a>  l <span class="ot">&lt;-</span> <span class="fu">vector</span>()</span>
-<span id="cb11-6"><a></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">dim</span>(X)[<span class="dv">1</span>])</span>
-<span id="cb11-7"><a></a>  {</span>
-<span id="cb11-8"><a></a>    d <span class="ot">&lt;-</span> <span class="fu">vector</span>(); <span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>K){d[j] <span class="ot">&lt;-</span> <span class="fu">sqrt</span>((X[i,<span class="dv">1</span>]<span class="sc">-</span>c[j,<span class="dv">1</span>])<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (X[i,<span class="dv">2</span>]<span class="sc">-</span>c[j,<span class="dv">2</span>])<span class="sc">^</span><span class="dv">2</span>)} </span>
-<span id="cb11-9"><a></a>    l[i] <span class="ot">&lt;-</span> <span class="fu">which.min</span>(d)</span>
-<span id="cb11-10"><a></a>  }</span>
-<span id="cb11-11"><a></a>  <span class="fu">plot</span>(X, <span class="at">xlab=</span><span class="st">"X"</span>, <span class="at">ylab=</span><span class="st">"Y"</span>, <span class="at">col=</span>l, <span class="at">pch=</span><span class="dv">19</span>); <span class="fu">points</span>(c, <span class="at">col=</span><span class="st">"blue"</span>, <span class="at">cex=</span><span class="dv">3</span>, <span class="at">pch=</span><span class="dv">19</span>)</span>
-<span id="cb11-12"><a></a>  s <span class="ot">=</span> <span class="fu">list</span>(); <span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">unique</span>(l)){s[[i]] <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(X[l<span class="sc">==</span>i,])}; c <span class="ot">=</span> <span class="fu">Reduce</span>(<span class="st">"rbind"</span>, s)</span>
-<span id="cb11-13"><a></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r smaller number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a>K <span class="ot">=</span> <span class="dv">3</span>; <span class="fu">set.seed</span>(<span class="dv">123</span>); c <span class="ot">=</span> X[<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">dim</span>(X)[<span class="dv">1</span>],K),]; <span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>),<span class="at">mai=</span><span class="fu">c</span>(<span class="fl">0.8</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">0</span>))</span>
+<span id="cb12-2"><a></a><span class="fu">plot</span>(X, <span class="at">xlab =</span> <span class="st">"X"</span>, <span class="at">ylab =</span> <span class="st">"Y"</span>, <span class="at">pch =</span> <span class="dv">19</span>); <span class="fu">points</span>(c, <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">cex =</span> <span class="dv">3</span>, <span class="at">pch =</span> <span class="dv">19</span>)</span>
+<span id="cb12-3"><a></a><span class="cf">for</span>(t <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span>
+<span id="cb12-4"><a></a>{</span>
+<span id="cb12-5"><a></a>  l <span class="ot">&lt;-</span> <span class="fu">vector</span>()</span>
+<span id="cb12-6"><a></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">dim</span>(X)[<span class="dv">1</span>])</span>
+<span id="cb12-7"><a></a>  {</span>
+<span id="cb12-8"><a></a>    d <span class="ot">&lt;-</span> <span class="fu">vector</span>(); <span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>K){d[j] <span class="ot">&lt;-</span> <span class="fu">sqrt</span>((X[i,<span class="dv">1</span>]<span class="sc">-</span>c[j,<span class="dv">1</span>])<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (X[i,<span class="dv">2</span>]<span class="sc">-</span>c[j,<span class="dv">2</span>])<span class="sc">^</span><span class="dv">2</span>)} </span>
+<span id="cb12-9"><a></a>    l[i] <span class="ot">&lt;-</span> <span class="fu">which.min</span>(d)</span>
+<span id="cb12-10"><a></a>  }</span>
+<span id="cb12-11"><a></a>  <span class="fu">plot</span>(X, <span class="at">xlab=</span><span class="st">"X"</span>, <span class="at">ylab=</span><span class="st">"Y"</span>, <span class="at">col=</span>l, <span class="at">pch=</span><span class="dv">19</span>); <span class="fu">points</span>(c, <span class="at">col=</span><span class="st">"blue"</span>, <span class="at">cex=</span><span class="dv">3</span>, <span class="at">pch=</span><span class="dv">19</span>)</span>
+<span id="cb12-12"><a></a>  s <span class="ot">=</span> <span class="fu">list</span>(); <span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">unique</span>(l)){s[[i]] <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(X[l<span class="sc">==</span>i,])}; c <span class="ot">=</span> <span class="fu">Reduce</span>(<span class="st">"rbind"</span>, s)</span>
+<span id="cb12-13"><a></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-13-1.png" width="864"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-15-1.png" width="864"></p>
 </figure>
 </div>
 </div>
@@ -812,34 +882,34 @@ F-statistic:   NaN on 19 and 0 DF,  p-value: NA</code></pre>
 <h2>Toy example of machine learning</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="cell small">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r small number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a>N <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb12-2"><a></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(N)</span>
-<span id="cb12-3"><a></a>y <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> x <span class="sc">+</span> <span class="fu">rnorm</span>(N)</span>
-<span id="cb12-4"><a></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(x, y)</span>
-<span id="cb12-5"><a></a><span class="fu">plot</span>(y <span class="sc">~</span> x, <span class="at">data =</span> df, <span class="at">col =</span> <span class="st">"blue"</span>)</span>
-<span id="cb12-6"><a></a><span class="fu">legend</span>(<span class="st">"topleft"</span>, <span class="st">"Data points"</span>, <span class="at">fill =</span> <span class="st">"blue"</span>, <span class="at">bty =</span> <span class="st">"n"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell smaller">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r smaller number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a>N <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb13-2"><a></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(N)</span>
+<span id="cb13-3"><a></a>y <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> x <span class="sc">+</span> <span class="fu">rnorm</span>(N)</span>
+<span id="cb13-4"><a></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(x, y)</span>
+<span id="cb13-5"><a></a><span class="fu">plot</span>(y <span class="sc">~</span> x, <span class="at">data =</span> df, <span class="at">col =</span> <span class="st">"blue"</span>)</span>
+<span id="cb13-6"><a></a><span class="fu">legend</span>(<span class="st">"topleft"</span>, <span class="st">"Data points"</span>, <span class="at">fill =</span> <span class="st">"blue"</span>, <span class="at">bty =</span> <span class="st">"n"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-15-1.png" width="768"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-17-1.png" width="768"></p>
 </figure>
 </div>
 </div>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="fragment">
-<div class="cell small">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r small number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a>train <span class="ot">&lt;-</span> df[<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">dim</span>(df)[<span class="dv">1</span>], <span class="fl">0.7</span> <span class="sc">*</span> <span class="fu">dim</span>(df)[<span class="dv">1</span>]), ]</span>
-<span id="cb13-2"><a></a>test <span class="ot">&lt;-</span> df[<span class="sc">!</span><span class="fu">rownames</span>(df) <span class="sc">%in%</span> <span class="fu">rownames</span>(train), ]</span>
-<span id="cb13-3"><a></a>df<span class="sc">$</span>color <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="fu">rownames</span>(df) <span class="sc">%in%</span> <span class="fu">rownames</span>(test),<span class="st">"red"</span>,<span class="st">"blue"</span>)</span>
-<span id="cb13-4"><a></a><span class="fu">plot</span>(y <span class="sc">~</span> x, <span class="at">data =</span> df, <span class="at">col =</span> df<span class="sc">$</span>color)</span>
-<span id="cb13-5"><a></a><span class="fu">legend</span>(<span class="st">"topleft"</span>, <span class="fu">c</span>(<span class="st">"Train"</span>,<span class="st">"Test"</span>),<span class="at">fill=</span><span class="fu">c</span>(<span class="st">"blue"</span>,<span class="st">"red"</span>),<span class="at">bty=</span><span class="st">"n"</span>)</span>
-<span id="cb13-6"><a></a><span class="fu">abline</span>(<span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> train), <span class="at">col =</span> <span class="st">"blue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell smaller">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r smaller number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a>train <span class="ot">&lt;-</span> df[<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">dim</span>(df)[<span class="dv">1</span>], <span class="fl">0.7</span> <span class="sc">*</span> <span class="fu">dim</span>(df)[<span class="dv">1</span>]), ]</span>
+<span id="cb14-2"><a></a>test <span class="ot">&lt;-</span> df[<span class="sc">!</span><span class="fu">rownames</span>(df) <span class="sc">%in%</span> <span class="fu">rownames</span>(train), ]</span>
+<span id="cb14-3"><a></a>df<span class="sc">$</span>col <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="fu">rownames</span>(df) <span class="sc">%in%</span> <span class="fu">rownames</span>(test), <span class="st">"red"</span>, <span class="st">"blue"</span>)</span>
+<span id="cb14-4"><a></a><span class="fu">plot</span>(y <span class="sc">~</span> x, <span class="at">data =</span> df, <span class="at">col =</span> df<span class="sc">$</span>col)</span>
+<span id="cb14-5"><a></a><span class="fu">legend</span>(<span class="st">"topleft"</span>, <span class="fu">c</span>(<span class="st">"Train"</span>,<span class="st">"Test"</span>), <span class="at">fill=</span><span class="fu">c</span>(<span class="st">"blue"</span>,<span class="st">"red"</span>), <span class="at">bty=</span><span class="st">"n"</span>)</span>
+<span id="cb14-6"><a></a><span class="fu">abline</span>(<span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> train), <span class="at">col =</span> <span class="st">"blue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-17-1.png" width="768"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-19-1.png" width="768"></p>
 </figure>
 </div>
 </div>
@@ -853,13 +923,13 @@ F-statistic:   NaN on 19 and 0 DF,  p-value: NA</code></pre>
 <div class="columns">
 <div class="column" style="width:60%;">
 <div class="cell small">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r small number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a>test_predicted <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">predict</span>(<span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> train), <span class="at">newdata =</span> test))</span>
-<span id="cb14-2"><a></a><span class="fu">plot</span>(test<span class="sc">$</span>y <span class="sc">~</span> test_predicted, <span class="at">ylab =</span> <span class="st">"True y"</span>, <span class="at">xlab =</span> <span class="st">"Pred y"</span>, <span class="at">col =</span> <span class="st">"red"</span>)</span>
-<span id="cb14-3"><a></a><span class="fu">abline</span>(<span class="fu">lm</span>(test<span class="sc">$</span>y <span class="sc">~</span> test_predicted), <span class="at">col =</span> <span class="st">"darkgreen"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r small number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a>test_predicted <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">predict</span>(<span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> train), <span class="at">newdata =</span> test))</span>
+<span id="cb15-2"><a></a><span class="fu">plot</span>(test<span class="sc">$</span>y <span class="sc">~</span> test_predicted, <span class="at">ylab =</span> <span class="st">"True y"</span>, <span class="at">xlab =</span> <span class="st">"Pred y"</span>, <span class="at">col =</span> <span class="st">"red"</span>)</span>
+<span id="cb15-3"><a></a><span class="fu">abline</span>(<span class="fu">lm</span>(test<span class="sc">$</span>y <span class="sc">~</span> test_predicted), <span class="at">col =</span> <span class="st">"darkgreen"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-18-1.png" width="768"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-20-1.png" width="768"></p>
 </figure>
 </div>
 </div>
@@ -867,7 +937,7 @@ F-statistic:   NaN on 19 and 0 DF,  p-value: NA</code></pre>
 </div><div class="column" style="width:40%;">
 <div class="fragment">
 <div class="cell small">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r small number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a><span class="fu">summary</span>(<span class="fu">lm</span>(test<span class="sc">$</span>y <span class="sc">~</span> test_predicted))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r small number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a><span class="fu">summary</span>(<span class="fu">lm</span>(test<span class="sc">$</span>y <span class="sc">~</span> test_predicted))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -954,10 +1024,10 @@ F-statistic: 107.4 on 1 and 28 DF,  p-value: 4.329e-11</code></pre>
 <div class="columns">
 <div class="column" style="width:45%;">
 <div class="cell small">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r small number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a>n <span class="ot">&lt;-</span> <span class="dv">100</span> <span class="co"># sample size</span></span>
-<span id="cb17-2"><a></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n) <span class="co"># simulated expanatory variable</span></span>
-<span id="cb17-3"><a></a>y <span class="ot">&lt;-</span> <span class="dv">3</span> <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> x <span class="sc">+</span> <span class="fu">rnorm</span>(n) <span class="co"># simulated response variable</span></span>
-<span id="cb17-4"><a></a><span class="fu">summary</span>(<span class="fu">lm</span>(y <span class="sc">~</span> x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r small number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a>n <span class="ot">&lt;-</span> <span class="dv">100</span> <span class="co"># sample size</span></span>
+<span id="cb18-2"><a></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n) <span class="co"># simulated expanatory variable</span></span>
+<span id="cb18-3"><a></a>y <span class="ot">&lt;-</span> <span class="dv">3</span> <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> x <span class="sc">+</span> <span class="fu">rnorm</span>(n) <span class="co"># simulated response variable</span></span>
+<span id="cb18-4"><a></a><span class="fu">summary</span>(<span class="fu">lm</span>(y <span class="sc">~</span> x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -983,19 +1053,19 @@ F-statistic:   332 on 1 and 98 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div><div class="column" style="width:55%;">
 <div class="fragment">
 <div class="cell small">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r small number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a>alpha <span class="ot">&lt;-</span> <span class="fu">vector</span>(); beta <span class="ot">&lt;-</span> <span class="fu">vector</span>()</span>
-<span id="cb19-2"><a></a>E <span class="ot">&lt;-</span> <span class="fu">vector</span>(); dEdalpha <span class="ot">&lt;-</span> <span class="fu">vector</span>(); dEdbeta <span class="ot">&lt;-</span> <span class="fu">vector</span>()</span>
-<span id="cb19-3"><a></a>eta <span class="ot">&lt;-</span> <span class="fl">0.01</span>; alpha[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="dv">1</span>; beta[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="co"># initialize alpha and beta</span></span>
-<span id="cb19-4"><a></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>)</span>
-<span id="cb19-5"><a></a>{</span>
-<span id="cb19-6"><a></a>  E[i] <span class="ot">&lt;-</span> (<span class="dv">1</span><span class="sc">/</span>n) <span class="sc">*</span> <span class="fu">sum</span>((y <span class="sc">-</span> alpha[i] <span class="sc">-</span> beta[i] <span class="sc">*</span> x)<span class="sc">^</span><span class="dv">2</span>)  </span>
-<span id="cb19-7"><a></a>  dEdalpha[i] <span class="ot">&lt;-</span> <span class="sc">-</span> <span class="fu">sum</span>(<span class="dv">2</span> <span class="sc">*</span> (y <span class="sc">-</span> alpha[i] <span class="sc">-</span> beta[i] <span class="sc">*</span> x)) <span class="sc">/</span> n</span>
-<span id="cb19-8"><a></a>  dEdbeta[i] <span class="ot">&lt;-</span> <span class="sc">-</span> <span class="fu">sum</span>(<span class="dv">2</span> <span class="sc">*</span> x <span class="sc">*</span> (y <span class="sc">-</span> alpha[i] <span class="sc">-</span> beta[i] <span class="sc">*</span> x)) <span class="sc">/</span> n</span>
-<span id="cb19-9"><a></a>  </span>
-<span id="cb19-10"><a></a>  alpha[i<span class="sc">+</span><span class="dv">1</span>] <span class="ot">&lt;-</span> alpha[i] <span class="sc">-</span> eta <span class="sc">*</span> dEdalpha[i]</span>
-<span id="cb19-11"><a></a>  beta[i<span class="sc">+</span><span class="dv">1</span>] <span class="ot">&lt;-</span> beta[i] <span class="sc">-</span> eta <span class="sc">*</span> dEdbeta[i]</span>
-<span id="cb19-12"><a></a>}</span>
-<span id="cb19-13"><a></a><span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">"alpha = "</span>, <span class="fu">tail</span>(alpha, <span class="dv">1</span>),<span class="st">", beta = "</span>, <span class="fu">tail</span>(beta, <span class="dv">1</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r small number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a>alpha <span class="ot">&lt;-</span> <span class="fu">vector</span>(); beta <span class="ot">&lt;-</span> <span class="fu">vector</span>()</span>
+<span id="cb20-2"><a></a>E <span class="ot">&lt;-</span> <span class="fu">vector</span>(); dEdalpha <span class="ot">&lt;-</span> <span class="fu">vector</span>(); dEdbeta <span class="ot">&lt;-</span> <span class="fu">vector</span>()</span>
+<span id="cb20-3"><a></a>eta <span class="ot">&lt;-</span> <span class="fl">0.01</span>; alpha[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="dv">1</span>; beta[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="co"># initialize alpha and beta</span></span>
+<span id="cb20-4"><a></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>)</span>
+<span id="cb20-5"><a></a>{</span>
+<span id="cb20-6"><a></a>  E[i] <span class="ot">&lt;-</span> (<span class="dv">1</span><span class="sc">/</span>n) <span class="sc">*</span> <span class="fu">sum</span>((y <span class="sc">-</span> alpha[i] <span class="sc">-</span> beta[i] <span class="sc">*</span> x)<span class="sc">^</span><span class="dv">2</span>)  </span>
+<span id="cb20-7"><a></a>  dEdalpha[i] <span class="ot">&lt;-</span> <span class="sc">-</span> <span class="fu">sum</span>(<span class="dv">2</span> <span class="sc">*</span> (y <span class="sc">-</span> alpha[i] <span class="sc">-</span> beta[i] <span class="sc">*</span> x)) <span class="sc">/</span> n</span>
+<span id="cb20-8"><a></a>  dEdbeta[i] <span class="ot">&lt;-</span> <span class="sc">-</span> <span class="fu">sum</span>(<span class="dv">2</span> <span class="sc">*</span> x <span class="sc">*</span> (y <span class="sc">-</span> alpha[i] <span class="sc">-</span> beta[i] <span class="sc">*</span> x)) <span class="sc">/</span> n</span>
+<span id="cb20-9"><a></a>  </span>
+<span id="cb20-10"><a></a>  alpha[i<span class="sc">+</span><span class="dv">1</span>] <span class="ot">&lt;-</span> alpha[i] <span class="sc">-</span> eta <span class="sc">*</span> dEdalpha[i]</span>
+<span id="cb20-11"><a></a>  beta[i<span class="sc">+</span><span class="dv">1</span>] <span class="ot">&lt;-</span> beta[i] <span class="sc">-</span> eta <span class="sc">*</span> dEdbeta[i]</span>
+<span id="cb20-12"><a></a>}</span>
+<span id="cb20-13"><a></a><span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">"alpha = "</span>, <span class="fu">tail</span>(alpha, <span class="dv">1</span>),<span class="st">", beta = "</span>, <span class="fu">tail</span>(beta, <span class="dv">1</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "alpha = 2.89719694937354, beta = 1.94752837381973"</code></pre>
 </div>
@@ -1006,7 +1076,7 @@ F-statistic:   332 on 1 and 98 DF,  p-value: &lt; 2.2e-16</code></pre>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-23-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-25-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1020,12 +1090,12 @@ F-statistic:   332 on 1 and 98 DF,  p-value: &lt; 2.2e-16</code></pre>
 <div class="columns">
 <div class="column" style="width:57%;">
 <p><img data-src="assets/Problem.png"></p>
-<div class="cell small">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r small number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a>d <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>)  <span class="co"># true labels</span></span>
-<span id="cb21-2"><a></a>x1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>) <span class="co"># input variable x1</span></span>
-<span id="cb21-3"><a></a>x2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>) <span class="co"># input variable x2</span></span>
-<span id="cb21-4"><a></a></span>
-<span id="cb21-5"><a></a><span class="fu">data.frame</span>(<span class="at">x1 =</span> x1, <span class="at">x2 =</span> x2, <span class="at">d =</span> d)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell smaller">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r smaller number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a>d <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>)  <span class="co"># true labels</span></span>
+<span id="cb22-2"><a></a>x1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>) <span class="co"># input variable x1</span></span>
+<span id="cb22-3"><a></a>x2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>) <span class="co"># input variable x2</span></span>
+<span id="cb22-4"><a></a></span>
+<span id="cb22-5"><a></a><span class="fu">data.frame</span>(<span class="at">x1 =</span> x1, <span class="at">x2 =</span> x2, <span class="at">d =</span> d)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="kable-table">
 <table>
@@ -1082,28 +1152,28 @@ F-statistic:   332 on 1 and 98 DF,  p-value: &lt; 2.2e-16</code></pre>
 <h2>ANN from scratch in R: implementation in code</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div class="cell small">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r small number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a>phi <span class="ot">&lt;-</span> <span class="cf">function</span>(x){<span class="fu">return</span>(<span class="dv">1</span><span class="sc">/</span>(<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="sc">-</span>x)))} <span class="co"># activation function</span></span>
-<span id="cb22-2"><a></a></span>
-<span id="cb22-3"><a></a>mu <span class="ot">&lt;-</span> <span class="fl">0.1</span>; N_epochs <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
-<span id="cb22-4"><a></a>w1 <span class="ot">&lt;-</span> <span class="fl">0.1</span>; w2 <span class="ot">&lt;-</span> <span class="fl">0.5</span>; E <span class="ot">&lt;-</span> <span class="fu">vector</span>()</span>
-<span id="cb22-5"><a></a><span class="cf">for</span>(epochs <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>N_epochs)</span>
-<span id="cb22-6"><a></a>{</span>
-<span id="cb22-7"><a></a>  <span class="co">#Forward propagation</span></span>
-<span id="cb22-8"><a></a>  y <span class="ot">&lt;-</span> <span class="fu">phi</span>(w1 <span class="sc">*</span> x1 <span class="sc">+</span> w2 <span class="sc">*</span> x2 <span class="sc">-</span> <span class="dv">3</span>) <span class="co"># we use a fixed bias -3</span></span>
-<span id="cb22-9"><a></a>  </span>
-<span id="cb22-10"><a></a>  <span class="co">#Backward propagation</span></span>
-<span id="cb22-11"><a></a>  E[epochs] <span class="ot">&lt;-</span> (<span class="dv">1</span> <span class="sc">/</span> (<span class="dv">2</span> <span class="sc">*</span> <span class="fu">length</span>(d))) <span class="sc">*</span> <span class="fu">sum</span>((d <span class="sc">-</span> y)<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb22-12"><a></a>  dE_dw1 <span class="ot">&lt;-</span> <span class="sc">-</span> (<span class="dv">1</span> <span class="sc">/</span> <span class="fu">length</span>(d)) <span class="sc">*</span> <span class="fu">sum</span>((d <span class="sc">-</span> y) <span class="sc">*</span> y <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> y) <span class="sc">*</span> x1)</span>
-<span id="cb22-13"><a></a>  dE_dw2 <span class="ot">&lt;-</span> <span class="sc">-</span> (<span class="dv">1</span> <span class="sc">/</span> <span class="fu">length</span>(d)) <span class="sc">*</span> <span class="fu">sum</span>((d <span class="sc">-</span> y) <span class="sc">*</span> y <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> y) <span class="sc">*</span> x2)</span>
-<span id="cb22-14"><a></a>  w1 <span class="ot">&lt;-</span> w1 <span class="sc">-</span> mu <span class="sc">*</span> dE_dw1</span>
-<span id="cb22-15"><a></a>  w2 <span class="ot">&lt;-</span> w2 <span class="sc">-</span> mu <span class="sc">*</span> dE_dw2</span>
-<span id="cb22-16"><a></a>}</span>
-<span id="cb22-17"><a></a><span class="fu">plot</span>(E <span class="sc">~</span> <span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span>N_epochs), <span class="at">xlab=</span><span class="st">"Epochs"</span>, <span class="at">ylab=</span><span class="st">"Error"</span>, <span class="at">col=</span><span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell smaller">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r smaller number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a>phi <span class="ot">&lt;-</span> <span class="cf">function</span>(x){<span class="fu">return</span>(<span class="dv">1</span><span class="sc">/</span>(<span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>(<span class="sc">-</span>x)))} <span class="co"># activation function</span></span>
+<span id="cb23-2"><a></a></span>
+<span id="cb23-3"><a></a>mu <span class="ot">&lt;-</span> <span class="fl">0.1</span>; N_epochs <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb23-4"><a></a>w1 <span class="ot">&lt;-</span> <span class="fl">0.1</span>; w2 <span class="ot">&lt;-</span> <span class="fl">0.5</span>; E <span class="ot">&lt;-</span> <span class="fu">vector</span>()</span>
+<span id="cb23-5"><a></a><span class="cf">for</span>(epochs <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>N_epochs)</span>
+<span id="cb23-6"><a></a>{</span>
+<span id="cb23-7"><a></a>  <span class="co">#Forward propagation</span></span>
+<span id="cb23-8"><a></a>  y <span class="ot">&lt;-</span> <span class="fu">phi</span>(w1 <span class="sc">*</span> x1 <span class="sc">+</span> w2 <span class="sc">*</span> x2 <span class="sc">-</span> <span class="dv">3</span>) <span class="co"># we use a fixed bias -3</span></span>
+<span id="cb23-9"><a></a>  </span>
+<span id="cb23-10"><a></a>  <span class="co">#Backward propagation</span></span>
+<span id="cb23-11"><a></a>  E[epochs] <span class="ot">&lt;-</span> (<span class="dv">1</span> <span class="sc">/</span> (<span class="dv">2</span> <span class="sc">*</span> <span class="fu">length</span>(d))) <span class="sc">*</span> <span class="fu">sum</span>((d <span class="sc">-</span> y)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb23-12"><a></a>  dE_dw1 <span class="ot">&lt;-</span> <span class="sc">-</span> (<span class="dv">1</span> <span class="sc">/</span> <span class="fu">length</span>(d)) <span class="sc">*</span> <span class="fu">sum</span>((d <span class="sc">-</span> y) <span class="sc">*</span> y <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> y) <span class="sc">*</span> x1)</span>
+<span id="cb23-13"><a></a>  dE_dw2 <span class="ot">&lt;-</span> <span class="sc">-</span> (<span class="dv">1</span> <span class="sc">/</span> <span class="fu">length</span>(d)) <span class="sc">*</span> <span class="fu">sum</span>((d <span class="sc">-</span> y) <span class="sc">*</span> y <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> y) <span class="sc">*</span> x2)</span>
+<span id="cb23-14"><a></a>  w1 <span class="ot">&lt;-</span> w1 <span class="sc">-</span> mu <span class="sc">*</span> dE_dw1</span>
+<span id="cb23-15"><a></a>  w2 <span class="ot">&lt;-</span> w2 <span class="sc">-</span> mu <span class="sc">*</span> dE_dw2</span>
+<span id="cb23-16"><a></a>}</span>
+<span id="cb23-17"><a></a><span class="fu">plot</span>(E <span class="sc">~</span> <span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span>N_epochs), <span class="at">xlab=</span><span class="st">"Epochs"</span>, <span class="at">ylab=</span><span class="st">"Error"</span>, <span class="at">col=</span><span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-25-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-27-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1121,7 +1191,7 @@ F-statistic:   332 on 1 and 98 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 <div class="fragment">
 <div class="cell small">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r small number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a>y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r small number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a>y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.04742587 0.05752359 0.95730271 0.96489475</code></pre>
 </div>
@@ -1135,10 +1205,10 @@ F-statistic:   332 on 1 and 98 DF,  p-value: &lt; 2.2e-16</code></pre>
 <h2>Decision tree from scratch in R: problem formulation</h2>
 <div class="columns">
 <div class="column" style="width:48%;">
-<div class="cell small">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r small number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a>X<span class="ot">&lt;-</span><span class="fu">data.frame</span>(<span class="at">height=</span><span class="fu">c</span>(<span class="dv">183</span>,<span class="dv">167</span>,<span class="dv">178</span>,<span class="dv">171</span>),<span class="at">weight=</span><span class="fu">c</span>(<span class="dv">78</span>,<span class="dv">73</span>,<span class="dv">85</span>,<span class="dv">67</span>))</span>
-<span id="cb25-2"><a></a>y<span class="ot">&lt;-</span><span class="fu">as.factor</span>(<span class="fu">c</span>(<span class="st">"Female"</span>, <span class="st">"Male"</span>, <span class="st">"Male"</span>, <span class="st">"Female"</span>))</span>
-<span id="cb25-3"><a></a><span class="fu">data.frame</span>(X, <span class="at">sex =</span> y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell smaller">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r smaller number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a>X<span class="ot">&lt;-</span><span class="fu">data.frame</span>(<span class="at">height=</span><span class="fu">c</span>(<span class="dv">183</span>,<span class="dv">167</span>,<span class="dv">178</span>,<span class="dv">171</span>),<span class="at">weight=</span><span class="fu">c</span>(<span class="dv">78</span>,<span class="dv">73</span>,<span class="dv">85</span>,<span class="dv">67</span>))</span>
+<span id="cb26-2"><a></a>y<span class="ot">&lt;-</span><span class="fu">as.factor</span>(<span class="fu">c</span>(<span class="st">"Female"</span>, <span class="st">"Male"</span>, <span class="st">"Male"</span>, <span class="st">"Female"</span>))</span>
+<span id="cb26-3"><a></a><span class="fu">data.frame</span>(X, <span class="at">sex =</span> y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="kable-table">
 <table>
@@ -1176,14 +1246,14 @@ F-statistic:   332 on 1 and 98 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 <div class="fragment">
-<div class="cell small">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r small number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a><span class="fu">library</span>(<span class="st">"rpart"</span>); <span class="fu">library</span>(<span class="st">"rpart.plot"</span>)</span>
-<span id="cb26-2"><a></a>fit<span class="ot">&lt;-</span><span class="fu">rpart</span>(y<span class="sc">~</span>height<span class="sc">+</span>weight,<span class="at">data=</span>X,<span class="at">method=</span><span class="st">"class"</span>,<span class="at">minsplit=</span><span class="sc">-</span><span class="dv">1</span>)</span>
-<span id="cb26-3"><a></a><span class="fu">rpart.plot</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell smaller">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r smaller number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a><span class="fu">library</span>(<span class="st">"rpart"</span>); <span class="fu">library</span>(<span class="st">"rpart.plot"</span>)</span>
+<span id="cb27-2"><a></a>fit<span class="ot">&lt;-</span><span class="fu">rpart</span>(y<span class="sc">~</span>height<span class="sc">+</span>weight,<span class="at">data=</span>X,<span class="at">method=</span><span class="st">"class"</span>,<span class="at">minsplit=</span><span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb27-3"><a></a><span class="fu">rpart.plot</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-28-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-30-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1196,17 +1266,17 @@ F-statistic:   332 on 1 and 98 DF,  p-value: &lt; 2.2e-16</code></pre>
 </ul>
 </div>
 <div class="fragment">
-<div class="cell small">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r small number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a>color <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"blue"</span>, <span class="st">"blue"</span>, <span class="st">"red"</span>)</span>
-<span id="cb27-2"><a></a><span class="fu">plot</span>(height <span class="sc">~</span> weight, <span class="at">data =</span> X, <span class="at">col =</span> color, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">cex =</span> <span class="dv">3</span>)</span>
-<span id="cb27-3"><a></a><span class="fu">legend</span>(<span class="st">"topleft"</span>,<span class="fu">c</span>(<span class="st">"Male"</span>,<span class="st">"Female"</span>),<span class="at">fill=</span><span class="fu">c</span>(<span class="st">"blue"</span>,<span class="st">"red"</span>),<span class="at">inset=</span>.<span class="dv">02</span>)</span>
-<span id="cb27-4"><a></a></span>
-<span id="cb27-5"><a></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">169</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"darkgreen"</span>, <span class="at">lwd =</span> <span class="fl">1.5</span>)</span>
-<span id="cb27-6"><a></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">82</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"darkgreen"</span>, <span class="at">lwd =</span> <span class="fl">1.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell smaller">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r smaller number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a>color <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"blue"</span>, <span class="st">"blue"</span>, <span class="st">"red"</span>)</span>
+<span id="cb28-2"><a></a><span class="fu">plot</span>(height <span class="sc">~</span> weight, <span class="at">data =</span> X, <span class="at">col =</span> color, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">cex =</span> <span class="dv">3</span>)</span>
+<span id="cb28-3"><a></a><span class="fu">legend</span>(<span class="st">"topleft"</span>,<span class="fu">c</span>(<span class="st">"Male"</span>,<span class="st">"Female"</span>),<span class="at">fill=</span><span class="fu">c</span>(<span class="st">"blue"</span>,<span class="st">"red"</span>),<span class="at">inset=</span>.<span class="dv">02</span>)</span>
+<span id="cb28-4"><a></a></span>
+<span id="cb28-5"><a></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">169</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"darkgreen"</span>, <span class="at">lwd =</span> <span class="fl">1.5</span>)</span>
+<span id="cb28-6"><a></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">82</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"darkgreen"</span>, <span class="at">lwd =</span> <span class="fl">1.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="index_files/figure-revealjs/unnamed-chunk-29-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-31-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1222,17 +1292,17 @@ F-statistic:   332 on 1 and 98 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p><img data-src="assets/Gini.png" style="width:100.0%"></p>
 <div class="fragment">
 <div class="cell smaller">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r smaller number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a>gini <span class="ot">&lt;-</span> <span class="cf">function</span>(x)</span>
-<span id="cb28-2"><a></a>{</span>
-<span id="cb28-3"><a></a>  <span class="fu">return</span>(<span class="dv">1</span> <span class="sc">-</span> <span class="fu">sum</span>((<span class="fu">table</span>(x) <span class="sc">/</span> <span class="fu">length</span>(x))<span class="sc">^</span><span class="dv">2</span>))</span>
-<span id="cb28-4"><a></a>}</span>
-<span id="cb28-5"><a></a><span class="fu">gini</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r smaller number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a>gini <span class="ot">&lt;-</span> <span class="cf">function</span>(x)</span>
+<span id="cb29-2"><a></a>{</span>
+<span id="cb29-3"><a></a>  <span class="fu">return</span>(<span class="dv">1</span> <span class="sc">-</span> <span class="fu">sum</span>((<span class="fu">table</span>(x) <span class="sc">/</span> <span class="fu">length</span>(x))<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb29-4"><a></a>}</span>
+<span id="cb29-5"><a></a><span class="fu">gini</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.5</code></pre>
 </div>
 </div>
 <div class="cell smaller">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r smaller number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a><span class="fu">gini</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r smaller number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a></a><span class="fu">gini</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.32</code></pre>
 </div>
@@ -1241,35 +1311,35 @@ F-statistic:   332 on 1 and 98 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div><div class="column" style="width:55%;">
 <div class="fragment">
 <div class="cell smaller">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r smaller number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a></a>get_best_split <span class="ot">&lt;-</span> <span class="cf">function</span>(X, y)</span>
-<span id="cb32-2"><a></a>{</span>
-<span id="cb32-3"><a></a>  mean_gini <span class="ot">&lt;-</span> <span class="fu">vector</span>(); spl_vals <span class="ot">&lt;-</span> <span class="fu">vector</span>(); spl_names <span class="ot">&lt;-</span> <span class="fu">vector</span>()</span>
-<span id="cb32-4"><a></a>  <span class="cf">for</span>(j <span class="cf">in</span> <span class="fu">colnames</span>(X)) <span class="co"># for each variable in X data frame</span></span>
-<span id="cb32-5"><a></a>  {</span>
-<span id="cb32-6"><a></a>    spl <span class="ot">&lt;-</span> <span class="fu">vector</span>() <span class="co"># vector of potential split candidates</span></span>
-<span id="cb32-7"><a></a>    sort_X <span class="ot">&lt;-</span> X[<span class="fu">order</span>(X[, j]), ]; sort_y <span class="ot">&lt;-</span> y[<span class="fu">order</span>(X[, j])] <span class="co"># sort by variable</span></span>
-<span id="cb32-8"><a></a>    <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>(<span class="fu">dim</span>(X)[<span class="dv">1</span>]<span class="sc">-</span><span class="dv">1</span>)) <span class="co"># for each observation of variable in X data frame</span></span>
-<span id="cb32-9"><a></a>    {</span>
-<span id="cb32-10"><a></a>      spl[i] <span class="ot">&lt;-</span> (sort_X[i, j] <span class="sc">+</span> sort_X[(i <span class="sc">+</span> <span class="dv">1</span>), j]) <span class="sc">/</span> <span class="dv">2</span> <span class="co"># variable consecutive means</span></span>
-<span id="cb32-11"><a></a>      g1_y <span class="ot">&lt;-</span> sort_y[sort_X[, j] <span class="sc">&gt;</span> spl[i]] <span class="co"># take labels for group above split</span></span>
-<span id="cb32-12"><a></a>      g2_y <span class="ot">&lt;-</span> sort_y[sort_X[, j] <span class="sc">&lt;</span> spl[i]] <span class="co"># take labels for group below split</span></span>
-<span id="cb32-13"><a></a>      mean_gini <span class="ot">&lt;-</span> <span class="fu">append</span>(mean_gini, (<span class="fu">gini</span>(g1_y) <span class="sc">+</span> <span class="fu">gini</span>(g2_y))<span class="sc">/</span><span class="dv">2</span>) <span class="co"># two groups mean Gini</span></span>
-<span id="cb32-14"><a></a>      spl_vals <span class="ot">&lt;-</span> <span class="fu">append</span>(spl_vals, spl[i])</span>
-<span id="cb32-15"><a></a>      spl_names <span class="ot">&lt;-</span> <span class="fu">append</span>(spl_names, j)</span>
-<span id="cb32-16"><a></a>    }</span>
-<span id="cb32-17"><a></a>  }</span>
-<span id="cb32-18"><a></a>  min_spl_val <span class="ot">&lt;-</span> spl_vals[mean_gini <span class="sc">==</span> <span class="fu">min</span>(mean_gini)][<span class="dv">1</span>] <span class="co"># get best split variable</span></span>
-<span id="cb32-19"><a></a>  min_spl_name <span class="ot">&lt;-</span> spl_names[mean_gini <span class="sc">==</span> <span class="fu">min</span>(mean_gini)][<span class="dv">1</span>] <span class="co"># get best split value</span></span>
-<span id="cb32-20"><a></a>  sort_X <span class="ot">&lt;-</span> X[<span class="fu">order</span>(X[, min_spl_name]), ] <span class="co"># sort X by best split variable</span></span>
-<span id="cb32-21"><a></a>  sort_y <span class="ot">&lt;-</span> y[<span class="fu">order</span>(X[, min_spl_name])] <span class="co"># sort y by best split variable</span></span>
-<span id="cb32-22"><a></a>  g1_y <span class="ot">&lt;-</span> sort_y[sort_X[, min_spl_name] <span class="sc">&gt;</span> min_spl_val] <span class="co"># labels above best split</span></span>
-<span id="cb32-23"><a></a>  g2_y <span class="ot">&lt;-</span> sort_y[sort_X[, min_spl_name] <span class="sc">&lt;</span> min_spl_val] <span class="co"># labels below best split</span></span>
-<span id="cb32-24"><a></a>  <span class="cf">if</span>(<span class="fu">gini</span>(g1_y) <span class="sc">==</span> <span class="dv">0</span>){sex <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"Above: "</span>, <span class="fu">as.character</span>(g1_y))}</span>
-<span id="cb32-25"><a></a>  <span class="cf">else</span> <span class="cf">if</span>(<span class="fu">gini</span>(g2_y) <span class="sc">==</span> <span class="dv">0</span>){sex <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"Below: "</span>, <span class="fu">as.character</span>(g2_y))}</span>
-<span id="cb32-26"><a></a>  </span>
-<span id="cb32-27"><a></a>  <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">spl_name =</span> min_spl_name, <span class="at">spl_value =</span> min_spl_val, <span class="at">sex =</span> sex))</span>
-<span id="cb32-28"><a></a>}</span>
-<span id="cb32-29"><a></a><span class="fu">get_best_split</span>(X, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r smaller number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a></a>get_best_split <span class="ot">&lt;-</span> <span class="cf">function</span>(X, y)</span>
+<span id="cb33-2"><a></a>{</span>
+<span id="cb33-3"><a></a>  mean_gini <span class="ot">&lt;-</span> <span class="fu">vector</span>(); spl_vals <span class="ot">&lt;-</span> <span class="fu">vector</span>(); spl_names <span class="ot">&lt;-</span> <span class="fu">vector</span>()</span>
+<span id="cb33-4"><a></a>  <span class="cf">for</span>(j <span class="cf">in</span> <span class="fu">colnames</span>(X)) <span class="co"># for each variable in X data frame</span></span>
+<span id="cb33-5"><a></a>  {</span>
+<span id="cb33-6"><a></a>    spl <span class="ot">&lt;-</span> <span class="fu">vector</span>() <span class="co"># vector of potential split candidates</span></span>
+<span id="cb33-7"><a></a>    sort_X <span class="ot">&lt;-</span> X[<span class="fu">order</span>(X[, j]), ]; sort_y <span class="ot">&lt;-</span> y[<span class="fu">order</span>(X[, j])] <span class="co"># sort by variable</span></span>
+<span id="cb33-8"><a></a>    <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>(<span class="fu">dim</span>(X)[<span class="dv">1</span>]<span class="sc">-</span><span class="dv">1</span>)) <span class="co"># for each observation of variable in X data frame</span></span>
+<span id="cb33-9"><a></a>    {</span>
+<span id="cb33-10"><a></a>      spl[i] <span class="ot">&lt;-</span> (sort_X[i, j] <span class="sc">+</span> sort_X[(i <span class="sc">+</span> <span class="dv">1</span>), j]) <span class="sc">/</span> <span class="dv">2</span> <span class="co"># variable consecutive means</span></span>
+<span id="cb33-11"><a></a>      g1_y <span class="ot">&lt;-</span> sort_y[sort_X[, j] <span class="sc">&gt;</span> spl[i]] <span class="co"># take labels for group above split</span></span>
+<span id="cb33-12"><a></a>      g2_y <span class="ot">&lt;-</span> sort_y[sort_X[, j] <span class="sc">&lt;</span> spl[i]] <span class="co"># take labels for group below split</span></span>
+<span id="cb33-13"><a></a>      mean_gini <span class="ot">&lt;-</span> <span class="fu">append</span>(mean_gini, (<span class="fu">gini</span>(g1_y) <span class="sc">+</span> <span class="fu">gini</span>(g2_y))<span class="sc">/</span><span class="dv">2</span>) <span class="co"># two groups mean Gini</span></span>
+<span id="cb33-14"><a></a>      spl_vals <span class="ot">&lt;-</span> <span class="fu">append</span>(spl_vals, spl[i])</span>
+<span id="cb33-15"><a></a>      spl_names <span class="ot">&lt;-</span> <span class="fu">append</span>(spl_names, j)</span>
+<span id="cb33-16"><a></a>    }</span>
+<span id="cb33-17"><a></a>  }</span>
+<span id="cb33-18"><a></a>  min_spl_val <span class="ot">&lt;-</span> spl_vals[mean_gini <span class="sc">==</span> <span class="fu">min</span>(mean_gini)][<span class="dv">1</span>] <span class="co"># get best split variable</span></span>
+<span id="cb33-19"><a></a>  min_spl_name <span class="ot">&lt;-</span> spl_names[mean_gini <span class="sc">==</span> <span class="fu">min</span>(mean_gini)][<span class="dv">1</span>] <span class="co"># get best split value</span></span>
+<span id="cb33-20"><a></a>  sort_X <span class="ot">&lt;-</span> X[<span class="fu">order</span>(X[, min_spl_name]), ] <span class="co"># sort X by best split variable</span></span>
+<span id="cb33-21"><a></a>  sort_y <span class="ot">&lt;-</span> y[<span class="fu">order</span>(X[, min_spl_name])] <span class="co"># sort y by best split variable</span></span>
+<span id="cb33-22"><a></a>  g1_y <span class="ot">&lt;-</span> sort_y[sort_X[, min_spl_name] <span class="sc">&gt;</span> min_spl_val] <span class="co"># labels above best split</span></span>
+<span id="cb33-23"><a></a>  g2_y <span class="ot">&lt;-</span> sort_y[sort_X[, min_spl_name] <span class="sc">&lt;</span> min_spl_val] <span class="co"># labels below best split</span></span>
+<span id="cb33-24"><a></a>  <span class="cf">if</span>(<span class="fu">gini</span>(g1_y) <span class="sc">==</span> <span class="dv">0</span>){sex <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"Above: "</span>, <span class="fu">as.character</span>(g1_y))}</span>
+<span id="cb33-25"><a></a>  <span class="cf">else</span> <span class="cf">if</span>(<span class="fu">gini</span>(g2_y) <span class="sc">==</span> <span class="dv">0</span>){sex <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"Below: "</span>, <span class="fu">as.character</span>(g2_y))}</span>
+<span id="cb33-26"><a></a>  </span>
+<span id="cb33-27"><a></a>  <span class="fu">return</span>(<span class="fu">list</span>(<span class="at">spl_name =</span> min_spl_name, <span class="at">spl_value =</span> min_spl_val, <span class="at">sex =</span> sex))</span>
+<span id="cb33-28"><a></a>}</span>
+<span id="cb33-29"><a></a><span class="fu">get_best_split</span>(X, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$spl_name
 [1] "height"
@@ -1294,28 +1364,28 @@ $sex
 </ul>
 <div class="fragment">
 <div class="cell smaller">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r smaller number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a></a>get_new_data <span class="ot">&lt;-</span> <span class="cf">function</span>(X, y)</span>
-<span id="cb34-2"><a></a>{</span>
-<span id="cb34-3"><a></a>  spl_name <span class="ot">&lt;-</span> <span class="fu">get_best_split</span>(X, y)<span class="sc">$</span>spl_name</span>
-<span id="cb34-4"><a></a>  spl_val <span class="ot">&lt;-</span> <span class="fu">get_best_split</span>(X, y)<span class="sc">$</span>spl_value</span>
-<span id="cb34-5"><a></a>  </span>
-<span id="cb34-6"><a></a>  <span class="co"># Sort X and y by the variable of the best split</span></span>
-<span id="cb34-7"><a></a>  sort_X <span class="ot">&lt;-</span> X[<span class="fu">order</span>(X[, spl_name]), ]; sort_y <span class="ot">&lt;-</span> y[<span class="fu">order</span>(X[, spl_name])]</span>
-<span id="cb34-8"><a></a>  </span>
-<span id="cb34-9"><a></a>  <span class="co"># get X and y for the first group of samples above the best split value</span></span>
-<span id="cb34-10"><a></a>  g1_y <span class="ot">&lt;-</span> sort_y[sort_X[, spl_name] <span class="sc">&gt;</span> spl_val]</span>
-<span id="cb34-11"><a></a>  g1_X <span class="ot">&lt;-</span> sort_X[sort_X[, spl_name] <span class="sc">&gt;</span> spl_val,]</span>
-<span id="cb34-12"><a></a>  </span>
-<span id="cb34-13"><a></a>  <span class="co"># get X and y for the second group of samples below the best split value</span></span>
-<span id="cb34-14"><a></a>  g2_y <span class="ot">&lt;-</span> sort_y[sort_X[, spl_name] <span class="sc">&lt;</span> spl_val]</span>
-<span id="cb34-15"><a></a>  g2_X <span class="ot">&lt;-</span> sort_X[sort_X[, spl_name] <span class="sc">&lt;</span> spl_val,]</span>
-<span id="cb34-16"><a></a>  </span>
-<span id="cb34-17"><a></a>  <span class="co"># return new data (subset of X and y) for a group with Gini index &gt; 0</span></span>
-<span id="cb34-18"><a></a>  <span class="cf">if</span>(<span class="fu">gini</span>(g1_y) <span class="sc">&gt;</span> <span class="dv">0</span>){<span class="fu">return</span>(<span class="fu">list</span>(<span class="at">new_X =</span> g1_X, <span class="at">new_y =</span> g1_y))}</span>
-<span id="cb34-19"><a></a>  <span class="cf">else</span> <span class="cf">if</span>(<span class="fu">gini</span>(g2_y) <span class="sc">&gt;</span> <span class="dv">0</span>){<span class="fu">return</span>(<span class="fu">list</span>(<span class="at">new_X =</span> g2_X, <span class="at">new_y =</span> g2_y))}</span>
-<span id="cb34-20"><a></a>  <span class="cf">else</span>{<span class="fu">return</span>(<span class="dv">0</span>)}</span>
-<span id="cb34-21"><a></a>}</span>
-<span id="cb34-22"><a></a><span class="fu">get_new_data</span>(X, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r smaller number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a></a>get_new_data <span class="ot">&lt;-</span> <span class="cf">function</span>(X, y)</span>
+<span id="cb35-2"><a></a>{</span>
+<span id="cb35-3"><a></a>  spl_name <span class="ot">&lt;-</span> <span class="fu">get_best_split</span>(X, y)<span class="sc">$</span>spl_name</span>
+<span id="cb35-4"><a></a>  spl_val <span class="ot">&lt;-</span> <span class="fu">get_best_split</span>(X, y)<span class="sc">$</span>spl_value</span>
+<span id="cb35-5"><a></a>  </span>
+<span id="cb35-6"><a></a>  <span class="co"># Sort X and y by the variable of the best split</span></span>
+<span id="cb35-7"><a></a>  sort_X <span class="ot">&lt;-</span> X[<span class="fu">order</span>(X[, spl_name]), ]; sort_y <span class="ot">&lt;-</span> y[<span class="fu">order</span>(X[, spl_name])]</span>
+<span id="cb35-8"><a></a>  </span>
+<span id="cb35-9"><a></a>  <span class="co"># get X and y for the first group of samples above the best split value</span></span>
+<span id="cb35-10"><a></a>  g1_y <span class="ot">&lt;-</span> sort_y[sort_X[, spl_name] <span class="sc">&gt;</span> spl_val]</span>
+<span id="cb35-11"><a></a>  g1_X <span class="ot">&lt;-</span> sort_X[sort_X[, spl_name] <span class="sc">&gt;</span> spl_val,]</span>
+<span id="cb35-12"><a></a>  </span>
+<span id="cb35-13"><a></a>  <span class="co"># get X and y for the second group of samples below the best split value</span></span>
+<span id="cb35-14"><a></a>  g2_y <span class="ot">&lt;-</span> sort_y[sort_X[, spl_name] <span class="sc">&lt;</span> spl_val]</span>
+<span id="cb35-15"><a></a>  g2_X <span class="ot">&lt;-</span> sort_X[sort_X[, spl_name] <span class="sc">&lt;</span> spl_val,]</span>
+<span id="cb35-16"><a></a>  </span>
+<span id="cb35-17"><a></a>  <span class="co"># return new data (subset of X and y) for a group with Gini index &gt; 0</span></span>
+<span id="cb35-18"><a></a>  <span class="cf">if</span>(<span class="fu">gini</span>(g1_y) <span class="sc">&gt;</span> <span class="dv">0</span>){<span class="fu">return</span>(<span class="fu">list</span>(<span class="at">new_X =</span> g1_X, <span class="at">new_y =</span> g1_y))}</span>
+<span id="cb35-19"><a></a>  <span class="cf">else</span> <span class="cf">if</span>(<span class="fu">gini</span>(g2_y) <span class="sc">&gt;</span> <span class="dv">0</span>){<span class="fu">return</span>(<span class="fu">list</span>(<span class="at">new_X =</span> g2_X, <span class="at">new_y =</span> g2_y))}</span>
+<span id="cb35-20"><a></a>  <span class="cf">else</span>{<span class="fu">return</span>(<span class="dv">0</span>)}</span>
+<span id="cb35-21"><a></a>}</span>
+<span id="cb35-22"><a></a><span class="fu">get_new_data</span>(X, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$new_X
   height weight
@@ -1337,36 +1407,36 @@ Levels: Female Male</code></pre>
 </div>
 <div class="fragment">
 <div class="cell smaller">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r smaller number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a></a>decision_tree <span class="ot">&lt;-</span> <span class="cf">function</span>(X, y, <span class="at">max_depth =</span> <span class="dv">2</span>)</span>
-<span id="cb36-2"><a></a>{</span>
-<span id="cb36-3"><a></a>  new_X <span class="ot">&lt;-</span> X; new_y <span class="ot">&lt;-</span> y</span>
-<span id="cb36-4"><a></a>  df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">matrix</span>(<span class="at">ncol =</span> <span class="dv">5</span>, <span class="at">nrow =</span> max_depth))</span>
-<span id="cb36-5"><a></a>  <span class="fu">colnames</span>(df) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"spl_num"</span>, <span class="st">"spl_name"</span>, <span class="st">"sign"</span>, <span class="st">"spl_val"</span>, <span class="st">"label"</span>)</span>
-<span id="cb36-6"><a></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>max_depth)</span>
-<span id="cb36-7"><a></a>  {</span>
-<span id="cb36-8"><a></a>    best_split_output <span class="ot">&lt;-</span> <span class="fu">get_best_split</span>(new_X, new_y)</span>
-<span id="cb36-9"><a></a>    sex <span class="ot">&lt;-</span> <span class="fu">unlist</span>(<span class="fu">strsplit</span>(best_split_output<span class="sc">$</span>sex,<span class="st">": "</span>))</span>
-<span id="cb36-10"><a></a>    df[i, <span class="st">"spl_num"</span>] <span class="ot">&lt;-</span> i</span>
-<span id="cb36-11"><a></a>    df[i, <span class="st">"spl_name"</span>] <span class="ot">&lt;-</span> best_split_output<span class="sc">$</span>spl_name</span>
-<span id="cb36-12"><a></a>    df[i, <span class="st">"sign"</span>] <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(sex[<span class="dv">1</span>] <span class="sc">==</span> <span class="st">"Below"</span>, <span class="st">"&lt;"</span>, <span class="st">"&gt;"</span>)</span>
-<span id="cb36-13"><a></a>    df[i, <span class="st">"spl_val"</span>] <span class="ot">&lt;-</span> best_split_output<span class="sc">$</span>spl_value</span>
-<span id="cb36-14"><a></a>    df[i, <span class="st">"label"</span>] <span class="ot">&lt;-</span> sex[<span class="dv">2</span>]</span>
-<span id="cb36-15"><a></a>    </span>
-<span id="cb36-16"><a></a>    new_data_output <span class="ot">&lt;-</span> <span class="fu">get_new_data</span>(new_X, new_y)</span>
-<span id="cb36-17"><a></a>    <span class="cf">if</span>(<span class="fu">length</span>(new_data_output) <span class="sc">!=</span> <span class="dv">1</span>)</span>
-<span id="cb36-18"><a></a>    {</span>
-<span id="cb36-19"><a></a>      new_X <span class="ot">&lt;-</span> new_data_output<span class="sc">$</span>new_X</span>
-<span id="cb36-20"><a></a>      new_y <span class="ot">&lt;-</span> new_data_output<span class="sc">$</span>new_y</span>
-<span id="cb36-21"><a></a>    }</span>
-<span id="cb36-22"><a></a>    <span class="cf">else</span></span>
-<span id="cb36-23"><a></a>    {</span>
-<span id="cb36-24"><a></a>      <span class="fu">print</span>(<span class="st">"All terminal nodes have perfect purity"</span>)</span>
-<span id="cb36-25"><a></a>      <span class="cf">break</span></span>
-<span id="cb36-26"><a></a>    }</span>
-<span id="cb36-27"><a></a>  }</span>
-<span id="cb36-28"><a></a>  <span class="fu">return</span>(df)</span>
-<span id="cb36-29"><a></a>}</span>
-<span id="cb36-30"><a></a><span class="fu">decision_tree</span>(X, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r smaller number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a></a>decision_tree <span class="ot">&lt;-</span> <span class="cf">function</span>(X, y, <span class="at">max_depth =</span> <span class="dv">2</span>)</span>
+<span id="cb37-2"><a></a>{</span>
+<span id="cb37-3"><a></a>  new_X <span class="ot">&lt;-</span> X; new_y <span class="ot">&lt;-</span> y</span>
+<span id="cb37-4"><a></a>  df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">matrix</span>(<span class="at">ncol =</span> <span class="dv">5</span>, <span class="at">nrow =</span> max_depth))</span>
+<span id="cb37-5"><a></a>  <span class="fu">colnames</span>(df) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"spl_num"</span>, <span class="st">"spl_name"</span>, <span class="st">"sign"</span>, <span class="st">"spl_val"</span>, <span class="st">"label"</span>)</span>
+<span id="cb37-6"><a></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>max_depth)</span>
+<span id="cb37-7"><a></a>  {</span>
+<span id="cb37-8"><a></a>    best_split_output <span class="ot">&lt;-</span> <span class="fu">get_best_split</span>(new_X, new_y)</span>
+<span id="cb37-9"><a></a>    sex <span class="ot">&lt;-</span> <span class="fu">unlist</span>(<span class="fu">strsplit</span>(best_split_output<span class="sc">$</span>sex,<span class="st">": "</span>))</span>
+<span id="cb37-10"><a></a>    df[i, <span class="st">"spl_num"</span>] <span class="ot">&lt;-</span> i</span>
+<span id="cb37-11"><a></a>    df[i, <span class="st">"spl_name"</span>] <span class="ot">&lt;-</span> best_split_output<span class="sc">$</span>spl_name</span>
+<span id="cb37-12"><a></a>    df[i, <span class="st">"sign"</span>] <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(sex[<span class="dv">1</span>] <span class="sc">==</span> <span class="st">"Below"</span>, <span class="st">"&lt;"</span>, <span class="st">"&gt;"</span>)</span>
+<span id="cb37-13"><a></a>    df[i, <span class="st">"spl_val"</span>] <span class="ot">&lt;-</span> best_split_output<span class="sc">$</span>spl_value</span>
+<span id="cb37-14"><a></a>    df[i, <span class="st">"label"</span>] <span class="ot">&lt;-</span> sex[<span class="dv">2</span>]</span>
+<span id="cb37-15"><a></a>    </span>
+<span id="cb37-16"><a></a>    new_data_output <span class="ot">&lt;-</span> <span class="fu">get_new_data</span>(new_X, new_y)</span>
+<span id="cb37-17"><a></a>    <span class="cf">if</span>(<span class="fu">length</span>(new_data_output) <span class="sc">!=</span> <span class="dv">1</span>)</span>
+<span id="cb37-18"><a></a>    {</span>
+<span id="cb37-19"><a></a>      new_X <span class="ot">&lt;-</span> new_data_output<span class="sc">$</span>new_X</span>
+<span id="cb37-20"><a></a>      new_y <span class="ot">&lt;-</span> new_data_output<span class="sc">$</span>new_y</span>
+<span id="cb37-21"><a></a>    }</span>
+<span id="cb37-22"><a></a>    <span class="cf">else</span></span>
+<span id="cb37-23"><a></a>    {</span>
+<span id="cb37-24"><a></a>      <span class="fu">print</span>(<span class="st">"All terminal nodes have perfect purity"</span>)</span>
+<span id="cb37-25"><a></a>      <span class="cf">break</span></span>
+<span id="cb37-26"><a></a>    }</span>
+<span id="cb37-27"><a></a>  }</span>
+<span id="cb37-28"><a></a>  <span class="fu">return</span>(df)</span>
+<span id="cb37-29"><a></a>}</span>
+<span id="cb37-30"><a></a><span class="fu">decision_tree</span>(X, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "All terminal nodes have perfect purity"</code></pre>
 </div>
@@ -1415,29 +1485,29 @@ Levels: Female Male</code></pre>
 </ul>
 <div class="fragment">
 <div class="cell smaller">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r smaller number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a></a>predict_decision_tree <span class="ot">&lt;-</span> <span class="cf">function</span>(X, y)</span>
-<span id="cb38-2"><a></a>{</span>
-<span id="cb38-3"><a></a>  <span class="co"># Train a decision tree</span></span>
-<span id="cb38-4"><a></a>  t <span class="ot">&lt;-</span> <span class="fu">decision_tree</span>(X, y, <span class="at">max_depth =</span> <span class="dv">2</span>)</span>
-<span id="cb38-5"><a></a>  </span>
-<span id="cb38-6"><a></a>  <span class="co"># Parse the output of decision tree and code it via if, else if and else</span></span>
-<span id="cb38-7"><a></a>  pred_labs <span class="ot">&lt;-</span> <span class="fu">vector</span>()</span>
-<span id="cb38-8"><a></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">dim</span>(X)[<span class="dv">1</span>])</span>
-<span id="cb38-9"><a></a>  {</span>
-<span id="cb38-10"><a></a>    <span class="cf">if</span>(<span class="fu">eval</span>(<span class="fu">parse</span>(<span class="at">text=</span><span class="fu">paste0</span>(X[i,t<span class="sc">$</span>spl_name[<span class="dv">1</span>]],t<span class="sc">$</span>sign[<span class="dv">1</span>],t<span class="sc">$</span>spl_val[<span class="dv">1</span>]))))</span>
-<span id="cb38-11"><a></a>    {</span>
-<span id="cb38-12"><a></a>      pred_labs[i] <span class="ot">&lt;-</span> t<span class="sc">$</span>label[<span class="dv">1</span>]</span>
-<span id="cb38-13"><a></a>    }</span>
-<span id="cb38-14"><a></a>    <span class="cf">else</span> <span class="cf">if</span>(<span class="fu">eval</span>(<span class="fu">parse</span>(<span class="at">text=</span><span class="fu">paste0</span>(X[i,t<span class="sc">$</span>spl_name[<span class="dv">2</span>]],t<span class="sc">$</span>sign[<span class="dv">2</span>],t<span class="sc">$</span>spl_val[<span class="dv">2</span>]))))</span>
-<span id="cb38-15"><a></a>    {</span>
-<span id="cb38-16"><a></a>      pred_labs[i] <span class="ot">&lt;-</span> t<span class="sc">$</span>label[<span class="dv">2</span>]</span>
-<span id="cb38-17"><a></a>    }</span>
-<span id="cb38-18"><a></a>    <span class="cf">else</span>{pred_labs[i] <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(t<span class="sc">$</span>label[<span class="dv">2</span>] <span class="sc">==</span> <span class="st">"Male"</span>, <span class="st">"Female"</span>, <span class="st">"Male"</span>)}</span>
-<span id="cb38-19"><a></a>  }</span>
-<span id="cb38-20"><a></a></span>
-<span id="cb38-21"><a></a>  <span class="fu">return</span>(<span class="fu">cbind</span>(<span class="fu">cbind</span>(X, y), pred_labs))</span>
-<span id="cb38-22"><a></a>}</span>
-<span id="cb38-23"><a></a><span class="fu">predict_decision_tree</span>(X, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r smaller number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a></a>predict_decision_tree <span class="ot">&lt;-</span> <span class="cf">function</span>(X, y)</span>
+<span id="cb39-2"><a></a>{</span>
+<span id="cb39-3"><a></a>  <span class="co"># Train a decision tree</span></span>
+<span id="cb39-4"><a></a>  t <span class="ot">&lt;-</span> <span class="fu">decision_tree</span>(X, y, <span class="at">max_depth =</span> <span class="dv">2</span>)</span>
+<span id="cb39-5"><a></a>  </span>
+<span id="cb39-6"><a></a>  <span class="co"># Parse the output of decision tree and code it via if, else if and else</span></span>
+<span id="cb39-7"><a></a>  pred_labs <span class="ot">&lt;-</span> <span class="fu">vector</span>()</span>
+<span id="cb39-8"><a></a>  <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">dim</span>(X)[<span class="dv">1</span>])</span>
+<span id="cb39-9"><a></a>  {</span>
+<span id="cb39-10"><a></a>    <span class="cf">if</span>(<span class="fu">eval</span>(<span class="fu">parse</span>(<span class="at">text=</span><span class="fu">paste0</span>(X[i,t<span class="sc">$</span>spl_name[<span class="dv">1</span>]],t<span class="sc">$</span>sign[<span class="dv">1</span>],t<span class="sc">$</span>spl_val[<span class="dv">1</span>]))))</span>
+<span id="cb39-11"><a></a>    {</span>
+<span id="cb39-12"><a></a>      pred_labs[i] <span class="ot">&lt;-</span> t<span class="sc">$</span>label[<span class="dv">1</span>]</span>
+<span id="cb39-13"><a></a>    }</span>
+<span id="cb39-14"><a></a>    <span class="cf">else</span> <span class="cf">if</span>(<span class="fu">eval</span>(<span class="fu">parse</span>(<span class="at">text=</span><span class="fu">paste0</span>(X[i,t<span class="sc">$</span>spl_name[<span class="dv">2</span>]],t<span class="sc">$</span>sign[<span class="dv">2</span>],t<span class="sc">$</span>spl_val[<span class="dv">2</span>]))))</span>
+<span id="cb39-15"><a></a>    {</span>
+<span id="cb39-16"><a></a>      pred_labs[i] <span class="ot">&lt;-</span> t<span class="sc">$</span>label[<span class="dv">2</span>]</span>
+<span id="cb39-17"><a></a>    }</span>
+<span id="cb39-18"><a></a>    <span class="cf">else</span>{pred_labs[i] <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(t<span class="sc">$</span>label[<span class="dv">2</span>] <span class="sc">==</span> <span class="st">"Male"</span>, <span class="st">"Female"</span>, <span class="st">"Male"</span>)}</span>
+<span id="cb39-19"><a></a>  }</span>
+<span id="cb39-20"><a></a></span>
+<span id="cb39-21"><a></a>  <span class="fu">return</span>(<span class="fu">cbind</span>(<span class="fu">cbind</span>(X, y), pred_labs))</span>
+<span id="cb39-22"><a></a>}</span>
+<span id="cb39-23"><a></a><span class="fu">predict_decision_tree</span>(X, y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "All terminal nodes have perfect purity"</code></pre>
 </div>

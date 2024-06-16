@@ -21,6 +21,7 @@
     "listing": "/slides/index.html",
     "items": [
       "/slides/coding/index.html",
+      "/slides/debugging/index.html",
       "/slides/demo/index.html",
       "/slides/scripting/index.html",
       "/slides/shiny/index.html",
