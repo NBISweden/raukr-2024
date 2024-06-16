@@ -24,9 +24,52 @@ library("rpart.plot")
 
 ## Types of data analysis
 
-![](assets/AmountOfData.jpg){width="100%" .center}
+![](assets/AmountOfData.png){width="150%" .center}
 
-## Low dimensional space
+
+
+## Some peculiarities of Frequentist statistics
+
+:::: {.columns}
+::: {.column width="50%"}
+
+- based on Maximum Likelihood principle
+- focus ~~too much~~ on summary statistics
+
+::: {.fragment}
+$$\rm{L}\,(\,x_i \,|\, \mu,\sigma^2\,) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp^{\displaystyle -\frac{\sum\limits_{i=1}^N (x_i-\mu)^2}{2\sigma^2}}$$
+:::
+
+::: {.fragment}
+$$\frac{\partial \rm{L}\,(\,x_i \,|\, \mu,\sigma^2\,)}{\partial\mu} = 0; \,\, \frac{\partial \rm{L}\,(\,x_i \,|\, \mu,\sigma^2\,)}{\partial\sigma^2} = 0$$
+:::
+
+::: {.fragment}
+$$\mu = \frac{1}{N}\sum_{i=0}^N x_i \,\,\rm{-}\,\rm{mean \, estimator}$$
+
+$$\sigma^2 = \frac{1}{N}\sum_{i=0}^N (x_i-\mu)^2 \,\,\rm{-}\,\rm{variance \, estimator}$$
+:::
+
+:::
+
+
+::: {.column width="50%"}
+
+::: {.fragment}
+![](assets/Anscombes_quartet.png){width="150%" .center}
+Summary statistics do not always reasonbly describe data (example: Anscombes quartet)
+:::
+
+:::
+
+::::
+
+
+## Frequentist statistics: focus ~~to much~~ on p-values
+
+:::: {.columns}
+
+::: {.column width="55%"}
 
 ```{r}
 #| echo: false
@@ -35,8 +78,53 @@ set.seed(123)
 ```
 
 ```{r}
-#| class-source: small
-#| classes: small
+#| class-source: smaller
+#| classes: smaller
+#| fig-height: 6.5
+
+FC<-1.02; x_mean<-5; x_sd<-1; N_vector<-seq(from=100,to=10000,by=100); pvalue_t<-vector(); pvalue_lm<-vector()
+for(N in N_vector)
+{
+  x1 <- rnorm(N, x_mean, x_sd); x2 <- rnorm(N, x_mean*FC, x_sd)
+  t_test_res<-t.test(x1, x2); pvalue_t <- append(pvalue_t, t_test_res$p.value)
+
+  x <- rnorm(N, 0, 1); y <- 0.1*x+2*rnorm(N, 0, 1)
+  lm_res <- summary(lm(y~x)); pvalue_lm <- append(pvalue_lm, lm_res$coefficients[2,4])
+}
+par(mfrow=c(2,2)); par(mar = c(5, 5, 1, 1))
+boxplot(x1, x2, names=c("X1","X2"), ylab="Value", col="darkred"); mtext("Fold change FC = 1.02")
+plot(pvalue_t~N_vector,type='o',xlab="N",ylab="p-value",col="darkgreen"); mtext("P-value of two-group t-test")
+plot(y~x, xlab="X", ylab="Y"); abline(lm(y~x), col="blue", lwd=2); mtext("Y = 0.1*X + 2*rnorm(N, 0, 1)")
+plot(pvalue_lm~N_vector,type='o',xlab="N",ylab="p-value",col="darkgreen"); mtext("P-value of linear regression")
+```
+
+:::
+
+::: {.column width="45%"}
+::: {.fragment}
+![](assets/Pvalue.png){width="100%" .center}
+
+Questionable whether p-value is a best metric for ranking features (biomarkers)
+:::
+:::
+
+::::
+
+## Frequentist statistics struggles with high-dimensional data
+
+:::: {.columns}
+
+::: {.column width="32%"}
+
+```{r}
+#| echo: false
+
+set.seed(123)
+```
+
+```{r}
+#| class-source: smaller
+#| classes: smaller
 
 n <- 20 # number of samples
 p <- 2  # number of features / dimensions
@@ -45,7 +133,15 @@ X <- matrix(rnorm(n * p), n, p)
 summary(lm(Y ~ X))
 ```
 
-## Going to higher dimensions
+::: {.fragment}
+Going to higher dimensions &rarr;
+:::
+
+:::
+
+::: {.column width="35%"}
+
+::: {.fragment}
 
 ```{r}
 #| echo: false
@@ -54,8 +150,8 @@ set.seed(123456)
 ```
 
 ```{r}
-#| class-source: small
-#| classes: small
+#| class-source: smaller
+#| classes: smaller
 
 n <- 20 # number of samples
 p <- 10 # number of features / dimensions
@@ -63,8 +159,15 @@ Y <- rnorm(n)
 X <- matrix(rnorm(n * p), n, p)
 summary(lm(Y ~ X))
 ```
+:::
+::: {.fragment}
+Going to even higher dimensions &rarr;
+:::
+:::
 
-## Even higher dimensions
+::: {.column width="33%"}
+
+::: {.fragment}
 
 ```{r}
 #| echo: false
@@ -73,8 +176,8 @@ set.seed(123456)
 ```
 
 ```{r}
-#| class-source: small
-#| classes: small
+#| class-source: smaller
+#| classes: smaller
 
 n <- 20 # number of samples
 p <- 20 # number of features / dimensions
@@ -82,6 +185,11 @@ Y <- rnorm(n)
 X <- matrix(rnorm(n * p), n, p)
 summary(lm(Y ~ X))
 ```
+
+:::
+:::
+::::
+
 
 ## Equidistant points in high dimensions
 
@@ -460,8 +568,8 @@ set.seed(12345)
 ```{r}
 #| fig-width: 8
 #| fig-height: 6
-#| class-source: small
-#| classes: small
+#| class-source: smaller
+#| classes: smaller
 
 N <- 100
 x <- rnorm(N)
@@ -482,14 +590,14 @@ set.seed(123)
 ```{r}
 #| fig-width: 8
 #| fig-height: 6
-#| class-source: small
-#| classes: small
+#| class-source: smaller
+#| classes: smaller
 
 train <- df[sample(1:dim(df)[1], 0.7 * dim(df)[1]), ]
 test <- df[!rownames(df) %in% rownames(train), ]
-df$color <- ifelse(rownames(df) %in% rownames(test),"red","blue")
-plot(y ~ x, data = df, col = df$color)
-legend("topleft", c("Train","Test"),fill=c("blue","red"),bty="n")
+df$col <- ifelse(rownames(df) %in% rownames(test), "red", "blue")
+plot(y ~ x, data = df, col = df$col)
+legend("topleft", c("Train","Test"), fill=c("blue","red"), bty="n")
 abline(lm(y ~ x, data = train), col = "blue")
 ```
 
@@ -671,8 +779,8 @@ plot(E,ylab="Error",xlab="Number of iterations",type="l",col="blue")
 ![](assets/Problem.png)
 
 ```{r}
-#| class-source: small
-#| classes: small
+#| class-source: smaller
+#| classes: smaller
 
 d <- c(0, 0, 1, 1)  # true labels
 x1 <- c(0, 0, 1, 1) # input variable x1
@@ -711,8 +819,8 @@ $$\phi^\prime(s)=\phi(s)\left(1-\phi(s)\right)$$
 ::: {.column width="50%"}
 
 ```{r}
-#| class-source: small
-#| classes: small
+#| class-source: smaller
+#| classes: smaller
 
 phi <- function(x){return(1/(1 + exp(-x)))} # activation function
 
@@ -772,8 +880,8 @@ We nearly reconstruct true labels **d = (0, 0, 1, 1)**
 ::: {.column width="48%"}
 
 ```{r}
-#| class-source: small
-#| classes: small
+#| class-source: smaller
+#| classes: smaller
 X<-data.frame(height=c(183,167,178,171),weight=c(78,73,85,67))
 y<-as.factor(c("Female", "Male", "Male", "Female"))
 data.frame(X, sex = y)
@@ -781,8 +889,8 @@ data.frame(X, sex = y)
 
 ::: {.fragment}
 ```{r}
-#| class-source: small
-#| classes: small
+#| class-source: smaller
+#| classes: smaller
 
 library("rpart"); library("rpart.plot")
 fit<-rpart(y~height+weight,data=X,method="class",minsplit=-1)
@@ -801,8 +909,8 @@ rpart.plot(fit)
 ::: {.fragment}
 
 ```{r}
-#| class-source: small
-#| classes: small
+#| class-source: smaller
+#| classes: smaller
 #| fig-width: 10
 #| fig-height: 7
 color <- c("red", "blue", "blue", "red")
