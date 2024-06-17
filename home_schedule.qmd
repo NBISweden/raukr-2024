@@ -14,9 +14,16 @@ format:
 # <iframe width="100%" height="100%" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSIci4xlYTisAysZOricXo1DtN7xCxy0cAy3q2vHSPAPt-NP_XGVHmwzZ7DUJUVyEdHOwdwWN3AkorX/pubhtml?gid=0&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
 ```
 
+::: {.callout-note}
+This page takes a few seconds to load.
+:::
+
+<iframe width="100%" height="100%" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSIci4xlYTisAysZOricXo1DtN7xCxy0cAy3q2vHSPAPt-NP_XGVHmwzZ7DUJUVyEdHOwdwWN3AkorX/pubhtml?gid=0&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
+
 ::: {.schedule}
 
 ```{r}
+#| eval: false
 #| echo: false
 #| fig-height: 6
 
