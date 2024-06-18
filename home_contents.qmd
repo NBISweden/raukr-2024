@@ -11,10 +11,6 @@ execute:
   freeze: false
 ---
 
-::: {.callout-note}
-The contents are being updated.
-:::
-
 :::{.contents-table .column-body-outset}
 
 |Topic                                  |Presenter                              |Links|
