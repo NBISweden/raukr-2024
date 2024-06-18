@@ -14,16 +14,10 @@ format:
 # <iframe width="100%" height="100%" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSIci4xlYTisAysZOricXo1DtN7xCxy0cAy3q2vHSPAPt-NP_XGVHmwzZ7DUJUVyEdHOwdwWN3AkorX/pubhtml?gid=0&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
 ```
 
-::: {.callout-note}
-This page takes a few seconds to load.
-:::
-
-<iframe width="100%" height="100%" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSIci4xlYTisAysZOricXo1DtN7xCxy0cAy3q2vHSPAPt-NP_XGVHmwzZ7DUJUVyEdHOwdwWN3AkorX/pubhtml?gid=0&amp;single=true&amp;widget=true&amp;headers=false"></iframe>
-
 ::: {.schedule}
 
 ```{r}
-#| eval: false
+#| eval: true
 #| echo: false
 #| fig-height: 6
 
@@ -43,6 +37,7 @@ googlesheets4::gs4_deauth()
 url_schedule = "https://docs.google.com/spreadsheets/d/1svAmuAzNRG3Ujj73qbC9DsOSzZ7jGyol79pLxuLD_fg"
 
 dfr <- googlesheets4::read_sheet(url_schedule, sheet="schedule-vertical", col_types = "c") %>%
+  #filter(!is.na(type)) %>%
   mutate(time=as.character(time)) %>%
   tidyr::fill(date, .direction="down") %>%
   tidyr::drop_na(type) %>%
@@ -66,7 +61,7 @@ colors <- data.frame(
 )
 rownames(colors) <- colors$id
 
-calendar(dfr, view="week", navigation=TRUE, defaultDate=as.Date("2024-06-10"), height=790) %>%
+calendar(dfr, view="week", navigation=TRUE, defaultDate=as.Date("2024-06-17"), height=790) %>%
     cal_week_options(startDayOfWeek = 1, hourStart=8, hourEnd=21, eventView="time", showNowIndicator = TRUE) %>%
   cal_props(colors)
 ```
