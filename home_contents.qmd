@@ -31,7 +31,7 @@ The contents are being updated.
 |Plotting with ggplot2                  |Roy Francis                            |[Slides](slides/ggplot/index.html), [Lab](labs/ggplot/index.html)|
 |[**12-Jun-2024 (Wed)**]{.badge .badge-secondary}                               |||
 |Tidyverse                              |Marcin Kierczak                        |[Slides](slides/tidyverse/index.html), [Lab](labs/tidyverse/index.html)|
-|Futurverse 1                           |Henrik Bengtsson, UCSF                 |[Web](https://now.futureverse.org/)|
+|Futurverse 1                           |Henrik Bengtsson, UCSF                 |[Web](https://henrikbengtsson.github.io/future-tutorial-raukr2024/lab1.html)|
 |[**13-Jun-2024 (Thu)**]{.badge .badge-secondary}                               |||
 |How to repeat yourself with Purrr      |Jenny Bryan, Posit                     |[Repo](https://github.com/jennybc/2024_raukr-purrr-pkg-dev)|
 |Web apps with Shiny                    |Roy Francis                            |[Slides](slides/shiny/index.html), [Lab](labs/shiny/index.html)|
@@ -41,7 +41,7 @@ The contents are being updated.
 |[**WEEK 2**]{.badge .badge-secondary}                                          |||
 |[**17-Jun-2024 (Mon)**]{.badge .badge-secondary}                               |||
 |Statistics and machine learning in R   |Nikolay Oskolkov                       |[Slides](slides/ml/index.html), [Lab](labs/ml/index.html)|
-|Futurverse 2                           |Henrik Bengtsson, UCSF                 ||
+|Futurverse 2                           |Henrik Bengtsson, UCSF                 |[Web](https://henrikbengtsson.github.io/future-tutorial-raukr2024/lab1.html)|
 |[**18-Jun-2024 (Tue)**]{.badge .badge-secondary}                               |||
 |Project environments using Renv        |Roy Francis                            |[Slides](slides/r-env/index.html)|
 :::
