@@ -61,7 +61,7 @@ colors <- data.frame(
 )
 rownames(colors) <- colors$id
 
-calendar(dfr, view="week", navigation=TRUE, defaultDate=as.Date("2024-06-17"), height=790) %>%
+calendar(dfr, view="week", navigation=TRUE, defaultDate=as.Date("2024-06-10"), height=790) %>%
     cal_week_options(startDayOfWeek = 1, hourStart=8, hourEnd=21, eventView="time", showNowIndicator = TRUE) %>%
   cal_props(colors)
 ```
