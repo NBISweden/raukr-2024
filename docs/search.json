@@ -3925,5 +3925,243 @@
     "title": "Mathematical statistics and machine learning in R",
     "section": "Frequentist statistics struggles with high-dimensional data",
     "text": "Frequentist statistics struggles with high-dimensional data\n\n\n\nn &lt;- 20 # number of samples\np &lt;- 2  # number of features / dimensions\nY &lt;- rnorm(n)\nX &lt;- matrix(rnorm(n * p), n, p)\nsummary(lm(Y ~ X))\n\n\nCall:\nlm(formula = Y ~ X)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-2.0522 -0.6380  0.1451  0.3911  1.8829 \n\nCoefficients:\n            Estimate Std. Error t value Pr(&gt;|t|)\n(Intercept)  0.14950    0.22949   0.651    0.523\nX1          -0.09405    0.28245  -0.333    0.743\nX2          -0.11919    0.24486  -0.487    0.633\n\nResidual standard error: 1.017 on 17 degrees of freedom\nMultiple R-squared:  0.02204,   Adjusted R-squared:  -0.09301 \nF-statistic: 0.1916 on 2 and 17 DF,  p-value: 0.8274\n\n\n\nGoing to higher dimensions →\n\n\n\n\nn &lt;- 20 # number of samples\np &lt;- 10 # number of features / dimensions\nY &lt;- rnorm(n)\nX &lt;- matrix(rnorm(n * p), n, p)\nsummary(lm(Y ~ X))\n\n\nCall:\nlm(formula = Y ~ X)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-1.0255 -0.4320  0.1056  0.4493  1.0617 \n\nCoefficients:\n            Estimate Std. Error t value Pr(&gt;|t|)  \n(Intercept)  0.54916    0.26472   2.075   0.0679 .\nX1           0.30013    0.21690   1.384   0.1998  \nX2           0.68053    0.27693   2.457   0.0363 *\nX3          -0.10675    0.26010  -0.410   0.6911  \nX4          -0.21367    0.33690  -0.634   0.5417  \nX5          -0.19123    0.31881  -0.600   0.5634  \nX6           0.81074    0.25221   3.214   0.0106 *\nX7           0.09634    0.24143   0.399   0.6992  \nX8          -0.29864    0.19004  -1.571   0.1505  \nX9          -0.78175    0.35408  -2.208   0.0546 .\nX10          0.83736    0.36936   2.267   0.0496 *\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 0.8692 on 9 degrees of freedom\nMultiple R-squared:  0.6592,    Adjusted R-squared:  0.2805 \nF-statistic: 1.741 on 10 and 9 DF,  p-value: 0.2089\n\n\n\n\nGoing to even higher dimensions →\n\n\n\n\nn &lt;- 20 # number of samples\np &lt;- 20 # number of features / dimensions\nY &lt;- rnorm(n)\nX &lt;- matrix(rnorm(n * p), n, p)\nsummary(lm(Y ~ X))\n\n\nCall:\nlm(formula = Y ~ X)\n\nResiduals:\nALL 20 residuals are 0: no residual degrees of freedom!\n\nCoefficients: (1 not defined because of singularities)\n            Estimate Std. Error t value Pr(&gt;|t|)\n(Intercept)  1.34889        NaN     NaN      NaN\nX1           0.66218        NaN     NaN      NaN\nX2           0.76212        NaN     NaN      NaN\nX3          -1.35033        NaN     NaN      NaN\nX4          -0.57487        NaN     NaN      NaN\nX5           0.02142        NaN     NaN      NaN\nX6           0.40290        NaN     NaN      NaN\nX7           0.03313        NaN     NaN      NaN\nX8          -0.31983        NaN     NaN      NaN\nX9          -0.92833        NaN     NaN      NaN\nX10          0.18091        NaN     NaN      NaN\nX11         -1.37618        NaN     NaN      NaN\nX12          2.11438        NaN     NaN      NaN\nX13         -1.75103        NaN     NaN      NaN\nX14         -1.55073        NaN     NaN      NaN\nX15          0.01112        NaN     NaN      NaN\nX16         -0.50943        NaN     NaN      NaN\nX17         -0.47576        NaN     NaN      NaN\nX18          0.31793        NaN     NaN      NaN\nX19          1.43615        NaN     NaN      NaN\nX20               NA         NA      NA       NA\n\nResidual standard error: NaN on 0 degrees of freedom\nMultiple R-squared:      1, Adjusted R-squared:    NaN \nF-statistic:   NaN on 19 and 0 DF,  p-value: NA"
+  },
+  {
+    "objectID": "slides/debugging/index.html#run-forrest-run",
+    "href": "slides/debugging/index.html#run-forrest-run",
+    "title": "Debugging, Profiling, and a Bit of Optimization",
+    "section": "Run Forrest, run!",
+    "text": "Run Forrest, run!\n\n\n\n\n\nMy code does not run! – debugging\nNow it does run but… out of memory! – profiling\nIt runs! It says it will finish in 5 minutes years. – optimization"
+  },
+  {
+    "objectID": "slides/debugging/index.html#types-of-bugs",
+    "href": "slides/debugging/index.html#types-of-bugs",
+    "title": "Debugging, Profiling, and a Bit of Optimization",
+    "section": "Types of bugs",
+    "text": "Types of bugs\n\n🔣 Syntax errors\n\n\nprin(var1) \nmean(sum(seq((x + 2) * (y - 9 * b))))\n\n\n\n🔢 Arithmetic\n\n\ny &lt;- 7 / 0\n\nNot in R though! y = Inf\n\n\n\n🍎🍊 Type\n\n\nmean('a')\n\n\n\n\n🧩 Logic\n\nEverything works and produces seemingly valid output that is WRONG!\nIMHO those are the hardest 💀 to debug!"
+  },
+  {
+    "objectID": "slides/debugging/index.html#how-to-avoid-bugs",
+    "href": "slides/debugging/index.html#how-to-avoid-bugs",
+    "title": "Debugging, Profiling, and a Bit of Optimization",
+    "section": "How to avoid bugs",
+    "text": "How to avoid bugs\n\n\n\nEncapsulate your code in smaller units 🍱 (functions), you can test.\nUse classes and type checking 🆗.\nTest 🧪 at the boundaries, e.g. loops at min and max value.\nFeed your functions with test data 💾 that should result with a known output.\nUse antibugging 🕸: stopifnot(y &lt;= 75)"
+  },
+  {
+    "objectID": "slides/debugging/index.html#floating-confusion",
+    "href": "slides/debugging/index.html#floating-confusion",
+    "title": "Debugging, Profiling, and a Bit of Optimization",
+    "section": "Floating confusion",
+    "text": "Floating confusion\n\n\n(vec &lt;- seq(0.1, 0.9, by=0.1))\nvec == 0.7 \nvec == 0.5\n\n\n\n\n[1] 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9\n[1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE\n[1] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE\n\n\n\n\n\n\n(0.5 + 0.1) - 0.6\n(0.7 + 0.1) - 0.8 \n\n\n\n\n\n[1] 0\n[1] -1.110223e-16\n\n\n\n\n💀 Beware of floating point arithmetic! 💀"
+  },
+  {
+    "objectID": "slides/debugging/index.html#how-to-float",
+    "href": "slides/debugging/index.html#how-to-float",
+    "title": "Debugging, Profiling, and a Bit of Optimization",
+    "section": "How to float 🏊",
+    "text": "How to float 🏊\n\n\nround((0.7 + 0.1) , digits = 2) - 0.8\n\n[1] 0\n\n\n\nComparing floating point numbers:\n\n(vec &lt;- seq(0.1, 0.9, by=0.1))\nvec == 0.7\n\n[1] 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9\n[1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE\n\n\n\n\n\nepsilon &lt;- 0.001\nabs(vec - 0.7) &lt;= epsilon\n\n[1] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE"
+  },
+  {
+    "objectID": "slides/debugging/index.html#final-thoughts-on-floating",
+    "href": "slides/debugging/index.html#final-thoughts-on-floating",
+    "title": "Debugging, Profiling, and a Bit of Optimization",
+    "section": "Final thoughts on floating",
+    "text": "Final thoughts on floating\n\nhead(unlist(.Machine))\n\n    double.eps double.neg.eps    double.xmin    double.xmax    double.base \n  2.220446e-16   1.110223e-16  2.225074e-308  1.797693e+308   2.000000e+00 \n double.digits \n  5.300000e+01 \n\n\n\n\nhead(unlist(.Platform))\n\n   OS.type   file.sep dynlib.ext        GUI     endian    pkgType \n    \"unix\"        \"/\"      \".so\"      \"X11\"   \"little\"   \"source\""
+  },
+  {
+    "objectID": "slides/debugging/index.html#handling-errors",
+    "href": "slides/debugging/index.html#handling-errors",
+    "title": "Debugging, Profiling, and a Bit of Optimization",
+    "section": "Handling Errors",
+    "text": "Handling Errors\nLet us generate some errors:\n\ninput &lt;- c(1, 10, -7, -2/5, 0, 'char', 100, pi, NaN)\nfor (val in input) {\n  (paste0('Log of ', val, 'is ', log10(val)))\n}\n\nError in log10(val): non-numeric argument to mathematical function\n\n\n\n\n\n\n\nSo, how to handle this mess?"
+  },
+  {
+    "objectID": "slides/debugging/index.html#handling-errors-try",
+    "href": "slides/debugging/index.html#handling-errors-try",
+    "title": "Debugging, Profiling, and a Bit of Optimization",
+    "section": "Handling Errors – try",
+    "text": "Handling Errors – try\n\n\ntry(\n  print(\n    paste0('Log of ', input, ' is ', log10(as.numeric(input)))\n  )\n)\n\n\n\n\n[1] \"Log of 1 is 0\"                               \n[2] \"Log of 10 is 1\"                              \n[3] \"Log of -7 is NaN\"                            \n[4] \"Log of -0.4 is NaN\"                          \n[5] \"Log of 0 is -Inf\"                            \n[6] \"Log of char is NA\"                           \n[7] \"Log of 100 is 2\"                             \n[8] \"Log of 3.14159265358979 is 0.497149872694133\"\n[9] \"Log of NaN is NaN\""
+  },
+  {
+    "objectID": "slides/debugging/index.html#handling-errors-trycatch-block",
+    "href": "slides/debugging/index.html#handling-errors-trycatch-block",
+    "title": "Debugging, Profiling, and a Bit of Optimization",
+    "section": "Handling Errors – tryCatch block:",
+    "text": "Handling Errors – tryCatch block:\n\nresult &lt;- tryCatch(log10(val), \n            warning = function(w) { \n              print('Warning! Negative argument supplied. Negating.') \n              log10(-val) }, \n            error = function(e) { \n              print('ERROR! Not a number!')\n              NaN\n            }\n          )\n\n\n\n\n[1] \"Log of 1 is 0\"\n[1] \"Log of 10 is 1\"\n[1] \"Warning! Negative argument supplied. Negating.\"\n[1] \"Log of -7 is 0.845098040014257\"\n[1] \"Warning! Negative argument supplied. Negating.\"\n[1] \"Log of -0.4 is -0.397940008672038\"\n[1] \"Log of 0 is -Inf\"\n[1] \"Log of NA is NA\"\n[1] \"Log of 100 is 2\"\n[1] \"Log of 3.14159265358979 is 0.497149872694133\"\n[1] \"Log of NaN is NaN\""
+  },
+  {
+    "objectID": "slides/debugging/index.html#debugging-errors-and-warnings",
+    "href": "slides/debugging/index.html#debugging-errors-and-warnings",
+    "title": "Debugging, Profiling, and a Bit of Optimization",
+    "section": "Debugging – errors and warnings",
+    "text": "Debugging – errors and warnings\n\n\nAn error in your code will result in a call to the stop() function that:\n\nBreaks the execution of the program (loop, if-statement, etc.)\nPerforms the action defined by the global parameter error.\n\nA warning just prints out the warning message (or reports it in another way)\n\n\n\n\nGlobal parameter error defines what R should do when an error occurs.\n\n\noptions(error = )\n\n\n\n\nYou can use simpleError() and simpleWarning() to generate errors and warnings in your code:\n\n\nf &lt;- function(x) {\n  if (x &lt; 0) {\n    x &lt;- abs(x)\n    w &lt;- simpleWarning(\"Value less than 0. Taking abs(x)\")\n    w\n  }\n}"
+  },
+  {
+    "objectID": "slides/debugging/index.html#debugging-what-are-my-options",
+    "href": "slides/debugging/index.html#debugging-what-are-my-options",
+    "title": "Debugging, Profiling, and a Bit of Optimization",
+    "section": "Debugging – what are my options?",
+    "text": "Debugging – what are my options?\n\nOld-school debugging: a lot of print statements\n\nprint values of your variables at some checkpoints,\nsometimes fine but often laborious,\nneed to remove/comment out manually after debugging.\n\n\n\n\nDumping frames\n\non error, R state will be saved to a file,\nfile can be read into debugger,\nvalues of all variables can be checked,\ncan debug on another machine, e.g. send dump to your colleague!\n\n\n\n\n\nTraceback\n\na list of the recent function calls with values of their parameters\n\n\n\n\n\nStep-by-step debugging\n\nexecute code line by line within the debugger"
+  },
+  {
+    "objectID": "slides/debugging/index.html#option-1-dumping-frames",
+    "href": "slides/debugging/index.html#option-1-dumping-frames",
+    "title": "Debugging, Profiling, and a Bit of Optimization",
+    "section": "Option 1: dumping frames",
+    "text": "Option 1: dumping frames\n\nf &lt;- function(x) { sin(x) }\noptions(error = quote(dump.frames(dumpto = \"assets/testdump\", to.file = T)))\nf('test')\noptions(error = NULL) # reset the behavior\nload('assets/testdump.rda')\n# debugger(testdump)\n\nHint: Last empty line brings you back to the environments menu."
+  },
+  {
+    "objectID": "slides/debugging/index.html#option-2-traceback",
+    "href": "slides/debugging/index.html#option-2-traceback",
+    "title": "Debugging, Profiling, and a Bit of Optimization",
+    "section": "Option 2: traceback",
+    "text": "Option 2: traceback\n\nf &lt;- function(x) { \n  log10(x) \n}\ng &lt;- function(x) { \n  f(x) \n}\ng('test')\n\nError in log10(x): non-numeric argument to mathematical function\n\n\n\n&gt; traceback()\n2: f(x) at #2\n1: g(\"test\")\ntraceback() shows what were the function calls and what parameters were passed to them when the error occurred."
+  },
+  {
+    "objectID": "slides/debugging/index.html#option-3-step-by-step-debugging",
+    "href": "slides/debugging/index.html#option-3-step-by-step-debugging",
+    "title": "Debugging, Profiling, and a Bit of Optimization",
+    "section": "Option 3: step-by-step debugging",
+    "text": "Option 3: step-by-step debugging\n\n\nLet us define a new function h(x, y):\n\nh &lt;- function(x, y) { \n  f(x) \n  f(y) \n}\n\nNow, we can use debug() to debug the function in a step-by-step manner:\n\ndebug(h)\nh('text', 7)\nundebug(h)"
+  },
+  {
+    "objectID": "slides/debugging/index.html#profiling-proc.time",
+    "href": "slides/debugging/index.html#profiling-proc.time",
+    "title": "Debugging, Profiling, and a Bit of Optimization",
+    "section": "Profiling – proc.time()",
+    "text": "Profiling – proc.time()\nProfiling is the process of identifying memory and time bottlenecks 🍼 in your code.\n\nproc.time()\n\n   user  system elapsed \n  2.204   1.819   1.519 \n\n\n\nuser time – CPU time charged for the execution of user instructions of the calling process,\nsystem time – CPU time charged for execution by the system on behalf of the calling process,\nelapsed time – total CPU time elapsed for the currently running R process.\n\n\n\npt1 &lt;- proc.time()\ntmp &lt;- runif(n =  10e5)\npt2 &lt;- proc.time()\npt2 - pt1\n\n   user  system elapsed \n  0.014   0.000   0.015"
+  },
+  {
+    "objectID": "slides/debugging/index.html#profiling-system.time",
+    "href": "slides/debugging/index.html#profiling-system.time",
+    "title": "Debugging, Profiling, and a Bit of Optimization",
+    "section": "Profiling – system.time()",
+    "text": "Profiling – system.time()\n\nsystem.time(runif(n = 10e6))\nsystem.time(rnorm(n = 10e6))\n\n   user  system elapsed \n  0.167   0.002   0.168 \n   user  system elapsed \n  0.596   0.002   0.598 \n\n\n\nAn alternative approach is to use tic and toc statements from the tictoc package.\n\nlibrary(tictoc)\ntic()\ntmp1 &lt;- runif(n = 10e6)\ntoc()\n\n0.135 sec elapsed"
+  },
+  {
+    "objectID": "slides/debugging/index.html#profiling-in-action",
+    "href": "slides/debugging/index.html#profiling-in-action",
+    "title": "Debugging, Profiling, and a Bit of Optimization",
+    "section": "Profiling in action",
+    "text": "Profiling in action\nThese 4 functions fill a large vector with values supplied by function f.\n\n1 – loop without memory allocation.\n\nfun_fill_loop1 &lt;- function(n = 10e6, f) {\n  result &lt;- NULL\n  for (i in 1:n) {\n    result &lt;- c(result, eval(call(f, 1)))\n  }\n  return(result)\n}\n\n\n\n2 – loop with memory allocation.\n\nfun_fill_loop2 &lt;- function(n = 10e6, f) {\n  result &lt;- vector(length = n)\n  for (i in 1:n) {\n    result[i] &lt;- eval(call(f, 1))\n  }\n  return(result)\n}"
+  },
+  {
+    "objectID": "slides/debugging/index.html#profiling-in-action-cted.",
+    "href": "slides/debugging/index.html#profiling-in-action-cted.",
+    "title": "Debugging, Profiling, and a Bit of Optimization",
+    "section": "Profiling in action cted.",
+    "text": "Profiling in action cted.\nBut it is maybe better to use…\n\nvectorization!\n\n\n3 – vectorized loop without memory allocation.\n\nfun_fill_vec1 &lt;- function(n = 10e6, f) {\n  result &lt;- NULL\n  result &lt;- eval(call(f, n))\n  return(result)\n}\n\n\n\n4 – vectorized with memory allocation.\n\nfun_fill_vec2 &lt;- function(n = 10e6, f) {\n  result &lt;- vector(length = n)\n  result &lt;- eval(call(f, n))\n  return(result)\n}"
+  },
+  {
+    "objectID": "slides/debugging/index.html#profiling-our-functions",
+    "href": "slides/debugging/index.html#profiling-our-functions",
+    "title": "Debugging, Profiling, and a Bit of Optimization",
+    "section": "Profiling our functions",
+    "text": "Profiling our functions\n\n\np1 &lt;- system.time(fun_fill_loop1(n = 10e4, \"runif\")) # 1 - loop, no alloc\np2 &lt;- system.time(fun_fill_loop2(n = 10e4, \"runif\")) # 2 - loop, alloc \np3 &lt;- system.time(fun_fill_vec1(n = 10e4, \"runif\"))  # 3 - vector, no alloc\np4 &lt;- system.time(fun_fill_vec2(n = 10e4, \"runif\"))  # 4 - vector, alloc\n\n\n\n\nfn\nuser.self\nsys.self\nelapsed\n\n\n\n\nfn1\n7.641\n0.05\n7.692\n\n\nfn2\n0.320\n0.00\n0.320\n\n\nfn3\n0.001\n0.00\n0.001\n\n\nfn4\n0.002\n0.00\n0.002\n\n\n\nThe system.time() function is not the most accurate though. During the lab, we will experiment with package microbenchmark."
+  },
+  {
+    "objectID": "slides/debugging/index.html#more-advanced-profiling",
+    "href": "slides/debugging/index.html#more-advanced-profiling",
+    "title": "Debugging, Profiling, and a Bit of Optimization",
+    "section": "More advanced profiling",
+    "text": "More advanced profiling\nWe can also do a bit more advanced profiling, including the memory profiling, using, e.g. Rprof() function.\n\nRprof('profiler_test.out', interval = 0.01, memory.profiling = T)\nfor (i in 1:5) {\n  result &lt;- fun_fill_loop2(n = 10e4, \"runif\")\n  print(result)\n}\nRprof(NULL)\n\nAnd let us summarise:\n\nsummary &lt;- summaryRprof(\"profiler_test.out\", memory = \"both\")\n#unlink(\"profiler_test.out\")\nknitr::kable(summary$by.self)\n\n\n\n\n\n\n\n\n\n\n\n\n\nself.time\nself.pct\ntotal.time\ntotal.pct\nmem.total\n\n\n\n\n“runif”\n2.13\n48.41\n2.13\n48.41\n1899.0\n\n\n“eval”\n1.04\n23.64\n3.29\n74.77\n3334.7\n\n\n“print.default”\n0.85\n19.32\n0.85\n19.32\n72.1\n\n\n“fun_fill_loop2”\n0.24\n5.45\n3.53\n80.23\n3646.3\n\n\n“parent.frame”\n0.06\n1.36\n0.06\n1.36\n64.6\n\n\n“is.list”\n0.05\n1.14\n0.05\n1.14\n82.3\n\n\n“is.pairlist”\n0.01\n0.23\n0.01\n0.23\n23.1\n\n\n“mayCallBrowser”\n0.01\n0.23\n0.01\n0.23\n1.0\n\n\n“strsplit”\n0.01\n0.23\n0.01\n0.23\n0.4"
+  },
+  {
+    "objectID": "slides/debugging/index.html#profiling-profr-package",
+    "href": "slides/debugging/index.html#profiling-profr-package",
+    "title": "Debugging, Profiling, and a Bit of Optimization",
+    "section": "Profiling – profr package",
+    "text": "Profiling – profr package\nThere are also packages available that enable even more advanced profiling:\n\nlibrary(profr)\nRprof(\"profiler_test2.out\", interval = 0.01)\ntmp &lt;- table(sort(rnorm(1e5)))\nRprof(NULL)\nprofile_df &lt;- parse_rprof('profiler_test2.out')\n\nThis returns a table that can be visualised:\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nlevel\ng_id\nt_id\nf\nstart\nend\nn\nleaf\ntime\nsource\n\n\n\n\n1\n1\n1\n.main\n0.00\n0.40\n1\nFALSE\n0.40\nNA\n\n\n2\n1\n1\nexecute\n0.00\n0.40\n1\nFALSE\n0.40\nNA\n\n\n3\n1\n1\nrmarkdown::render\n0.00\n0.40\n1\nFALSE\n0.40\nNA\n\n\n4\n1\n1\nknitr::knit\n0.00\n0.40\n1\nFALSE\n0.40\nNA\n\n\n5\n1\n1\nprocess_file\n0.00\n0.40\n1\nFALSE\n0.40\nNA\n\n\n6\n1\n1\nhandle_error\n0.00\n0.40\n1\nFALSE\n0.40\nNA\n\n\n7\n1\n1\nwithCallingHandlers\n0.00\n0.40\n1\nFALSE\n0.40\nbase\n\n\n8\n1\n1\nwithCallingHandlers\n0.00\n0.40\n1\nFALSE\n0.40\nbase\n\n\n9\n1\n1\nprocess_group\n0.00\n0.40\n1\nFALSE\n0.40\nNA\n\n\n10\n1\n1\nprocess_group.block\n0.00\n0.40\n1\nFALSE\n0.40\nNA\n\n\n11\n1\n1\ncall_block\n0.00\n0.40\n1\nFALSE\n0.40\nNA\n\n\n12\n1\n1\nblock_exec\n0.00\n0.40\n1\nFALSE\n0.40\nNA\n\n\n13\n1\n1\neng_r\n0.00\n0.40\n1\nFALSE\n0.40\nNA\n\n\n14\n1\n1\nin_input_dir\n0.00\n0.40\n1\nFALSE\n0.40\nNA\n\n\n15\n1\n1\nin_dir\n0.00\n0.40\n1\nFALSE\n0.40\nNA\n\n\n16\n1\n1\nevaluate\n0.00\n0.40\n1\nFALSE\n0.40\nNA\n\n\n17\n1\n1\nevaluate::evaluate\n0.00\n0.40\n1\nFALSE\n0.40\nNA\n\n\n18\n1\n1\nevaluate_call\n0.00\n0.40\n1\nFALSE\n0.40\nNA\n\n\n19\n1\n1\ntiming_fn\n0.00\n0.40\n1\nFALSE\n0.40\nNA\n\n\n20\n1\n1\nhandle\n0.00\n0.40\n1\nFALSE\n0.40\nNA\n\n\n21\n1\n1\nwithCallingHandlers\n0.00\n0.40\n1\nFALSE\n0.40\nbase\n\n\n22\n1\n1\nwithVisible\n0.00\n0.40\n1\nFALSE\n0.40\nbase\n\n\n23\n1\n1\neval_with_user_handlers\n0.00\n0.40\n1\nFALSE\n0.40\nNA\n\n\n24\n1\n1\neval\n0.00\n0.40\n1\nFALSE\n0.40\nbase\n\n\n25\n1\n1\neval\n0.00\n0.40\n1\nFALSE\n0.40\nbase\n\n\n26\n1\n1\ntable\n0.00\n0.40\n1\nFALSE\n0.40\nbase\n\n\n27\n1\n1\nfactor\n0.00\n0.38\n1\nFALSE\n0.38\nbase\n\n\n28\n1\n1\norder\n0.00\n0.02\n1\nTRUE\n0.02\nbase\n\n\n28\n2\n1\nunique\n0.02\n0.22\n1\nFALSE\n0.20\nbase\n\n\n29\n1\n1\nunique.default\n0.02\n0.22\n1\nTRUE\n0.20\nbase"
+  },
+  {
+    "objectID": "slides/debugging/index.html#profiling-profr-package-cted.",
+    "href": "slides/debugging/index.html#profiling-profr-package-cted.",
+    "title": "Debugging, Profiling, and a Bit of Optimization",
+    "section": "Profiling – profr package cted.",
+    "text": "Profiling – profr package cted.\nWe can also plot the results using – proftools package-\n\nlibrary(proftools)\nprofile_df2 &lt;- readProfileData(\"profiler_test2.out\")\nplotProfileCallGraph(profile_df2, style = google.style, score = \"total\")"
+  },
+  {
+    "objectID": "slides/debugging/index.html#profiling-with-profvis",
+    "href": "slides/debugging/index.html#profiling-with-profvis",
+    "title": "Debugging, Profiling, and a Bit of Optimization",
+    "section": "Profiling with profvis",
+    "text": "Profiling with profvis\nYet another nice way to profile your code is by using Hadley Wickham’s profvis package:\n\nlibrary(profvis)\nprofvis({fun_fill_loop2(1e4, 'runif')\n  fun_fill_vec2(1e4, 'runif')\n})"
+  },
+  {
+    "objectID": "slides/debugging/index.html#profiling-with-profvis-cted.",
+    "href": "slides/debugging/index.html#profiling-with-profvis-cted.",
+    "title": "Debugging, Profiling, and a Bit of Optimization",
+    "section": "Profiling with profvis cted.",
+    "text": "Profiling with profvis cted."
+  },
+  {
+    "objectID": "slides/debugging/index.html#optimizing-your-code",
+    "href": "slides/debugging/index.html#optimizing-your-code",
+    "title": "Debugging, Profiling, and a Bit of Optimization",
+    "section": "Optimizing your code",
+    "text": "Optimizing your code\n\nWe should forget about small efficiencies, say about 97% of the time: premature optimization is the root of all evil. Yet we should not pass up our opportunities in that critical 3%. A good programmer will not be deluded into complacency by such reasoning, he will be wise to look carefully at the critical code; but only after that code has been identified.\n– Donald Knuth\n\n\n\n\nsource: http://www.xkcd/com/1319\n\n\nsource: http://www.xkcd/com/1205"
+  },
+  {
+    "objectID": "slides/debugging/index.html#ways-to-optimize-the-code",
+    "href": "slides/debugging/index.html#ways-to-optimize-the-code",
+    "title": "Debugging, Profiling, and a Bit of Optimization",
+    "section": "Ways to optimize the code",
+    "text": "Ways to optimize the code\n\n\nwrite it in a more efficient way, e.g. use vectorization or *apply family instead of loops etc.,\nallocating memory to avoid copy-on-modify,\nuse package BLAS for linear algebra,\nuse bigmemory package,\nGPU computations,\nmulticore support, e.g. multicore, snow\nuse futures\nuse data.table or tibble instead of data.frame"
+  },
+  {
+    "objectID": "slides/debugging/index.html#copy-on-modify",
+    "href": "slides/debugging/index.html#copy-on-modify",
+    "title": "Debugging, Profiling, and a Bit of Optimization",
+    "section": "Copy-on-modify",
+    "text": "Copy-on-modify\n\nlibrary(pryr)\norder &lt;- 1024\nmatrix_A &lt;- matrix(rnorm(order^2), nrow = order)\nmatrix_B &lt;- matrix_A\n\n\nCheck where the objects are in the memory:\n\n\n\naddress(matrix_A)\naddress(matrix_B)\n\n[1] \"0x7fff977ff010\"\n[1] \"0x7fff977ff010\"\n\n\n\n\nWhat happens if we modify a value in one of the matrices?\n\n\n\nmatrix_B[1,1] &lt;- 1\naddress(matrix_A)\naddress(matrix_B)\n\n[1] \"0x7fff977ff010\"\n[1] \"0x7fff96ffe010\""
+  },
+  {
+    "objectID": "slides/debugging/index.html#avoid-copying-by-allocating-memory",
+    "href": "slides/debugging/index.html#avoid-copying-by-allocating-memory",
+    "title": "Debugging, Profiling, and a Bit of Optimization",
+    "section": "Avoid copying by allocating memory",
+    "text": "Avoid copying by allocating memory\nNo memory allocation\n\nf1 &lt;- function(to = 3, silent=F) {\n  tmp &lt;- c()\n  for (i in 1:to) {\n    a1 &lt;- address(tmp)\n    tmp &lt;- c(tmp, i)\n    a2 &lt;- address(tmp)\n    if (!silent) { print(paste0(a1, \" --&gt; \", a2)) } \n  }\n}\nf1()\n\n[1] \"0x5555555747c0 --&gt; 0x555559c1a5a0\"\n[1] \"0x555559c1a5a0 --&gt; 0x555559bd2a40\"\n[1] \"0x555559bd2a40 --&gt; 0x55555b9a32e8\""
+  },
+  {
+    "objectID": "slides/debugging/index.html#avoid-copying-by-allocating-memory-cted.",
+    "href": "slides/debugging/index.html#avoid-copying-by-allocating-memory-cted.",
+    "title": "Debugging, Profiling, and a Bit of Optimization",
+    "section": "Avoid copying by allocating memory cted.",
+    "text": "Avoid copying by allocating memory cted.\nWith memory allocation\n\nf2 &lt;- function(to = 3, silent = FALSE) {\n  tmp &lt;- vector(length = to, mode='numeric')\n  for (i in 1:to) {\n    a1 &lt;- address(tmp)\n    tmp[i] &lt;- i\n    a2 &lt;- address(tmp)\n    if(!silent) { print(paste0(a1, \" --&gt; \", a2)) }\n  }\n}\nf2()\n\n[1] \"0x55555d85acb8 --&gt; 0x55555d85acb8\"\n[1] \"0x55555d85acb8 --&gt; 0x55555d85acb8\"\n[1] \"0x55555d85acb8 --&gt; 0x55555d85acb8\""
+  },
+  {
+    "objectID": "slides/debugging/index.html#allocating-memory-benchmark.",
+    "href": "slides/debugging/index.html#allocating-memory-benchmark.",
+    "title": "Debugging, Profiling, and a Bit of Optimization",
+    "section": "Allocating memory – benchmark.",
+    "text": "Allocating memory – benchmark.\n\nlibrary(microbenchmark)\nbenchmrk &lt;- microbenchmark(f1(to = 1e3, silent = T), \n                           f2(to = 1e3, silent = T), \n                           times = 100L)\nggplot2::autoplot(benchmrk)"
+  },
+  {
+    "objectID": "slides/debugging/index.html#gpu",
+    "href": "slides/debugging/index.html#gpu",
+    "title": "Debugging, Profiling, and a Bit of Optimization",
+    "section": "GPU",
+    "text": "GPU\n\nA = matrix(rnorm(1000^2), nrow=1000) # stored: RAM, computed: CPU\nB = matrix(rnorm(1000^2), nrow=1000) \ngpuA = gpuMatrix(A, type = \"float\") # stored: RAM, computed: GPU\ngpuB = gpuMatrix(B, type = \"float\")\nvclA = vclMatrix(A, type = \"float\") # stored: GPU, computed: GPU\nvclB = vclMatrix(B, type = \"float\")\nbch &lt;- microbenchmark(\n  cpu_ram = A %*% B,\n  gpu_ram = gpuA %*% gpuB,\n  gpu_vcl = vclA %*% vclB, \n  times = 10L) \n\nMore on Charles Determan’s Blog."
+  },
+  {
+    "objectID": "slides/debugging/index.html#gpu-cted.",
+    "href": "slides/debugging/index.html#gpu-cted.",
+    "title": "Debugging, Profiling, and a Bit of Optimization",
+    "section": "GPU cted.",
+    "text": "GPU cted.\n\nggplot2::autoplot(bch)"
+  },
+  {
+    "objectID": "slides/debugging/index.html#parallelization-using-package-parallel",
+    "href": "slides/debugging/index.html#parallelization-using-package-parallel",
+    "title": "Debugging, Profiling, and a Bit of Optimization",
+    "section": "Parallelization using package parallel",
+    "text": "Parallelization using package parallel\nEasiest to parallelize is lapply:\n\nresult &lt;- lapply(1:2, function(x) { c(x, x^2, x^3) })\nresult\n\n[[1]]\n[1] 1 1 1\n\n[[2]]\n[1] 2 4 8\n\n\n\nlibrary(parallel)\nnum_cores &lt;- detectCores() - 1\ncl &lt;- makeCluster(num_cores) # Init cluster\nparLapply(cl, 1:2, function(x) { c(x, x^2, x^3)} )\nstopCluster(cl)\n\n[[1]]\n[1] 1 1 1\n\n[[2]]\n[1] 2 4 8"
+  },
+  {
+    "objectID": "slides/debugging/index.html#section-1",
+    "href": "slides/debugging/index.html#section-1",
+    "title": "Debugging, Profiling, and a Bit of Optimization",
+    "section": "",
+    "text": "Thank you! Questions?\n\n\n         _                  \nplatform x86_64-pc-linux-gnu\nos       linux-gnu          \nmajor    4                  \nminor    3.2                \n\n\n2024 • SciLifeLab • NBIS • RaukR"
   }
 ]

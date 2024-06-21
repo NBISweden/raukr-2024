@@ -20,7 +20,7 @@ library(ggplot2)
 # remotes::install_github("hadley/emo")
 library(emo)
 # remotes::install_github("cdeterman/gpuR")
-library(gpuR)
+#library(gpuR)
 ```
 
 ## Run Forrest, run!
@@ -355,6 +355,9 @@ g('test')
 
 ## Option 3: step-by-step debugging
 
+:::: {.columns}
+::: {.column width="50%"}
+
 Let us define a new function `h(x, y)`:
 
 ```{r debug}
@@ -373,9 +376,14 @@ h('text', 7)
 undebug(h)
 ```
 
-. . .
+:::
 
-<img src="assets/debug.png" style="width: 100%"/>
+::: {.column .fragment width="50%"}
+
+![](assets/debug.png)
+
+:::
+::::
 
 ## Profiling -- `proc.time()`
 
@@ -497,7 +505,7 @@ p4 <- system.time(fun_fill_vec2(n = 10e4, "runif"))  # 4 - vector, alloc
 
 ```{r profile_plot}
 #| echo: false
-#| results: true
+#| results: asis
 
 p <- data.frame(fn = paste0(rep('fn', 4), c(1,2,3,4)),
                 user.self = 1*(c(p1[1], p2[1], p3[1], p4[1])),
@@ -532,7 +540,6 @@ And let us summarise:
 
 ```{r summaryRprof}
 summary <- summaryRprof("profiler_test.out", memory = "both")
-#unlink("profiler_test.out")
 knitr::kable(summary$by.self)
 ```
 
@@ -575,7 +582,6 @@ We can also plot the results using -- `proftools` package-
 
 library(proftools)
 profile_df2 <- readProfileData("profiler_test2.out")
-unlink("profiler_test2.out")
 plotProfileCallGraph(profile_df2, style = google.style, score = "total")
 ```
 
@@ -722,6 +728,7 @@ ggplot2::autoplot(benchmrk)
 
 ```{r gpu_R}
 #| cache: true
+#| eval: false
 
 A = matrix(rnorm(1000^2), nrow=1000) # stored: RAM, computed: CPU
 B = matrix(rnorm(1000^2), nrow=1000) 
@@ -742,12 +749,15 @@ bch <- microbenchmark(
 
 ```{r}
 #| cache: true
+#| eval: false
 #| fig-align: center
 #| fig-height: 5
 #| fig-width: 4
 
 ggplot2::autoplot(bch)
 ```
+
+![](assets/gpu.png)
 
 ## Parallelization using package `parallel`
 
