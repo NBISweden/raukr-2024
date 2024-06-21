@@ -2,158 +2,158 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://nbisweden.github.io/raukr-2024/slides/tidyverse/index.html</loc>
-    <lastmod>2024-02-19T20:33:17.095Z</lastmod>
+    <lastmod>2024-06-21T21:42:37.827Z</lastmod>
   </url>
   <url>
     <loc>https://nbisweden.github.io/raukr-2024/slides/scripting/index.html</loc>
-    <lastmod>2024-02-19T20:33:17.095Z</lastmod>
+    <lastmod>2024-06-21T21:42:37.795Z</lastmod>
   </url>
   <url>
     <loc>https://nbisweden.github.io/raukr-2024/slides/r-env/index.html</loc>
-    <lastmod>2024-06-12T22:25:17.150Z</lastmod>
+    <lastmod>2024-06-21T21:42:37.759Z</lastmod>
   </url>
   <url>
     <loc>https://nbisweden.github.io/raukr-2024/slides/packages/index.html</loc>
-    <lastmod>2024-02-19T20:33:17.091Z</lastmod>
+    <lastmod>2024-06-21T21:42:37.755Z</lastmod>
   </url>
   <url>
     <loc>https://nbisweden.github.io/raukr-2024/slides/ml/index.html</loc>
-    <lastmod>2024-06-16T06:28:35.434Z</lastmod>
+    <lastmod>2024-06-21T21:42:37.743Z</lastmod>
   </url>
   <url>
     <loc>https://nbisweden.github.io/raukr-2024/slides/git/index.html</loc>
-    <lastmod>2024-02-19T20:33:17.091Z</lastmod>
+    <lastmod>2024-06-21T21:42:37.735Z</lastmod>
   </url>
   <url>
     <loc>https://nbisweden.github.io/raukr-2024/slides/demo/index.html</loc>
-    <lastmod>2024-02-19T20:33:17.091Z</lastmod>
-  </url>
-  <url>
-    <loc>https://nbisweden.github.io/raukr-2024/labs/vectorization/index.html</loc>
-    <lastmod>2023-06-27T18:23:08.000Z</lastmod>
-  </url>
-  <url>
-    <loc>https://nbisweden.github.io/raukr-2024/labs/shiny/index.html</loc>
-    <lastmod>2024-06-12T22:25:17.134Z</lastmod>
-  </url>
-  <url>
-    <loc>https://nbisweden.github.io/raukr-2024/labs/reticulate/index.html</loc>
-    <lastmod>2024-06-14T08:53:53.986Z</lastmod>
-  </url>
-  <url>
-    <loc>https://nbisweden.github.io/raukr-2024/labs/packages/index.html</loc>
-    <lastmod>2023-06-27T18:23:08.000Z</lastmod>
-  </url>
-  <url>
-    <loc>https://nbisweden.github.io/raukr-2024/labs/ml/index.html</loc>
-    <lastmod>2024-02-21T19:56:00.203Z</lastmod>
-  </url>
-  <url>
-    <loc>https://nbisweden.github.io/raukr-2024/labs/git/index.html</loc>
-    <lastmod>2024-06-12T22:25:17.134Z</lastmod>
-  </url>
-  <url>
-    <loc>https://nbisweden.github.io/raukr-2024/labs/demo/index.html</loc>
-    <lastmod>2024-05-29T12:50:15.982Z</lastmod>
-  </url>
-  <url>
-    <loc>https://nbisweden.github.io/raukr-2024/labs/coding/index.html</loc>
-    <lastmod>2024-06-12T22:25:17.134Z</lastmod>
-  </url>
-  <url>
-    <loc>https://nbisweden.github.io/raukr-2024/home_schedule.html</loc>
-    <lastmod>2024-06-21T08:38:47.719Z</lastmod>
-  </url>
-  <url>
-    <loc>https://nbisweden.github.io/raukr-2024/home_program.html</loc>
-    <lastmod>2024-05-29T15:34:11.473Z</lastmod>
-  </url>
-  <url>
-    <loc>https://nbisweden.github.io/raukr-2024/home_faq.html</loc>
-    <lastmod>2024-01-27T21:40:07.000Z</lastmod>
-  </url>
-  <url>
-    <loc>https://nbisweden.github.io/raukr-2024/home_about.html</loc>
-    <lastmod>2024-06-13T07:20:28.752Z</lastmod>
-  </url>
-  <url>
-    <loc>https://nbisweden.github.io/raukr-2024/home_contents.html</loc>
-    <lastmod>2024-06-18T19:33:02.503Z</lastmod>
-  </url>
-  <url>
-    <loc>https://nbisweden.github.io/raukr-2024/home_gallery.html</loc>
-    <lastmod>2024-01-28T16:33:32.000Z</lastmod>
-  </url>
-  <url>
-    <loc>https://nbisweden.github.io/raukr-2024/home_registration.html</loc>
-    <lastmod>2024-05-29T12:50:15.982Z</lastmod>
-  </url>
-  <url>
-    <loc>https://nbisweden.github.io/raukr-2024/index.html</loc>
-    <lastmod>2024-06-04T16:12:06.580Z</lastmod>
-  </url>
-  <url>
-    <loc>https://nbisweden.github.io/raukr-2024/labs/debugging/index.html</loc>
-    <lastmod>2024-06-12T22:25:17.134Z</lastmod>
-  </url>
-  <url>
-    <loc>https://nbisweden.github.io/raukr-2024/labs/ggplot/index.html</loc>
-    <lastmod>2023-06-27T18:23:08.000Z</lastmod>
-  </url>
-  <url>
-    <loc>https://nbisweden.github.io/raukr-2024/labs/index.html</loc>
-    <lastmod>2024-06-07T19:32:37.862Z</lastmod>
-  </url>
-  <url>
-    <loc>https://nbisweden.github.io/raukr-2024/labs/oop/index.html</loc>
-    <lastmod>2024-01-28T03:15:05.000Z</lastmod>
-  </url>
-  <url>
-    <loc>https://nbisweden.github.io/raukr-2024/labs/quarto/index.html</loc>
-    <lastmod>2024-06-12T22:25:17.134Z</lastmod>
-  </url>
-  <url>
-    <loc>https://nbisweden.github.io/raukr-2024/labs/scripting/index.html</loc>
-    <lastmod>2023-06-27T18:23:08.000Z</lastmod>
-  </url>
-  <url>
-    <loc>https://nbisweden.github.io/raukr-2024/labs/tidyverse/index.html</loc>
-    <lastmod>2024-06-12T22:25:17.134Z</lastmod>
+    <lastmod>2024-06-21T21:42:37.719Z</lastmod>
   </url>
   <url>
     <loc>https://nbisweden.github.io/raukr-2024/slides/coding/index.html</loc>
-    <lastmod>2024-06-12T22:25:17.142Z</lastmod>
+    <lastmod>2024-06-21T21:42:37.715Z</lastmod>
   </url>
   <url>
-    <loc>https://nbisweden.github.io/raukr-2024/slides/ggplot/index.html</loc>
-    <lastmod>2024-06-12T22:25:17.146Z</lastmod>
+    <loc>https://nbisweden.github.io/raukr-2024/labs/tidyverse/index.html</loc>
+    <lastmod>2024-06-21T21:42:37.707Z</lastmod>
   </url>
   <url>
-    <loc>https://nbisweden.github.io/raukr-2024/slides/index.html</loc>
-    <lastmod>2024-06-07T19:55:02.151Z</lastmod>
+    <loc>https://nbisweden.github.io/raukr-2024/labs/scripting/index.html</loc>
+    <lastmod>2024-06-21T21:42:37.515Z</lastmod>
   </url>
   <url>
-    <loc>https://nbisweden.github.io/raukr-2024/slides/oop/index.html</loc>
-    <lastmod>2024-06-12T22:25:17.146Z</lastmod>
+    <loc>https://nbisweden.github.io/raukr-2024/labs/quarto/index.html</loc>
+    <lastmod>2024-06-21T21:42:37.487Z</lastmod>
   </url>
   <url>
-    <loc>https://nbisweden.github.io/raukr-2024/slides/quarto/index.html</loc>
-    <lastmod>2024-06-12T22:25:17.146Z</lastmod>
+    <loc>https://nbisweden.github.io/raukr-2024/labs/oop/index.html</loc>
+    <lastmod>2024-06-21T21:42:37.479Z</lastmod>
   </url>
   <url>
-    <loc>https://nbisweden.github.io/raukr-2024/slides/reticulate/index.html</loc>
-    <lastmod>2024-06-14T09:21:22.535Z</lastmod>
+    <loc>https://nbisweden.github.io/raukr-2024/labs/index.html</loc>
+    <lastmod>2024-06-21T21:42:37.479Z</lastmod>
   </url>
   <url>
-    <loc>https://nbisweden.github.io/raukr-2024/slides/shiny/index.html</loc>
-    <lastmod>2024-05-29T12:45:40.294Z</lastmod>
+    <loc>https://nbisweden.github.io/raukr-2024/labs/ggplot/index.html</loc>
+    <lastmod>2024-06-21T21:42:37.479Z</lastmod>
   </url>
   <url>
-    <loc>https://nbisweden.github.io/raukr-2024/slides/vectorization/index.html</loc>
-    <lastmod>2024-02-19T20:33:17.095Z</lastmod>
+    <loc>https://nbisweden.github.io/raukr-2024/labs/debugging/index.html</loc>
+    <lastmod>2024-06-21T21:42:37.475Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nbisweden.github.io/raukr-2024/index.html</loc>
+    <lastmod>2024-06-21T21:42:37.475Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nbisweden.github.io/raukr-2024/home_registration.html</loc>
+    <lastmod>2024-06-21T21:42:37.475Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nbisweden.github.io/raukr-2024/home_gallery.html</loc>
+    <lastmod>2024-06-21T21:42:37.475Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nbisweden.github.io/raukr-2024/home_contents.html</loc>
+    <lastmod>2024-06-21T21:42:37.475Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nbisweden.github.io/raukr-2024/home_about.html</loc>
+    <lastmod>2024-06-21T21:42:37.475Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nbisweden.github.io/raukr-2024/home_faq.html</loc>
+    <lastmod>2024-06-21T21:42:37.475Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nbisweden.github.io/raukr-2024/home_program.html</loc>
+    <lastmod>2024-06-21T21:42:37.475Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nbisweden.github.io/raukr-2024/home_schedule.html</loc>
+    <lastmod>2024-06-21T21:42:37.475Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nbisweden.github.io/raukr-2024/labs/coding/index.html</loc>
+    <lastmod>2024-06-21T21:42:37.475Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nbisweden.github.io/raukr-2024/labs/demo/index.html</loc>
+    <lastmod>2024-06-21T21:42:37.475Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nbisweden.github.io/raukr-2024/labs/git/index.html</loc>
+    <lastmod>2024-06-21T21:42:37.479Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nbisweden.github.io/raukr-2024/labs/ml/index.html</loc>
+    <lastmod>2024-06-21T21:42:37.479Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nbisweden.github.io/raukr-2024/labs/packages/index.html</loc>
+    <lastmod>2024-06-21T21:42:37.483Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nbisweden.github.io/raukr-2024/labs/reticulate/index.html</loc>
+    <lastmod>2024-06-21T21:42:37.515Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nbisweden.github.io/raukr-2024/labs/shiny/index.html</loc>
+    <lastmod>2024-06-21T21:42:37.519Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nbisweden.github.io/raukr-2024/labs/vectorization/index.html</loc>
+    <lastmod>2024-06-21T21:42:37.707Z</lastmod>
   </url>
   <url>
     <loc>https://nbisweden.github.io/raukr-2024/slides/debugging/index.html</loc>
-    <lastmod>2024-06-21T19:55:36.605Z</lastmod>
+    <lastmod>2024-06-21T21:42:37.719Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nbisweden.github.io/raukr-2024/slides/ggplot/index.html</loc>
+    <lastmod>2024-06-21T21:42:37.731Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nbisweden.github.io/raukr-2024/slides/index.html</loc>
+    <lastmod>2024-06-21T21:42:37.735Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nbisweden.github.io/raukr-2024/slides/oop/index.html</loc>
+    <lastmod>2024-06-21T21:42:37.751Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nbisweden.github.io/raukr-2024/slides/quarto/index.html</loc>
+    <lastmod>2024-06-21T21:42:37.759Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nbisweden.github.io/raukr-2024/slides/reticulate/index.html</loc>
+    <lastmod>2024-06-21T21:42:37.791Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nbisweden.github.io/raukr-2024/slides/shiny/index.html</loc>
+    <lastmod>2024-06-21T21:42:37.819Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nbisweden.github.io/raukr-2024/slides/vectorization/index.html</loc>
+    <lastmod>2024-06-21T21:42:37.827Z</lastmod>
   </url>
 </urlset>

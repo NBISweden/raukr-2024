@@ -784,12 +784,12 @@ IMHO those are the hardest 💀 to debug!</p>
 </section>
 <section id="profiling-proc.time" class="slide level2">
 <h2>Profiling – <code>proc.time()</code></h2>
-<p>Profiling is the process of <strong>identifying memory</strong> and time <strong>bottlenecks</strong> 🍼 in your code.</p>
+<p>Profiling is the process of <strong>identifying memory</strong> and time <strong>bottlenecks</strong> 🍾 in your code.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a></a><span class="fu">proc.time</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  2.204   1.819   1.519 </code></pre>
+  1.798   0.708   1.532 </code></pre>
 </div>
 </div>
 <ul>
@@ -805,7 +805,7 @@ IMHO those are the hardest 💀 to debug!</p>
 <span id="cb35-4"><a></a>pt2 <span class="sc">-</span> pt1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  0.014   0.000   0.015 </code></pre>
+  0.017   0.007   0.025 </code></pre>
 </div>
 </div>
 </div>
@@ -817,9 +817,9 @@ IMHO those are the hardest 💀 to debug!</p>
 <span id="cb37-2"><a></a><span class="fu">system.time</span>(<span class="fu">rnorm</span>(<span class="at">n =</span> <span class="fl">10e6</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  0.167   0.002   0.168 
+  0.260   0.009   0.268 
    user  system elapsed 
-  0.596   0.002   0.598 </code></pre>
+  0.433   0.020   0.454 </code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -830,7 +830,7 @@ IMHO those are the hardest 💀 to debug!</p>
 <span id="cb39-3"><a></a>tmp1 <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="at">n =</span> <span class="fl">10e6</span>)</span>
 <span id="cb39-4"><a></a><span class="fu">toc</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>0.135 sec elapsed</code></pre>
+<pre><code>0.228 sec elapsed</code></pre>
 </div>
 </div>
 </div>
@@ -911,26 +911,26 @@ IMHO those are the hardest 💀 to debug!</p>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">fn1</td>
-<td style="text-align: right;">7.641</td>
-<td style="text-align: right;">0.05</td>
-<td style="text-align: right;">7.692</td>
+<td style="text-align: right;">11.973</td>
+<td style="text-align: right;">0.099</td>
+<td style="text-align: right;">12.073</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">fn2</td>
-<td style="text-align: right;">0.320</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.320</td>
+<td style="text-align: right;">0.386</td>
+<td style="text-align: right;">0.032</td>
+<td style="text-align: right;">0.418</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">fn3</td>
-<td style="text-align: right;">0.001</td>
-<td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.001</td>
+<td style="text-align: right;">0.002</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">0.002</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">fn4</td>
 <td style="text-align: right;">0.002</td>
-<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">0.000</td>
 <td style="text-align: right;">0.002</td>
 </tr>
 </tbody>
@@ -951,8 +951,7 @@ IMHO those are the hardest 💀 to debug!</p>
 <p>And let us summarise:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a></a>summary <span class="ot">&lt;-</span> <span class="fu">summaryRprof</span>(<span class="st">"profiler_test.out"</span>, <span class="at">memory =</span> <span class="st">"both"</span>)</span>
-<span id="cb47-2"><a></a><span class="co">#unlink("profiler_test.out")</span></span>
-<span id="cb47-3"><a></a>knitr<span class="sc">::</span><span class="fu">kable</span>(summary<span class="sc">$</span>by.self)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb47-2"><a></a>knitr<span class="sc">::</span><span class="fu">kable</span>(summary<span class="sc">$</span>by.self)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table>
 <colgroup>
@@ -1410,37 +1409,25 @@ IMHO those are the hardest 💀 to debug!</p>
 <td style="text-align: right;">1</td>
 <td style="text-align: left;">factor</td>
 <td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.38</td>
+<td style="text-align: right;">0.40</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: left;">FALSE</td>
-<td style="text-align: right;">0.38</td>
+<td style="text-align: right;">0.40</td>
 <td style="text-align: left;">base</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">28</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: left;">order</td>
+<td style="text-align: left;">unique</td>
 <td style="text-align: right;">0.00</td>
-<td style="text-align: right;">0.02</td>
+<td style="text-align: right;">0.22</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: left;">TRUE</td>
-<td style="text-align: right;">0.02</td>
+<td style="text-align: right;">0.22</td>
 <td style="text-align: left;">base</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">28</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">unique</td>
-<td style="text-align: right;">0.02</td>
-<td style="text-align: right;">0.22</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">FALSE</td>
-<td style="text-align: right;">0.20</td>
-<td style="text-align: left;">base</td>
-</tr>
-<tr class="even">
 <td style="text-align: right;">29</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
@@ -1481,8 +1468,8 @@ IMHO those are the hardest 💀 to debug!</p>
 <h2>Profiling with <code>profvis</code> cted.</h2>
 <div class="cell">
 <div class="cell-output-display">
-<div class="profvis html-widget html-fill-item" id="htmlwidget-903cc6a81251a6bfc9c8" style="width:100%;height:600px;"></div>
-<script type="application/json" data-for="htmlwidget-903cc6a81251a6bfc9c8">{"x":{"message":{"prof":{"time":[1,1,1,2,2,3,3],"depth":[3,2,1,2,1,2,1],"label":["eval","eval","fun_fill_loop2","runif","fun_fill_loop2","runif","fun_fill_loop2"],"filenum":[null,null,2,null,2,null,2],"linenum":[null,null,2,null,2,null,2],"memalloc":[29.746826171875,29.746826171875,29.746826171875,38.44047546386719,38.44047546386719,46.66403961181641,46.66403961181641],"meminc":[0,0,0,8.693649291992188,0,8.223564147949219,0],"filename":[null,null,"<expr>",null,"<expr>",null,"<expr>"]},"interval":10,"files":[{"filename":"<expr>","content":"library(profvis)\nprofvis({fun_fill_loop2(1e4, 'runif') \n  c()\n})","normpath":"<expr>"}],"prof_output":"/tmp/RtmpDQb2tg/file11a3f6b638de2.prof","highlight":{"output":["^output\\$"],"gc":["^<GC>$"],"stacktrace":["^\\.\\.stacktraceo(n|ff)\\.\\.$"]},"split":"h"}},"evals":[],"jsHooks":[]}</script>
+<div class="profvis html-widget html-fill-item" id="htmlwidget-490f2412218e3cf9bf64" style="width:100%;height:600px;"></div>
+<script type="application/json" data-for="htmlwidget-490f2412218e3cf9bf64">{"x":{"message":{"prof":{"time":[1,1,3,3],"depth":[2,1,2,1],"label":["runif","fun_fill_loop2","runif","fun_fill_loop2"],"filenum":[null,1,null,1],"linenum":[null,2,null,2],"memalloc":[33.52100372314453,33.52100372314453,46.63864898681641,46.63864898681641],"meminc":[0,0,7.167594909667969,0],"filename":[null,"<expr>",null,"<expr>"]},"interval":10,"files":[{"filename":"<expr>","content":"library(profvis)\nprofvis({fun_fill_loop2(1e4, 'runif') \n  c()\n})","normpath":"<expr>"}],"prof_output":"/tmp/Rtmp0fmLSB/file6225a99101.prof","highlight":{"output":["^output\\$"],"gc":["^<GC>$"],"stacktrace":["^\\.\\.stacktraceo(n|ff)\\.\\.$"]},"split":"h"}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </section>
@@ -1533,8 +1520,8 @@ IMHO those are the hardest 💀 to debug!</p>
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a></a><span class="fu">address</span>(matrix_A)</span>
 <span id="cb52-2"><a></a><span class="fu">address</span>(matrix_B)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "0x7fff977ff010"
-[1] "0x7fff977ff010"</code></pre>
+<pre><code>[1] "0x7fe490ab0010"
+[1] "0x7fe490ab0010"</code></pre>
 </div>
 </div>
 </div>
@@ -1547,8 +1534,8 @@ IMHO those are the hardest 💀 to debug!</p>
 <span id="cb54-2"><a></a><span class="fu">address</span>(matrix_A)</span>
 <span id="cb54-3"><a></a><span class="fu">address</span>(matrix_B)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "0x7fff977ff010"
-[1] "0x7fff96ffe010"</code></pre>
+<pre><code>[1] "0x7fe490ab0010"
+[1] "0x7fe4902af010"</code></pre>
 </div>
 </div>
 </div>
@@ -1568,9 +1555,9 @@ IMHO those are the hardest 💀 to debug!</p>
 <span id="cb56-9"><a></a>}</span>
 <span id="cb56-10"><a></a><span class="fu">f1</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "0x5555555747c0 --&gt; 0x555559c1a5a0"
-[1] "0x555559c1a5a0 --&gt; 0x555559bd2a40"
-[1] "0x555559bd2a40 --&gt; 0x55555b9a32e8"</code></pre>
+<pre><code>[1] "0x561c9d55e560 --&gt; 0x561ca3e80678"
+[1] "0x561ca3e80678 --&gt; 0x561ca3e802f8"
+[1] "0x561ca3e802f8 --&gt; 0x561ca3e71908"</code></pre>
 </div>
 </div>
 </section>
@@ -1589,9 +1576,9 @@ IMHO those are the hardest 💀 to debug!</p>
 <span id="cb58-9"><a></a>}</span>
 <span id="cb58-10"><a></a><span class="fu">f2</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "0x55555d85acb8 --&gt; 0x55555d85acb8"
-[1] "0x55555d85acb8 --&gt; 0x55555d85acb8"
-[1] "0x55555d85acb8 --&gt; 0x55555d85acb8"</code></pre>
+<pre><code>[1] "0x561ca87f50d8 --&gt; 0x561ca87f50d8"
+[1] "0x561ca87f50d8 --&gt; 0x561ca87f50d8"
+[1] "0x561ca87f50d8 --&gt; 0x561ca87f50d8"</code></pre>
 </div>
 </div>
 </section>
