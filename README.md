@@ -110,10 +110,10 @@ If new packages are added/required, then they need to be added to the docker ima
 renv::snapshot(type="all")
 ```
 
-- Rebuild the container with the new packages. Run this in a local terminal in the root of the repo. Increment the version number as needed.
+- Rebuild the container with the new packages. Run this in a local terminal in the root of the repo. **Increment the version number as needed.**
 
 ```
-docker build --platform=linux/amd64 -t ghcr.io/nbisweden/workshop-raukr:1.3 -t ghcr.io/nbisweden/workshop-raukr:latest --file dockerfile .
+docker build --platform=linux/amd64 -t ghcr.io/nbisweden/workshop-raukr:1.4 -t ghcr.io/nbisweden/workshop-raukr:latest --file dockerfile .
 ```
 
 - Push image back to repository
@@ -122,7 +122,7 @@ docker build --platform=linux/amd64 -t ghcr.io/nbisweden/workshop-raukr:1.3 -t g
 # login if needed
 # echo "personalaccesstoken" | docker login ghcr.io -u githubusername --password-stdin
 
-docker push ghcr.io/nbisweden/workshop-raukr:1.3
+docker push ghcr.io/nbisweden/workshop-raukr:1.4
 docker push ghcr.io/nbisweden/workshop-raukr:latest
 ```
 

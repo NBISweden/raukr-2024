@@ -368,6 +368,21 @@
       ],
       "Hash": "088cd2077b5619fcb7b373b1a45174e7"
     },
+    "R.cache": {
+      "Package": "R.cache",
+      "Version": "0.16.0",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "R",
+        "R.methodsS3",
+        "R.oo",
+        "R.utils",
+        "digest",
+        "utils"
+      ],
+      "Hash": "fe539ca3f8efb7410c3ae2cf5fe6c0f8"
+    },
     "R.methodsS3": {
       "Package": "R.methodsS3",
       "Version": "1.8.2",
@@ -512,6 +527,13 @@
       ],
       "Hash": "f5a75d57e0a3014a6ef537ac04a80fc6"
     },
+    "RViennaCL": {
+      "Package": "RViennaCL",
+      "Version": "1.7.1.8",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Hash": "196cb945dd1f5ee3893c7b6776cf7e85"
+    },
     "Rcpp": {
       "Package": "Rcpp",
       "Version": "1.0.12",
@@ -560,6 +582,28 @@
         "Rcpp"
       ],
       "Hash": "c232938949fcd8126034419cc529333a"
+    },
+    "Rgraphviz": {
+      "Package": "Rgraphviz",
+      "Version": "2.41.2",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteRepo": "Rgraphviz",
+      "RemoteUsername": "kasperdanielhansen",
+      "RemoteRef": "HEAD",
+      "RemoteSha": "2c5057bb982db79840c40c0f47b37af7d7887be2",
+      "Requirements": [
+        "R",
+        "grDevices",
+        "graph",
+        "graphics",
+        "grid",
+        "methods",
+        "stats4",
+        "utils"
+      ],
+      "Hash": "aa62c8c4749f1e90366d62c07bdfbfbd"
     },
     "Rhdf5lib": {
       "Package": "Rhdf5lib",
@@ -839,6 +883,260 @@
         "sys"
       ],
       "Hash": "cad6cf7f1d5f6e906700b9d3e718c796"
+    },
+    "assertive": {
+      "Package": "assertive",
+      "Version": "0.3-6",
+      "Source": "Bitbucket",
+      "RemoteType": "bitbucket",
+      "RemoteHost": "api.bitbucket.org/2.0",
+      "RemoteRepo": "assertive",
+      "RemoteUsername": "richierocks",
+      "RemoteRef": "HEAD",
+      "RemoteSha": "1a4265522125415d16465f7d6f931a3addbcc509",
+      "Requirements": [
+        "R",
+        "assertive.base",
+        "assertive.code",
+        "assertive.data",
+        "assertive.data.uk",
+        "assertive.data.us",
+        "assertive.datetimes",
+        "assertive.files",
+        "assertive.matrices",
+        "assertive.models",
+        "assertive.numbers",
+        "assertive.properties",
+        "assertive.reflection",
+        "assertive.sets",
+        "assertive.strings",
+        "assertive.types",
+        "knitr"
+      ],
+      "Hash": "d4df815d5e13445e3715dbf20dafee1d"
+    },
+    "assertive.base": {
+      "Package": "assertive.base",
+      "Version": "0.0-9",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "R",
+        "methods",
+        "utils"
+      ],
+      "Hash": "b13489d382536049f19cd7b205fbc12a"
+    },
+    "assertive.code": {
+      "Package": "assertive.code",
+      "Version": "0.0-3",
+      "Source": "Bitbucket",
+      "RemoteType": "bitbucket",
+      "RemoteHost": "api.bitbucket.org/2.0",
+      "RemoteRepo": "assertive.code",
+      "RemoteUsername": "richierocks",
+      "RemoteRef": "HEAD",
+      "RemoteSha": "24e7d61289f08a1e9bed1e408fdcd1f70a595021",
+      "Requirements": [
+        "R",
+        "assertive.base",
+        "assertive.properties",
+        "assertive.types",
+        "methods"
+      ],
+      "Hash": "696219f37190619504d7c8eb636a4ee5"
+    },
+    "assertive.data": {
+      "Package": "assertive.data",
+      "Version": "0.0-3",
+      "Source": "Bitbucket",
+      "RemoteType": "bitbucket",
+      "RemoteHost": "api.bitbucket.org/2.0",
+      "RemoteRepo": "assertive.data",
+      "RemoteUsername": "richierocks",
+      "RemoteRef": "HEAD",
+      "RemoteSha": "dbd9cc32e488ef0ed877d74d2e120370df764571",
+      "Requirements": [
+        "R",
+        "assertive.base",
+        "assertive.strings"
+      ],
+      "Hash": "30c6f7e476f907068f599b892e18c96b"
+    },
+    "assertive.data.uk": {
+      "Package": "assertive.data.uk",
+      "Version": "0.0-2",
+      "Source": "Bitbucket",
+      "RemoteType": "bitbucket",
+      "RemoteHost": "api.bitbucket.org/2.0",
+      "RemoteRepo": "assertive.data.uk",
+      "RemoteUsername": "richierocks",
+      "RemoteRef": "HEAD",
+      "RemoteSha": "f9272b43e41eb27414068430540ed13879d61af3",
+      "Requirements": [
+        "R",
+        "assertive.base",
+        "assertive.strings"
+      ],
+      "Hash": "7fff180a209f6cb74d29f60fff44294a"
+    },
+    "assertive.data.us": {
+      "Package": "assertive.data.us",
+      "Version": "0.0-2",
+      "Source": "Bitbucket",
+      "RemoteType": "bitbucket",
+      "RemoteHost": "api.bitbucket.org/2.0",
+      "RemoteRepo": "assertive.data.us",
+      "RemoteUsername": "richierocks",
+      "RemoteRef": "HEAD",
+      "RemoteSha": "c5f082d6786cf32b1aa531a256af6459a26cc372",
+      "Requirements": [
+        "R",
+        "assertive.base",
+        "assertive.strings"
+      ],
+      "Hash": "5f2259afb4cf8fa06714d4c69425cc59"
+    },
+    "assertive.datetimes": {
+      "Package": "assertive.datetimes",
+      "Version": "0.0-3",
+      "Source": "Bitbucket",
+      "RemoteType": "bitbucket",
+      "RemoteHost": "api.bitbucket.org/2.0",
+      "RemoteRepo": "assertive.datetimes",
+      "RemoteUsername": "richierocks",
+      "RemoteRef": "HEAD",
+      "RemoteSha": "e52473769dd84b95222be397d4d560664a3fd866",
+      "Requirements": [
+        "R",
+        "assertive.base",
+        "assertive.types"
+      ],
+      "Hash": "65b30aada95683e3267b195009d5aa63"
+    },
+    "assertive.files": {
+      "Package": "assertive.files",
+      "Version": "0.0-2",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "R",
+        "assertive.base",
+        "assertive.numbers"
+      ],
+      "Hash": "946a8b6f9951bc8e4931eb5b892ae56e"
+    },
+    "assertive.matrices": {
+      "Package": "assertive.matrices",
+      "Version": "0.0-2",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "R",
+        "assertive.base"
+      ],
+      "Hash": "04e0d9bb4e0a89a632c2e89b6e681a95"
+    },
+    "assertive.models": {
+      "Package": "assertive.models",
+      "Version": "0.0-2",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "R",
+        "assertive.base",
+        "stats"
+      ],
+      "Hash": "0039faf687147d63758ad0126a0f917c"
+    },
+    "assertive.numbers": {
+      "Package": "assertive.numbers",
+      "Version": "0.0-2",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "R",
+        "assertive.base"
+      ],
+      "Hash": "cf44804c431986c64dfd2f577031c9f4"
+    },
+    "assertive.properties": {
+      "Package": "assertive.properties",
+      "Version": "0.0-5",
+      "Source": "Bitbucket",
+      "RemoteType": "bitbucket",
+      "RemoteHost": "api.bitbucket.org/2.0",
+      "RemoteRepo": "assertive.properties",
+      "RemoteUsername": "richierocks",
+      "RemoteRef": "HEAD",
+      "RemoteSha": "4b0150c4c2b5ca5d956e297e4630012206828e67",
+      "Requirements": [
+        "R",
+        "assertive.base",
+        "methods"
+      ],
+      "Hash": "2e6f167fa55efd929a6efbc0772f3ce4"
+    },
+    "assertive.reflection": {
+      "Package": "assertive.reflection",
+      "Version": "0.0-5",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "R",
+        "assertive.base",
+        "utils"
+      ],
+      "Hash": "4eb9e99fa4cd2b04439f0a080d5a90c9"
+    },
+    "assertive.sets": {
+      "Package": "assertive.sets",
+      "Version": "0.0-3",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "R",
+        "assertive.base"
+      ],
+      "Hash": "7e10f191b5d6f423fb0e056096e4cc96"
+    },
+    "assertive.strings": {
+      "Package": "assertive.strings",
+      "Version": "0.0-3",
+      "Source": "Bitbucket",
+      "RemoteType": "bitbucket",
+      "RemoteHost": "api.bitbucket.org/2.0",
+      "RemoteRepo": "assertive.strings",
+      "RemoteUsername": "richierocks",
+      "RemoteRef": "HEAD",
+      "RemoteSha": "3536feadbc2b2d1c8b6ea8209c3ff6c2fac75223",
+      "Requirements": [
+        "R",
+        "assertive.base",
+        "assertive.types",
+        "stringi"
+      ],
+      "Hash": "2478cefcef0144c09cab457cf25f4f6b"
+    },
+    "assertive.types": {
+      "Package": "assertive.types",
+      "Version": "0.0-3",
+      "Source": "Bitbucket",
+      "RemoteType": "bitbucket",
+      "RemoteHost": "api.bitbucket.org/2.0",
+      "RemoteRepo": "assertive.types",
+      "RemoteUsername": "richierocks",
+      "RemoteRef": "HEAD",
+      "RemoteSha": "1c665af355205cf879eb03245714233cf2a7a564",
+      "Requirements": [
+        "R",
+        "assertive.base",
+        "assertive.properties",
+        "codetools",
+        "methods",
+        "stats"
+      ],
+      "Hash": "d76210144edcf9cc1db9daf3fe83ed8e"
     },
     "assertthat": {
       "Package": "assertthat",
@@ -2020,6 +2318,29 @@
       ],
       "Hash": "ed33b16c6d24f7ced1d68877ac2509ee"
     },
+    "gganimate": {
+      "Package": "gganimate",
+      "Version": "1.0.9",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "cli",
+        "ggplot2",
+        "glue",
+        "grDevices",
+        "grid",
+        "lifecycle",
+        "progress",
+        "rlang",
+        "scales",
+        "stringi",
+        "transformr",
+        "tweenr",
+        "utils",
+        "vctrs"
+      ],
+      "Hash": "c6e8a7ff1b78529309cb2186ec1e3d38"
+    },
     "ggiraph": {
       "Package": "ggiraph",
       "Version": "0.8.8",
@@ -2042,7 +2363,7 @@
     },
     "ggplot2": {
       "Package": "ggplot2",
-      "Version": "3.4.4",
+      "Version": "3.5.0",
       "Source": "Repository",
       "Repository": "RSPM",
       "Requirements": [
@@ -2063,7 +2384,7 @@
         "vctrs",
         "withr"
       ],
-      "Hash": "313d31eff2274ecf4c1d3581db7241f9"
+      "Hash": "52ef83f93f74833007f193b2d4c159a2"
     },
     "ggrepel": {
       "Package": "ggrepel",
@@ -2096,6 +2417,13 @@
         "rlang"
       ],
       "Hash": "03533b1c875028233598f848fda44c4c"
+    },
+    "gifski": {
+      "Package": "gifski",
+      "Version": "1.12.0-2",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Hash": "94ea43ec9e47684c20810e9272605425"
     },
     "gitcreds": {
       "Package": "gitcreds",
@@ -2192,6 +2520,26 @@
         "withr"
       ],
       "Hash": "d6db1667059d027da730decdc214b959"
+    },
+    "graph": {
+      "Package": "graph",
+      "Version": "1.83.0",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteRepo": "graph",
+      "RemoteUsername": "Bioconductor",
+      "RemoteRef": "HEAD",
+      "RemoteSha": "4602e2657ad12307643ab184d930d0a83197a9e6",
+      "Requirements": [
+        "BiocGenerics",
+        "R",
+        "methods",
+        "stats",
+        "stats4",
+        "utils"
+      ],
+      "Hash": "f7021891fcb6b272549967055ceb40f2"
     },
     "gridExtra": {
       "Package": "gridExtra",
@@ -2959,6 +3307,13 @@
         "rlang"
       ],
       "Hash": "f2a94f8fc9db382a642e965339635ad6"
+    },
+    "lpSolve": {
+      "Package": "lpSolve",
+      "Version": "5.6.20",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Hash": "2801c8082e89ed84cc0dbe43de850d31"
     },
     "lubridate": {
       "Package": "lubridate",
@@ -3953,6 +4308,18 @@
       ],
       "Hash": "1425f91b4d5d9a8f25352c44a3d914ed"
     },
+    "repurrrsive": {
+      "Package": "repurrrsive",
+      "Version": "1.1.0",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "R",
+        "tibble",
+        "utils"
+      ],
+      "Hash": "83cf8bf4ada1dca8cfe94111c2a691d7"
+    },
     "reshape2": {
       "Package": "reshape2",
       "Version": "1.4.4",
@@ -4923,6 +5290,25 @@
       ],
       "Hash": "960e2ae9e09656611e0b8214ad543207"
     },
+    "styler": {
+      "Package": "styler",
+      "Version": "1.10.2",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "R",
+        "R.cache",
+        "cli",
+        "magrittr",
+        "purrr",
+        "rlang",
+        "rprojroot",
+        "tools",
+        "vctrs",
+        "withr"
+      ],
+      "Hash": "d61238fd44fc63c8adf4565efe8eb682"
+    },
     "survival": {
       "Package": "survival",
       "Version": "3.5-7",
@@ -5322,6 +5708,21 @@
       ],
       "Hash": "89895690e02327432149e99f2cde8941"
     },
+    "transformr": {
+      "Package": "transformr",
+      "Version": "0.1.5",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "cpp11",
+        "lpSolve",
+        "rlang",
+        "sf",
+        "tweenr",
+        "vctrs"
+      ],
+      "Hash": "584eda9966ed571b3adc75e338116147"
+    },
     "tseries": {
       "Package": "tseries",
       "Version": "0.10-55",
@@ -5351,6 +5752,21 @@
         "xfun"
       ],
       "Hash": "efcde6054a0796aec89329b1eca7f886"
+    },
+    "tweenr": {
+      "Package": "tweenr",
+      "Version": "2.0.3",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "R",
+        "cpp11",
+        "farver",
+        "magrittr",
+        "rlang",
+        "vctrs"
+      ],
+      "Hash": "82fac2b73e6a1f3874fc000aaf96d8bc"
     },
     "tzdb": {
       "Package": "tzdb",

@@ -69,4 +69,17 @@ WORKDIR /home/rstudio/raukr
 ## rstudio server
 ## docker run --platform=linux/amd64 --rm -e PASSWORD=raukr -p 8787:8787 -v ${PWD}:/home/rstudio/raukr ghcr.io/nbisweden/workshop-raukr:latest
 
+## manual install for gpuR
+## currently nonfunctional
+## apt-get install -y libviennacl-dev ocl-icd-libopencl1 opencl-headers clinfo
+## remotes::install_bitbucket("richierocks/assertive.properties")
+## remotes::install_bitbucket("richierocks/assertive.types")
+## remotes::install_bitbucket("richierocks/assertive.strings")
+## remotes::install_bitbucket("richierocks/assertive.datetimes")
+## remotes::install_bitbucket("richierocks/assertive.data")
+## remotes::install_bitbucket("richierocks/assertive.data.uk")
+## remotes::install_bitbucket("richierocks/assertive.data.us")
+## remotes::install_bitbucket("richierocks/assertive.code")
+## remotes::install_bitbucket("richierocks/assertive")
+## remotes::install_github("cdeterman/gpuR")
 
