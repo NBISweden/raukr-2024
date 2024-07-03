@@ -26,6 +26,8 @@ execute:
 
 In Life Sciences and Bioinformatics, the R programming language is pivotal for data transformation, statistical analyses, and crafting publication-ready visualizations. This workshop goes beyond the basics, offering participants a comprehensive understanding of the R ecosystem. We explore best coding practices, code profiling, data wrangling, generating reports from notebooks and development of web apps using R.
 
+[[Slides]{.btn .btn-sm .btn-secondary}](slides/index.html) [[Labs]{.btn .btn-sm .btn-secondary}](labs/index.html)
+
 <!-- [[Slides &#9656;]{.btn .btn-primary}](slides/index.html) [[Labs &#9656;]{.btn .btn-primary}](labs/index.html) -->
 
 <br>
