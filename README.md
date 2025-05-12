@@ -1,4 +1,4 @@
-# Raukr 2024 • Workshop Website  
+# Raukr 2024 • Workshop Website  ![](https://zenodo.org/badge/DOI/10.5281/zenodo.15388710.svg)
 **NBIS Summer School • Advanced R for Bioinformatics**
 
 ## Environment
